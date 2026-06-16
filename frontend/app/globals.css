@@ -1,42 +1,41 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* Ensures Tailwind includes rules for files inside your standalone components folder */
+@source "components/**/*.{ts,tsx}";
+@source "app/**/*.{ts,tsx}";
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* 2. Configure your design tokens using the new v4 CSS-centric theme engine */
+@theme {
+  --color-background: #f8fafc; /* Slate 50 equivalent */
+  --color-foreground: #0f172a; /* Slate 900 equivalent */
+  
+  --animate-fadeIn: fadeIn 0.25s ease-out forwards;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 }
 
+/* 3. Define fallback document behaviors */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: 'Inter', var(--font-geist-sans), sans-serif;
+  color: var(--color-foreground);
+  background: var(--color-background);
+  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  overflow-x: hidden;
 }
 
-.glass {
-  color: #171717;
+/* Custom scrollbar utility wrapper to keep categories horizontal but clean */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
-
-.glass h3 {
-  color: #171717;
-}
-
-.glass p {
-  color: #49454e;
-}
-
-.satin-gradient {
-  background: linear-gradient(45deg, #5F5E5E 0%, #9F9E9E 100%);
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
