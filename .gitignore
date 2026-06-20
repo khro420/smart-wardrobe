@@ -1,0 +1,47 @@
+# ======================
+# Python
+# ======================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# virtual environment
+venv/
+.env/
+
+# ======================
+# ML / AI ARTIFACTS
+# ======================
+runs/
+*.pt
+
+# datasets (VERY IMPORTANT)
+datasets/
+data/
+images/
+labels/
+
+# ======================
+# logs / outputs
+# ======================
+logs/
+*.log
+
+# ======================
+# OS junk
+# ======================
+.DS_Store
+Thumbs.db
+
+# ======================
+# VS Code (optional)
+# ======================
+.vscode/
+
+# ======================
+# Node (ONLY if you actually use frontend)
+# ======================
+node_modules/
+dist/
+build/
