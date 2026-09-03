@@ -42,14 +42,12 @@ class AttributeExtractor:
         # Outerwear (layer 2)
         "short_sleeve_outwear": ("outerwear", 2),
         "long_sleeve_outwear":  ("outerwear", 2),
-        "hoodie":               ("outerwear", 2),
-        "sweater":              ("outerwear", 2),
+
         # Bottoms (layer 0)
         "shorts":             ("bottom", 0),
         "trousers":           ("bottom", 0),
-        "jeans":              ("bottom", 0),
-        "cargo_pants":        ("bottom", 0),
         "skirt":              ("bottom", 0),
+        
         # Dresses (layer 0, one-piece)
         "short_sleeve_dress": ("dress", 0),
         "long_sleeve_dress":  ("dress", 0),

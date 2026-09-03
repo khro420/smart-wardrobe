@@ -12,22 +12,22 @@ const INITIAL_GARMENTS = [
     name: "Cashmere Crew", 
     category: "Tops", 
     favorite: true, 
-    img: "🧥",
+    img: "Item image",
     specs: {
       detectedOn: "2026-03-14",
-      visualCategory: "Outerwear // Knitwear",
+      visualCategory: "Knitwear",
       inferredFit: "Oversized Silhouette",
-      dominantPattern: "Solid Color // Matte Finish",
+      dominantPattern: "Solid colour",
     },
     // Computer Vision Extracted Feature Vectors for AI Recommender Pairing Matrix
     aiTags: {
       primaryColorHex: "#1C1C1C",
-      secondaryColorHex: "NONE_DETECTED",
-      detectedSubGenres: ["MINIMALIST", "STREETWEAR_VOLUME", "ARCHIVE"],
-      inferredSeasonality: ["AUTUMN", "WINTER"],
-      layeringPriorityIndex: "MID_TO_OUTER", // Inferred from structural thickness
-      estimatedTextureDensity: "HEAVYWEIGHT",
-      vibeSignature: "RELAXED_DROP_SHOULDER"
+      secondaryColorHex: "None",
+      detectedSubGenres: ["Minimal", "Relaxed", "Classic"],
+      inferredSeasonality: ["Autumn", "Winter"],
+      layeringPriorityIndex: "Mid layer",
+      estimatedTextureDensity: "Heavyweight",
+      vibeSignature: "Relaxed fit"
     }
   },
   { 
@@ -35,21 +35,21 @@ const INITIAL_GARMENTS = [
     name: "White Tee", 
     category: "Tops", 
     favorite: true, 
-    img: "👕",
+    img: "Item image",
     specs: {
       detectedOn: "2026-01-22",
-      visualCategory: "T-Shirts // Base Layers",
+      visualCategory: "T-shirt",
       inferredFit: "Regular / Straight Fit",
       dominantPattern: "Plain Solid",
     },
     aiTags: {
       primaryColorHex: "#FFFFFF",
-      secondaryColorHex: "NONE_DETECTED",
-      detectedSubGenres: ["CORE_ESSENTIALS", "MINIMALIST"],
-      inferredSeasonality: ["SPRING", "SUMMER"],
-      layeringPriorityIndex: "BASE_LAYER",
-      estimatedTextureDensity: "LIGHTWEIGHT",
-      vibeSignature: "BOX_STANDARD"
+      secondaryColorHex: "None",
+      detectedSubGenres: ["Essentials", "Minimal"],
+      inferredSeasonality: ["Spring", "Summer"],
+      layeringPriorityIndex: "Base layer",
+      estimatedTextureDensity: "Lightweight",
+      vibeSignature: "Regular fit"
     }
   },
   { 
@@ -57,21 +57,21 @@ const INITIAL_GARMENTS = [
     name: "67 Tee", 
     category: "Tops", 
     favorite: false, 
-    img: "🎽",
+    img: "Item image",
     specs: {
       detectedOn: "2025-11-05",
       visualCategory: "Graphic Tops",
-      inferredFit: "Cropped // Wide",
+      inferredFit: "Cropped, relaxed fit",
       dominantPattern: "Distressed Screenprint Front Graphic",
     },
     aiTags: {
       primaryColorHex: "#4B5366",
       secondaryColorHex: "#EAEAEA",
-      detectedSubGenres: ["VINTAGE_STREETWEAR", "GRAPHIC_HYPE"],
-      inferredSeasonality: ["SPRING", "SUMMER"],
-      layeringPriorityIndex: "BASE_LAYER",
-      estimatedTextureDensity: "MIDWEIGHT",
-      vibeSignature: "CROPPED_SQUARE"
+      detectedSubGenres: ["Vintage", "Graphic"],
+      inferredSeasonality: ["Spring", "Summer"],
+      layeringPriorityIndex: "Base layer",
+      estimatedTextureDensity: "Midweight",
+      vibeSignature: "Cropped fit"
     }
   },
   { 
@@ -79,7 +79,7 @@ const INITIAL_GARMENTS = [
     name: "Doggy Tee", 
     category: "Tops", 
     favorite: false, 
-    img: "🦮",
+    img: "Item image",
     specs: {
       detectedOn: "2026-05-19",
       visualCategory: "Graphic Tops",
@@ -89,12 +89,36 @@ const INITIAL_GARMENTS = [
     aiTags: {
       primaryColorHex: "#FFFDD0",
       secondaryColorHex: "#8B4513",
-      detectedSubGenres: ["STREETWEAR", "HYPEBEAST"],
-      inferredSeasonality: ["SPRING", "SUMMER"],
-      layeringPriorityIndex: "BASE_LAYER",
-      estimatedTextureDensity: "MIDWEIGHT",
-      vibeSignature: "OVERSIZED_STREET_DROP"
+      detectedSubGenres: ["Casual", "Graphic"],
+      inferredSeasonality: ["Spring", "Summer"],
+      layeringPriorityIndex: "Base layer",
+      estimatedTextureDensity: "Midweight",
+      vibeSignature: "Oversized fit"
     }
+  },
+];
+
+const SAVED_OUTFITS = [
+  {
+    id: 1,
+    name: "Weekend coffee run",
+    occasion: "Casual",
+    items: ["Cashmere Crew", "White Tee", "Lounge Pants"],
+    savedOn: "Saved 23 Jun 2026",
+  },
+  {
+    id: 2,
+    name: "Warm evening out",
+    occasion: "Evening",
+    items: ["Graphic Shirt", "Linen Trousers", "Knit Socks"],
+    savedOn: "Saved 18 Jun 2026",
+  },
+  {
+    id: 3,
+    name: "Easy workday",
+    occasion: "Smart casual",
+    items: ["White Tee", "Cashmere Crew", "Tailored Trousers"],
+    savedOn: "Saved 12 Jun 2026",
   },
 ];
 
@@ -128,13 +152,13 @@ export default function WardrobePage() {
       <div className="space-y-6 animate-in fade-in duration-300 antialiased">
         
         {/* Switcher Tabs */}
-        <div className="flex bg-white border-4 border-black p-1 w-full max-w-xs mx-auto shadow-[4px_4px_0px_0px_#000000]">
+        <div className="flex w-full max-w-sm mx-auto rounded-full bg-slate-100 p-1 shadow-sm">
           {(["Outfits", "Garments"] as const).map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`flex-1 text-center py-2 text-xs font-mono font-black uppercase transition-all ${
-                activeTab === tab ? "bg-black text-white" : "text-zinc-400 hover:text-black"
+              className={`flex-1 rounded-full text-center py-2.5 text-sm font-medium transition-all ${
+                activeTab === tab ? "bg-[#263144] text-white" : "text-zinc-400 hover:text-black"
               }`}
             >
               {tab}
@@ -148,7 +172,7 @@ export default function WardrobePage() {
             <Search className="w-4 h-4 text-black absolute left-3.5 top-1/2 -translate-y-1/2 stroke-[3]" />
             <input 
               type="text" 
-              placeholder="SEARCH_YOUR_ARCHIVE..." 
+              placeholder="Search your wardrobe"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="w-full bg-zinc-50 border-2 border-black font-mono text-xs font-bold uppercase pl-10 pr-4 py-2.5 placeholder-zinc-400 focus:outline-hidden"
@@ -191,15 +215,15 @@ export default function WardrobePage() {
                   <Heart className={`w-4 h-4 stroke-[2.5] ${g.favorite ? "fill-black text-black" : "text-black"}`} />
                 </button>
 
-                <div className="w-full h-32 bg-zinc-50 border-2 border-black mt-6 flex items-center justify-center text-4xl relative overflow-hidden">
-                  <span className="group-hover:scale-110 group-hover:rotate-3 transition-transform duration-200 filter drop-shadow-[2px_2px_0px_rgba(0,0,0,0.15)]">
+                <div className="w-full h-32 bg-zinc-50 border-2 border-black mt-6 flex items-center justify-center text-xs font-medium text-zinc-400 relative overflow-hidden">
+                  <span className="group-hover:scale-110 transition-transform duration-200">
                     {g.img}
                   </span>
                 </div>
 
                 <div className="mt-3 pt-2 border-t-2 border-black">
                   <p className="text-xs font-sans font-bold text-black tracking-tight line-clamp-1">{g.name}</p>
-                  <p className="text-[10px] font-mono font-bold text-zinc-400 uppercase mt-0.5">// {g.category}</p>
+                  <p className="text-[10px] font-mono font-bold text-zinc-400 mt-0.5">{g.category}</p>
                 </div>
               </div>
             ))}
@@ -211,12 +235,38 @@ export default function WardrobePage() {
               <div className="w-9 h-9 bg-white border-2 border-zinc-400 group-hover:border-black flex items-center justify-center text-zinc-400 group-hover:text-black transition-colors">
                 <Plus className="w-5 h-5 stroke-[3]" />
               </div>
-              <p className="text-xs font-mono font-black uppercase tracking-widest">ADD_ITEM //</p>
+              <p className="text-xs font-mono font-black tracking-wide">Add an item</p>
             </Link>
           </div>
         ) : (
-          <div className="text-center py-16 border-4 border-dashed border-zinc-300 bg-zinc-100/50 font-mono text-zinc-400 text-xs font-black uppercase tracking-wider">
-            [ ERR: NO_CUSTOM_OUTFIT_SETS_FOUND ]
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
+            {SAVED_OUTFITS.map((outfit) => (
+              <article key={outfit.id} className="overflow-hidden rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md">
+                <div className="flex h-40 items-center justify-center rounded-xl border border-dashed border-slate-200 bg-slate-50 text-center text-xs font-medium text-slate-400">
+                  Outfit image placeholder
+                </div>
+                <div className="mt-4 flex items-start justify-between gap-3">
+                  <div>
+                    <p className="text-sm font-semibold text-slate-800">{outfit.name}</p>
+                    <p className="mt-1 text-xs text-slate-500">{outfit.occasion} · {outfit.savedOn}</p>
+                  </div>
+                  <span className="rounded-full bg-[#f5eaf1] px-2.5 py-1 text-[11px] font-medium text-[#6d335b]">Saved</span>
+                </div>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {outfit.items.map((item) => (
+                    <span key={item} className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-[11px] text-slate-600">{item}</span>
+                  ))}
+                </div>
+                <div className="mt-5 grid grid-cols-2 gap-3">
+                  <Link href={`/try-on/result?name=${encodeURIComponent(outfit.name)}`} className="rounded-xl bg-[#263144] px-3 py-2.5 text-center text-xs font-semibold text-white transition-colors hover:bg-[#6d335b]">
+                    View visualisation
+                  </Link>
+                  <Link href="/try-on" className="rounded-xl border border-slate-200 px-3 py-2.5 text-center text-xs font-semibold text-slate-600 transition-colors hover:bg-slate-50">
+                    Visualise again
+                  </Link>
+                </div>
+              </article>
+            ))}
           </div>
         )}
       </div>
@@ -240,12 +290,12 @@ export default function WardrobePage() {
 
             {/* Header Display */}
             <div className="flex items-center gap-4 pt-2 border-b-4 border-black pb-4">
-              <div className="w-16 h-16 bg-zinc-50 border-2 border-black flex items-center justify-center text-4xl shrink-0 shadow-[2px_2px_0px_0px_#000000]">
+              <div className="w-16 h-16 bg-zinc-50 border-2 border-black flex items-center justify-center px-2 text-center text-[10px] font-medium text-zinc-400 shrink-0 shadow-[2px_2px_0px_0px_#000000]">
                 {selectedItem.img}
               </div>
               <div className="space-y-0.5">
                 <span className="text-[9px] font-mono font-black bg-black text-white px-2 py-0.5 uppercase tracking-wider">
-                  {selectedItem.category} // CV_SCAN_NODE_{selectedItem.id}
+                  {selectedItem.category}
                 </span>
                 <h3 className="text-xl font-sans font-black text-black tracking-tight">{selectedItem.name}</h3>
               </div>
@@ -256,22 +306,22 @@ export default function WardrobePage() {
                 
                 {/* Section 1: Standard Extracted Image Meta */}
                 <div className="space-y-2">
-                  <p className="text-[10px] font-mono font-black text-zinc-400 uppercase tracking-widest">// DETECTED_IMAGE_PARAMETERS</p>
+                  <p className="text-[10px] font-mono font-black text-zinc-400 tracking-wide">Item details</p>
                   <div className="grid grid-cols-2 gap-2 text-xs font-sans font-medium text-black">
                     <div className="border-2 border-black bg-zinc-50 p-2.5">
-                      <span className="block text-[9px] font-mono font-black text-zinc-400">// FILE_PROCESSED_DATE</span>
+                      <span className="block text-[9px] font-mono font-black text-zinc-400">Added on</span>
                       <span className="font-bold">{selectedItem.specs?.detectedOn || "N/A"}</span>
                     </div>
                     <div className="border-2 border-black bg-zinc-50 p-2.5">
-                      <span className="block text-[9px] font-mono font-black text-zinc-400">// CLASSIFIED_FIT_MASK</span>
+                      <span className="block text-[9px] font-mono font-black text-zinc-400">Fit</span>
                       <span className="font-bold">{selectedItem.specs?.inferredFit || "N/A"}</span>
                     </div>
                     <div className="border-2 border-black bg-zinc-50 p-2.5 col-span-2">
-                      <span className="block text-[9px] font-mono font-black text-zinc-400">// STRUCTURAL_VISUAL_CATEGORY</span>
+                      <span className="block text-[9px] font-mono font-black text-zinc-400">Category</span>
                       <span className="font-bold">{selectedItem.specs?.visualCategory || "N/A"}</span>
                     </div>
                     <div className="border-2 border-black bg-zinc-50 p-2.5 col-span-2">
-                      <span className="block text-[9px] font-mono font-black text-zinc-400">// SURFACE_PATTERN_DETECTION</span>
+                      <span className="block text-[9px] font-mono font-black text-zinc-400">Pattern</span>
                       <span className="font-bold text-zinc-800">{selectedItem.specs?.dominantPattern || "N/A"}</span>
                     </div>
                   </div>
@@ -282,7 +332,7 @@ export default function WardrobePage() {
                   <div className="flex items-center gap-2 border-b-2 border-black pb-2">
                     <Cpu className="w-4 h-4 text-black stroke-[3]" />
                     <p className="text-[10px] font-mono font-black uppercase tracking-widest text-black">
-                      AI_RECOMMENDER_EXTRACTED_VECTORS //
+                      Style notes
                     </p>
                   </div>
 
@@ -290,7 +340,7 @@ export default function WardrobePage() {
                     
                     {/* Embedded Pixel Color Quantization */}
                     <div className="space-y-1">
-                      <span className="block text-[9px] font-black text-zinc-400">// QUANTIZED_PRIMARY_HEX</span>
+                      <span className="block text-[9px] font-black text-zinc-400">Main color</span>
                       <div className="flex items-center gap-2">
                         <div 
                           className="w-4 h-4 border-2 border-black" 
@@ -301,9 +351,9 @@ export default function WardrobePage() {
                     </div>
 
                     <div className="space-y-1">
-                      <span className="block text-[9px] font-black text-zinc-400">// QUANTIZED_SECONDARY_HEX</span>
+                      <span className="block text-[9px] font-black text-zinc-400">Accent color</span>
                       <div className="flex items-center gap-2">
-                        {selectedItem.aiTags?.secondaryColorHex && selectedItem.aiTags.secondaryColorHex !== "NONE_DETECTED" ? (
+                      {selectedItem.aiTags?.secondaryColorHex && selectedItem.aiTags.secondaryColorHex !== "None" ? (
                           <>
                             <div 
                               className="w-4 h-4 border-2 border-black" 
@@ -312,50 +362,50 @@ export default function WardrobePage() {
                             <span className="font-black text-black">{selectedItem.aiTags.secondaryColorHex}</span>
                           </>
                         ) : (
-                          <span className="font-bold text-zinc-400">NONE_DETECTED</span>
+                          <span className="font-bold text-zinc-400">Not detected</span>
                         )}
                       </div>
                     </div>
 
                     {/* Layering Graph Node Weights */}
                     <div className="space-y-1 border-t border-zinc-200 pt-2">
-                      <span className="block text-[9px] font-black text-zinc-400">// OUTFIT_LAYERING_INDEX</span>
-                      <span className="font-black text-black">{selectedItem.aiTags?.layeringPriorityIndex || "UNSET"}</span>
+                      <span className="block text-[9px] font-black text-zinc-400">Layering</span>
+                      <span className="font-black text-black">{selectedItem.aiTags?.layeringPriorityIndex || "Not available"}</span>
                     </div>
 
                     {/* Extracted Silhouette Vibe */}
                     <div className="space-y-1 border-t border-zinc-200 pt-2">
-                      <span className="block text-[9px] font-black text-zinc-400">// SILHOUETTE_OUTPUT_TAG</span>
-                      <span className="font-black text-black">{selectedItem.aiTags?.vibeSignature || "STANDARD"}</span>
+                      <span className="block text-[9px] font-black text-zinc-400">Silhouette</span>
+                      <span className="font-black text-black">{selectedItem.aiTags?.vibeSignature || "Regular fit"}</span>
                     </div>
 
                     {/* Sub Genre Classifiers for Compatibility Parsing */}
                     <div className="space-y-1 col-span-1 sm:col-span-2 border-t border-zinc-200 pt-2">
-                      <span className="block text-[9px] font-black text-zinc-400">// MATCHING_STYLE_GENRES</span>
+                      <span className="block text-[9px] font-black text-zinc-400">Style tags</span>
                       <div className="flex flex-wrap gap-1 mt-0.5">
                         {selectedItem.aiTags?.detectedSubGenres?.map((genre, i) => (
                           <span key={i} className="bg-zinc-100 text-black border-2 border-black px-1.5 py-0.5 text-[9px] font-black">
                             {genre}
                           </span>
-                        )) || <span className="text-zinc-400">NONE</span>}
+                        )) || <span className="text-zinc-400">None</span>}
                       </div>
                     </div>
 
                     <div className="space-y-1 col-span-1 sm:col-span-2 border-t border-zinc-200 pt-2">
-                      <span className="block text-[9px] font-black text-zinc-400">// SEASONAL_PAIRING_RESTRICTIONS</span>
+                      <span className="block text-[9px] font-black text-zinc-400">Best seasons</span>
                       <div className="flex flex-wrap gap-1 mt-0.5">
                         {selectedItem.aiTags?.inferredSeasonality?.map((season, i) => (
                           <span key={i} className="bg-zinc-100 text-black border-2 border-black px-1.5 py-0.5 text-[9px] font-black">
                             {season}
                           </span>
-                        )) || <span className="text-zinc-400">ALL_SEASON</span>}
+                        )) || <span className="text-zinc-400">All seasons</span>}
                       </div>
                     </div>
 
                     {/* Texture/Weight Matrix */}
                     <div className="space-y-1 col-span-1 sm:col-span-2 border-t border-zinc-200 pt-2">
-                      <span className="block text-[9px] font-black text-zinc-400">// INFERRED_FABRIC_WEIGHT_CLASS</span>
-                      <span className="font-black text-black">{selectedItem.aiTags?.estimatedTextureDensity || "UNKNOWN"}</span>
+                      <span className="block text-[9px] font-black text-zinc-400">Fabric weight</span>
+                      <span className="font-black text-black">{selectedItem.aiTags?.estimatedTextureDensity || "Not available"}</span>
                     </div>
 
                   </div>
@@ -367,7 +417,7 @@ export default function WardrobePage() {
                     onClick={() => setSelectedItemId(null)}
                     className="flex-1 bg-black text-white border-2 border-black text-center py-2.5 text-xs font-mono font-black uppercase tracking-widest shadow-[3px_3px_0px_0px_#27272a] hover:bg-zinc-800 transition-all"
                   >
-                    DISMISS_DATATRACK //
+                    Close
                   </button>
                   <button 
                     onClick={() => setIsDeleteConfirmOpen(true)}
@@ -383,9 +433,9 @@ export default function WardrobePage() {
                 <div className="flex items-start gap-2.5 text-rose-700">
                   <ShieldAlert className="w-5 h-5 shrink-0 stroke-[2.5] mt-0.5" />
                   <div>
-                    <h4 className="text-xs font-mono font-black uppercase tracking-tight">DATA_PURGE_WARNING //</h4>
+                    <h4 className="text-xs font-mono font-black tracking-tight">Remove this item?</h4>
                     <p className="text-xs font-sans font-medium mt-1">
-                      Deleting this component breaks active token graph associations. The AI recommender will lose reference parameters for <strong className="font-bold text-rose-950">{selectedItem.name}</strong>.
+                      This will permanently remove <strong className="font-bold text-rose-950">{selectedItem.name}</strong> from your wardrobe.
                     </p>
                   </div>
                 </div>
@@ -395,13 +445,13 @@ export default function WardrobePage() {
                     onClick={() => handleDeleteItem(selectedItem.id)}
                     className="flex-1 bg-rose-600 text-white border-2 border-rose-700 text-center py-2 font-mono text-xs font-black uppercase tracking-wider hover:bg-rose-700 transition-colors"
                   >
-                    WIPE_FROM_RECOMMENDER_MODELS
+                    Delete item
                   </button>
                   <button 
                     onClick={() => setIsDeleteConfirmOpen(false)}
                     className="px-4 bg-white text-black border-2 border-black text-center py-2 font-mono text-xs font-black uppercase tracking-wider hover:bg-zinc-100 transition-colors"
                   >
-                    ABORT
+                    Cancel
                   </button>
                 </div>
               </div>

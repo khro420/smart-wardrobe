@@ -1,41 +1,63 @@
 @import "tailwindcss";
 
-/* Ensures Tailwind includes rules for files inside your standalone components folder */
 @source "components/**/*.{ts,tsx}";
 @source "app/**/*.{ts,tsx}";
 
-/* 2. Configure your design tokens using the new v4 CSS-centric theme engine */
 @theme {
-  --color-background: #f8fafc; /* Slate 50 equivalent */
-  --color-foreground: #0f172a; /* Slate 900 equivalent */
-  
+  --color-background: #f8f7f4;
+  --color-foreground: #1e293b;
   --animate-fadeIn: fadeIn 0.25s ease-out forwards;
 
   @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(4px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 }
 
-/* 3. Define fallback document behaviors */
+:root { --aura-cream: #f8f7f4; --aura-plum: #6d335b; }
+
+* { box-sizing: border-box; }
+
 body {
   color: var(--color-foreground);
   background: var(--color-background);
-  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
   overflow-x: hidden;
 }
 
-/* Custom scrollbar utility wrapper to keep categories horizontal but clean */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
+button, a, input { -webkit-tap-highlight-color: transparent; }
+
+/* Soften the existing page components into a cohesive editorial product UI. */
+.font-mono { font-family: "Inter", ui-sans-serif, system-ui, sans-serif !important; }
+.uppercase { text-transform: none !important; }
+.tracking-widest, .tracking-wide { letter-spacing: normal !important; }
+
+.border-4.border-black,
+.border-2.border-black,
+.border.border-black {
+  border-color: #e2e8f0 !important;
+  border-width: 1px !important;
 }
-.no-scrollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+
+.border-4.border-black { border-radius: 20px; }
+.border-2.border-black { border-radius: 12px; }
+
+.border-b-4.border-black,
+.border-t-4.border-black,
+.border-b-2.border-black { border-color: #e2e8f0 !important; border-width: 1px !important; }
+
+[class*="shadow-"] { box-shadow: 0 4px 14px rgb(15 23 42 / 0.06) !important; }
+
+.bg-black { background-color: #263144 !important; }
+.text-black { color: #1e293b !important; }
+.bg-zinc-50 { background-color: #fafafa !important; }
+.bg-zinc-100 { background-color: #f4f5f7 !important; }
+.border-dashed { border-radius: 16px; }
+
+input:focus, button:focus-visible, a:focus-visible {
+  outline: 3px solid rgb(109 51 91 / 0.28);
+  outline-offset: 2px;
 }
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

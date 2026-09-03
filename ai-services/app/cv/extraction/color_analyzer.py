@@ -1,14 +1,3 @@
-"""
-color_analyzer.py
-
-Simplified color analysis for garment images.
-Extracts only what the recommender needs:
-- primary_color (string name)
-- color_palette (hex + coverage)
-- color_temperature (warm/cool/neutral)
-- is_dominant (shadow-tolerant dominance check)
-"""
-
 import cv2
 import numpy as np
 
@@ -17,28 +6,6 @@ class ColorAnalyzer:
     """
     Extracts color information from garment images.
     """
-
-    # Named color mapping for human-readable output
-    # OpenCV HSV Ranges: Hue (0-180), Saturation (0-255), Value (0-255)
-    COLOR_NAMES = {
-        # 1. Neutral Basics (Low Saturation - Catch these first!)
-        "black":     [(0, 0, 0),       (180, 50, 55)],   # Low brightness, low saturation
-        "white":     [(0, 0, 200),     (180, 30, 255)],  # High brightness, very low saturation
-        "gray":      [(0, 0, 55),      (180, 30, 200)],  # Mid brightness, very low saturation
-        
-        # 2. Muted Earth Tones / Complex Neutrals
-        "beige":     [(10, 30, 150),   (30, 90, 255)],   # Muted, light warm tones (cream, tan, beige)
-        "brown":     [(10, 30, 30),    (25, 180, 150)],  # Darker, richer warm muted tones
-        
-        # 3. Core Color Families (Lowered saturation floor to 30-40 to catch muted/dusty shades)
-        "red":       [(0, 40, 40),     (10, 255, 255)],  # Includes crimson/burgundy
-        "orange":    [(10, 40, 40),    (25, 255, 255)],  # Includes peach/terracotta
-        "yellow":    [(25, 40, 40),    (35, 255, 255)],  # Includes gold
-        "green":     [(35, 30, 30),    (85, 255, 255)],  # Dropped floor to 30: catches sage, olive, mint
-        "blue":      [(85, 30, 30),    (130, 255, 255)], # Dropped floor to 30: catches teal, slate, navy, sky
-        "purple":    [(130, 40, 40),   (165, 255, 255)], # Includes lavender, plum, magenta
-        "pink":      [(165, 40, 40),   (180, 255, 255)], # Wraps around back to pink/red-pinks
-    }
 
     def __init__(self, num_dominant_colors=5):
         self.num_dominant_colors = num_dominant_colors
@@ -86,16 +53,6 @@ class ColorAnalyzer:
         results.sort(key=lambda x: x[1], reverse=True)
         return results
 
-    def get_color_name_from_hsv(self, hsv_color):
-        """Map HSV color to nearest named color."""
-        h, s, v = hsv_color
-        for name, (lower, upper) in self.COLOR_NAMES.items():
-            if (lower[0] <= h <= upper[0] and
-                lower[1] <= s <= upper[1] and
-                lower[2] <= v <= upper[2]):
-                return name
-        return "unknown"
-
     def analyze_lab(self, image, mask=None):
         """
         LAB color space analysis for color temperature.
@@ -134,39 +91,28 @@ class ColorAnalyzer:
         dominant = self.get_dominant_colors_kmeans(image, mask, self.num_dominant_colors)
         lab = self.analyze_lab(image, mask)
 
-        # Build palette with names and track name aggregates for shadow handling
+        # Build palette cleanly without color name mappings
         palette = []
-        name_percentages = {}
-        
         for hex_color, pct, rgb in dominant:
-            rgb_arr = np.uint8([[rgb]])
-            hsv = cv2.cvtColor(rgb_arr, cv2.COLOR_RGB2HSV)[0][0]
-            color_name = self.get_color_name_from_hsv(hsv)
-
             palette.append({
                 "hex": hex_color,
                 "rgb": list(rgb),
                 "percentage": round(float(pct), 4),
-                "color_name": color_name,
             })
-            
-            # Aggregate totals by color family name to group shadows together
-            name_percentages[color_name] = name_percentages.get(color_name, 0.0) + float(pct)
 
         # Base defaults if no palette was extracted
-        primary_name = "unknown"
+        primary_hex = "#000000"
         is_dominant = False
 
         if palette:
-            # Primary color is now explicitly the name string of the top cluster
-            primary_name = palette[0]["color_name"]
+            # Primary color is now directly the top hex value
+            primary_hex = palette[0]["hex"]
             
-            # Shadow-tolerant check: use the combined total of the primary color family
-            combined_primary_coverage = name_percentages.get(primary_name, 0.0)
-            is_dominant = combined_primary_coverage > 0.60
+            # Check if the primary hex cluster alone covers > 60% of the image
+            is_dominant = palette[0]["percentage"] > 0.60
 
         return {
-            "primary_color": str(primary_name),
+            "primary_color": primary_hex,
             "palette": palette,
             "color_temperature": lab.get("color_temperature", "neutral"),
             "is_dominant": bool(is_dominant),
