@@ -1,0 +1,7 @@
+{
+  "/extract/results/page": "app/extract/results/page.js",
+  "/wardrobe/page": "app/wardrobe/page.js",
+  "/auth/page": "app/auth/page.js",
+  "/page": "app/page.js",
+  "/extract/page": "app/extract/page.js"
+}

@@ -1,0 +1,8 @@
+{
+  "catvton_source_revision": "7818397f25613beedb3d861a34769f607cfcf3b1",
+  "catvton_source_sha256": "created by setup_vton.py",
+  "catvton_model_revision": "2969fcf85fe62f2036605716f0b56f0b81d01d79",
+  "base_model_revision": "8a4288a76071f7280aedbdb3253bdb9e9d5d84bb",
+  "vae_revision": "31f26fdeee1355a5c34592e401dd41e45d25a493",
+  "status": "template; run setup_vton.py to create the verified manifest"
+}

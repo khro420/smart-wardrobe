@@ -1,0 +1,14 @@
+{
+  "03158_00": "Pattern density is distorted and the neckline, width, and hem silhouette do not match the product.",
+  "07011_00": "The high neck, shoulder shape, body volume, and chevron texture are simplified or changed.",
+  "00609_00": "The floral print is rearranged and simplified, with changed colour balance and hem geometry.",
+  "13468_00": "The loose drop-shoulder silhouette becomes a narrower long-sleeve top and the olive colour shifts.",
+  "00848_00": "The brand text is hallucinated as illegible lettering; colour and body length also change.",
+  "08255_00": "Ribbing and lettuce-edge details are smoothed away and the pink tone and neckline change.",
+  "00627_00": "Strap branding disappears and the neckline, strap spacing, and crop length are reconstructed inaccurately.",
+  "03075_00": "Tie-dye bands are relocated and blurred, while sleeve and high-neck geometry change.",
+  "08428_00": "The visible inner camisole/layer structure is lost and the sheer neckline construction changes.",
+  "12875_00": "The logo is hallucinated as incorrect text and the sweatshirt proportions differ from the target.",
+  "14179_00": "Sleeve graphics disappear and the red tone, width, and cuff/body proportions change.",
+  "13891_00": "The V-neck becomes a deep scoop and strap spacing, taper, and garment length change."
+}

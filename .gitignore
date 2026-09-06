@@ -8,13 +8,21 @@ __pycache__/
 
 # virtual environment
 venv/
-.env/
+.env
+.env.*
 
 # ======================
 # ML / AI ARTIFACTS
 # ======================
 runs/
 *.pt
+*.pth
+backend/models/vtoff/.cache/
+backend/models/vtoff/siglip-base-patch16-512/
+backend/models/vtoff/sd-vae-ft-mse/
+backend/models/vtoff/scheduler/
+backend/models/vton/assets/
+backend/models/vton/manifest.json
 
 # datasets (VERY IMPORTANT)
 datasets/
@@ -48,3 +56,10 @@ build/
 
 crops/
 uploads/
+
+# Smart Wardrobe private runtime state
+storage/
+.pytest_cache/
+frontend/.next/
+frontend/.next-verification/
+frontend/.next-build-check/

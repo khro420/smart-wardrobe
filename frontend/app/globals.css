@@ -21,14 +21,18 @@
 body {
   color: var(--color-foreground);
   background: var(--color-background);
-  font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+  font-family: ui-sans-serif, system-ui, sans-serif;
   overflow-x: hidden;
 }
 
-button, a, input { -webkit-tap-highlight-color: transparent; }
+button, a, input, select, textarea { -webkit-tap-highlight-color: transparent; }
+button, select, summary { cursor: pointer; }
+button:disabled, select:disabled, input:disabled, textarea:disabled { cursor: not-allowed; }
+input::placeholder, textarea::placeholder { color: #94a3b8; opacity: 1; }
+::selection { background: rgb(109 51 91 / 0.18); }
 
 /* Soften the existing page components into a cohesive editorial product UI. */
-.font-mono { font-family: "Inter", ui-sans-serif, system-ui, sans-serif !important; }
+.font-mono { font-family: ui-sans-serif, system-ui, sans-serif !important; }
 .uppercase { text-transform: none !important; }
 .tracking-widest, .tracking-wide { letter-spacing: normal !important; }
 
@@ -54,10 +58,45 @@ button, a, input { -webkit-tap-highlight-color: transparent; }
 .bg-zinc-100 { background-color: #f4f5f7 !important; }
 .border-dashed { border-radius: 16px; }
 
-input:focus, button:focus-visible, a:focus-visible {
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, summary:focus-visible {
   outline: 3px solid rgb(109 51 91 / 0.28);
   outline-offset: 2px;
 }
 
+.skip-link {
+  position: fixed;
+  z-index: 100;
+  left: 1rem;
+  top: 1rem;
+  transform: translateY(-200%);
+  border-radius: 0.5rem;
+  background: #263144;
+  color: white;
+  padding: 0.7rem 1rem;
+  font-weight: 700;
+}
+
+.skip-link:focus { transform: translateY(0); }
+
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.ui-skeleton {
+  background: linear-gradient(90deg, #f1f5f9 25%, #e8edf3 50%, #f1f5f9 75%);
+  background-size: 200% 100%;
+  animation: skeleton-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes skeleton-pulse {
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

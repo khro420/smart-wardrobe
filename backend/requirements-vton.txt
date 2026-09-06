@@ -1,0 +1,10 @@
+# Additive CatVTON preprocessing dependencies. Install these into the existing
+# CUDA environment; do not replace its working torch/torchvision versions.
+fvcore==0.1.5.post20221221
+iopath==0.1.10
+cloudpickle==3.0.0
+omegaconf==2.3.0
+pycocotools==2.0.8
+scikit-image==0.24.0
+PyYAML==6.0.1
+av==12.3.0

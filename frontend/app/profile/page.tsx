@@ -1,199 +1,70 @@
 "use client";
 
-import React, { useState } from "react";
-import { User, Cpu, Shield, HardDrive, Key, LogOut, Layers, Eye, RefreshCw } from "lucide-react";
+import { FormEvent, useEffect, useState } from "react";
+import { ShieldCheck, User } from "lucide-react";
+
 import Layout from "@/components/Layout";
+import { getPreferences, getProfile, savePreference, type Profile, updateProfile } from "@/lib/api";
 
 export default function ProfilePage() {
-  // Mock State for user profile configuration matrices
-  const [userData, setUserData] = useState({
-    username: "Demo user",
-    email: "demo@example.com",
-    accountTier: "Premium",
-    joinedDate: "2026-02-11",
-    syncStatus: "Connected"
-  });
+  const [profile, setProfile] = useState<Profile>();
+  const [name, setName] = useState("");
+  const [styleNote, setStyleNote] = useState("");
+  const [message, setMessage] = useState("");
+  const [messageIsError, setMessageIsError] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [savingProfile, setSavingProfile] = useState(false);
+  const [savingStyle, setSavingStyle] = useState(false);
 
-  // Computer Vision Data Pipeline Statistics
-  const pipelineStats = {
-    totalScansProcessed: 142,
-    successfulSegmentationRate: "98.4%",
-    totalVectorEmbeddingsGenerated: 1136,
-    storageUsedGb: 1.45,
-    storageLimitGb: 10.00
+  useEffect(() => {
+    let active = true;
+    void Promise.all([getProfile(), getPreferences()]).then(([nextProfile, preferences]) => {
+      if (!active) return;
+      setProfile(nextProfile);
+      setName(nextProfile.display_name);
+      const savedStyle = preferences.find((preference) => preference.preference_type === "style_note");
+      setStyleNote(typeof savedStyle?.preference_value.value === "string" ? savedStyle.preference_value.value : "");
+      setMessageIsError(false);
+    }).catch((error: unknown) => {
+      if (active) { setMessage(error instanceof Error ? error.message : "Could not load profile."); setMessageIsError(true); }
+    }).finally(() => {
+      if (active) setLoading(false);
+    });
+    return () => { active = false; };
+  }, []);
+
+  const saveProfile = async (event: FormEvent) => {
+    event.preventDefault();
+    setSavingProfile(true);
+    setMessage("");
+    try {
+      const next = await updateProfile(name.trim());
+      setProfile(next);
+      setMessage("Profile updated.");
+      setMessageIsError(false);
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Could not update profile.");
+      setMessageIsError(true);
+    } finally {
+      setSavingProfile(false);
+    }
   };
 
-  const handleDisconnectNode = () => {
-    alert("You have been signed out.");
+  const saveStylePreference = async (event: FormEvent) => {
+    event.preventDefault();
+    setSavingStyle(true);
+    setMessage("");
+    try {
+      await savePreference("style_note", { value: styleNote.trim() }, 1);
+      setMessage("Style preference saved for future recommendations.");
+      setMessageIsError(false);
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Could not save the preference.");
+      setMessageIsError(true);
+    } finally {
+      setSavingStyle(false);
+    }
   };
 
-  return (
-    <Layout>
-      <div className="w-full space-y-8 animate-in fade-in duration-300 antialiased">
-        
-        {/* ========================================================= */}
-        {/* PROFILE HEADER BLOCK                                      */}
-        {/* ========================================================= */}
-        <div className="bg-white border-4 border-black p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-[4px_4px_0px_0px_#000000]">
-          <div className="flex items-center gap-4">
-            <div className="w-16 h-16 bg-zinc-50 border-4 border-black flex items-center justify-center text-black shrink-0 shadow-[2px_2px_0px_0px_#000000]">
-              <User className="w-8 h-8 stroke-[2.5]" />
-            </div>
-            <div>
-              <span className="text-[9px] font-mono font-black bg-black text-white px-2 py-0.5 uppercase tracking-wider">
-                {userData.accountTier}
-              </span>
-              <h2 className="text-2xl font-sans font-black text-black tracking-tight mt-1">{userData.username}</h2>
-              <p className="text-xs font-mono font-bold text-zinc-400 mt-0.5">{userData.email}</p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2 bg-zinc-50 border-2 border-black px-3 py-1.5 font-mono text-[10px] font-black">
-            <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            Status: {userData.syncStatus}
-          </div>
-        </div>
-
-        {/* ========================================================= */}
-        {/* MAIN CONFIGURATION MATRIX LAYOUT                          */}
-        {/* ========================================================= */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          
-          {/* LEFT/MID COLUMN: SYSTEM METRICS & AI PIPELINE ANALYTICS */}
-          <div className="md:col-span-2 space-y-6">
-            
-            {/* AI COMPUTER VISION METRICS CONTAINER */}
-            <div className="bg-white border-4 border-black p-6 space-y-4 shadow-[4px_4px_0px_0px_#000000]">
-              <div className="flex items-center gap-2 border-b-2 border-black pb-2">
-                <Cpu className="w-4 h-4 text-black stroke-[3]" />
-                <h3 className="text-xs font-mono font-black uppercase tracking-widest text-black">
-                  Wardrobe activity
-                </h3>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-sans font-medium text-black">
-                <div className="border-2 border-black bg-zinc-50 p-3">
-                  <span className="block text-[9px] font-mono font-black text-zinc-400">Photos added</span>
-                  <span className="text-lg font-black font-mono">{pipelineStats.totalScansProcessed}</span>
-                </div>
-                <div className="border-2 border-black bg-zinc-50 p-3">
-                  <span className="block text-[9px] font-mono font-black text-zinc-400">Photos processed</span>
-                  <span className="text-lg font-black font-mono text-emerald-600">{pipelineStats.successfulSegmentationRate}</span>
-                </div>
-                <div className="border-2 border-black bg-zinc-50 p-3">
-                  <span className="block text-[9px] font-mono font-black text-zinc-400">Style insights</span>
-                  <span className="text-lg font-black font-mono">{pipelineStats.totalVectorEmbeddingsGenerated}</span>
-                </div>
-                <div className="border-2 border-black bg-zinc-50 p-3">
-                  <span className="block text-[9px] font-mono font-black text-zinc-400">Member since</span>
-                  <span className="text-sm font-bold font-mono pt-1 block">{userData.joinedDate}</span>
-                </div>
-              </div>
-
-              {/* CLOUD IMAGE RESOURCE STORAGE BLOCK */}
-              <div className="border-2 border-black p-4 bg-zinc-50 space-y-2">
-                <div className="flex justify-between items-center font-mono text-[10px] font-black">
-                  <div className="flex items-center gap-1.5">
-                    <HardDrive className="w-3.5 h-3.5 stroke-[2.5]" />
-                    <span>Storage used</span>
-                  </div>
-                  <span>{pipelineStats.storageUsedGb} GB / {pipelineStats.storageLimitGb} GB</span>
-                </div>
-                <div className="w-full bg-zinc-200 border border-black h-4 p-0.5">
-                  <div 
-                    className="bg-black h-full transition-all duration-500" 
-                    style={{ width: `${(pipelineStats.storageUsedGb / pipelineStats.storageLimitGb) * 100}%` }}
-                  />
-                </div>
-                <span className="block text-[9px] font-mono font-medium text-zinc-400">
-                  Your wardrobe photos are stored securely.
-                </span>
-              </div>
-            </div>
-
-            {/* CORE SECURITY / IDENTIFICATION SETTINGS */}
-            <div className="bg-white border-4 border-black p-6 space-y-4 shadow-[4px_4px_0px_0px_#000000]">
-              <div className="flex items-center gap-2 border-b-2 border-black pb-2">
-                <Shield className="w-4 h-4 text-black stroke-[3]" />
-                <h3 className="text-xs font-mono font-black uppercase tracking-widest text-black">
-                  Account settings
-                </h3>
-              </div>
-
-              <div className="space-y-3 font-mono text-xs">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-200 pb-3">
-                  <div>
-                    <span className="block text-[9px] font-black text-zinc-400">Name</span>
-                    <span className="font-bold text-black">{userData.username}</span>
-                  </div>
-                  <button className="px-3 py-1 border-2 border-black text-[10px] font-black uppercase hover:bg-zinc-100 transition-colors shadow-[2px_2px_0px_0px_#000000]">
-                    Edit name
-                  </button>
-                </div>
-
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-200 pb-3">
-                  <div>
-                    <span className="block text-[9px] font-black text-zinc-400">Password</span>
-                    <span className="font-bold text-black">••••••••••••••••</span>
-                  </div>
-                  <button className="px-3 py-1 border-2 border-black text-[10px] font-black uppercase hover:bg-zinc-100 transition-colors shadow-[2px_2px_0px_0px_#000000]">
-                    Change password
-                  </button>
-                </div>
-              </div>
-            </div>
-
-          </div>
-
-          {/* RIGHT COLUMN: RECOSYSTEM ACTIONS & CONTROLS */}
-          <div className="space-y-6">
-            
-            {/* AI ENGINE RE-CALIBRATION UTILITY */}
-            <div className="bg-white border-4 border-black p-6 space-y-4 shadow-[4px_4px_0px_0px_#000000]">
-              <div className="flex items-center gap-2 border-b-2 border-black pb-2">
-                <Layers className="w-4 h-4 text-black stroke-[3]" />
-                <h3 className="text-xs font-mono font-black uppercase tracking-widest text-black">
-                  Outfit suggestions
-                </h3>
-              </div>
-              
-              <p className="text-xs font-sans font-medium text-zinc-700 leading-relaxed">
-                Refresh your suggestions if you would like to see a different mix of outfit ideas.
-              </p>
-
-              <button className="w-full flex items-center justify-center gap-2 bg-black text-white border-2 border-black py-2 text-xs font-mono font-black uppercase tracking-wider shadow-[3px_3px_0px_0px_#52525b] hover:bg-zinc-800 transition-all">
-                <RefreshCw className="w-3.5 h-3.5 stroke-[2.5]" />
-                Refresh suggestions
-              </button>
-            </div>
-
-            {/* DESTRUCTIVE TERMINATION LOGOUT TRIGGER */}
-            <div className="bg-white border-4 border-black p-6 space-y-4 shadow-[4px_4px_0px_0px_#000000]">
-              <div className="flex items-center gap-2 border-b-2 border-black pb-2">
-                <Key className="w-4 h-4 text-black stroke-[3]" />
-                <h3 className="text-xs font-mono font-black uppercase tracking-widest text-black">
-                  Sign out
-                </h3>
-              </div>
-
-              <p className="text-xs font-sans font-medium text-zinc-500">
-                Sign out of AURA on this device.
-              </p>
-
-              <button 
-                onClick={handleDisconnectNode}
-                className="w-full flex items-center justify-center gap-2 bg-white text-rose-600 border-2 border-rose-600 py-2 text-xs font-mono font-black uppercase tracking-wider hover:bg-rose-600 hover:text-white transition-colors"
-              >
-                <LogOut className="w-3.5 h-3.5 stroke-[2.5]" />
-                Sign out
-              </button>
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-    </Layout>
-  );
+  return <Layout><div className="mx-auto max-w-2xl space-y-6" aria-busy={loading}><div className="border-2 border-black bg-white p-6"><div className="flex items-center gap-3"><User className="h-8 w-8" aria-hidden="true" /><div><p className="font-mono text-[10px] font-black tracking-widest text-zinc-500">ACCOUNT</p><h1 className="text-2xl font-black">Your profile</h1></div></div><p className="mt-4 text-sm text-zinc-600">Only the authenticated account can retrieve or update this profile and its wardrobe records.</p></div>{message && <p role={messageIsError ? "alert" : "status"} className={`border-2 p-3 text-sm ${messageIsError ? "border-rose-600 bg-rose-50 text-rose-700" : "border-emerald-600 bg-emerald-50 text-emerald-800"}`}>{message}</p>}{loading && <div className="ui-skeleton h-44 rounded-xl" role="status" aria-label="Loading profile" />}<form onSubmit={saveProfile} className={`space-y-4 border-2 border-black bg-white p-6 ${loading ? "hidden" : ""}`}><label className="block text-sm font-bold">Display name<input value={name} onChange={(event) => setName(event.target.value)} required maxLength={100} disabled={savingProfile} className="mt-1 w-full border-2 border-black p-2" /></label><label className="block text-sm font-bold">Email<input value={profile?.email ?? ""} readOnly aria-describedby="email-help" className="mt-1 w-full border-2 border-zinc-300 bg-zinc-100 p-2 text-zinc-600" /><span id="email-help" className="mt-1 block text-xs font-normal text-zinc-500">Your sign-in email cannot be changed here.</span></label><button disabled={!profile || !name.trim() || savingProfile} aria-busy={savingProfile} className="min-h-11 bg-black px-4 py-3 text-sm font-bold text-white disabled:opacity-40">{savingProfile ? "Saving…" : "Save profile"}</button></form><form onSubmit={saveStylePreference} className={`space-y-4 border-2 border-black bg-zinc-50 p-6 ${loading ? "hidden" : ""}`}><div><p className="font-mono text-[10px] font-black tracking-widest text-zinc-500">USER PREFERENCE</p><h2 className="text-xl font-black">Style note</h2><p className="mt-1 text-sm text-zinc-600">This private preference is attached to recommendation requests from your confirmed wardrobe.</p></div><label className="block text-sm font-bold">What should your recommendations prioritise?<textarea value={styleNote} onChange={(event) => setStyleNote(event.target.value)} maxLength={300} disabled={savingStyle} className="mt-1 min-h-24 w-full resize-y border-2 border-black bg-white p-3" placeholder="For example: relaxed neutral outfits for campus." /><span className="mt-1 block text-right text-xs font-normal text-zinc-500">{styleNote.length}/300</span></label><button disabled={!profile || !styleNote.trim() || savingStyle} aria-busy={savingStyle} className="min-h-11 bg-black px-4 py-3 text-sm font-bold text-white disabled:opacity-40">{savingStyle ? "Saving…" : "Save style note"}</button></form><aside className="border-2 border-black bg-zinc-50 p-5"><div className="flex items-center gap-2"><ShieldCheck className="h-5 w-5" aria-hidden="true" /><h2 className="font-bold">Privacy and media</h2></div><p className="mt-2 text-sm text-zinc-600">Wardrobe uploads, personal images, preferences, and generated visualisations are private by default and served through owner-checked API routes.</p></aside></div></Layout>;
 }

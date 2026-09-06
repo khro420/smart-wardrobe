@@ -1,0 +1,4 @@
+# Metric implementations named by the official TryOffDiff evaluation instructions.
+pyiqa==0.1.15.post2
+clean-fid==0.1.35
+DISTS-pytorch==0.1

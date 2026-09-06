@@ -1,0 +1,6 @@
+# Optional model-backed VTOFF runtime. Install after the core requirements.
+diffusers==0.35.1
+transformers==4.53.2
+accelerate==1.8.1
+huggingface-hub>=0.34.0,<1.0
+safetensors>=0.5.3
