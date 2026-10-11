@@ -27,7 +27,8 @@ CREATE TABLE IF NOT EXISTS media_assets (
 CREATE TABLE IF NOT EXISTS processing_jobs (
   id TEXT PRIMARY KEY, user_id TEXT NOT NULL, source_media_id TEXT NOT NULL,
   status TEXT NOT NULL, error_message TEXT, created_at TEXT NOT NULL,
-  started_at TEXT, updated_at TEXT NOT NULL, completed_at TEXT
+  started_at TEXT, updated_at TEXT NOT NULL, completed_at TEXT,
+  progress_percent INTEGER NOT NULL DEFAULT 0, progress_message TEXT
 );
 CREATE TABLE IF NOT EXISTS processing_items (
   id TEXT PRIMARY KEY, job_id TEXT NOT NULL, detected_category TEXT NOT NULL,
@@ -80,7 +81,9 @@ CREATE TABLE IF NOT EXISTS visualisations (
   id TEXT PRIMARY KEY, user_id TEXT NOT NULL, outfit_id TEXT, recommendation_id TEXT,
   source_type TEXT NOT NULL DEFAULT 'outfit', person_image_id TEXT NOT NULL,
   output_media_id TEXT, status TEXT NOT NULL, error_message TEXT, created_at TEXT NOT NULL,
-  updated_at TEXT NOT NULL, completed_at TEXT,
+  updated_at TEXT NOT NULL, completed_at TEXT, progress_percent INTEGER NOT NULL DEFAULT 0,
+  progress_current INTEGER NOT NULL DEFAULT 0, progress_total INTEGER NOT NULL DEFAULT 0,
+  progress_message TEXT,
   CHECK ((source_type = 'outfit' AND outfit_id IS NOT NULL AND recommendation_id IS NULL)
       OR (source_type = 'recommendation' AND recommendation_id IS NOT NULL AND outfit_id IS NULL))
 );
@@ -108,6 +111,10 @@ def initialise_database() -> None:
             if name not in media_columns:
                 conn.execute(f"ALTER TABLE media_assets ADD COLUMN {name} {sql_type}")
         visualisation_columns = {row[1] for row in conn.execute("PRAGMA table_info(visualisations)").fetchall()}
+        processing_job_columns = {row[1] for row in conn.execute("PRAGMA table_info(processing_jobs)").fetchall()}
+        for name, sql_type in (("progress_percent", "INTEGER NOT NULL DEFAULT 0"), ("progress_message", "TEXT")):
+            if name not in processing_job_columns:
+                conn.execute(f"ALTER TABLE processing_jobs ADD COLUMN {name} {sql_type}")
         # Keep local development databases created before recommendation support
         # compatible with the report's source-type model.
         if "recommendation_id" not in visualisation_columns:
@@ -118,7 +125,9 @@ def initialise_database() -> None:
             ("configuration_json", "TEXT"), ("model_version", "TEXT"),
             ("started_at", "TEXT"), ("person_media_id", "TEXT"),
             ("output_kind", "TEXT"), ("metrics_json", "TEXT"),
-            ("error_code", "TEXT"),
+            ("error_code", "TEXT"), ("progress_percent", "INTEGER NOT NULL DEFAULT 0"),
+            ("progress_current", "INTEGER NOT NULL DEFAULT 0"),
+            ("progress_total", "INTEGER NOT NULL DEFAULT 0"), ("progress_message", "TEXT"),
         ):
             if name not in visualisation_columns:
                 conn.execute(f"ALTER TABLE visualisations ADD COLUMN {name} {sql_type}")

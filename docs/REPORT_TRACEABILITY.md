@@ -51,8 +51,13 @@ hardware boundary, evaluation commands, and O3 acceptance matrix, see
 The production VTON implementation is the pinned original SD-based CatVTON mix
 runtime in `backend/app/infrastructure/ai/catvton_runtime.py`. Its generated
 output is distinct from the explicitly labelled development-copy adapter. The
-O3 auditor is fail-closed: functional rows may pass independently, but FR-32 and
-AIR-07 remain blocked until real checkpoint and licensed dataset evidence exists.
+O3 auditor is fail-closed. The real checkpoint and official licensed DressCode
+evidence are now present: the paired 30-sample CatVTON evaluation covers ten
+fixed-seed examples each for upper body, lower body and dresses. It retains
+input/output hashes, model-asset provenance, configuration, hardware, latency,
+peak VRAM, per-group SSIM/LPIPS/DISTS results and manually reviewed visible
+failure labels. The authoritative O3 matrix is
+`storage/verification/o3/requirements-audit.json` and records 18/18 passed.
 
 ## Objective O1 acceptance matrix
 
@@ -81,12 +86,13 @@ integrity. Reproducers are `backend/scripts/verify_o1_capacity.py`,
 
 ## Objective O2 acceptance matrix
 
-The current O2 delivery is **closed with one explicitly deferred report gate**:
-**11/12 evidence groups passed and 1/12 (AIR-03) is user-deferred** until the
-official DressCode dataset is supplied. This is 12/12 delivery groups closed,
-not 12/12 report requirements passed. The authoritative matrix is
-`storage/verification/o2/requirements-audit.json`, mirrored at
-`backend/runs/o2/requirements-audit.json`.
+The earlier O2 delivery record below describes the September 2026 interim state.
+Its former DressCode deferral has now been closed by the local, officially
+authorised paired-test audit at
+`storage/verification/vtoff/dresscode_dataset_audit.json`, followed by 30-example
+category-balanced TryOffDiff and CatVTON evaluations. These are reconstruction
+quality experiments only; they do not establish real-world garment size or
+physical-fit accuracy.
 
 | Report requirements | Current result | Primary evidence or remaining gate |
 | --- | --- | --- |

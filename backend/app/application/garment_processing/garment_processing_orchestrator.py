@@ -24,7 +24,7 @@ def run_job(job_id: str, user_id: str) -> None:
         if not job:
             return
         now = utcnow()
-        claimed = conn.execute("UPDATE processing_jobs SET status='processing', started_at=?, updated_at=? WHERE id=? AND status='queued'", (now, now, job_id)).rowcount
+        claimed = conn.execute("UPDATE processing_jobs SET status='processing', started_at=?, updated_at=?, progress_percent=5, progress_message='Analysing the uploaded image.' WHERE id=? AND status='queued'", (now, now, job_id)).rowcount
         if not claimed:
             return
     try:
@@ -32,10 +32,12 @@ def run_job(job_id: str, user_id: str) -> None:
         detections = get_garment_adapter().analyse(path)
         if not detections:
             with connection() as conn:
-                conn.execute("UPDATE processing_jobs SET status='failed', error_message=?, updated_at=?, completed_at=? WHERE id=? AND status='processing'", ("No supported garments were detected. Try a clearer image with visible clothing.", utcnow(), utcnow(), job_id))
+                conn.execute("UPDATE processing_jobs SET status='failed', error_message=?, progress_message=?, updated_at=?, completed_at=? WHERE id=? AND status='processing'", ("No supported garments were detected. Try a clearer image with visible clothing.", "No supported garments were found.", utcnow(), utcnow(), job_id))
             return
         prepared_items = []
-        for detection in detections:
+        for index, detection in enumerate(detections, start=1):
+            with connection() as conn:
+                conn.execute("UPDATE processing_jobs SET progress_percent=?, progress_message=?, updated_at=? WHERE id=? AND status='processing'", (25 + int(((index - 1) / len(detections)) * 65), f"Preparing garment {index} of {len(detections)}.", utcnow(), job_id))
             crop_media_id = store_media_bytes(detection.crop_png, user_id, "garment_crop") if detection.crop_png else job["source_media_id"]
             mask_media_id = store_media_bytes(detection.mask_png, user_id, "segmentation_mask") if detection.mask_png else None
             standardisation = get_standardisation_adapter().standardise(
@@ -55,6 +57,18 @@ def run_job(job_id: str, user_id: str) -> None:
                                     "used_fallback": standardisation.used_fallback,
                                     "vtoff": standardisation.metadata,
                                     "embedding_status": "unavailable" if attributes.get("embedding") is None else "available"}
+            # Necklines and sleeve lengths only describe upper-body garments
+            # and dresses. Do not present an otherwise valid Fashionpedia
+            # prediction for trousers, skirts, or shorts.
+            if detection.category in {"shorts", "trousers", "skirt"}:
+                visible = dict(candidate_attributes.get("fashionpedia_visible_attributes") or {})
+                visible.pop("neckline", None)
+                visible.pop("sleeve_length", None)
+                candidate_attributes["fashionpedia_visible_attributes"] = visible
+                candidate_attributes["custom_tags"] = [
+                    tag for tag in candidate_attributes.get("custom_tags", [])
+                    if not tag.startswith(("neckline:", "sleeve length:"))
+                ]
             GarmentAttributes(candidate_attributes).validate_embedding(runtime().embedding_dimension)
             prepared_items.append((
                 str(uuid.uuid4()),
@@ -64,10 +78,12 @@ def run_job(job_id: str, user_id: str) -> None:
                 crop_media_id, standardisation.preferred_media_id,
                 json.dumps(detection.bounding_box), mask_media_id, standardisation.vtoff_media_id,
             ))
+            with connection() as conn:
+                conn.execute("UPDATE processing_jobs SET progress_percent=?, progress_message=?, updated_at=? WHERE id=? AND status='processing'", (25 + int((index / len(detections)) * 65), f"Garment {index} of {len(detections)} prepared.", utcnow(), job_id))
         with connection() as conn:
             # Acquire the write lock before checking state: cancellation must win
             # if it was committed while inference ran outside the transaction.
-            changed = conn.execute("UPDATE processing_jobs SET status='review_required', updated_at=? WHERE id=? AND status='processing'", (utcnow(), job_id)).rowcount
+            changed = conn.execute("UPDATE processing_jobs SET status='review_required', progress_percent=100, progress_message=?, updated_at=? WHERE id=? AND status='processing'", (f"{len(prepared_items)} garment candidate(s) are ready to review.", utcnow(), job_id)).rowcount
             if not changed:
                 return
             for item_id, category, confidence, attributes, crop_id, preferred_id, box, mask_id, vtoff_id in prepared_items:
@@ -79,4 +95,4 @@ def run_job(job_id: str, user_id: str) -> None:
     except Exception:
         logging.getLogger(__name__).exception("Garment processing failed for job %s", job_id)
         with connection() as conn:
-            conn.execute("UPDATE processing_jobs SET status='failed', error_message=?, updated_at=?, completed_at=? WHERE id=? AND status='processing'", ("Garment processing could not finish. Please retry with another image; if it repeats, check the processing service.", utcnow(), utcnow(), job_id))
+            conn.execute("UPDATE processing_jobs SET status='failed', error_message=?, progress_message=?, updated_at=?, completed_at=? WHERE id=? AND status='processing'", ("Garment processing could not finish. Please retry with another image; if it repeats, check the processing service.", "Garment processing could not finish.", utcnow(), utcnow(), job_id))

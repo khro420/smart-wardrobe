@@ -54,11 +54,6 @@ class VisualisationPlan:
 
     @property
     def mode(self) -> str:
-        if len(self.garments) != 1:
-            raise ValueError(
-                "Select an outfit containing exactly one garment. "
-                "Multi-garment try-on is not supported."
-            )
         try:
             return CATEGORY_MODES[self.garments[0].category]
         except KeyError:
@@ -66,3 +61,19 @@ class VisualisationPlan:
                 "This garment category is not supported for try-on. "
                 "Choose a top, bottom or dress; outerwear is not supported."
             ) from None
+
+    @property
+    def modes(self) -> tuple[str, ...]:
+        """CatVTON mask modes, one for each ordered outfit layer."""
+        if not self.garments:
+            raise ValueError("Select an outfit containing at least one garment.")
+        modes = []
+        for garment in self.garments:
+            try:
+                modes.append(CATEGORY_MODES[garment.category])
+            except KeyError:
+                raise ValueError(
+                    "This garment category is not supported for try-on. "
+                    "Choose a top, bottom or dress; outerwear is not supported."
+                ) from None
+        return tuple(modes)

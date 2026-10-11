@@ -135,11 +135,11 @@ def _hardware(torch_module) -> dict:
     return hardware
 
 
-def _failure_sheet(record: dict, destination: Path) -> None:
+def _failure_sheet(record: dict, destination: Path, output_name: str = "TryOffDiff output") -> None:
     paths = (
         (record["person"], "Person input"),
         (record["target"], "Paired product target"),
-        (record["generated"], "TryOffDiff output"),
+        (record["generated"], output_name),
         (record.get("baseline"), "Observed YOLO crop baseline"),
     )
     panel_width, panel_height = 512, 620
@@ -199,13 +199,13 @@ def _compute_metrics(records: list[dict], device: str) -> None:
 
 def main() -> None:
     parser = ArgumentParser(description="Run a reproducible paired VTOFF evaluation.")
-    parser.add_argument("--audit", type=Path, default=PROJECT / "storage" / "verification" / "vtoff" / "paired_dataset_audit.json")
+    parser.add_argument("--audit", type=Path, default=PROJECT / "storage" / "verification" / "vtoff" / "dresscode_dataset_audit.json")
     parser.add_argument("--limit", type=int, default=50, help="Deterministic sample size; 0 means the full cleaned test set.")
     parser.add_argument("--per-group", type=int, default=10, help="DressCode examples per upper/lower/dress group.")
-    parser.add_argument("--sample-seed", type=int, default=20260905)
+    parser.add_argument("--sample-seed", type=int, default=20260906)
     parser.add_argument("--generation-seed", type=int, default=42)
-    parser.add_argument("--steps", type=int, default=20)
-    parser.add_argument("--guidance", type=float, default=2.0)
+    parser.add_argument("--steps", type=int, default=50)
+    parser.add_argument("--guidance", type=float, default=2.5)
     parser.add_argument("--device", default="cuda")
     parser.add_argument("--failure-limit", type=int, default=12)
     parser.add_argument("--failure-labels", type=Path)

@@ -26,7 +26,8 @@ def complete(visualisation_id, user_id, result, plan, person_bytes):
         conn.execute(
             "UPDATE visualisations SET status='completed', output_media_id=?, "
             "output_kind=?, model_version=?, metrics_json=?, error_message=NULL, "
-            "error_code=NULL, updated_at=?, completed_at=? "
+            "error_code=NULL, progress_percent=100, progress_current=progress_total, "
+            "progress_message='Outfit preview complete.', updated_at=?, completed_at=? "
             "WHERE id=? AND user_id=? AND status='processing'",
             (
                 output_id,

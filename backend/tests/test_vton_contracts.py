@@ -61,15 +61,14 @@ def create_single_garment_outfit(client: TestClient) -> tuple[str, str, str]:
     return confirmed["outfit_id"], garment["id"], person["id"]
 
 
-def test_supported_category_contract_and_single_garment_boundary():
+def test_supported_category_contract_and_multi_garment_outfits():
     assert set(CATEGORY_MODES.values()) == {"upper", "lower", "overall"}
     assert len(CATEGORY_MODES) == 11
     for category, expected in CATEGORY_MODES.items():
         assert plan(category).mode == expected
     with pytest.raises(ValueError, match="outerwear"):
         plan("long_sleeve_outwear").mode
-    with pytest.raises(ValueError, match="exactly one garment"):
-        plan(count=2).mode
+    assert plan(count=2).modes == ("upper", "upper")
 
 
 def test_preprocessing_and_generated_output_fail_closed():
@@ -122,7 +121,7 @@ def test_preflight_freezes_provenance_and_returns_safe_metadata():
 
 def test_invalid_generated_output_finishes_failed_without_media():
     class FlatGeneratedAdapter:
-        def generate(self, current_plan, person_image, garment_image):
+        def generate(self, current_plan, person_image, garment_image, progress_callback=None):
             return GeneratedVisualisation(
                 image_bytes("black", (768, 1024)), 768, 1024,
                 "invalid-test-adapter", 1.0, "generated",

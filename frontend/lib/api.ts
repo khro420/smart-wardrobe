@@ -23,7 +23,7 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
 }
 
 export type ProcessingItem = { id: string; detected_category: string; confidence: number; review_status: "pending" | "accepted" | "rejected" | "confirmed"; crop_media_id: string; preferred_media_id: string; mask_media_id: string | null; vtoff_media_id: string | null; bounding_box: number[] | null; attributes: Record<string, unknown> };
-export type ProcessingJob = { id: string; status: string; error_message?: string | null; items: ProcessingItem[] };
+export type ProcessingJob = { id: string; status: string; error_message?: string | null; progress_percent: number; progress_message?: string | null; items: ProcessingItem[] };
 
 export async function submitWardrobeImage(file: File) {
   const form = new FormData(); form.append("file", file);
@@ -46,8 +46,8 @@ export type Recommendation = { id: string; recommendation_type: string; status: 
 export type SavedRecommendationOutfit = { id: string; name: string; garment_ids: string[] };
 export type PersonImage = { id: string; media_id: string; display_name: string; status: string };
 export type VisualisationItem = { garment_id: string; source_media_id: string; category: string; role: string; item_order: number };
-export type VisualisationPreparation = { source_type: "outfit" | "recommendation"; source_id: string; category: "upper" | "lower" | "overall"; capture_guidance: string; items: (VisualisationItem & { name: string })[] };
-export type Visualisation = { id: string; status: "queued" | "processing" | "completed" | "failed" | "cancelled"; source_type: "outfit" | "recommendation"; outfit_id?: string | null; recommendation_id?: string | null; person_image_id: string; output_media_id?: string | null; output_kind?: "generated" | "development" | null; model_version?: string | null; error_code?: string | null; error_message?: string | null; configuration: Record<string, unknown>; metrics: Record<string, unknown>; items: VisualisationItem[]; notice: string; is_development_fallback: boolean };
+export type VisualisationPreparation = { source_type: "outfit" | "recommendation"; source_id: string; category: "upper" | "lower" | "overall" | "outfit"; categories: ("upper" | "lower" | "overall")[]; capture_guidance: string; items: (VisualisationItem & { name: string })[] };
+export type Visualisation = { id: string; status: "queued" | "processing" | "completed" | "failed" | "cancelled"; source_type: "outfit" | "recommendation"; outfit_id?: string | null; recommendation_id?: string | null; person_image_id: string; output_media_id?: string | null; output_kind?: "generated" | "development" | null; model_version?: string | null; error_code?: string | null; error_message?: string | null; progress_percent: number; progress_current: number; progress_total: number; progress_message?: string | null; started_at?: string | null; configuration: Record<string, unknown>; metrics: Record<string, unknown>; items: VisualisationItem[]; notice: string; is_development_fallback: boolean };
 
 function wardrobeQuery(filters: GarmentFilters & { creationType?: Outfit["creation_type"] } = {}) {
   const params = new URLSearchParams();

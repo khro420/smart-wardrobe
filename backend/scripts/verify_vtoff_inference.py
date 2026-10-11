@@ -51,9 +51,9 @@ def _panel(payload: bytes, title: str) -> Image.Image:
 def main() -> None:
     parser = ArgumentParser(description="Verify real multi-garment TryOffDiff inference.")
     parser.add_argument("--source", type=Path)
-    parser.add_argument("--steps", type=int, default=20)
+    parser.add_argument("--steps", type=int, default=50)
     parser.add_argument("--seed", type=int, default=42)
-    parser.add_argument("--guidance", type=float, default=2.0)
+    parser.add_argument("--guidance", type=float, default=2.5)
     parser.add_argument("--device", default="cuda")
     args = parser.parse_args()
 

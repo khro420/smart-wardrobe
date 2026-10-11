@@ -14,7 +14,10 @@ from PIL import Image, ImageOps
 
 from app.application.ports.garment_attribute_port import GarmentAttributePort
 from app.domain.value_objects.garment_attributes import GarmentAttributes
-from app.infrastructure.config import EMBEDDING_DEVICE, EMBEDDING_ENABLED, EMBEDDING_MODEL_DIR
+from app.infrastructure.config import (
+    EMBEDDING_DEVICE, EMBEDDING_ENABLED, EMBEDDING_MODEL_DIR,
+    FASHIONPEDIA_ATTRIBUTE_HEAD_PATH, FASHIONPEDIA_ATTRIBUTES_ENABLED,
+)
 from app.infrastructure.ai.gpu_runtime import gpu_inference_slot
 
 
@@ -52,6 +55,8 @@ class SiglipEmbeddingAdapter(GarmentAttributePort):
         self._processor = None
         self._device = None
         self._dtype = None
+        self._heads = None
+        self._head_labels: dict[str, list[str]] = {}
         self._load_lock = Lock()
         self._inference_lock = Lock()
 
@@ -62,7 +67,7 @@ class SiglipEmbeddingAdapter(GarmentAttributePort):
             if self._model is not None:
                 return
             import torch
-            from transformers import SiglipImageProcessor, SiglipVisionModel
+            from transformers import SiglipImageProcessor, SiglipModel
 
             config_path = self.model_dir / "config.json"
             weights_path = self.model_dir / "model.safetensors"
@@ -81,11 +86,23 @@ class SiglipEmbeddingAdapter(GarmentAttributePort):
             self._device = torch.device(self.device_name)
             self._dtype = torch.float16 if self._device.type == "cuda" else torch.float32
             self._processor = SiglipImageProcessor.from_pretrained(self.model_dir, local_files_only=True)
-            self._model = SiglipVisionModel.from_pretrained(
+            self._model = SiglipModel.from_pretrained(
                 self.model_dir, local_files_only=True, torch_dtype=self._dtype, low_cpu_mem_usage=True,
             ).eval().to(self._device)
-            if int(self._model.config.hidden_size) != EMBEDDING_DIMENSION:
-                raise RuntimeError(f"Expected {EMBEDDING_DIMENSION}-D SigLIP output, got {self._model.config.hidden_size}.")
+            if int(self._model.config.vision_config.hidden_size) != EMBEDDING_DIMENSION:
+                raise RuntimeError(f"Expected {EMBEDDING_DIMENSION}-D SigLIP output, got {self._model.config.vision_config.hidden_size}.")
+            if FASHIONPEDIA_ATTRIBUTES_ENABLED not in {"0", "false", "off", "disabled"} and FASHIONPEDIA_ATTRIBUTE_HEAD_PATH.is_file():
+                checkpoint = torch.load(FASHIONPEDIA_ATTRIBUTE_HEAD_PATH, map_location=self._device, weights_only=False)
+                vocabulary = checkpoint.get("vocabulary")
+                state = checkpoint.get("heads")
+                if not isinstance(vocabulary, dict) or not isinstance(state, dict):
+                    raise RuntimeError("Fashionpedia attribute checkpoint is invalid.")
+                self._head_labels = {field: [str(item["name"]) for item in labels] for field, labels in vocabulary.items()}
+                self._heads = torch.nn.ModuleDict({
+                    field: torch.nn.Sequential(torch.nn.LayerNorm(EMBEDDING_DIMENSION), torch.nn.Linear(EMBEDDING_DIMENSION, len(labels)))
+                    for field, labels in self._head_labels.items()
+                }).to(self._device).eval()
+                self._heads.load_state_dict(state)
 
     def extract(self, image_path: str) -> GarmentAttributes:
         import torch
@@ -101,12 +118,31 @@ class SiglipEmbeddingAdapter(GarmentAttributePort):
             with torch.inference_mode(), torch.autocast(
                 device_type=self._device.type, dtype=self._dtype, enabled=self._device.type == "cuda"
             ):
-                pooled = self._model(**inputs).pooler_output[0].float()
-                pooled = torch.nn.functional.normalize(pooled, p=2, dim=0)
+                raw_features = self._model.get_image_features(pixel_values=inputs["pixel_values"])[0].float()
+                pooled = torch.nn.functional.normalize(raw_features, p=2, dim=0)
             vector = pooled.cpu().tolist()
             peak = torch.cuda.max_memory_allocated(self._device) if self._device.type == "cuda" else None
         if len(vector) != EMBEDDING_DIMENSION or any(not math.isfinite(value) for value in vector):
             raise RuntimeError("Visual embedding output is incorrectly sized or non-finite.")
+        visible_attributes = {}
+        if self._heads is not None:
+            with torch.inference_mode():
+                feature = raw_features.unsqueeze(0)
+                for field, head in self._heads.items():
+                    probabilities = torch.softmax(head(feature)[0], dim=0)
+                    index = int(torch.argmax(probabilities).item())
+                    visible_attributes[field] = {
+                        "value": self._head_labels[field][index],
+                        "confidence": round(float(probabilities[index].item()), 4),
+                    }
+        suggestions = {field: value["value"] for field, value in visible_attributes.items()}
+        pattern = suggestions.get("pattern", "").replace(" (pattern)", "")
+        silhouette = suggestions.get("silhouette", "").replace(" (fit)", "")
+        tags = [f"neckline: {suggestions['neckline']}" for _ in [0] if suggestions.get("neckline")]
+        if suggestions.get("sleeve_length"):
+            tags.append(f"sleeve length: {suggestions['sleeve_length'].replace(' (length)', '')}")
+        if silhouette:
+            tags.append(f"silhouette: {silhouette}")
         return GarmentAttributes({
             "embedding": vector,
             "embedding_status": "available",
@@ -119,6 +155,11 @@ class SiglipEmbeddingAdapter(GarmentAttributePort):
             "embedding_device": str(self._device),
             "embedding_latency_seconds": round(time.perf_counter() - started, 6),
             "embedding_peak_vram_bytes": peak,
+            "fashionpedia_visible_attributes": visible_attributes,
+            "attribute_suggestion_source": "Fashionpedia-trained visual heads" if visible_attributes else "unavailable",
+            "pattern": pattern or None,
+            "fit": silhouette or None,
+            "custom_tags": tags,
         })
 
 

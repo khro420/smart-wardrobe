@@ -231,10 +231,12 @@ The older 512 x 512 alpha-mask centring transform remains only as a deterministi
 segmentation baseline under `segmentation_standardisation.py`. It cannot infer
 occluded regions and is no longer stored or presented as VTOFF output.
 
-A real cold-start smoke run used DeepFashion2 validation image `000001.jpg`, a
-YOLO `sling_dress` prediction (confidence 0.782), seed 42, guidance 2.0 and 20
-diffusion steps. It produced a 512 x 512 RGB reconstruction in 30.24 seconds with
-2,215,769,600 bytes (2.06 GiB) peak allocated VRAM on the RTX 5060 Laptop GPU.
+A real smoke run used DeepFashion2 validation image `000001.jpg`, a YOLO
+`sling_dress` prediction (confidence 0.782), seed 42, guidance 2.5 and 50
+diffusion steps. It produced a 512 x 512 RGB reconstruction in 39.21 seconds
+with 2,215,769,600 bytes (2.06 GiB) peak allocated VRAM on the RTX 5060 Laptop
+GPU. This validated quality profile is the production default; deployments can
+still override it only through explicit environment configuration.
 The labelled comparison and machine-readable provenance are saved under
 `storage/verification/vtoff/smoke/` and `backend/runs/vtoff/smoke/`. Qualitatively,
 the model reconstructed a full black suspender-style dress, but invented garbled
@@ -284,6 +286,14 @@ default. Segmentation confidence and generated LPIPS were almost uncorrelated in
 this sample (Pearson r=-0.099), so confidence is only a category-reliability gate;
 it must not be represented as a hallucination or fidelity detector.
 
+The officially licensed DressCode paired-test audit is now complete for all three
+groups: 1,800 pairs each for upper body, lower body and dresses. The fixed-seed
+30-example TryOffDiff run (10 per group, seed 20260906; generation seed 42; 50
+steps; guidance 2.5) completed without runtime errors. Its mean SSIM is 0.8551,
+LPIPS 0.1715 and DISTS 0.1880; the 12 metric-ranked visible failures have
+substantive manual labels. This is bounded reconstruction evidence, not proof of
+physical fit or recovery of hidden garment detail.
+
 The reproducible real-weight check generated 15 labelled comparison pairs from the
 DeepFashion2 validation images without retraining or changing `best.pt`.
 
@@ -307,26 +317,22 @@ product-image reconstruction or a full virtual try-on system.
   improvement for weak categories remain optional future work. AIR-01–02 now has
   a held-out conversion audit, precision/recall, box/mask AP, per-category
   metrics and labelled failure evidence; the model was not retrained.
-- Extend AIR-03 from the completed 30-pair VITON-HD development slice to the
-  lower-body and dress groups. VITON-HD only validates upper-body garments.
-  `prepare_dresscode_vtoff_evaluation.py` now audits only official paired test
-  manifests, and `evaluate_vtoff_paired.py` supports fixed-seed stratified
-  upper/lower/dress evaluation, but the authors' access-controlled DressCode
-  dataset has not been supplied. No unofficial mirror is accepted. DressCode
-  generation caches are tied to model hash, source/target hashes, group,
-  category, seed, steps and guidance; mismatches require explicit regeneration.
-  The evaluator writes a failure-label template and remains `review_pending`
-  until all selected failures have substantive visual labels. The old 15
-  mask-centering pairs remain baseline evidence and must not be reported as
-  generative quality evidence.
+- AIR-03 is complete for the fixed-size development evaluation: official
+  DressCode paired test manifests cover upper body, lower body and dresses. No
+  unofficial mirror is accepted. DressCode generation caches are tied to model
+  hash, source/target hashes, group, category, seed, steps and guidance; any
+  mismatch requires explicit regeneration. The old 15 mask-centering pairs remain
+  baseline evidence and must not be reported as generative quality evidence.
 - PostgreSQL + pgvector verification is complete. The live PostgreSQL 16 run loaded
   the `vector` extension, confirmed both columns as `vector(768)`, transactionally
   round-tripped 768 dimensions through `processing_item` and `garment`, and rolled
   the verification records back. Evidence is in
   `storage/verification/pgvector/results.json`.
-- Full VTON generation, evaluation and visualisation-specific requirements. The
-  existing development VTON implementation is outside this slice and remains a
-  labelled copy of the personal image.
+- Real CatVTON generation and category-balanced DressCode reconstruction evidence
+  are complete. The 30-sample run records hashes, pinned asset provenance,
+  configuration, hardware, latency, peak VRAM, per-group metrics and 12 manually
+  labelled visible failures. It remains a single-garment AI visual preview and
+  does not establish measurement-accurate physical fit.
 - Durable multi-worker AI execution, full capacity/coverage measurement and a
   complete accessibility audit. Cancellation is logically safe; it does not
   pre-empt a GPU call already in progress. Interrupted visualisations and jobs
@@ -345,12 +351,11 @@ product-image reconstruction or a full virtual try-on system.
 This document records scoped report alignment and known gaps. It is not a claim
 that every feature and acceptance target in the complete FYP report is finished.
 
-## O2 scoped closure handoff (2026-09-06)
+## O2 scoped closure handoff (refreshed 2026-10-10)
 
-The O2 delivery is closed at **11/12 evidence groups passed plus 1/12 explicitly
-user-deferred**. AIR-03 lower-body/dress evidence is not passed and must not be
-described as evaluated; it is deferred until official DressCode access. There are
-no other incomplete delivery gates.
+The O2 delivery is complete at **12/12 evidence groups passed**. AIR-03 now has
+officially licensed DressCode evidence for upper body, lower body and dresses;
+all statements remain limited to paired image reconstruction quality.
 Machine-readable status is stored in
 `storage/verification/o2/requirements-audit.json` and
 `backend/runs/o2/requirements-audit.json`.
@@ -389,13 +394,6 @@ Completed O2 work:
   tables loaded, both embedding columns reported `vector(768)`, and transactional
   inserts round-tripped 768 dimensions through `processing_item` and `garment`.
 
-Deferred report work:
-
-1. Obtain DressCode from the official authors under their agreement, place it at
-   `backend/datasets/dresscode`, and run the prepared audit/evaluator to produce
-   lower-body and dress paired metrics plus reviewed failure labels.
-
-This user-approved scoped closure is not an AIR-03 pass. Do not substitute an
-unofficial DressCode mirror, count the deterministic mask-centering baseline as
-VTOFF, describe lower/dress evaluation as completed, or describe the weak
+Do not substitute an unofficial DressCode mirror, count the deterministic
+mask-centering baseline as generative quality evidence, or describe the weak
 colour/dominance outputs as reliable automation.

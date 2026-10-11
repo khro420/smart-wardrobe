@@ -2,12 +2,13 @@
 
 ## Implemented scope
 
-The local academic prototype implements single-garment virtual try-on for the
-eleven DeepFashion2 top, bottom and dress classes. A source containing multiple
-garments is rejected because the selected CatVTON checkpoint does not establish
-outfit-level multi-garment compositing. The two outerwear classes are also
-rejected because the original checkpoint and automatic-mask contract do not
-provide enough evidence for reliable layering in this project.
+The local academic prototype implements whole-outfit virtual try-on for the
+eleven DeepFashion2 top, bottom and dress classes. CatVTON accepts one garment
+condition per pass, so the application applies every confirmed source item in
+its saved order and uses each pass output as the next pass input. The two
+outerwear classes remain rejected because the original checkpoint and automatic
+mask contract do not provide enough evidence for reliable layering in this
+project.
 
 The runtime uses the original Stable-Diffusion-based CatVTON mix checkpoint at
 768 × 1024 in BF16. It does not use CatVTON-FLUX or the mask-free variant.
@@ -30,8 +31,8 @@ paths, so an API request cannot silently fetch or change model assets.
 
 `POST /api/v1/visualisations/prepare` accepts exactly one owner-scoped
 `outfit_id` or `recommendation_id`. It returns the resolved source type and ID,
-one supported garment, its reviewed protected `source_media_id`, the mapped
-CatVTON category (`upper`, `lower`, or `overall`), and person-photo guidance.
+every supported garment, its reviewed protected `source_media_id`, the mapped
+CatVTON categories (`upper`, `lower`, or `overall`), and person-photo guidance.
 
 `POST /api/v1/visualisations` adds one available owner-scoped
 `person_image_id`. Within one transaction it creates a queued request and a
@@ -43,7 +44,7 @@ The model adapter receives:
 
 - decoded, EXIF-normalised RGB person pixels fitted to 768 × 1024;
 - decoded garment pixels alpha-composited on white and aspect-padded to
-  768 × 1024;
+  768 × 1024 for every frozen outfit item;
 - CatVTON automatic masks produced by the pinned DensePose and SCHP weights;
 - 50 DDIM steps, guidance 2.5, deterministic seed 42, and BF16 precision.
 
@@ -129,7 +130,7 @@ evidence as completion.
 | Requirement | Implementation acceptance | Evidence gate |
 | --- | --- | --- |
 | FR-18, FR-25 | Persisted recommendations and every named visualisation entry point use the same source contract | Backend tests, frontend lint/build, history UI |
-| FR-26 | Whole source rejected for unknown, duplicate, unavailable, unreviewed, unowned, multi-garment, outerwear, or missing media | `test_vton_contracts.py` |
+| FR-26 | Whole source rejected for unknown, duplicate, unavailable, unreviewed, unowned, outerwear, or missing media; all supported source items are retained | `test_vton_contracts.py` |
 | FR-27–FR-31 | Available owner images only; upload/selection; decoded byte/format/resolution/ownership validation; protected storage | API tests and protected-media service |
 | FR-32 | Frozen person and garment media reach real CatVTON | Real smoke result must be `complete` |
 | FR-33–FR-36 | All lifecycle states, owner-only completed output, explicit AI/fit notice, retry creates a new record | Tests, result UI lint/build |

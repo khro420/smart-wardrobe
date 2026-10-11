@@ -1,0 +1,148 @@
+{
+  "input": "C:\\Users\\khorh\\Downloads\\Paper.docx",
+  "fonts_by_char_count": {},
+  "direct_run_formatting_runs": 52,
+  "direct_paragraph_formatting_paragraphs": 1,
+  "heading_like_paragraphs_not_heading_style": [
+    {
+      "para_index": 43,
+      "text": "1. Title",
+      "style": "Normal"
+    },
+    {
+      "para_index": 48,
+      "text": "2. Abstract",
+      "style": "Normal"
+    },
+    {
+      "para_index": 51,
+      "text": "Background/problem \u2013 What problem exists?",
+      "style": "Normal"
+    },
+    {
+      "para_index": 52,
+      "text": "Objective \u2013 What did you aim to achieve?",
+      "style": "Normal"
+    },
+    {
+      "para_index": 53,
+      "text": "Method \u2013 How did you develop the application?",
+      "style": "Normal"
+    },
+    {
+      "para_index": 54,
+      "text": "Results \u2013 What did you find?",
+      "style": "Normal"
+    },
+    {
+      "para_index": 55,
+      "text": "Conclusion \u2013 What does the study demonstrate?",
+      "style": "Normal"
+    },
+    {
+      "para_index": 57,
+      "text": "Problem \u2192 Objective \u2192 Method \u2192 Results \u2192 Conclusion",
+      "style": "Normal"
+    },
+    {
+      "para_index": 58,
+      "text": "Example",
+      "style": "Normal"
+    },
+    {
+      "para_index": 60,
+      "text": "3. Introduction",
+      "style": "Normal"
+    },
+    {
+      "para_index": 62,
+      "text": "\u201cWhy was this project necessary?\u201d",
+      "style": "Normal"
+    },
+    {
+      "para_index": 64,
+      "text": "Paragraph 1 \u2014 Background",
+      "style": "Normal"
+    },
+    {
+      "para_index": 67,
+      "text": "Paragraph 2 \u2014 Problem statement",
+      "style": "Normal"
+    },
+    {
+      "para_index": 70,
+      "text": "Paragraph 3 \u2014 Existing solutions",
+      "style": "Normal"
+    },
+    {
+      "para_index": 74,
+      "text": "Paragraph 4 \u2014 Your solution",
+      "style": "Normal"
+    },
+    {
+      "para_index": 78,
+      "text": "Paragraph 5 \u2014 Objectives/contribution",
+      "style": "Normal"
+    },
+    {
+      "para_index": 86,
+      "text": "4. Literature Review",
+      "style": "Normal"
+    },
+    {
+      "para_index": 88,
+      "text": "\u201cWhat has already been done, and what is missing?\u201d",
+      "style": "Normal"
+    },
+    {
+      "para_index": 95,
+      "text": "5. Methodology",
+      "style": "Normal"
+    },
+    {
+      "para_index": 98,
+      "text": "5.1 Development Methodology",
+      "style": "Normal"
+    }
+  ],
+  "examples": {
+    "direct_run_formatting": [
+      {
+        "para_index": 43,
+        "run_text": "1. Title",
+        "style": "Normal"
+      },
+      {
+        "para_index": 45,
+        "run_text": "Example:",
+        "style": "Normal"
+      },
+      {
+        "para_index": 46,
+        "run_text": "Development and Evaluation of a Mobile Application for Managing Student Attendan",
+        "style": "Normal"
+      },
+      {
+        "para_index": 47,
+        "run_text": "\u201cMy Application Project\u201d",
+        "style": "Normal"
+      },
+      {
+        "para_index": 48,
+        "run_text": "2. Abstract",
+        "style": "Normal"
+      }
+    ],
+    "direct_paragraph_formatting": [
+      {
+        "para_index": 85,
+        "text": "",
+        "style": "Normal"
+      }
+    ]
+  },
+  "notes": [
+    "Direct formatting is not always wrong, but it often causes inconsistent output when templates change.",
+    "Heading-like paragraphs not using Heading styles can break TOC and accessibility."
+  ]
+}

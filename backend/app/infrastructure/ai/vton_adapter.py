@@ -14,8 +14,11 @@ from app.infrastructure.config import VTON_DEVICE, VTON_ENABLED, VTON_MODEL_DIR
 
 class DevelopmentVTONAdapter:
     def generate(
-        self, plan: VisualisationPlan, person_image: bytes, garment_image: bytes
+        self, plan: VisualisationPlan, person_image: bytes, garment_images: tuple[bytes, ...],
+        progress_callback=None,
     ) -> GeneratedVisualisation:
+        if progress_callback:
+            progress_callback(len(garment_images), len(garment_images), "finalising")
         with Image.open(BytesIO(person_image)) as source:
             image = ImageOps.fit(
                 ImageOps.exif_transpose(source).convert("RGB"),
@@ -29,12 +32,12 @@ class DevelopmentVTONAdapter:
             model_version="development-copy-v2",
             latency_ms=0.0,
             output_kind="development",
-            metadata={"generated": False},
+            metadata={"generated": False, "garment_count": len(garment_images)},
         )
 
 
 class UnavailableVTONAdapter:
-    def generate(self, plan, person_image, garment_image):
+    def generate(self, plan, person_image, garment_images, progress_callback=None):
         raise VTONFailure("unavailable")
 
 

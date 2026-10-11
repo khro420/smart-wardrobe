@@ -138,32 +138,47 @@ class CatVTONRuntime:
             raise VTONFailure("unavailable") from exc
 
     def generate(
-        self, plan: VisualisationPlan, person_payload: bytes, garment_payload: bytes
+        self,
+        plan: VisualisationPlan,
+        person_payload: bytes,
+        garment_payloads: tuple[bytes, ...],
+        progress_callback=None,
     ) -> GeneratedVisualisation:
         self._load()
         import torch
+        if len(garment_payloads) != len(plan.garments):
+            raise VTONFailure("unprocessable")
         size = (plan.configuration.width, plan.configuration.height)
         person = prepare_person(person_payload, size)
-        garment = prepare_garment(garment_payload, size)
         started = time.perf_counter()
         try:
             torch.cuda.reset_peak_memory_stats()
-            mask = self._masker(person, plan.mode)["mask"]
-            if mask.size != person.size or mask.getbbox() is None:
-                raise VTONFailure("unprocessable")
-            generator = torch.Generator(device=self.device_name).manual_seed(
-                plan.configuration.seed
-            )
-            result = self._pipeline(
-                image=person,
-                condition_image=garment,
-                mask=mask,
-                num_inference_steps=plan.configuration.steps,
-                guidance_scale=plan.configuration.guidance,
-                generator=generator,
-                height=plan.configuration.height,
-                width=plan.configuration.width,
-            )[0]
+            result = person
+            # CatVTON accepts one condition image per pass. Apply every frozen
+            # outfit item in saved order so an upper/lower (or layered) source
+            # becomes one composed outfit preview rather than dropping items.
+            for index, (mode, garment_payload) in enumerate(zip(plan.modes, garment_payloads)):
+                if progress_callback:
+                    progress_callback(index, len(garment_payloads), "applying")
+                garment = prepare_garment(garment_payload, size)
+                mask = self._masker(result, mode)["mask"]
+                if mask.size != result.size or mask.getbbox() is None:
+                    raise VTONFailure("unprocessable")
+                generator = torch.Generator(device=self.device_name).manual_seed(
+                    (plan.configuration.seed + index) % 2**32
+                )
+                result = self._pipeline(
+                    image=result,
+                    condition_image=garment,
+                    mask=mask,
+                    num_inference_steps=plan.configuration.steps,
+                    guidance_scale=plan.configuration.guidance,
+                    generator=generator,
+                    height=plan.configuration.height,
+                    width=plan.configuration.width,
+                )[0]
+                if progress_callback:
+                    progress_callback(index + 1, len(garment_payloads), "finalising")
         except torch.OutOfMemoryError as exc:
             torch.cuda.empty_cache()
             raise VTONFailure("out_of_memory") from exc
@@ -180,7 +195,8 @@ class CatVTONRuntime:
             metadata={
                 "peak_vram_bytes": torch.cuda.max_memory_allocated(),
                 "device": torch.cuda.get_device_name(),
-                "mode": plan.mode,
+                "modes": list(plan.modes),
+                "garment_count": len(plan.garments),
                 "source_revision": CATVTON_SOURCE_REVISION,
                 "model_revision": CATVTON_MODEL_REVISION,
             },

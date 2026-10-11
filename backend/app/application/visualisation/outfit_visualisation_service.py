@@ -57,8 +57,9 @@ def create_visualisation(
         conn.execute(
             "INSERT INTO visualisations "
             "(id,user_id,outfit_id,recommendation_id,source_type,person_image_id,"
-            "person_media_id,status,created_at,updated_at,configuration_json) "
-            "VALUES (?,?,?,?,?,?,?,'queued',?,?,?)",
+            "person_media_id,status,created_at,updated_at,configuration_json,"
+            "progress_percent,progress_current,progress_total,progress_message) "
+            "VALUES (?,?,?,?,?,?,?,'queued',?,?,?,0,0,?,?)",
             (
                 identifier,
                 user_id,
@@ -70,6 +71,8 @@ def create_visualisation(
                 now,
                 now,
                 json.dumps(plan.configuration.to_dict()),
+                len(plan.garments),
+                "Waiting for the GPU queue.",
             ),
         )
         for item in plan.garments:
@@ -95,7 +98,8 @@ def run_visualisation(visualisation_id, user_id):
         with runtime().gpu_slot():
             with connection() as conn:
                 claimed = conn.execute(
-                    "UPDATE visualisations SET status='processing',started_at=?,updated_at=? "
+                    "UPDATE visualisations SET status='processing',started_at=?,updated_at=?,"
+                    "progress_percent=2,progress_message='Preparing the requested outfit.' "
                     "WHERE id=? AND user_id=? AND status='queued'",
                     (utcnow(), utcnow(), visualisation_id, user_id),
                 ).rowcount
@@ -136,16 +140,32 @@ def run_visualisation(visualisation_id, user_id):
                     ),
                     VTONConfiguration(**json.loads(visual["configuration_json"])),
                 )
-            plan.mode
+            plan.modes
             person_path, _ = runtime().media.path_for_owner(
                 plan.person_media_id, user_id
             )
-            garment_path, _ = runtime().media.path_for_owner(
-                plan.garments[0].source_media_id, user_id
+            garment_images = tuple(
+                runtime().media.path_for_owner(item.source_media_id, user_id)[0].read_bytes()
+                for item in plan.garments
             )
             person_bytes = person_path.read_bytes()
+            def report_progress(current: int, total: int, phase: str) -> None:
+                if phase == "applying":
+                    percent = 5 + int((current / max(total, 1)) * 90)
+                    message = f"Applying garment {current + 1} of {total}."
+                else:
+                    percent = 95 if current >= total else 5 + int((current / max(total, 1)) * 90)
+                    message = "Finalising the outfit preview." if current >= total else f"Garment {current} of {total} complete."
+                with connection() as progress_conn:
+                    progress_conn.execute(
+                        "UPDATE visualisations SET progress_percent=?,progress_current=?,"
+                        "progress_total=?,progress_message=?,updated_at=? "
+                        "WHERE id=? AND user_id=? AND status='processing'",
+                        (percent, current, total, message, utcnow(), visualisation_id, user_id),
+                    )
+
             result = get_vton_adapter().generate(
-                plan, person_bytes, garment_path.read_bytes()
+                plan, person_bytes, garment_images, report_progress
             )
             complete(visualisation_id, user_id, result, plan, person_bytes)
     except Exception as exc:

@@ -10,6 +10,12 @@ import { cancelProcessingJob, confirmProcessingJob, getProcessingJob, reviewProc
 const textValue = (value: unknown) => Array.isArray(value) ? value.join(", ") : typeof value === "string" ? value : "";
 const inputClass = "mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:outline-2 focus:outline-offset-2 focus:outline-purple-800";
 const categories = ["short_sleeve_top", "long_sleeve_top", "short_sleeve_outwear", "long_sleeve_outwear", "vest", "sling", "shorts", "trousers", "skirt", "short_sleeve_dress", "long_sleeve_dress", "vest_dress", "sling_dress"];
+const patterns = ["plain", "abstract", "cartoon", "letters, numbers", "camouflage", "check", "dot", "fair isle", "floral", "geometric", "paisley", "stripe", "houndstooth", "herringbone", "chevron", "argyle", "leopard", "snakeskin", "cheetah", "peacock", "zebra", "giraffe", "toile de jouy", "plant"];
+const silhouettes = ["asymmetrical", "symmetrical", "peplum", "circle", "flare", "fit and flare", "trumpet", "mermaid", "balloon", "bell", "bell bottom", "bootcut", "peg", "pencil", "straight", "a-line", "tent", "baggy", "wide leg", "high low", "curved", "tight", "regular", "loose", "oversized"];
+const necklines = ["collarless", "asymmetric", "crew", "round", "v-neck", "surplice", "oval", "u-neck", "sweetheart", "queen anne", "boat", "scoop", "square", "plunging", "keyhole", "halter", "crossover", "choker", "high", "turtle", "cowl", "straight across", "illusion", "off-the-shoulder", "one shoulder"];
+const sleeveLengths = ["sleeveless", "short", "elbow-length", "wrist-length"];
+const styles = ["casual", "classic", "formal", "minimal", "smart casual", "sporty", "streetwear", "vintage", "bohemian"];
+const materials = ["cotton", "denim", "leather", "linen", "silk", "synthetic", "wool", "not sure"];
 
 function CandidateReview({ item, disabled, onReview, onDirty }: {
   item: ProcessingItem;
@@ -17,13 +23,17 @@ function CandidateReview({ item, disabled, onReview, onDirty }: {
   onReview: (update: Record<string, unknown>) => Promise<boolean>;
   onDirty: (id: string, dirty: boolean) => void;
 }) {
+  const visible = item.attributes.fashionpedia_visible_attributes as Record<string, { value?: string }> | undefined;
+  const suggestion = (field: string) => visible?.[field]?.value ?? "";
+  const clean = (value: string) => value.replace(" (pattern)", "").replace(" (length)", "").replace(" (fit)", "").replace(" (neck)", "").replace(" (neckline)", "");
+  const supportsUpperDetails = !["shorts", "trousers", "skirt"].includes(item.detected_category);
   const [draft, setDraft] = useState({
     name: textValue(item.attributes.name) || item.detected_category.replaceAll("_", " "),
     category: textValue(item.attributes.reviewed_category) || item.detected_category,
     primary_colour: textValue(item.attributes.primary_colour),
-    pattern: textValue(item.attributes.pattern),
-    fit: textValue(item.attributes.fit), style: textValue(item.attributes.style),
-    material: textValue(item.attributes.material), custom_tags: textValue(item.attributes.custom_tags),
+    pattern: textValue(item.attributes.pattern) || clean(suggestion("pattern")),
+    fit: textValue(item.attributes.fit) || clean(suggestion("silhouette")), style: textValue(item.attributes.style),
+    material: textValue(item.attributes.material), neckline: supportsUpperDetails ? clean(suggestion("neckline")) : "", sleeve_length: supportsUpperDetails ? clean(suggestion("sleeve_length")) : "",
     color_temperature: textValue(item.attributes.color_temperature) || "neutral",
     is_dominant: item.attributes.is_dominant === true,
     preferred_media: item.vtoff_media_id && item.preferred_media_id === item.vtoff_media_id ? "vtoff" : "crop",
@@ -42,8 +52,8 @@ function CandidateReview({ item, disabled, onReview, onDirty }: {
         pattern: draft.pattern.trim() || null,
         preferred_media: draft.preferred_media,
         attributes: { fit: draft.fit.trim() || null, style: draft.style.trim() || null,
-          material: draft.material.trim() || null,
-          custom_tags: draft.custom_tags.split(",").map((tag) => tag.trim()).filter(Boolean),
+          material: draft.material || null, neckline: supportsUpperDetails ? draft.neckline || null : null, sleeve_length: supportsUpperDetails ? draft.sleeve_length || null : null,
+          custom_tags: [supportsUpperDetails && draft.neckline && `neckline: ${draft.neckline}`, supportsUpperDetails && draft.sleeve_length && `sleeve length: ${draft.sleeve_length}`, draft.fit && `silhouette: ${draft.fit}`].filter((value): value is string => Boolean(value)),
           color_temperature: draft.color_temperature, is_dominant: draft.is_dominant },
       } : {}),
     });
@@ -71,8 +81,8 @@ function CandidateReview({ item, disabled, onReview, onDirty }: {
               {!categories.includes(draft.category) && <option value={draft.category}>{draft.category}</option>}
               {categories.map((category) => <option key={category} value={category}>{category.replaceAll("_", " ")}</option>)}
             </select></label>
-            {([['primary_colour', 'Primary colour'], ['pattern', 'Pattern'], ['fit', 'Fit'], ['style', 'Style'], ['material', 'Material'], ['custom_tags', 'Tags (comma separated)']] as const).map(([key, label]) =>
-              <label key={key} className="text-sm">{label}<input maxLength={key === "custom_tags" ? 500 : key === "primary_colour" || key === "pattern" ? 50 : 100} value={draft[key]} onChange={(e) => change(key, e.target.value)} placeholder="Not specified" className={inputClass} /></label>)}
+            <label className="text-sm">Primary colour<input maxLength={50} value={draft.primary_colour} onChange={(e) => change("primary_colour", e.target.value)} placeholder="Not specified" className={inputClass} /></label>
+            {([['pattern', 'Pattern', patterns], ['fit', 'Fit (visible silhouette)', silhouettes], ['style', 'Style', styles], ['material', 'Material', materials], ...(supportsUpperDetails ? [['neckline', 'Neckline', necklines], ['sleeve_length', 'Sleeve length', sleeveLengths]] as const : [])] as const).map(([key, label, options]) => <label key={key} className="text-sm">{label}<select value={draft[key]} onChange={(e) => change(key, e.target.value)} className={inputClass}><option value="">Not specified</option>{options.map((option) => <option key={option} value={option}>{option}</option>)}</select></label>)}
             <label className="text-sm">Colour temperature<select value={draft.color_temperature} onChange={(event) => change("color_temperature", event.target.value)} className={inputClass}><option value="warm">Warm</option><option value="cool">Cool</option><option value="neutral">Neutral</option></select></label>
             <label className="flex items-center gap-2 self-end rounded-lg border border-slate-300 px-3 py-2 text-sm"><input type="checkbox" checked={draft.is_dominant} onChange={(event) => change("is_dominant", event.target.checked)} />One colour covers most of garment</label>
           </div>
@@ -109,6 +119,7 @@ function ExtractionResultsContent() {
   const [job, setJob] = useState<ProcessingJob>();
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  const [busyMessage, setBusyMessage] = useState("");
   const actionLock = useRef(false);
   const [dirtyIds, setDirtyIds] = useState<Set<string>>(new Set());
   const [outfitName, setOutfitName] = useState("");
@@ -128,31 +139,32 @@ function ExtractionResultsContent() {
   }, [jobId, reload]);
   const review = async (update: Record<string, unknown>) => {
     if (!jobId || actionLock.current) return false;
-    actionLock.current = true; setBusy(true); setError("");
+    actionLock.current = true; setBusy(true); setBusyMessage("Saving your review decision…"); setError("");
     try { setJob(await reviewProcessingJob(jobId, [update])); return true; }
     catch (e) { setError(e instanceof Error ? e.message : "Could not update review."); return false; }
-    finally { actionLock.current = false; setBusy(false); }
+    finally { actionLock.current = false; setBusy(false); setBusyMessage(""); }
   };
   const accepted = job?.items.filter((item) => item.review_status === "accepted").map((item) => item.id) ?? [];
   const save = async (mode: "garments" | "outfit") => {
     if (!jobId || actionLock.current || !accepted.length || dirtyIds.size) return;
-    actionLock.current = true; setBusy(true); setError("");
+    actionLock.current = true; setBusy(true); setBusyMessage(mode === "outfit" ? "Saving your outfit…" : "Saving selected garments…"); setError("");
     try { await confirmProcessingJob(jobId, accepted, mode, outfitName.trim()); window.location.assign("/wardrobe"); }
     catch (e) { setError(e instanceof Error ? e.message : "Could not save candidates."); }
-    finally { actionLock.current = false; setBusy(false); }
+    finally { actionLock.current = false; setBusy(false); setBusyMessage(""); }
   };
   const cancel = async () => {
     if (!jobId || actionLock.current) return;
-    actionLock.current = true; setBusy(true); setError("");
+    actionLock.current = true; setBusy(true); setBusyMessage("Cancelling processing…"); setError("");
     try { await cancelProcessingJob(jobId); setReload((value) => value + 1); }
     catch (e) { setError(e instanceof Error ? e.message : "Could not cancel processing."); }
-    finally { actionLock.current = false; setBusy(false); }
+    finally { actionLock.current = false; setBusy(false); setBusyMessage(""); }
   };
   const processing = jobId && (!job || ["queued", "processing"].includes(job.status));
   return <Layout><div className="mx-auto max-w-4xl space-y-6">
     <div><h1 className="text-2xl font-bold">Review garment candidates</h1><p className="mt-2 text-sm text-slate-600">Review and accept each item you want to save. Pending and rejected items stay out of your wardrobe.</p></div>
     {(error || !jobId) && <div role="alert" className="rounded-lg border border-rose-300 bg-rose-50 p-4 text-sm text-rose-800"><p>{error || "No processing job was selected."}</p>{jobId && <button onClick={() => setReload((value) => value + 1)} className="mt-2 underline">Retry loading</button>} <Link href="/auth" className="underline">Sign in</Link></div>}
-    {processing && !error && <p role="status" className="rounded-lg bg-white p-6">{job?.status === "processing" ? "Analysing garments. This may take a moment…" : "Loading processing status…"}</p>}
+    {busy && <p role="status" aria-live="polite" className="rounded-lg border border-purple-200 bg-purple-50 p-3 text-sm text-purple-900">{busyMessage}</p>}
+    {processing && !error && <section role="status" aria-live="polite" className="rounded-lg border-2 border-dashed border-slate-400 bg-white p-6"><p className="font-semibold capitalize">{job?.status ?? "Loading"}</p><p className="mt-1 text-sm text-slate-600">{job?.progress_message ?? "Loading processing status…"}</p><div className="mt-4"><div className="flex justify-between text-xs font-semibold"><span>Image processing</span><span>{job?.progress_percent ?? 0}%</span></div><div className="mt-2 h-3 overflow-hidden rounded-full bg-slate-200" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={job?.progress_percent ?? 0}><div className="h-full bg-[#6d335b] transition-all duration-500" style={{ width: `${job?.progress_percent ?? 0}%` }} /></div><p className="mt-2 text-xs text-slate-500">You can keep this page open; it updates automatically as each garment is prepared.</p></div></section>}
     {job?.status === "failed" && <p role="alert" className="rounded-lg border border-rose-300 bg-rose-50 p-4 text-rose-800">{job.error_message || "Processing failed. Please try another image."}</p>}
     {job?.status === "cancelled" && <p role="status">Processing cancelled. Your existing wardrobe has not changed.</p>}
     {job?.status === "completed" && <p role="status">These candidates have already been saved. <Link href="/wardrobe" className="underline">Open wardrobe</Link></p>}

@@ -304,7 +304,7 @@ class GarmentWorkflowTests(unittest.TestCase):
         retained_id = store_media_bytes(png("orange"), self.owner, "upload")
         with connection() as conn:
             conn.execute("UPDATE media_assets SET created_at='2020-01-01T00:00:00+00:00' WHERE id IN (?, ?)", (orphan_id, retained_id))
-            conn.execute("INSERT INTO processing_jobs VALUES (?, ?, ?, 'failed', NULL, ?, NULL, ?, ?)", (str(uuid.uuid4()), self.owner, retained_id, "2020-01-01T00:00:00+00:00", "2020-01-01T00:00:00+00:00", "2020-01-01T00:00:00+00:00"))
+            conn.execute("INSERT INTO processing_jobs (id,user_id,source_media_id,status,error_message,created_at,started_at,updated_at,completed_at) VALUES (?, ?, ?, 'failed', NULL, ?, NULL, ?, ?)", (str(uuid.uuid4()), self.owner, retained_id, "2020-01-01T00:00:00+00:00", "2020-01-01T00:00:00+00:00", "2020-01-01T00:00:00+00:00"))
         candidates = find_orphaned_media(retention_hours=1)
         self.assertIn(orphan_id, {candidate["id"] for candidate in candidates})
         self.assertNotIn(retained_id, {candidate["id"] for candidate in candidates})

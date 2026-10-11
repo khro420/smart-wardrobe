@@ -10,6 +10,7 @@ __pycache__/
 venv/
 .env
 .env.*
+!backend/.env.example
 
 # ======================
 # ML / AI ARTIFACTS
@@ -23,6 +24,10 @@ backend/models/vtoff/sd-vae-ft-mse/
 backend/models/vtoff/scheduler/
 backend/models/vton/assets/
 backend/models/vton/manifest.json
+backend/models/fashionpedia/
+
+# Large local source archive used for fine-tuning; download or place locally.
+DressCode.zip
 
 # datasets (VERY IMPORTANT)
 datasets/
@@ -35,6 +40,9 @@ labels/
 # ======================
 logs/
 *.log
+
+# Human annotations produced while reviewing paired evaluation failures.
+backend/scripts/dresscode_*_failure_labels.json
 
 # ======================
 # OS junk
@@ -63,3 +71,6 @@ storage/
 frontend/.next/
 frontend/.next-verification/
 frontend/.next-build-check/
+
+deliverables
+build_summary_paper.py

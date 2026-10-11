@@ -51,20 +51,34 @@ def hardware() -> dict:
 def main() -> None:
     parser = ArgumentParser(description="Verify local-only CatVTON inference on one input pair.")
     parser.add_argument("--person", type=Path, required=True)
-    parser.add_argument("--garment", type=Path, required=True)
-    parser.add_argument("--category", required=True)
+    parser.add_argument(
+        "--garment", action="append", type=Path, required=True,
+        help="One garment path per --category, in the outfit layer order.",
+    )
+    parser.add_argument(
+        "--category", action="append", required=True,
+        help="DeepFashion2 category for the corresponding --garment.",
+    )
     parser.add_argument("--model-dir", type=Path, default=BACKEND / "models" / "vton")
     parser.add_argument("--output-dir", type=Path, default=PROJECT / "storage" / "verification" / "vton" / "smoke")
     parser.add_argument("--steps", type=int, default=50)
     parser.add_argument("--guidance", type=float, default=2.5)
     parser.add_argument("--seed", type=int, default=42)
     args = parser.parse_args()
+    if len(args.garment) != len(args.category):
+        parser.error("Provide one --category for every --garment.")
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
     configuration = VTONConfiguration(steps=args.steps, guidance=args.guidance, seed=args.seed)
     current_plan = VisualisationPlan(
         "outfit", "verification", "person", "person-media",
-        (VisualisationGarment("garment", "garment-media", args.category, "garment", 1),),
+        tuple(
+            VisualisationGarment(
+                f"garment-{index}", f"garment-media-{index}", category,
+                "garment", index,
+            )
+            for index, category in enumerate(args.category, start=1)
+        ),
         configuration,
     )
     manifest_path = args.model_dir / "manifest.json"
@@ -75,17 +89,26 @@ def main() -> None:
             "manifest": str(manifest_path),
             "manifest_sha256": sha256(manifest_path) if manifest_path.is_file() else None,
         },
-        "configuration": configuration.to_dict(), "mode": current_plan.mode,
+        "configuration": configuration.to_dict(), "modes": current_plan.modes,
         "inputs": {
             "person": str(args.person.resolve()), "person_sha256": sha256(args.person),
-            "garment": str(args.garment.resolve()), "garment_sha256": sha256(args.garment),
+            "garments": [
+                {
+                    "path": str(garment.resolve()), "category": category,
+                    "sha256": sha256(garment),
+                }
+                for garment, category in zip(args.garment, args.category)
+            ],
         },
         "hardware": hardware(), "errors": [],
     }
     started = time.perf_counter()
     try:
-        person_payload, garment_payload = args.person.read_bytes(), args.garment.read_bytes()
-        result = CatVTONRuntime(args.model_dir, "cuda").generate(current_plan, person_payload, garment_payload)
+        person_payload = args.person.read_bytes()
+        garment_payloads = tuple(garment.read_bytes() for garment in args.garment)
+        result = CatVTONRuntime(args.model_dir, "cuda").generate(
+            current_plan, person_payload, garment_payloads
+        )
         validate_generated_output(result, current_plan, person_payload)
         output = args.output_dir / "output.png"
         output.write_bytes(result.image)

@@ -9,8 +9,8 @@ Run python scripts/setup_vton.py from backend/ to download pinned assets and
 produce manifest.json. Request-time inference is local-only and refuses missing
 or mismatched revisions.
 
-The supported runtime profile is one top, bottom, or dress reference at 768 x
-1024, batch one, BF16, 50 steps, guidance 2.5, and seed 42. Outerwear and
-multi-garment outfits are rejected before inference. Lower-body and dress
-acceptance remain blocked until the officially licensed DressCode evaluation data
-is supplied.
+The supported runtime profile is one or more top, bottom, or dress references at
+768 x 1024, batch one, BF16, 50 steps, guidance 2.5, and seed 42. CatVTON is
+run once per saved outfit item, in item order, to compose the complete outfit.
+Outerwear is rejected before inference. Lower-body and dress acceptance remain
+blocked until the officially licensed DressCode evaluation data is supplied.

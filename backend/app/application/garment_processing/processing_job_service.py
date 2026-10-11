@@ -10,7 +10,7 @@ def create_job(source_media_id: str, user_id: str) -> str:
     media_path_for_owner(source_media_id, user_id)
     job_id, now = str(uuid.uuid4()), utcnow()
     with connection() as conn:
-        conn.execute("INSERT INTO processing_jobs VALUES (?, ?, ?, 'queued', NULL, ?, NULL, ?, NULL)", (job_id, user_id, source_media_id, now, now))
+        conn.execute("INSERT INTO processing_jobs (id,user_id,source_media_id,status,error_message,created_at,started_at,updated_at,completed_at,progress_percent,progress_message) VALUES (?, ?, ?, 'queued', NULL, ?, NULL, ?, NULL, 0, ?)", (job_id, user_id, source_media_id, now, now, "Waiting to analyse your image."))
     return job_id
 
 

@@ -84,14 +84,15 @@ def resolve_source(conn, user_id, outfit_id=None, recommendation_id=None):
         runtime().configuration(),
     )
     try:
-        mode = plan.mode
+        modes = plan.modes
     except ValueError as exc:
         raise HTTPException(422, str(exc)) from None
     return plan, {
         "source_type": plan.source_type,
         "source_id": plan.source_id,
         "items": previews,
-        "category": mode,
+        "category": "outfit" if len(modes) > 1 else modes[0],
+        "categories": list(modes),
         "capture_guidance": CAPTURE_GUIDANCE,
     }
 
