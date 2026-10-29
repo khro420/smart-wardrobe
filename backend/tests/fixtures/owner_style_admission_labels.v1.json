@@ -1,0 +1,14 @@
+{
+  "version": "owner-style-admission-labels-1.0.0",
+  "authority": "Approved Option A and backend scope; approved frontend scope, 2026-10-27",
+  "authored_before_production_patch": true,
+  "cases": [
+    {"id":"add_explicit","intent":true,"style":["casual"],"expected_review":true},
+    {"id":"add_preserved","intent":false,"style":["casual"],"expected_review":false},
+    {"id":"missing","intent":false,"style":null,"expected_review":false},
+    {"id":"empty","intent":false,"style":[],"expected_review":false},
+    {"id":"multiple","intent":false,"style":["casual","classic"],"expected_review":false},
+    {"id":"smart","intent":true,"style":["smart casual"],"expected_review":true}
+  ],
+  "invariants": ["Deny precedes positive evidence", "No old-data admission", "Atomic revision validation", "Unrelated saves preserve review", "Withdrawal is not resurrected", "Automatic metadata never attests", "All members must pass", "Exact existing scores and immutable replay", "No new scoring-loop work"]
+}

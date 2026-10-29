@@ -1,0 +1,394 @@
+{
+  "version": "automatic-admission-labels-1.0.0",
+  "approval": [
+    "Approve SA01\u2013SA10 and the proposed acceptance contract",
+    "Confirm the named backend/shared/T approvals",
+    "Confirm the named frontend approvals"
+  ],
+  "contract": {
+    "version": "automatic-garment-admission-proposal-labels-1.0.0",
+    "status": "PROPOSED; NOT APPROVED; NOT RUN",
+    "method": "Independent contract labels, not evaluator-generated answers; not fashion/model validation",
+    "scenarios": [
+      {
+        "id": "campus-C",
+        "request": "I'm going to class.",
+        "saved_style": "casual",
+        "fixture": "clean absent review",
+        "expected_member_condition": "Pass provisional"
+      },
+      {
+        "id": "campus-S",
+        "request": "I'm going to class.",
+        "saved_style": "smart casual",
+        "fixture": "clean absent review",
+        "expected_member_condition": "Pass provisional"
+      },
+      {
+        "id": "campus-M",
+        "request": "I'm going to class.",
+        "saved_style": null,
+        "fixture": "missing style",
+        "expected_member_condition": "Unknown"
+      },
+      {
+        "id": "campus-U",
+        "request": "I'm going to class.",
+        "saved_style": "classic",
+        "fixture": "valid uncovered style",
+        "expected_member_condition": "Unknown"
+      },
+      {
+        "id": "campus-D",
+        "request": "I'm going to class.",
+        "saved_style": "casual",
+        "fixture": "exact occasion deny",
+        "expected_member_condition": "Fail"
+      },
+      {
+        "id": "campus-X",
+        "request": "I'm going to class.",
+        "saved_style": "casual",
+        "fixture": "malformed authoritative container",
+        "expected_member_condition": "Unknown"
+      },
+      {
+        "id": "shopping-C",
+        "request": "I'm going shopping.",
+        "saved_style": "casual",
+        "fixture": "clean absent review",
+        "expected_member_condition": "Pass provisional"
+      },
+      {
+        "id": "shopping-S",
+        "request": "I'm going shopping.",
+        "saved_style": "smart casual",
+        "fixture": "clean absent review",
+        "expected_member_condition": "Pass provisional"
+      },
+      {
+        "id": "shopping-M",
+        "request": "I'm going shopping.",
+        "saved_style": null,
+        "fixture": "missing style",
+        "expected_member_condition": "Unknown"
+      },
+      {
+        "id": "shopping-U",
+        "request": "I'm going shopping.",
+        "saved_style": "classic",
+        "fixture": "valid uncovered style",
+        "expected_member_condition": "Unknown"
+      },
+      {
+        "id": "shopping-D",
+        "request": "I'm going shopping.",
+        "saved_style": "casual",
+        "fixture": "exact occasion deny",
+        "expected_member_condition": "Fail"
+      },
+      {
+        "id": "shopping-X",
+        "request": "I'm going shopping.",
+        "saved_style": "casual",
+        "fixture": "malformed authoritative container",
+        "expected_member_condition": "Unknown"
+      },
+      {
+        "id": "casual_outing-C",
+        "request": "I'm going out with friends.",
+        "saved_style": "casual",
+        "fixture": "clean absent review",
+        "expected_member_condition": "Pass provisional"
+      },
+      {
+        "id": "casual_outing-S",
+        "request": "I'm going out with friends.",
+        "saved_style": "smart casual",
+        "fixture": "clean absent review",
+        "expected_member_condition": "Pass provisional"
+      },
+      {
+        "id": "casual_outing-M",
+        "request": "I'm going out with friends.",
+        "saved_style": null,
+        "fixture": "missing style",
+        "expected_member_condition": "Unknown"
+      },
+      {
+        "id": "casual_outing-U",
+        "request": "I'm going out with friends.",
+        "saved_style": "classic",
+        "fixture": "valid uncovered style",
+        "expected_member_condition": "Unknown"
+      },
+      {
+        "id": "casual_outing-D",
+        "request": "I'm going out with friends.",
+        "saved_style": "casual",
+        "fixture": "exact occasion deny",
+        "expected_member_condition": "Fail"
+      },
+      {
+        "id": "casual_outing-X",
+        "request": "I'm going out with friends.",
+        "saved_style": "casual",
+        "fixture": "malformed authoritative container",
+        "expected_member_condition": "Unknown"
+      },
+      {
+        "id": "date-C",
+        "request": "I'm going on a date.",
+        "saved_style": "casual",
+        "fixture": "clean absent review",
+        "expected_member_condition": "Pass provisional"
+      },
+      {
+        "id": "date-S",
+        "request": "I'm going on a date.",
+        "saved_style": "smart casual",
+        "fixture": "clean absent review",
+        "expected_member_condition": "Pass provisional"
+      },
+      {
+        "id": "date-M",
+        "request": "I'm going on a date.",
+        "saved_style": null,
+        "fixture": "missing style",
+        "expected_member_condition": "Unknown"
+      },
+      {
+        "id": "date-U",
+        "request": "I'm going on a date.",
+        "saved_style": "classic",
+        "fixture": "valid uncovered style",
+        "expected_member_condition": "Unknown"
+      },
+      {
+        "id": "date-D",
+        "request": "I'm going on a date.",
+        "saved_style": "casual",
+        "fixture": "exact occasion deny",
+        "expected_member_condition": "Fail"
+      },
+      {
+        "id": "date-X",
+        "request": "I'm going on a date.",
+        "saved_style": "casual",
+        "fixture": "malformed authoritative container",
+        "expected_member_condition": "Unknown"
+      },
+      {
+        "id": "dinner-C",
+        "request": "I'm meeting friends for dinner.",
+        "saved_style": "casual",
+        "fixture": "clean absent review",
+        "expected_member_condition": "Pass provisional"
+      },
+      {
+        "id": "dinner-S",
+        "request": "I'm meeting friends for dinner.",
+        "saved_style": "smart casual",
+        "fixture": "clean absent review",
+        "expected_member_condition": "Pass provisional"
+      },
+      {
+        "id": "dinner-M",
+        "request": "I'm meeting friends for dinner.",
+        "saved_style": null,
+        "fixture": "missing style",
+        "expected_member_condition": "Unknown"
+      },
+      {
+        "id": "dinner-U",
+        "request": "I'm meeting friends for dinner.",
+        "saved_style": "classic",
+        "fixture": "valid uncovered style",
+        "expected_member_condition": "Unknown"
+      },
+      {
+        "id": "dinner-D",
+        "request": "I'm meeting friends for dinner.",
+        "saved_style": "casual",
+        "fixture": "exact occasion deny",
+        "expected_member_condition": "Fail"
+      },
+      {
+        "id": "dinner-X",
+        "request": "I'm meeting friends for dinner.",
+        "saved_style": "casual",
+        "fixture": "malformed authoritative container",
+        "expected_member_condition": "Unknown"
+      },
+      {
+        "id": "P01",
+        "fixture": "explicit casual and saved casual",
+        "expected": "Pass for occasion and separate casual formality"
+      },
+      {
+        "id": "P02",
+        "fixture": "explicit casual and saved smart casual",
+        "expected": "Unknown without matching declaration; no hierarchy"
+      },
+      {
+        "id": "P03",
+        "fixture": "explicit formal or black tie",
+        "expected": "PolicyUnavailable before garment overrides"
+      },
+      {
+        "id": "P04",
+        "fixture": "truthful owner review matches current value",
+        "expected": "Pass with owner-confirmed provenance"
+      },
+      {
+        "id": "P05",
+        "fixture": "saved style explicitly reported from model",
+        "expected": "Pass provisional; no human/model-accuracy certification"
+      },
+      {
+        "id": "P06",
+        "fixture": "legacy synthetic replica with style but no origin event",
+        "expected": "Pass provisional with origin unknown; zero stored changes"
+      },
+      {
+        "id": "P07",
+        "fixture": "old owner review stale; current saved label valid; source metadata absent",
+        "expected": "Pass provisional; old review remains stale"
+      },
+      {
+        "id": "P08",
+        "fixture": "review withdrawn; saved style remains valid",
+        "expected": "Pass provisional; withdrawal is not an occasion Deny"
+      },
+      {
+        "id": "P09",
+        "fixture": "new source metadata present but stale or malformed",
+        "expected": "Unknown; no downgrade to absent-origin bypass"
+      },
+      {
+        "id": "P10",
+        "fixture": "unreviewed casual outerwear plus valid base",
+        "expected": "Outerwear may pass; deterministic unchanged score decides structure"
+      },
+      {
+        "id": "P11",
+        "fixture": "unreviewed smart casual wedding",
+        "expected": "Unknown under unchanged strict wedding inference"
+      },
+      {
+        "id": "P12",
+        "fixture": "unreviewed smart casual academic presentation or interview",
+        "expected": "Unknown under unchanged AP/IP; role/code/other facts still needed"
+      },
+      {
+        "id": "P13",
+        "fixture": "empty, multiple or unrecognized style without exact Allow",
+        "expected": "Unknown; no category-only fallback"
+      },
+      {
+        "id": "P14",
+        "fixture": "explicit Allow and malformed root; Deny plus malformed root",
+        "expected": "Unknown for Allow case; Fail for applicable Deny case"
+      },
+      {
+        "id": "A01",
+        "fixture": "all processed candidates have valid supported categories and owned media; within quota",
+        "expected": "Automatically store every item, confirmed links and completed job; no Accept/Confirm UI action"
+      },
+      {
+        "id": "A02",
+        "fixture": "category valid but style absent",
+        "expected": "Automatically stored and considered; ordinary style condition Unknown"
+      },
+      {
+        "id": "A03",
+        "fixture": "local development fallback unclassified category",
+        "expected": "Incomplete; no automatic garment or fabricated style"
+      },
+      {
+        "id": "A04",
+        "fixture": "processing exception or no detections",
+        "expected": "Failed; no garment"
+      },
+      {
+        "id": "A05",
+        "fixture": "one candidate incomplete in multi-item batch",
+        "expected": "No automatic partial batch; valid candidates/drafts retained"
+      },
+      {
+        "id": "A06",
+        "fixture": "quota insufficient or concurrent count changes",
+        "expected": "No over-quota/partial write; controlled blocked result"
+      },
+      {
+        "id": "A07",
+        "fixture": "foreign owner or missing/invalid preferred media",
+        "expected": "No garment; ownership/media failure preserved"
+      },
+      {
+        "id": "A08",
+        "fixture": "cancel wins before finalization lock",
+        "expected": "Cancelled; no garment"
+      },
+      {
+        "id": "A09",
+        "fixture": "INSERT fault after first planned garment",
+        "expected": "Entire automatic batch rolls back"
+      },
+      {
+        "id": "A10",
+        "fixture": "retry after completed automatic job or lost response",
+        "expected": "Return same saved IDs; no duplicate/capacity charge"
+      },
+      {
+        "id": "A11",
+        "fixture": "legacy upload request omits admission_mode",
+        "expected": "Existing manual-review protocol retained"
+      },
+      {
+        "id": "A12",
+        "fixture": "genuinely incomplete category corrected in automatic-mode draft",
+        "expected": "One correction Save finalizes once ready; no second style attestation"
+      },
+      {
+        "id": "A13",
+        "fixture": "automatic adapter/client tries to forge owner/style/source audit",
+        "expected": "Reserved metadata rejected/stripped; no owner review written"
+      },
+      {
+        "id": "A14",
+        "fixture": "forged confirmed link to failed/non-completed job",
+        "expected": "Excluded by completed-job acquisition check"
+      },
+      {
+        "id": "A15",
+        "fixture": "initial/edited provenance and commit-time change",
+        "expected": "Actual source/value binding current; stale winner causes WardrobeChanged"
+      }
+    ],
+    "browser_groups": [
+      "default automatic Add -> saved Wardrobe -> shopping/class with no review POST",
+      "existing eight-item disposable replica; all five ordinary contexts without Edit or review",
+      "incomplete category and genuinely missing style distinguished",
+      "Deny/unknown/formal outcomes visible before context details",
+      "source disclosure: owner-confirmed vs saved-unreviewed/model-reported",
+      "optional correction, Cancel, failed save and stale snapshot",
+      "saved outfit/history/replay and durable auth",
+      "keyboard, full names, narrow width and native zoom"
+    ],
+    "historical_current_contract_transitions": {
+      "date_dinner": {
+        "E16": "InsufficientEvidence -> Selected",
+        "E17": "InsufficientEvidence -> Selected using current saved value, not stale owner proof",
+        "G07": "unreviewed outerwear may pass; exact winner/score can change"
+      },
+      "everyday": {
+        "CA03": "InsufficientEvidence -> Selected",
+        "SH03": "InsufficientEvidence -> Selected",
+        "CO03": "InsufficientEvidence -> Selected",
+        "N17": "InsufficientEvidence -> Selected using current saved value",
+        "N18": "unreviewed outerwear may pass; exact winner/score can change"
+      }
+    }
+  }
+}

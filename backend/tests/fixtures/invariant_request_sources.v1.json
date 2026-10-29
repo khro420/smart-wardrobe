@@ -1,0 +1,17 @@
+{
+  "version": "invariant-request-details-1.0.0",
+  "default_engine": "compact_exhaustive",
+  "default_profile": "compatibility_deferred",
+  "suitability_default": false,
+  "aggregation_capacity": 256,
+  "reference": {
+    "file": "tests/fixtures/invariant_request_reference/compact_scoring_facts.py",
+    "sha256": "612bf357c8f1c27edb6344297f4c45358f23546f212b29ebdedf1a263b7d3128"
+  },
+  "replacements": {
+    "app/application/recommendation/compact_scoring_facts.py": {
+      "before": "612bf357c8f1c27edb6344297f4c45358f23546f212b29ebdedf1a263b7d3128",
+      "after": "cb98ff0f62e51724789acb5cb812bdcf0b7bcf0bd66ee420ceda68f466a2a4f3"
+    }
+  }
+}

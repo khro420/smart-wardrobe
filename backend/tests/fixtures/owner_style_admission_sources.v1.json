@@ -1,0 +1,49 @@
+{
+  "version": "owner-style-admission-1.0.0",
+  "default_activation": false,
+  "replacements": {
+    "backend/app/domain/value_objects/requests.py": {
+      "before": "875f1b9fe618ac94bdc25cffeacd292c8ca5d97ead6795a78d58a8532bae617f",
+      "after": "adeb1925261c4a2dfacad266356c00ec40390c0ea29e1490b02704e47ce7b970"
+    },
+    "backend/app/application/garment_processing/review_service.py": {
+      "before": "64e0eb69da9fc23f1a858b6d0d0a4eb836de70166c7ad404aa59e30ce0497dbb",
+      "after": "97e0ab0f43c46078b9f9ad93928246df2ad7f06e7520de506dfbf6a317d695b0"
+    },
+    "backend/app/application/garment_processing/processing_job_service.py": {
+      "before": "e10c2162470f1febdd255fc586def52ddc5e73b313f6517f6d526d92017235a8",
+      "after": "de83d7be86a44a0eede9b90f2ab79104a20a98464cd4d2b495e6267ec11cdb08"
+    },
+    "backend/app/application/garment_processing/garment_processing_orchestrator.py": {
+      "before": "21bcf0c13e4bec6e4a01d94966aafffad819949b11aace0c1452f8cf731444e4",
+      "after": "600c201c8895acd68221d76c9a629f2e0a6a6f029ca71b9d9eef10f08aa490f2"
+    },
+    "backend/app/application/wardrobe/wardrobe_service.py": {
+      "before": "d6ed5b8bed31a724a56a6d29aec4b7a52341b075b61e167609650d72a3cab6df",
+      "after": "b966315446595d34eb366e6cb37bf29c5b17c7312b6b52114eda843853681678"
+    },
+    "frontend/lib/api.ts": {
+      "before": "8000806622e35d6ce4f96d57268147664eb1aada34e62d160daf894da9aa15ed",
+      "after": "9454efa15134ca1c10dbddfcbd2e47fbf560824bfc560acf91a14c5e174b31cc"
+    },
+    "frontend/app/extract/results/page.tsx": {
+      "before": "5ccc0562a422d45059521f81fa7d647c6b15a745d9a64d6c1e75f5dac5460cbc",
+      "after": "036463024568aae5b4400a53b839bebdd281a765a4da4498d77f50c37ca4c215"
+    },
+    "frontend/app/wardrobe/page.tsx": {
+      "before": "f5d8b4f886ffd74c373e8f4df63db175108aa555e0ae8f27a5049c75ccfb2008",
+      "after": "feb5c34d627f928b52b0ec07394dfacc485514c34ddff66fe911a61043f23b19"
+    },
+    "frontend/components/OutfitAssistant.tsx": {
+      "before": "b9361b04d3bd627732fa6b60cca58ccca2215ed5b0ebc417fe0f2404aecf7c85",
+      "after": "33ae0ef69846dfa0e5885d6821ad49d5921e842b89bdded611ce679024d31824"
+    },
+    "frontend/lib/recommendation-messages.ts": {
+      "before": "ef1bb841cbd85d443ab9dccdada5d71fdff6a9435a3a7c1effc587bff9728126",
+      "after": "50d8fb46bd2b7a66a63d817f16996a828597cec605b3ab3f159d0308cabdd71c"
+    }
+  },
+  "additions": {
+    "backend/app/application/wardrobe/owner_style_confirmation.py": "ec11b7648e10b21e8f05d3851e514a2ed080b9b8ba2fbc2c5023f3e3e3374c20"
+  }
+}

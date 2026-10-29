@@ -1,0 +1,75 @@
+{
+  "version": "contextual-wedding-1.0.0",
+  "default_activation": false,
+  "replacements": {
+    "backend/app/api/wardrobe_routes.py": {
+      "before": "e681a73864eb7483c1a112c9a58014159ed4546e265fd6d6c9f7d841169d1ef9",
+      "after": "4f6be857077c9f2cfd881946e272cffaaa463ec382d8982f875b3afb705dd4bb"
+    },
+    "backend/app/application/recommendation/compact_exhaustive_scorer.py": {
+      "before": "608f93bcfd7d30daa732a3b70848848831d891fc8d83669a1cc8c4ecbedcd78c",
+      "after": "807b659fd7a7851cb90b6657d432e90a65bbbf4f7e2398c49f56597c950aedca"
+    },
+    "backend/app/application/recommendation/compact_mandatory_verifier.py": {
+      "before": "fb404531c946d0b9003fbf3cd32229af18bdff0c86c4c0119978580821937e2b",
+      "after": "7e3c1e4738a82cf5088b9e8930f0775eec73dc9588f5fdf04f0dc0f4b901c3f0"
+    },
+    "backend/app/application/recommendation/outfit_assistant_service.py": {
+      "before": "6ca3a640029f65444d794c243a1759650c90059a98f99a2d3ea71c24f3431249",
+      "after": "eef2b26d5a8aab99fba10c3a01f80e6f86c53895a2c7010f243735ad6cc1cc4b"
+    },
+    "backend/app/application/recommendation/scoring_eligibility_gate.py": {
+      "before": "e405f2f854b5d58a1e80a5ccd2f464cf5c2ce378f61834a80994efb188fe693a",
+      "after": "2f70c640156a447ca88723d7deb8139c2fb2becbc86e9dfa5f2e3fb3c11fd3e1"
+    },
+    "backend/app/application/wardrobe/wardrobe_service.py": {
+      "before": "79a35f80c592afed20bc6ff40f14449d5e714cf544bae917aa39e145023b004b",
+      "after": "e998e00e15b3e8a33e365ceebf5fbbfc887999e19514a920240ec1b3894fe3b6"
+    },
+    "backend/app/domain/value_objects/requests.py": {
+      "before": "82a8e4358d3ea3458f0457683df450ac206967b8c7c4f90146614902fae081b9",
+      "after": "bbffd7f21f16115251973e492b758593bc18eb93c696d7730d2bc0225e5b44cc"
+    },
+    "backend/app/infrastructure/persistence/confirmed_garment_query_adapter.py": {
+      "before": "f316cf49a11e2f8f4a59bf60072ca6df43ca46f8a7ae03a0d977db35fbd33caf",
+      "after": "51ea581eed0a2c4eb5dddce2b48d23dea4ce8057bd642234009bdaea792d25da"
+    },
+    "backend/app/infrastructure/workflow_runtime.py": {
+      "before": "fc2bf4e01e5f8824efed512f5bbec940d92ee61f83d87ca3d989a58e91216614",
+      "after": "7cb02864c08c6857058251b71a3716bcea3f9e20f6024b9a650a39ad7ba7ac72"
+    },
+    "backend/app/shared_contracts/confirmed_garment_snapshot.py": {
+      "before": "9533e155c81f02588401b03bf54fcef0e7179e23ec0d758b40f3fd7deffdf658",
+      "after": "95259f37add8c04bf2b67ea91d51a731a46ba421ef8cb26ef8f59c7b2da36484"
+    },
+    "frontend/app/wardrobe/page.tsx": {
+      "before": "5611056ff4b28af83c1072f6215b4c84592cc03a041b07408fc129524005dc9b",
+      "after": "3e9464ef6c5b8dbef222fc24d947f9e86b16c25c06f39aa7ef824df5ce9d8133"
+    },
+    "frontend/lib/api.ts": {
+      "before": "5acada3cf1742ffcc7795b0641979e7d35e735dddbe93be2639a16c7eaa2ab5f",
+      "after": "b440930f7c1daf7521e1e3593b770f5d0840467a193ee9c434d3a2cb3be10bbf"
+    },
+    "frontend/lib/recommendation-messages.ts": {
+      "before": "cc4dc16ca349f0e83027d92d8fd8bf654a14e83810cdd5b235484dbb7b56985a",
+      "after": "20fe3796db66e2acd4e6ea5fae2f4359dc2de9e1e0ba477a633abfb824ef2991"
+    },
+    "frontend/components/OutfitAssistant.tsx": {
+      "before": "46ada89418cc19c9dc664ac79ccf37bd868c867e06f4bc2db4e87778b3e117f0",
+      "after": "39595273ebf2ad840bc8737ac0d0b2f31ef9ea4cb0e4c045db18264e554583d6"
+    },
+    "frontend/components/RecommendationResult.tsx": {
+      "before": "df14339413fed1cc95eef4909952d515a2b176c8dae74cdff5e4c2be41585ed8",
+      "after": "c1feeb51a63d1fbc1e90bf8cab58d3427273977c6c0bbc5d1c062abecb573743"
+    }
+  },
+  "additions": {
+    "backend/app/application/nlp/contextual_nlp_interpreter.py": "1fcd73d14037d5199510a3e6a56ebaa95768ba4f01bdd150d24cd18f9b6ee532",
+    "backend/app/application/recommendation/config/wedding_guest_suitability.v1.json": "c0eaf2af683e8278cc534b28a893e2cb9d4433816ddcda7d56f8bf66f49d7703",
+    "backend/app/application/recommendation/contextual_selection.py": "0430ec8492a06aef71f7768e3bd74d99150e672440c60f6473f276e8483e5847",
+    "backend/app/application/recommendation/contextual_suitability_evaluator.py": "b43b9cc49e2acc22e25550fab929e53d056ec1433882aaf83c7acf75c7919a33",
+    "backend/app/application/wardrobe/contextual_review.py": "9e14e7e69b1f8809009962c3c338e6b724d6a3cc6820749d8f7cb8c22ba7f15f",
+    "backend/app/domain/value_objects/contextual_garment_evidence.py": "0d538ef962c1aedf83fdfdbe710f1171efb6694e6a4ca4a6f46eb4645771bd90",
+    "backend/app/domain/value_objects/contextual_outfit_request.py": "d03f6918cc4d5308181cabef19186499255f934fa1e952bb9814fb728027d58f"
+  }
+}

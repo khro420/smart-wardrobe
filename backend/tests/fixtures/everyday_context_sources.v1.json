@@ -1,0 +1,47 @@
+{
+  "version": "everyday-context-1.0.0",
+  "default_activation": false,
+  "replacements": {
+    "backend/app/application/nlp/config/context_grammar.v1.json": {
+      "before": "39af89123f517077dba2fe40231733f65deec27340eb1188f53513313cb3368e",
+      "after": "d2a414eb52ac8ecc9325c82dbde658740bf72bbfea508168f97094b0186b28f9"
+    },
+    "backend/app/application/nlp/general_context_interpreter.py": {
+      "before": "26c12617823120cf0111e462d473b0d1862ee4e1ee9439afb6e1f12c8c5174a0",
+      "after": "f567e287422bb99a0a048a71542851bd8aba6979e36bdd643fa9d362ec5f1e94"
+    },
+    "backend/app/application/recommendation/config/context_policy_registry.v1.json": {
+      "before": "be0a8962070e27ff5ccb2ef229f1363c62c3cdeb01f5227d9196822583990090",
+      "after": "5749e30498bac15c2566add14888272084c39643b711804b39fe6827d3548017"
+    },
+    "backend/app/application/recommendation/config/situation_taxonomy.v1.json": {
+      "before": "d7560946ef69bc21785452646ca7f59827f6da69a460972fd63d83b3fdc3f955",
+      "after": "429e75d11e0a3dea6c8fbb499ed32c102aaaeacffe1ee59679dec03f1d952057"
+    },
+    "backend/app/application/recommendation/context_policy_registry.py": {
+      "before": "ebc923310ddd3303e96a104bdfda1fafe4f065ff6e57645089657348937c30ff",
+      "after": "706b542b5a2663751bddae6a20abb0643d291a9de8c7644b907742a6c780cc97"
+    },
+    "backend/app/application/recommendation/general_context_evaluator.py": {
+      "before": "0de77b38baa40c0d6f0df539e361d891cd1de13f978cbfd3d151e8eae95cff18",
+      "after": "e8705be8b37c7bba012f3ee49ebca4dc03e860d7f35dac00916c43506c905ae8"
+    },
+    "frontend/lib/api.ts": {
+      "before": "5c638637e0160cccbcd439832174dab752a45d30130596d739c932304a677083",
+      "after": "8000806622e35d6ce4f96d57268147664eb1aada34e62d160daf894da9aa15ed"
+    },
+    "frontend/lib/recommendation-messages.ts": {
+      "before": "db023b123c7c9f0f57c41fa788d689df63d23b22dac2dc788258d87f6be0250c",
+      "after": "ef1bb841cbd85d443ab9dccdada5d71fdff6a9435a3a7c1effc587bff9728126"
+    },
+    "frontend/components/OutfitAssistant.tsx": {
+      "before": "0ad83a8e69e2e185ff37f7b54e94b23f4a81b817722a0a43924a4bc697b938b2",
+      "after": "b9361b04d3bd627732fa6b60cca58ccca2215ed5b0ebc417fe0f2404aecf7c85"
+    },
+    "frontend/components/RecommendationResult.tsx": {
+      "before": "f9aff9537f3b1f7a6f793ddd06dd551a0f8c7ce87b651303611c1731f3f4d5bd",
+      "after": "20f86df8b156fa2e2331f9c83f4831de07924bed75f7733f43b908167c432c8a"
+    }
+  },
+  "additions": {}
+}

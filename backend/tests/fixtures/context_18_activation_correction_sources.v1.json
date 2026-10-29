@@ -1,0 +1,29 @@
+{
+  "version": "context-18-activation-correction-sources-1.0.0",
+  "default_activation": false,
+  "authority": "Owner-approved activation compatibility correction; no restart authority",
+  "replacements": {
+    "backend/app/application/nlp/context_expression_matcher.py": {
+      "before": "8fc28a65ab1ea4ed12f809b8b192a08686e3f9c923f33bdc4f1ebc884332fc4e",
+      "after": "02f5d4c928ff5c4b5176867469343aa2312b861c262cd698e9dd30d3c5e6a264"
+    },
+    "backend/tests/test_context_expansion_nlp.py": {
+      "before": "75219714eb4221656b8ac89b628eebf45f2a12f703fefabcd667891d50f91c21",
+      "after": "edc1d9fbeb75df4298707c9d51d93ff80c5c67adcb7525211b168f99d2bbd4ce"
+    },
+    "backend/tests/test_context_expansion_integration.py": {
+      "before": "35c88be55acbcff7177df247f082178665801745b1ee98f4ebdb85563e6f9c73",
+      "after": "0f5f94f77880f4bbb165f706b9894a9012426a32f9bc15c743d3f231641fc0b4"
+    }
+  },
+  "source_guard": {
+    "before": "f1d36488acbdde1d2dc7b710fbfac5225e40e0d81f2345d4170a568dc903eebc",
+    "after": "e50882ef30b37739ff7eda5896834dbd97dc1248c895fe51f42b269ddcb98610"
+  },
+  "original_expansion_manifest_sha256": "c4ce27fd910ba82cb07116a4a77d0179af17f191d51f26240b0f2083b2e77968",
+  "frozen_labels": {
+    "context_expansion_nlp_labels.v1.json": "4a7244ed31dbb05cff6a8436aa4e3f24d235bf257e60ae7b5931d603e192ec53",
+    "context_expansion_labels.v1.json": "6e3e72c61b4c6ce9c337dcd076cf8589d8683e404ae1d1d1576ddd53b5cc66a9"
+  },
+  "approved_candidate_sha256": "02f5d4c928ff5c4b5176867469343aa2312b861c262cd698e9dd30d3c5e6a264"
+}

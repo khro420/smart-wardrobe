@@ -1,0 +1,53 @@
+{
+  "version": "context-grammar-1.3.0",
+  "frames": [
+    "going",
+    "attending",
+    "having",
+    "meeting",
+    "wanting",
+    "command",
+    "going_out",
+    "outfit_question",
+    "presenting",
+    "being_interviewed",
+    "conducting_interview"
+  ],
+  "roles": [
+    "guest",
+    "bride",
+    "groom",
+    "bridesmaid",
+    "groomsman",
+    "presenter",
+    "attendee",
+    "candidate",
+    "graduate",
+    "interviewer"
+  ],
+  "dress_codes": {
+    "smart casual": "smart_casual",
+    "casual": "casual",
+    "formal": "formal",
+    "black tie": "black_tie"
+  },
+  "venues": [
+    "hotel",
+    "office",
+    "restaurant",
+    "university",
+    "outdoors",
+    "indoors",
+    "company",
+    "campus"
+  ],
+  "temporal": [
+    "tomorrow",
+    "tonight",
+    "today"
+  ],
+  "goals": [
+    "comfortable"
+  ],
+  "temporal_contract": "current_wardrobe_no_forecast_or_future_availability"
+}

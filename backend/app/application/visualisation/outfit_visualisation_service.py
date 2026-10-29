@@ -97,6 +97,7 @@ def run_visualisation(visualisation_id, user_id):
         # Keep the record queued while another AI subsystem owns the GPU.
         with runtime().gpu_slot():
             with connection() as conn:
+                conn.execute("BEGIN IMMEDIATE")
                 claimed = conn.execute(
                     "UPDATE visualisations SET status='processing',started_at=?,updated_at=?,"
                     "progress_percent=2,progress_message='Preparing the requested outfit.' "
@@ -116,6 +117,19 @@ def run_visualisation(visualisation_id, user_id):
                     "ORDER BY item_order",
                     (visualisation_id,),
                 ).fetchall()
+                if visual["source_type"] in ("recommendation", "outfit"):
+                    try:
+                        current, _ = resolve_source(
+                            conn, user_id,
+                            outfit_id=visual["outfit_id"] if visual["source_type"] == "outfit" else None,
+                            recommendation_id=visual["recommendation_id"] if visual["source_type"] == "recommendation" else None,
+                        )
+                    except HTTPException:
+                        raise VTONFailure("unprocessable") from None
+                    expected = tuple((x.garment_id,x.source_media_id,x.category,x.role,x.item_order) for x in current.garments)
+                    captured = tuple((x["garment_id"],x["source_media_id"],x["category"],x["role"],x["item_order"]) for x in items)
+                    if expected != captured:
+                        raise VTONFailure("unprocessable")
                 for item in items:
                     if not conn.execute(
                         "SELECT id FROM garments WHERE id=? AND user_id=? "

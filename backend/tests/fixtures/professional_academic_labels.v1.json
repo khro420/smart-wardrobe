@@ -1,0 +1,662 @@
+{
+  "version": "professional-academic-proposed-labels-1.0.0",
+  "status": "APPROVED CONTRACT LABELS / EXECUTION RECORDED SEPARATELY",
+  "method": "Author-labelled proposed contract cases; independent of any future implementation, not NLP accuracy or independently validated fashion quality.",
+  "assumption": "Outcomes apply only after explicit approval and correct implementation of the recommended rules/crosswalk/evidence contract. They are not current application results.",
+  "fixtures": {
+    "A0": "One synthetic owned/available/confirmed blue vest_dress, current singleton owner-reviewed smart casual style, clean declaration/context collections, no preferences.",
+    "A1": "A0 with current singleton reviewed casual style.",
+    "I0": "A0 plus PROPOSED current owner-reviewed structured_shape=true and clean_intact condition observation, exact value/category/media binding; no implied fit/quality/professional certification.",
+    "I4": "top-A long_sleeve_top / bottom-A trousers / dress-A vest_dress / outer-A long_sleeve_outwear; blue, reviewed smart casual; proposed positive collared/tailored/structured/structured features respectively and clean_intact observations; no preferences."
+  },
+  "cases": [
+    {
+      "id": "N01",
+      "scope": "proposed_phase3",
+      "request": "I have a job interview tomorrow.",
+      "fixture": "I0",
+      "proposed_outcome": "PolicyUnavailable",
+      "assertion": "Recognise job interview and timing; role and code unspecified. No candidate or code assumption."
+    },
+    {
+      "id": "N02",
+      "scope": "proposed_phase3",
+      "request": "What should I wear to an interview?",
+      "fixture": "I0",
+      "proposed_outcome": "PolicyUnavailable",
+      "assertion": "Recognise neutral interview.unspecified, not automatically employment. No mandatory Suggest prefix."
+    },
+    {
+      "id": "N03",
+      "scope": "proposed_phase3",
+      "request": "I'm attending an interview at a company.",
+      "fixture": "I0",
+      "proposed_outcome": "PolicyUnavailable",
+      "assertion": "Neutral interview; stated company venue, not automatically job domain, office or candidate role."
+    },
+    {
+      "id": "N04",
+      "scope": "proposed_phase3",
+      "request": "I have a presentation at university.",
+      "fixture": "A0",
+      "proposed_outcome": "PolicyUnavailable",
+      "assertion": "Academic context established; role remains unspecified."
+    },
+    {
+      "id": "N05",
+      "scope": "proposed_phase3",
+      "request": "I'm presenting my project tomorrow.",
+      "fixture": "A0",
+      "proposed_outcome": "PolicyUnavailable",
+      "assertion": "Neutral presentation.unspecified; presenter follows explicit verb; university remains unknown."
+    },
+    {
+      "id": "N06",
+      "scope": "proposed_phase3",
+      "request": "Suggest an outfit for my university presentation.",
+      "fixture": "A0",
+      "proposed_outcome": "PolicyUnavailable",
+      "assertion": "Academic context; possessive my does not establish presenter role."
+    },
+    {
+      "id": "N07",
+      "scope": "graduation_assessment_only",
+      "request": "I'm attending a graduation ceremony.",
+      "fixture": "I0",
+      "proposed_outcome": "PolicyUnavailable",
+      "assertion": "Recognise graduation; ceremony is meaningful event wording; no guest/graduate assumption or binding."
+    },
+    {
+      "id": "N08",
+      "scope": "proposed_phase3",
+      "request": "I'm presenting my project at university tomorrow.",
+      "fixture": "A0",
+      "proposed_outcome": "Selected",
+      "assertion": "Explicit presenter/university; AP01 provisional smart-casual appearance only; time adds no bonus; total 7/10."
+    },
+    {
+      "id": "N09",
+      "scope": "proposed_phase3",
+      "request": "I'm in the audience at a university presentation.",
+      "fixture": "A1",
+      "proposed_outcome": "Selected",
+      "assertion": "Explicit attendee role; AP02 provisional casual/smart-casual appearance; total 7/10."
+    },
+    {
+      "id": "N10",
+      "scope": "proposed_phase3",
+      "request": "I'm being interviewed for a job; the dress code is smart casual.",
+      "fixture": "I0",
+      "proposed_outcome": "Selected",
+      "assertion": "Explicit passive role candidate, explicit employment, supported code; IP01; total 7/10."
+    },
+    {
+      "id": "N11",
+      "scope": "proposed_phase3",
+      "request": "I'm conducting a job interview; the dress code is smart casual.",
+      "fixture": "I0",
+      "proposed_outcome": "Selected",
+      "assertion": "Explicit interviewer role; same bounded appearance heuristic, no claimed universal role equivalence."
+    },
+    {
+      "id": "N12",
+      "scope": "proposed_phase3",
+      "request": "I'm interviewing tomorrow.",
+      "fixture": "I0",
+      "proposed_outcome": "PolicyUnavailable",
+      "assertion": "Neutral interview; role ambiguous/unresolved, no choosing candidate or interviewer."
+    },
+    {
+      "id": "N13",
+      "scope": "proposed_phase3",
+      "request": "Suggest an outfit for a job interview as a candidate; the dress code is smart casual.",
+      "fixture": "I0",
+      "proposed_outcome": "Selected",
+      "assertion": "Equivalent to N10: same scope, gates, exact scores and winner."
+    },
+    {
+      "id": "N14",
+      "scope": "proposed_phase3",
+      "request": "Suggest an outfit for a university presentation as a presenter.",
+      "fixture": "A0",
+      "proposed_outcome": "Selected",
+      "assertion": "Equivalent explicit academic/presenter statement; AP01; no invented requested formality."
+    },
+    {
+      "id": "N15",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a university presentation.",
+      "fixture": "A0",
+      "proposed_outcome": "PolicyUnavailable",
+      "assertion": "Attending alone does not prove audience role: a presenter can attend too."
+    },
+    {
+      "id": "N16",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a job interview as a candidate at a company; the dress code is smart casual.",
+      "fixture": "I0",
+      "proposed_outcome": "Selected",
+      "assertion": "Company retained as stated venue; does not prove industry, indoor setting, code or garment properties."
+    },
+    {
+      "id": "I01",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a job interview as a candidate; the dress code is smart casual.",
+      "fixture": "A0",
+      "proposed_outcome": "InsufficientEvidence",
+      "assertion": "Reviewed smart-casual style alone does not establish IP01 appearance features or condition."
+    },
+    {
+      "id": "I02",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a job interview as a candidate; the dress code is smart casual.",
+      "fixture": "I0",
+      "proposed_outcome": "Selected",
+      "assertion": "Current reviewed smart-casual + structured one-piece + clean/intact observation: conditional appearance suggestion, 7/10."
+    },
+    {
+      "id": "I03",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a job interview as a candidate; the dress code is smart casual.",
+      "fixture": "I0 missing feature",
+      "proposed_outcome": "InsufficientEvidence",
+      "assertion": "No feature inferred from category, style, material, image suggestion or confidence."
+    },
+    {
+      "id": "I04",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a job interview as a candidate; the dress code is smart casual.",
+      "fixture": "I0 with structured_shape=false",
+      "proposed_outcome": "InsufficientEvidence",
+      "assertion": "An uncovered design is Unknown, not a universal inappropriate-fashion judgement."
+    },
+    {
+      "id": "I05",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a job interview as a candidate; the dress code is smart casual.",
+      "fixture": "I0 with condition_observation=needs_attention",
+      "proposed_outcome": "NoMatchingCandidates",
+      "assertion": "Approved negative condition gate fails, independent of smart-casual style."
+    },
+    {
+      "id": "I06",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a job interview as a candidate; the dress code is smart casual.",
+      "fixture": "I0 missing condition observation",
+      "proposed_outcome": "InsufficientEvidence",
+      "assertion": "No assumed cleanliness, intactness or current condition."
+    },
+    {
+      "id": "I07",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a job interview as a candidate; the dress code is smart casual.",
+      "fixture": "I0 with stale value/category/media binding",
+      "proposed_outcome": "InsufficientEvidence",
+      "assertion": "Stale evidence cannot supply positive facts."
+    },
+    {
+      "id": "I08",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a job interview as a candidate; the dress code is smart casual.",
+      "fixture": "I0 with conflicting canonical/mirror evidence",
+      "proposed_outcome": "InsufficientEvidence",
+      "assertion": "Malformed/conflicting authoritative evidence blocks inference."
+    },
+    {
+      "id": "I09",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a job interview as a candidate; the dress code is smart casual.",
+      "fixture": "I0 with model-only high-confidence appearance suggestions",
+      "proposed_outcome": "InsufficientEvidence",
+      "assertion": "Raw confidence or generic garment confirmation is not field review."
+    },
+    {
+      "id": "I10",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a job interview as a candidate; the dress code is smart casual.",
+      "fixture": "I0 with current style classic",
+      "proposed_outcome": "InsufficientEvidence",
+      "assertion": "Uncovered style is Unknown even with positive construction/condition."
+    },
+    {
+      "id": "I11",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a job interview as a candidate.",
+      "fixture": "I0",
+      "proposed_outcome": "PolicyUnavailable",
+      "assertion": "IP02: unspecified code cannot inherit wedding/date/dinner defaults."
+    },
+    {
+      "id": "I12",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a job interview as a candidate; the dress code is casual.",
+      "fixture": "I0",
+      "proposed_outcome": "PolicyUnavailable",
+      "assertion": "IP03: casual code recognised but no interview-casual policy proposed in first increment."
+    },
+    {
+      "id": "I13",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a formal job interview as a candidate.",
+      "fixture": "I0 + formal Allow",
+      "proposed_outcome": "PolicyUnavailable",
+      "assertion": "IP04: explicit Allow cannot enable unsupported formal capability."
+    },
+    {
+      "id": "I14",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a job interview as a candidate; the dress code is business casual.",
+      "fixture": "I0",
+      "proposed_outcome": "UnsupportedRequest",
+      "assertion": "Business casual is not silently rewritten to smart casual in the initial bounded grammar."
+    },
+    {
+      "id": "I15",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a job interview as a candidate in a laboratory; the dress code is smart casual.",
+      "fixture": "I0",
+      "proposed_outcome": "UnsupportedRequest",
+      "assertion": "Specialised environment requirement is retained/rejected, not stripped."
+    },
+    {
+      "id": "A01",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a university presentation as a presenter.",
+      "fixture": "A0",
+      "proposed_outcome": "Selected",
+      "assertion": "AP01: disclosed provisional smart-casual appearance; no formality condition or score term invented; 7/10."
+    },
+    {
+      "id": "A02",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a university presentation as an attendee.",
+      "fixture": "A1",
+      "proposed_outcome": "Selected",
+      "assertion": "AP02: disclosed provisional casual/smart-casual appearance; 7/10."
+    },
+    {
+      "id": "A03",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a university presentation as a presenter.",
+      "fixture": "A1",
+      "proposed_outcome": "InsufficientEvidence",
+      "assertion": "Unspecified-code presenter rule does not cover casual review; do not relabel a correct style."
+    },
+    {
+      "id": "A04",
+      "scope": "proposed_phase3",
+      "request": "Suggest an outfit for a casual university presentation as a presenter.",
+      "fixture": "A1",
+      "proposed_outcome": "Selected",
+      "assertion": "AP03: explicitly requested casual admits exact casual reviewed evidence; 7/10."
+    },
+    {
+      "id": "A05",
+      "scope": "proposed_phase3",
+      "request": "Suggest an outfit for a smart casual university presentation as an attendee.",
+      "fixture": "A0",
+      "proposed_outcome": "Selected",
+      "assertion": "AP04: exact smart-casual code/field; no formality hierarchy."
+    },
+    {
+      "id": "A06",
+      "scope": "proposed_phase3",
+      "request": "Suggest an outfit for a casual university presentation as an attendee.",
+      "fixture": "A0",
+      "proposed_outcome": "InsufficientEvidence",
+      "assertion": "Reviewed smart-casual is not evidence for explicit casual under exact matching."
+    },
+    {
+      "id": "A07",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a university presentation as a presenter.",
+      "fixture": "A0 without style review",
+      "proposed_outcome": "InsufficientEvidence",
+      "assertion": "Saved/model style alone is insufficient."
+    },
+    {
+      "id": "A08",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a university presentation as a presenter.",
+      "fixture": "A0 with stale style/category review",
+      "proposed_outcome": "InsufficientEvidence",
+      "assertion": "Existing staleness rule retained."
+    },
+    {
+      "id": "A09",
+      "scope": "proposed_phase3",
+      "request": "Suggest a formal outfit for a university presentation as a presenter.",
+      "fixture": "A0 + formal Allow",
+      "proposed_outcome": "PolicyUnavailable",
+      "assertion": "AP05: no formal support even with Allow."
+    },
+    {
+      "id": "A10",
+      "scope": "proposed_phase3",
+      "request": "I'm presenting my project at university outdoors tomorrow.",
+      "fixture": "A0",
+      "proposed_outcome": "UnsupportedRequest",
+      "assertion": "No outdoor/weather capability; this unrepresented environment must not be removed."
+    },
+    {
+      "id": "D01",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a job interview as a candidate; the dress code is smart casual.",
+      "fixture": "I0 + work Deny",
+      "proposed_outcome": "NoMatchingCandidates",
+      "assertion": "Approved proposed work negative scope applies to employment interviews."
+    },
+    {
+      "id": "D02",
+      "scope": "proposed_phase3",
+      "request": "Suggest an outfit for an employment interview as a candidate; the dress code is smart casual.",
+      "fixture": "I0 + work Deny",
+      "proposed_outcome": "NoMatchingCandidates",
+      "assertion": "Employment/job wording has identical scope; no alias bypass."
+    },
+    {
+      "id": "D03",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a job interview as a candidate; the dress code is smart casual.",
+      "fixture": "A0 + work Allow",
+      "proposed_outcome": "InsufficientEvidence",
+      "assertion": "Work Allow is not interview Allow; required additional observations still missing."
+    },
+    {
+      "id": "D04",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a job interview as a candidate; the dress code is smart casual.",
+      "fixture": "I0 + work Allow and work Deny",
+      "proposed_outcome": "NoMatchingCandidates",
+      "assertion": "Identifiable Deny first; original v1 conflict behaviour itself unchanged."
+    },
+    {
+      "id": "D05",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a university presentation as a presenter.",
+      "fixture": "A0 + campus Deny",
+      "proposed_outcome": "NoMatchingCandidates",
+      "assertion": "Approved proposed campus negative scope applies to explicit university presentation, both roles."
+    },
+    {
+      "id": "D06",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a university presentation as an attendee.",
+      "fixture": "A1 + campus Deny",
+      "proposed_outcome": "NoMatchingCandidates",
+      "assertion": "Attendee wording does not escape relevant negative scope."
+    },
+    {
+      "id": "D07",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a university presentation as a presenter.",
+      "fixture": "A0 without review + campus Allow",
+      "proposed_outcome": "InsufficientEvidence",
+      "assertion": "Campus Allow cannot establish presentation style evidence."
+    },
+    {
+      "id": "D08",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a university presentation as a presenter.",
+      "fixture": "A0 + work Deny",
+      "proposed_outcome": "Selected",
+      "assertion": "No work scope inferred solely from academic presentation; 7/10."
+    },
+    {
+      "id": "D09",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a job interview as a candidate; the dress code is smart casual.",
+      "fixture": "I0 + campus Deny",
+      "proposed_outcome": "Selected",
+      "assertion": "No university context or inherited campus scope; 7/10."
+    },
+    {
+      "id": "D10",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a job interview as a candidate; the dress code is smart casual.",
+      "fixture": "I0 + smart_casual formality Deny",
+      "proposed_outcome": "NoMatchingCandidates",
+      "assertion": "Explicit requested formality Deny still mandatory."
+    },
+    {
+      "id": "D11",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a job interview as a candidate; the dress code is smart casual.",
+      "fixture": "A0 + smart_casual formality Allow",
+      "proposed_outcome": "InsufficientEvidence",
+      "assertion": "Exact formality Allow is explicit positive for that condition only, not missing interview facts."
+    },
+    {
+      "id": "D12",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a university presentation as a presenter.",
+      "fixture": "A0 + smart_casual formality Deny",
+      "proposed_outcome": "Selected",
+      "assertion": "No explicit code/formality: provisional appearance predicate does not invent that condition; 7/10."
+    },
+    {
+      "id": "D13",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a job interview as a candidate; the dress code is smart casual.",
+      "fixture": "I0 + work Deny + malformed reserved tag",
+      "proposed_outcome": "NoMatchingCandidates",
+      "assertion": "Identifiable relevant Deny wins before malformed barrier."
+    },
+    {
+      "id": "D14",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a job interview as a candidate; the dress code is smart casual.",
+      "fixture": "I0 + work Allow + malformed reserved tag",
+      "proposed_outcome": "InsufficientEvidence",
+      "assertion": "Malformed authoritative collection blocks inference."
+    },
+    {
+      "id": "D15",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a job interview as a candidate; the dress code is smart casual.",
+      "fixture": "I0 + rec:v1:occasion:interview:allow",
+      "proposed_outcome": "InsufficientEvidence",
+      "assertion": "Unknown v1 target remains malformed, never becomes a newly valid interview override."
+    },
+    {
+      "id": "D16",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a job interview as a candidate; the dress code is smart casual.",
+      "fixture": "I0 + wedding Allow + date Deny",
+      "proposed_outcome": "Selected",
+      "assertion": "Unrelated scopes supply no positive evidence or interview veto; 7/10."
+    },
+    {
+      "id": "G01",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a job interview as a candidate; the dress code is smart casual.",
+      "fixture": "I0 archived only",
+      "proposed_outcome": "NoEligibleGarments",
+      "assertion": "Strict current query eligibility unchanged."
+    },
+    {
+      "id": "G02",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a university presentation as a presenter.",
+      "fixture": "A0 unavailable only",
+      "proposed_outcome": "NoEligibleGarments",
+      "assertion": "No stored unavailable garment admitted."
+    },
+    {
+      "id": "G03",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a job interview as a candidate; the dress code is smart casual.",
+      "fixture": "I0 foreign owner only",
+      "proposed_outcome": "NoEligibleGarments",
+      "assertion": "No owner crossing."
+    },
+    {
+      "id": "G04",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a university presentation as a presenter.",
+      "fixture": "A0 unconfirmed or NULL processing link only",
+      "proposed_outcome": "NoEligibleGarments",
+      "assertion": "No unconfirmed/legacy NULL-link trust."
+    },
+    {
+      "id": "G05",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a job interview as a candidate; the dress code is smart casual.",
+      "fixture": "One approved upper only",
+      "proposed_outcome": "InsufficientStructure",
+      "assertion": "No lower/one-piece invented."
+    },
+    {
+      "id": "G06",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a job interview as a candidate; the dress code is smart casual.",
+      "fixture": "I4",
+      "proposed_outcome": "Selected",
+      "assertion": "Four structures/every candidate; R=1/P=0; singleton 7/10, paired 4/5; stable dress-A+outer-A wins."
+    },
+    {
+      "id": "G07",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a job interview as a candidate; the dress code is smart casual.",
+      "fixture": "I4 with outerwear work Deny",
+      "proposed_outcome": "Selected",
+      "assertion": "Two outerwear candidates fail; two base candidates pass; paired upper+lower wins 4/5."
+    },
+    {
+      "id": "G08",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a job interview as a candidate; the dress code is smart casual.",
+      "fixture": "I4 with outerwear missing appearance review",
+      "proposed_outcome": "Selected",
+      "assertion": "Outerwear structures Unknown; never implicitly allowed; upper+lower wins 4/5."
+    },
+    {
+      "id": "G09",
+      "scope": "proposed_phase3",
+      "request": "Suggest an outfit with red for a job interview as a candidate; the dress code is smart casual.",
+      "fixture": "I0 blue",
+      "proposed_outcome": "NoMatchingCandidates",
+      "assertion": "Hard colour contradiction still fails before scoring."
+    },
+    {
+      "id": "G10",
+      "scope": "proposed_phase3",
+      "request": "Suggest an outfit with trousers for a university presentation as a presenter.",
+      "fixture": "A0 dress only",
+      "proposed_outcome": "NoMatchingCandidates",
+      "assertion": "Hard category constraint not relaxed."
+    },
+    {
+      "id": "G11",
+      "scope": "proposed_phase3",
+      "request": "Interview or university presentation",
+      "fixture": "I0",
+      "proposed_outcome": "UnsupportedRequest",
+      "assertion": "No choosing more permissive policy from competing events."
+    },
+    {
+      "id": "G12",
+      "scope": "proposed_phase3",
+      "request": "I'm not attending a job interview.",
+      "fixture": "I0",
+      "proposed_outcome": "UnsupportedRequest",
+      "assertion": "Negation not stripped."
+    },
+    {
+      "id": "P01",
+      "scope": "proposed_phase3",
+      "request": "Replay prior successful wedding/date/dinner key/text after new bundle selection",
+      "fixture": "Old stored result",
+      "proposed_outcome": "Selected",
+      "assertion": "Exact stored scores/provenance and history unchanged; no reinterpretation."
+    },
+    {
+      "id": "P02",
+      "scope": "proposed_phase3",
+      "request": "Replay new successful interview key/text after restart/profile change",
+      "fixture": "I0 stored result",
+      "proposed_outcome": "Selected",
+      "assertion": "Stored proof returned; current eligibility actions remain independently revalidated."
+    },
+    {
+      "id": "P03",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a job interview as a candidate; the dress code is smart casual.",
+      "fixture": "I0 changed required appearance evidence after ranking before commit",
+      "proposed_outcome": "WardrobeChanged",
+      "assertion": "Real snapshot revalidation; no partial chat/result or leaked proof."
+    },
+    {
+      "id": "P04",
+      "scope": "proposed_phase3",
+      "request": "Same successful key with another paraphrase",
+      "fixture": "I0 stored result",
+      "proposed_outcome": "IdempotencyConflict",
+      "assertion": "Exact request-text contract retained, despite semantic equivalence."
+    },
+    {
+      "id": "P05",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a university presentation as a presenter.",
+      "fixture": "A0 normal API/browser",
+      "proposed_outcome": "Selected",
+      "assertion": "Visible provisional note; no professional/fit/footwear claim; full name and explanations fit narrow/native200% layouts."
+    },
+    {
+      "id": "P06",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a job interview as a candidate; the dress code is smart casual.",
+      "fixture": "I0 normal API/browser",
+      "proposed_outcome": "Selected",
+      "assertion": "Show actual extra observations and dates, explicit code/role and provisional scope, not just generic style basis."
+    },
+    {
+      "id": "P07",
+      "scope": "proposed_phase3",
+      "request": "I'm attending a job interview as a candidate; the dress code is smart casual.",
+      "fixture": "100 approved snapshots, <=2 requested conditions",
+      "proposed_outcome": "Selected",
+      "assertion": "Prepared O(N*K*bounded atoms), no per-candidate parser/DB/config/model access; exact counts/call bounds declared first."
+    },
+    {
+      "id": "P08",
+      "scope": "proposed_phase3",
+      "request": "Review appearance details via existing authenticated route",
+      "fixture": "Disposable two owners with stale revision and injected write error",
+      "proposed_outcome": "Controlled review outcomes",
+      "assertion": "Own-only writes, strict fields/source, stale409, rollback, old style/wedding payloads preserved; no automatic suggestions promoted."
+    },
+    {
+      "id": "R01",
+      "scope": "graduation_assessment_only",
+      "request": "I'm attending a graduation as a guest; the dress code is smart casual.",
+      "fixture": "I0",
+      "proposed_outcome": "PolicyUnavailable",
+      "assertion": "No graduation binding even with complete interview/academic evidence."
+    },
+    {
+      "id": "R02",
+      "scope": "graduation_assessment_only",
+      "request": "I'm graduating tomorrow.",
+      "fixture": "I0",
+      "proposed_outcome": "PolicyUnavailable",
+      "assertion": "Graduate role may be understood; regalia/dress rules and policy missing."
+    },
+    {
+      "id": "R03",
+      "scope": "graduation_assessment_only",
+      "request": "I'm attending a formal graduation ceremony.",
+      "fixture": "I0 + campus Allow",
+      "proposed_outcome": "PolicyUnavailable",
+      "assertion": "No formal capability, parent Allow, or wedding-policy transfer."
+    },
+    {
+      "id": "R04",
+      "scope": "graduation_assessment_only",
+      "request": "I'm attending a graduation ceremony.",
+      "fixture": "I0 + campus Deny",
+      "proposed_outcome": "PolicyUnavailable",
+      "assertion": "Graduation scope remains undecided; admission stops before garment selection."
+    }
+  ]
+}

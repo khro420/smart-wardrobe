@@ -1,0 +1,241 @@
+{
+  "version": "context-relevance-objectives-1.1.0",
+  "policy_version": "context-relevance-policy-1.1.0",
+  "basis": "unvalidated_normative_prototype",
+  "entries": [
+    {
+      "situation": "everyday.shopping",
+      "binding_id": "shopping_appearance_v1",
+      "objective_id": "prototype.everyday.shopping",
+      "target": "casual",
+      "allowed_venues": [],
+      "allowed_companions": [],
+      "authority": "prototype_convention",
+      "explanation": "Using the prototype casual appearance default for ordinary shopping. This is a soft appearance goal, not a dress code or comfort assessment.",
+      "limitations": "Unvalidated prototype appearance goal using recorded styles, which may be unreviewed. No dress-code compliance, physical fit, weather protection, comfort, gender convention, footwear completeness or independent fashion accuracy is established."
+    },
+    {
+      "situation": "everyday.academic_attendance",
+      "binding_id": "campus_day_appearance_v1",
+      "objective_id": "prototype.everyday.academic_attendance",
+      "target": "casual",
+      "allowed_venues": [
+        "university",
+        "campus"
+      ],
+      "allowed_companions": [],
+      "authority": "prototype_convention",
+      "explanation": "Using the prototype casual appearance default for ordinary classes. Institutional, lab and uniform requirements are not established.",
+      "limitations": "Unvalidated prototype appearance goal using recorded styles, which may be unreviewed. No dress-code compliance, physical fit, weather protection, comfort, gender convention, footwear completeness or independent fashion accuracy is established."
+    },
+    {
+      "situation": "everyday.casual_outing",
+      "binding_id": "casual_outing_appearance_v1",
+      "objective_id": "prototype.everyday.casual_outing",
+      "target": "casual",
+      "allowed_venues": [],
+      "allowed_companions": [
+        "friends"
+      ],
+      "authority": "prototype_convention",
+      "explanation": "Using the prototype casual appearance default for this ordinary outing. Friends does not determine clothing requirements.",
+      "limitations": "Unvalidated prototype appearance goal using recorded styles, which may be unreviewed. No dress-code compliance, physical fit, weather protection, comfort, gender convention, footwear completeness or independent fashion accuracy is established."
+    },
+    {
+      "situation": "social.date",
+      "binding_id": "date_appearance_v1",
+      "objective_id": "prototype.social.date",
+      "target": "smart casual",
+      "allowed_venues": [
+        "restaurant",
+        "cafe"
+      ],
+      "allowed_companions": [],
+      "authority": "prototype_convention",
+      "explanation": "Using the prototype smart-casual appearance default for an ordinary date. Casual may also be appropriate; no venue or dress code was inferred.",
+      "limitations": "Unvalidated prototype appearance goal using recorded styles, which may be unreviewed. No dress-code compliance, physical fit, weather protection, comfort, gender convention, footwear completeness or independent fashion accuracy is established."
+    },
+    {
+      "situation": "social.meal",
+      "binding_id": "dinner_appearance_v1",
+      "objective_id": "prototype.social.meal",
+      "target": "smart casual",
+      "allowed_venues": [
+        "restaurant"
+      ],
+      "allowed_companions": [
+        "friends",
+        "family"
+      ],
+      "authority": "prototype_convention",
+      "explanation": "Using the prototype smart-casual appearance default for ordinary dinner. This is not a restaurant requirement; an explicit style request can override it.",
+      "limitations": "Unvalidated prototype appearance goal using recorded styles, which may be unreviewed. No dress-code compliance, physical fit, weather protection, comfort, gender convention, footwear completeness or independent fashion accuracy is established."
+    },
+    {
+      "situation": "academic.library_study",
+      "binding_id": "library_study_appearance_v1",
+      "objective_id": "prototype.academic.library_study",
+      "target": "casual",
+      "allowed_venues": [
+        "library",
+        "university",
+        "campus"
+      ],
+      "allowed_companions": [
+        "friends",
+        "classmates"
+      ],
+      "authority": "prototype_convention",
+      "explanation": "Using the prototype casual appearance goal for ordinary library study. This is a soft goal, not an externally required dress code.",
+      "limitations": "Independent appropriateness remains unvalidated. Saved labels may be unreviewed. No employer/institution/venue code, comfort, physical fit, weather protection, equipment, footwear or safety is established."
+    },
+    {
+      "situation": "academic.group_study",
+      "binding_id": "group_study_appearance_v1",
+      "objective_id": "prototype.academic.group_study",
+      "target": "casual",
+      "allowed_venues": [
+        "university",
+        "campus",
+        "library"
+      ],
+      "allowed_companions": [
+        "friends",
+        "classmates"
+      ],
+      "authority": "prototype_convention",
+      "explanation": "Using the prototype casual appearance goal for ordinary group study. This is a soft goal, not an externally required dress code.",
+      "limitations": "Independent appropriateness remains unvalidated. Saved labels may be unreviewed. No employer/institution/venue code, comfort, physical fit, weather protection, equipment, footwear or safety is established."
+    },
+    {
+      "situation": "professional.office_day",
+      "binding_id": "office_day_appearance_v1",
+      "objective_id": "prototype.professional.office_day",
+      "target": "smart casual",
+      "allowed_venues": [
+        "office",
+        "company"
+      ],
+      "allowed_companions": [
+        "colleagues"
+      ],
+      "authority": "prototype_convention",
+      "explanation": "Using the prototype smart casual appearance goal for ordinary office day. This is a soft goal, not an externally required dress code.",
+      "limitations": "Independent appropriateness remains unvalidated. Saved labels may be unreviewed. No employer/institution/venue code, comfort, physical fit, weather protection, equipment, footwear or safety is established."
+    },
+    {
+      "situation": "professional.workplace_meeting",
+      "binding_id": "workplace_meeting_appearance_v1",
+      "objective_id": "prototype.professional.workplace_meeting",
+      "target": "smart casual",
+      "allowed_venues": [
+        "office",
+        "company"
+      ],
+      "allowed_companions": [
+        "colleagues"
+      ],
+      "authority": "prototype_convention",
+      "explanation": "Using the prototype smart casual appearance goal for ordinary workplace meeting. This is a soft goal, not an externally required dress code.",
+      "limitations": "Independent appropriateness remains unvalidated. Saved labels may be unreviewed. No employer/institution/venue code, comfort, physical fit, weather protection, equipment, footwear or safety is established."
+    },
+    {
+      "situation": "social.birthday_gathering",
+      "binding_id": "birthday_gathering_appearance_v1",
+      "objective_id": "prototype.social.birthday_gathering",
+      "target": "casual",
+      "allowed_venues": [
+        "friend_home",
+        "restaurant"
+      ],
+      "allowed_companions": [
+        "friends",
+        "family"
+      ],
+      "authority": "prototype_convention",
+      "explanation": "Using the prototype casual appearance goal for ordinary birthday gathering. This is a soft goal, not an externally required dress code.",
+      "limitations": "Independent appropriateness remains unvalidated. Saved labels may be unreviewed. No employer/institution/venue code, comfort, physical fit, weather protection, equipment, footwear or safety is established."
+    },
+    {
+      "situation": "social.house_gathering",
+      "binding_id": "house_gathering_appearance_v1",
+      "objective_id": "prototype.social.house_gathering",
+      "target": "casual",
+      "allowed_venues": [
+        "friend_home"
+      ],
+      "allowed_companions": [
+        "friends"
+      ],
+      "authority": "prototype_convention",
+      "explanation": "Using the prototype casual appearance goal for ordinary house gathering. This is a soft goal, not an externally required dress code.",
+      "limitations": "Independent appropriateness remains unvalidated. Saved labels may be unreviewed. No employer/institution/venue code, comfort, physical fit, weather protection, equipment, footwear or safety is established."
+    },
+    {
+      "situation": "leisure.cinema_outing",
+      "binding_id": "cinema_outing_appearance_v1",
+      "objective_id": "prototype.leisure.cinema_outing",
+      "target": "casual",
+      "allowed_venues": [
+        "cinema"
+      ],
+      "allowed_companions": [
+        "friends",
+        "family",
+        "someone"
+      ],
+      "authority": "prototype_convention",
+      "explanation": "Using the prototype casual appearance goal for ordinary cinema outing. This is a soft goal, not an externally required dress code.",
+      "limitations": "Independent appropriateness remains unvalidated. Saved labels may be unreviewed. No employer/institution/venue code, comfort, physical fit, weather protection, equipment, footwear or safety is established."
+    },
+    {
+      "situation": "social.cafe_meetup",
+      "binding_id": "cafe_meetup_appearance_v1",
+      "objective_id": "prototype.social.cafe_meetup",
+      "target": "casual",
+      "allowed_venues": [
+        "cafe"
+      ],
+      "allowed_companions": [
+        "friends",
+        "family",
+        "someone"
+      ],
+      "authority": "prototype_convention",
+      "explanation": "Using the prototype casual appearance goal for ordinary cafe meetup. This is a soft goal, not an externally required dress code.",
+      "limitations": "Independent appropriateness remains unvalidated. Saved labels may be unreviewed. No employer/institution/venue code, comfort, physical fit, weather protection, equipment, footwear or safety is established."
+    },
+    {
+      "situation": "leisure.city_sightseeing",
+      "binding_id": "city_sightseeing_appearance_v1",
+      "objective_id": "prototype.leisure.city_sightseeing",
+      "target": "casual",
+      "allowed_venues": [
+        "city"
+      ],
+      "allowed_companions": [
+        "friends",
+        "family",
+        "someone"
+      ],
+      "authority": "prototype_convention",
+      "explanation": "Using the prototype casual appearance goal for ordinary city sightseeing. This is a soft goal, not an externally required dress code.",
+      "limitations": "Independent appropriateness remains unvalidated. Saved labels may be unreviewed. No employer/institution/venue code, comfort, physical fit, weather protection, equipment, footwear or safety is established."
+    },
+    {
+      "situation": "travel.journey",
+      "binding_id": "ordinary_transit_appearance_v1",
+      "objective_id": "prototype.travel.journey",
+      "target": "casual",
+      "allowed_venues": [],
+      "allowed_companions": [
+        "friends",
+        "family",
+        "someone"
+      ],
+      "authority": "prototype_convention",
+      "explanation": "Using the prototype casual appearance goal for ordinary journey. This is a soft goal, not an externally required dress code.",
+      "limitations": "Independent appropriateness remains unvalidated. Saved labels may be unreviewed. No employer/institution/venue code, comfort, physical fit, weather protection, equipment, footwear or safety is established."
+    }
+  ]
+}

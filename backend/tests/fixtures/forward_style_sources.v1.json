@@ -1,0 +1,23 @@
+{
+  "version": "forward-style-evidence-1.0.0",
+  "replacements": {
+    "app/application/wardrobe/wardrobe_service.py": {
+      "after": "5f6318edb08134b52575e6e182592c01aebdc5bb3edac9b65550cb253a0c6737",
+      "before": "2810ba1d1acdc046db54dd8b1e09f471f44970f51a8e4ff604ebc4e8857b3d60"
+    }
+  },
+  "frontend_replacements": {
+    "frontend/app/extract/results/page.tsx": {
+      "after": "925506b4985e8110c3450075c97510d6bef97e79a1e2c9eafd25c58d3b7b0056",
+      "before": "10f915f3d49786604b7cd9857b41bd40398a795ea03c3f1e67d2f11c56e467bf"
+    },
+    "frontend/lib/api.ts": {
+      "after": "379301a9abe17b930784a33fd93d2e6debb3e68f2d7e6ceee8814c68e4203440",
+      "before": "a4d408fbe65794334e0e3e35c68986e0a1952ac18a93f859789197641e2a7fa7"
+    },
+    "frontend/app/wardrobe/page.tsx": {
+      "after": "920d8e6a1e76956306fcd1045d9d63b571bff7b4d81336a11cc6fbc78ed636c1",
+      "before": "d082d2ff8508e653b331b9d4759beaad387b96509c84d60a59aaf26f785c778a"
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "version": "compatibility-decision-1.0.0",
+  "default_activation": false,
+  "atomic_rules": ["colour", "style"],
+  "missing_rule_bounds": ["0", "1"],
+  "decision": "interval_midpoint",
+  "no_pair_reference": "1/2",
+  "weights": ["3/5", "1/5", "1/5"],
+  "profile": "experimental_compatibility_decision_v1"
+}

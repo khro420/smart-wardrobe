@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0.0",
+  "version": "owner-declarations-1.0.0",
+  "reserved_prefix": "rec:v1",
+  "enabled_occasions": ["campus", "work", "casual_outing", "shopping", "dinner", "party", "date", "travel"],
+  "unavailable_occasions": ["exercise"],
+  "enabled_formality": ["casual", "smart_casual"],
+  "unavailable_formality": ["formal"],
+  "decisions": ["allow", "deny"],
+  "aggregation": "all_constituents_fail_then_unknown",
+  "annotation_source": "owner_declared_custom_tags",
+  "default_activation": false
+}

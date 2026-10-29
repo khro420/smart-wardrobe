@@ -1,0 +1,16 @@
+{
+  "version": "recommendation-failure-logging-1.0.0",
+  "replacements": {
+    "app/application/recommendation/outfit_assistant_service.py": {
+      "before": "005b8acd14128f6d6945356cb1c8861ac29eb29743bb7ed544ad4726be06e615",
+      "after": "6ca3a640029f65444d794c243a1759650c90059a98f99a2d3ea71c24f3431249"
+    },
+    "app/application/recommendation/homepage_recommendation_service.py": {
+      "before": "8cd89fa39b05a3471337d2a5c0ffbd53c4b7d0f44f8a284fc0864a458316938c",
+      "after": "4c6853dee17ccc2ad7a5350491f8643ef6405bc1b070d462cde82d619f6358e2"
+    }
+  },
+  "additions": {
+    "app/application/recommendation/failure_diagnostics.py": "aeb4428680d61959d2c1c81b97ec76b19ca9ee6ca2cc7416e7db362c48d95416"
+  }
+}

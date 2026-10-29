@@ -1,0 +1,779 @@
+{
+  "version": "context-expansion-labels-1.0.0",
+  "authority": "owner_approved_author_labelled_prototype",
+  "independent_validation": "OPEN",
+  "cases": [
+    {
+      "id": "LS-E-ADD",
+      "situation": "academic.library_study",
+      "setup": "Normal automatic Add then fresh request; no review, confirmation or tagging POST; genuine valid singleton style",
+      "expected": "Selected or honest processing correction before wardrobe storage",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "LS-E-STRUCTURES",
+      "situation": "academic.library_study",
+      "setup": "Audit all four candidates/structures from fixed source-labelled fixture",
+      "expected": "same R/C/P arithmetic and deterministic keys across compact/reference/public",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "LS-E-DENY",
+      "situation": "academic.library_study",
+      "setup": "Existing exact rec:v1 occasion campus Deny on one selected member",
+      "expected": "every candidate containing that member fails before R; valid alternative or NoMatchingCandidates",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "LS-E-PARENT_ALLOW",
+      "situation": "academic.library_study",
+      "setup": "Existing campus Allow with missing style and no scoped child permission",
+      "expected": "Unknown; broad positive declaration cannot supply missing child evidence",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "LS-E-CODE",
+      "situation": "academic.library_study",
+      "setup": "Supported casual or smart-casual code; then unavailable formal and black tie",
+      "expected": "matching singleton admission; no default without explicit style; disclosed baseline only after Pass; formal/black tie unavailable",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "LS-E-OVERRIDE",
+      "situation": "academic.library_study",
+      "setup": "Explicit supported style opposing the default",
+      "expected": "explicit objective; existing any-base hard style requirement preserved",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "LS-E-PREF",
+      "situation": "academic.library_study",
+      "setup": "Independent green-colour preference on stipulated matching-style green base fixture",
+      "expected": "R=1,C=1/2,P=1,T=9/10; beats unpreferred blue pair at 4/5",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "LS-E-UNKNOWN",
+      "situation": "academic.library_study",
+      "setup": "Missing/empty/multiple/uncovered style, absent vs malformed/stale source, outerwear included",
+      "expected": "no invented style or positive R; required gate Unknown; no baseline rescue",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "LS-E-HISTORY",
+      "situation": "academic.library_study",
+      "setup": "Persist fresh key then change active bundle/preferences; replay/read old history",
+      "expected": "same exact stored request, objective, proof, score and IDs; no current-policy interpretation",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "LS-E-UI",
+      "situation": "academic.library_study",
+      "setup": "Normal browser submission; success, no result and retry",
+      "expected": "goal and provisional limits, full exact R/C/P, visible outcome/focus; native source/build identity retained",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "GS-E-ADD",
+      "situation": "academic.group_study",
+      "setup": "Normal automatic Add then fresh request; no review, confirmation or tagging POST; genuine valid singleton style",
+      "expected": "Selected or honest processing correction before wardrobe storage",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "GS-E-STRUCTURES",
+      "situation": "academic.group_study",
+      "setup": "Audit all four candidates/structures from fixed source-labelled fixture",
+      "expected": "same R/C/P arithmetic and deterministic keys across compact/reference/public",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "GS-E-DENY",
+      "situation": "academic.group_study",
+      "setup": "Existing exact rec:v1 occasion campus Deny on one selected member",
+      "expected": "every candidate containing that member fails before R; valid alternative or NoMatchingCandidates",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "GS-E-PARENT_ALLOW",
+      "situation": "academic.group_study",
+      "setup": "Existing campus Allow with missing style and no scoped child permission",
+      "expected": "Unknown; broad positive declaration cannot supply missing child evidence",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "GS-E-CODE",
+      "situation": "academic.group_study",
+      "setup": "Supported casual or smart-casual code; then unavailable formal and black tie",
+      "expected": "matching singleton admission; no default without explicit style; disclosed baseline only after Pass; formal/black tie unavailable",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "GS-E-OVERRIDE",
+      "situation": "academic.group_study",
+      "setup": "Explicit supported style opposing the default",
+      "expected": "explicit objective; existing any-base hard style requirement preserved",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "GS-E-PREF",
+      "situation": "academic.group_study",
+      "setup": "Independent green-colour preference on stipulated matching-style green base fixture",
+      "expected": "R=1,C=1/2,P=1,T=9/10; beats unpreferred blue pair at 4/5",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "GS-E-UNKNOWN",
+      "situation": "academic.group_study",
+      "setup": "Missing/empty/multiple/uncovered style, absent vs malformed/stale source, outerwear included",
+      "expected": "no invented style or positive R; required gate Unknown; no baseline rescue",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "GS-E-HISTORY",
+      "situation": "academic.group_study",
+      "setup": "Persist fresh key then change active bundle/preferences; replay/read old history",
+      "expected": "same exact stored request, objective, proof, score and IDs; no current-policy interpretation",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "GS-E-UI",
+      "situation": "academic.group_study",
+      "setup": "Normal browser submission; success, no result and retry",
+      "expected": "goal and provisional limits, full exact R/C/P, visible outcome/focus; native source/build identity retained",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "OW-E-ADD",
+      "situation": "professional.office_day",
+      "setup": "Normal automatic Add then fresh request; no review, confirmation or tagging POST; genuine valid singleton style",
+      "expected": "Selected or honest processing correction before wardrobe storage",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "OW-E-STRUCTURES",
+      "situation": "professional.office_day",
+      "setup": "Audit all four candidates/structures from fixed source-labelled fixture",
+      "expected": "same R/C/P arithmetic and deterministic keys across compact/reference/public",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "OW-E-DENY",
+      "situation": "professional.office_day",
+      "setup": "Existing exact rec:v1 occasion work Deny on one selected member",
+      "expected": "every candidate containing that member fails before R; valid alternative or NoMatchingCandidates",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "OW-E-PARENT_ALLOW",
+      "situation": "professional.office_day",
+      "setup": "Existing work Allow with missing style and no scoped child permission",
+      "expected": "Unknown; broad positive declaration cannot supply missing child evidence",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "OW-E-CODE",
+      "situation": "professional.office_day",
+      "setup": "Supported casual or smart-casual code; then unavailable formal and black tie",
+      "expected": "matching singleton admission; no default without explicit style; disclosed baseline only after Pass; formal/black tie unavailable",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "OW-E-OVERRIDE",
+      "situation": "professional.office_day",
+      "setup": "Explicit supported style opposing the default",
+      "expected": "explicit objective; existing any-base hard style requirement preserved",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "OW-E-PREF",
+      "situation": "professional.office_day",
+      "setup": "Independent green-colour preference on stipulated matching-style green base fixture",
+      "expected": "R=1,C=1/2,P=1,T=9/10; beats unpreferred blue pair at 4/5",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "OW-E-UNKNOWN",
+      "situation": "professional.office_day",
+      "setup": "Missing/empty/multiple/uncovered style, absent vs malformed/stale source, outerwear included",
+      "expected": "no invented style or positive R; required gate Unknown; no baseline rescue",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "OW-E-HISTORY",
+      "situation": "professional.office_day",
+      "setup": "Persist fresh key then change active bundle/preferences; replay/read old history",
+      "expected": "same exact stored request, objective, proof, score and IDs; no current-policy interpretation",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "OW-E-UI",
+      "situation": "professional.office_day",
+      "setup": "Normal browser submission; success, no result and retry",
+      "expected": "goal and provisional limits, full exact R/C/P, visible outcome/focus; native source/build identity retained",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "WM-E-ADD",
+      "situation": "professional.workplace_meeting",
+      "setup": "Normal automatic Add then fresh request; no review, confirmation or tagging POST; genuine valid singleton style",
+      "expected": "Selected or honest processing correction before wardrobe storage",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "WM-E-STRUCTURES",
+      "situation": "professional.workplace_meeting",
+      "setup": "Audit all four candidates/structures from fixed source-labelled fixture",
+      "expected": "same R/C/P arithmetic and deterministic keys across compact/reference/public",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "WM-E-DENY",
+      "situation": "professional.workplace_meeting",
+      "setup": "Existing exact rec:v1 occasion work Deny on one selected member",
+      "expected": "every candidate containing that member fails before R; valid alternative or NoMatchingCandidates",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "WM-E-PARENT_ALLOW",
+      "situation": "professional.workplace_meeting",
+      "setup": "Existing work Allow with missing style and no scoped child permission",
+      "expected": "Unknown; broad positive declaration cannot supply missing child evidence",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "WM-E-CODE",
+      "situation": "professional.workplace_meeting",
+      "setup": "Supported casual or smart-casual code; then unavailable formal and black tie",
+      "expected": "matching singleton admission; no default without explicit style; disclosed baseline only after Pass; formal/black tie unavailable",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "WM-E-OVERRIDE",
+      "situation": "professional.workplace_meeting",
+      "setup": "Explicit supported style opposing the default",
+      "expected": "explicit objective; existing any-base hard style requirement preserved",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "WM-E-PREF",
+      "situation": "professional.workplace_meeting",
+      "setup": "Independent green-colour preference on stipulated matching-style green base fixture",
+      "expected": "R=1,C=1/2,P=1,T=9/10; beats unpreferred blue pair at 4/5",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "WM-E-UNKNOWN",
+      "situation": "professional.workplace_meeting",
+      "setup": "Missing/empty/multiple/uncovered style, absent vs malformed/stale source, outerwear included",
+      "expected": "no invented style or positive R; required gate Unknown; no baseline rescue",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "WM-E-HISTORY",
+      "situation": "professional.workplace_meeting",
+      "setup": "Persist fresh key then change active bundle/preferences; replay/read old history",
+      "expected": "same exact stored request, objective, proof, score and IDs; no current-policy interpretation",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "WM-E-UI",
+      "situation": "professional.workplace_meeting",
+      "setup": "Normal browser submission; success, no result and retry",
+      "expected": "goal and provisional limits, full exact R/C/P, visible outcome/focus; native source/build identity retained",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "BG-E-ADD",
+      "situation": "social.birthday_gathering",
+      "setup": "Normal automatic Add then fresh request; no review, confirmation or tagging POST; genuine valid singleton style",
+      "expected": "Selected or honest processing correction before wardrobe storage",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "BG-E-STRUCTURES",
+      "situation": "social.birthday_gathering",
+      "setup": "Audit all four candidates/structures from fixed source-labelled fixture",
+      "expected": "same R/C/P arithmetic and deterministic keys across compact/reference/public",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "BG-E-DENY",
+      "situation": "social.birthday_gathering",
+      "setup": "Existing exact rec:v1 occasion party Deny on one selected member",
+      "expected": "every candidate containing that member fails before R; valid alternative or NoMatchingCandidates",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "BG-E-PARENT_ALLOW",
+      "situation": "social.birthday_gathering",
+      "setup": "Existing party Allow with missing style and no scoped child permission",
+      "expected": "Unknown; broad positive declaration cannot supply missing child evidence",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "BG-E-CODE",
+      "situation": "social.birthday_gathering",
+      "setup": "Supported casual or smart-casual code; then unavailable formal and black tie",
+      "expected": "matching singleton admission; no default without explicit style; disclosed baseline only after Pass; formal/black tie unavailable",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "BG-E-OVERRIDE",
+      "situation": "social.birthday_gathering",
+      "setup": "Explicit supported style opposing the default",
+      "expected": "explicit objective; existing any-base hard style requirement preserved",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "BG-E-PREF",
+      "situation": "social.birthday_gathering",
+      "setup": "Independent green-colour preference on stipulated matching-style green base fixture",
+      "expected": "R=1,C=1/2,P=1,T=9/10; beats unpreferred blue pair at 4/5",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "BG-E-UNKNOWN",
+      "situation": "social.birthday_gathering",
+      "setup": "Missing/empty/multiple/uncovered style, absent vs malformed/stale source, outerwear included",
+      "expected": "no invented style or positive R; required gate Unknown; no baseline rescue",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "BG-E-HISTORY",
+      "situation": "social.birthday_gathering",
+      "setup": "Persist fresh key then change active bundle/preferences; replay/read old history",
+      "expected": "same exact stored request, objective, proof, score and IDs; no current-policy interpretation",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "BG-E-UI",
+      "situation": "social.birthday_gathering",
+      "setup": "Normal browser submission; success, no result and retry",
+      "expected": "goal and provisional limits, full exact R/C/P, visible outcome/focus; native source/build identity retained",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "HG-E-ADD",
+      "situation": "social.house_gathering",
+      "setup": "Normal automatic Add then fresh request; no review, confirmation or tagging POST; genuine valid singleton style",
+      "expected": "Selected or honest processing correction before wardrobe storage",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "HG-E-STRUCTURES",
+      "situation": "social.house_gathering",
+      "setup": "Audit all four candidates/structures from fixed source-labelled fixture",
+      "expected": "same R/C/P arithmetic and deterministic keys across compact/reference/public",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "HG-E-DENY",
+      "situation": "social.house_gathering",
+      "setup": "Existing exact rec:v1 occasion casual_outing Deny on one selected member",
+      "expected": "every candidate containing that member fails before R; valid alternative or NoMatchingCandidates",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "HG-E-PARENT_ALLOW",
+      "situation": "social.house_gathering",
+      "setup": "Existing casual_outing Allow with missing style and no scoped child permission",
+      "expected": "Unknown; broad positive declaration cannot supply missing child evidence",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "HG-E-CODE",
+      "situation": "social.house_gathering",
+      "setup": "Supported casual or smart-casual code; then unavailable formal and black tie",
+      "expected": "matching singleton admission; no default without explicit style; disclosed baseline only after Pass; formal/black tie unavailable",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "HG-E-OVERRIDE",
+      "situation": "social.house_gathering",
+      "setup": "Explicit supported style opposing the default",
+      "expected": "explicit objective; existing any-base hard style requirement preserved",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "HG-E-PREF",
+      "situation": "social.house_gathering",
+      "setup": "Independent green-colour preference on stipulated matching-style green base fixture",
+      "expected": "R=1,C=1/2,P=1,T=9/10; beats unpreferred blue pair at 4/5",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "HG-E-UNKNOWN",
+      "situation": "social.house_gathering",
+      "setup": "Missing/empty/multiple/uncovered style, absent vs malformed/stale source, outerwear included",
+      "expected": "no invented style or positive R; required gate Unknown; no baseline rescue",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "HG-E-HISTORY",
+      "situation": "social.house_gathering",
+      "setup": "Persist fresh key then change active bundle/preferences; replay/read old history",
+      "expected": "same exact stored request, objective, proof, score and IDs; no current-policy interpretation",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "HG-E-UI",
+      "situation": "social.house_gathering",
+      "setup": "Normal browser submission; success, no result and retry",
+      "expected": "goal and provisional limits, full exact R/C/P, visible outcome/focus; native source/build identity retained",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "CM-E-ADD",
+      "situation": "leisure.cinema_outing",
+      "setup": "Normal automatic Add then fresh request; no review, confirmation or tagging POST; genuine valid singleton style",
+      "expected": "Selected or honest processing correction before wardrobe storage",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "CM-E-STRUCTURES",
+      "situation": "leisure.cinema_outing",
+      "setup": "Audit all four candidates/structures from fixed source-labelled fixture",
+      "expected": "same R/C/P arithmetic and deterministic keys across compact/reference/public",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "CM-E-DENY",
+      "situation": "leisure.cinema_outing",
+      "setup": "Existing exact rec:v1 occasion casual_outing Deny on one selected member",
+      "expected": "every candidate containing that member fails before R; valid alternative or NoMatchingCandidates",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "CM-E-PARENT_ALLOW",
+      "situation": "leisure.cinema_outing",
+      "setup": "Existing casual_outing Allow with missing style and no scoped child permission",
+      "expected": "Unknown; broad positive declaration cannot supply missing child evidence",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "CM-E-CODE",
+      "situation": "leisure.cinema_outing",
+      "setup": "Supported casual or smart-casual code; then unavailable formal and black tie",
+      "expected": "matching singleton admission; no default without explicit style; disclosed baseline only after Pass; formal/black tie unavailable",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "CM-E-OVERRIDE",
+      "situation": "leisure.cinema_outing",
+      "setup": "Explicit supported style opposing the default",
+      "expected": "explicit objective; existing any-base hard style requirement preserved",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "CM-E-PREF",
+      "situation": "leisure.cinema_outing",
+      "setup": "Independent green-colour preference on stipulated matching-style green base fixture",
+      "expected": "R=1,C=1/2,P=1,T=9/10; beats unpreferred blue pair at 4/5",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "CM-E-UNKNOWN",
+      "situation": "leisure.cinema_outing",
+      "setup": "Missing/empty/multiple/uncovered style, absent vs malformed/stale source, outerwear included",
+      "expected": "no invented style or positive R; required gate Unknown; no baseline rescue",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "CM-E-HISTORY",
+      "situation": "leisure.cinema_outing",
+      "setup": "Persist fresh key then change active bundle/preferences; replay/read old history",
+      "expected": "same exact stored request, objective, proof, score and IDs; no current-policy interpretation",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "CM-E-UI",
+      "situation": "leisure.cinema_outing",
+      "setup": "Normal browser submission; success, no result and retry",
+      "expected": "goal and provisional limits, full exact R/C/P, visible outcome/focus; native source/build identity retained",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "CF-E-ADD",
+      "situation": "social.cafe_meetup",
+      "setup": "Normal automatic Add then fresh request; no review, confirmation or tagging POST; genuine valid singleton style",
+      "expected": "Selected or honest processing correction before wardrobe storage",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "CF-E-STRUCTURES",
+      "situation": "social.cafe_meetup",
+      "setup": "Audit all four candidates/structures from fixed source-labelled fixture",
+      "expected": "same R/C/P arithmetic and deterministic keys across compact/reference/public",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "CF-E-DENY",
+      "situation": "social.cafe_meetup",
+      "setup": "Existing exact rec:v1 occasion casual_outing Deny on one selected member",
+      "expected": "every candidate containing that member fails before R; valid alternative or NoMatchingCandidates",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "CF-E-PARENT_ALLOW",
+      "situation": "social.cafe_meetup",
+      "setup": "Existing casual_outing Allow with missing style and no scoped child permission",
+      "expected": "Unknown; broad positive declaration cannot supply missing child evidence",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "CF-E-CODE",
+      "situation": "social.cafe_meetup",
+      "setup": "Supported casual or smart-casual code; then unavailable formal and black tie",
+      "expected": "matching singleton admission; no default without explicit style; disclosed baseline only after Pass; formal/black tie unavailable",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "CF-E-OVERRIDE",
+      "situation": "social.cafe_meetup",
+      "setup": "Explicit supported style opposing the default",
+      "expected": "explicit objective; existing any-base hard style requirement preserved",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "CF-E-PREF",
+      "situation": "social.cafe_meetup",
+      "setup": "Independent green-colour preference on stipulated matching-style green base fixture",
+      "expected": "R=1,C=1/2,P=1,T=9/10; beats unpreferred blue pair at 4/5",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "CF-E-UNKNOWN",
+      "situation": "social.cafe_meetup",
+      "setup": "Missing/empty/multiple/uncovered style, absent vs malformed/stale source, outerwear included",
+      "expected": "no invented style or positive R; required gate Unknown; no baseline rescue",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "CF-E-HISTORY",
+      "situation": "social.cafe_meetup",
+      "setup": "Persist fresh key then change active bundle/preferences; replay/read old history",
+      "expected": "same exact stored request, objective, proof, score and IDs; no current-policy interpretation",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "CF-E-UI",
+      "situation": "social.cafe_meetup",
+      "setup": "Normal browser submission; success, no result and retry",
+      "expected": "goal and provisional limits, full exact R/C/P, visible outcome/focus; native source/build identity retained",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "SS-E-ADD",
+      "situation": "leisure.city_sightseeing",
+      "setup": "Normal automatic Add then fresh request; no review, confirmation or tagging POST; genuine valid singleton style",
+      "expected": "Selected or honest processing correction before wardrobe storage",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "SS-E-STRUCTURES",
+      "situation": "leisure.city_sightseeing",
+      "setup": "Audit all four candidates/structures from fixed source-labelled fixture",
+      "expected": "same R/C/P arithmetic and deterministic keys across compact/reference/public",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "SS-E-DENY",
+      "situation": "leisure.city_sightseeing",
+      "setup": "Existing exact rec:v1 occasion travel Deny on one selected member",
+      "expected": "every candidate containing that member fails before R; valid alternative or NoMatchingCandidates",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "SS-E-PARENT_ALLOW",
+      "situation": "leisure.city_sightseeing",
+      "setup": "Existing travel Allow with missing style and no scoped child permission",
+      "expected": "Unknown; broad positive declaration cannot supply missing child evidence",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "SS-E-CODE",
+      "situation": "leisure.city_sightseeing",
+      "setup": "Supported casual or smart-casual code; then unavailable formal and black tie",
+      "expected": "matching singleton admission; no default without explicit style; disclosed baseline only after Pass; formal/black tie unavailable",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "SS-E-OVERRIDE",
+      "situation": "leisure.city_sightseeing",
+      "setup": "Explicit supported style opposing the default",
+      "expected": "explicit objective; existing any-base hard style requirement preserved",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "SS-E-PREF",
+      "situation": "leisure.city_sightseeing",
+      "setup": "Independent green-colour preference on stipulated matching-style green base fixture",
+      "expected": "R=1,C=1/2,P=1,T=9/10; beats unpreferred blue pair at 4/5",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "SS-E-UNKNOWN",
+      "situation": "leisure.city_sightseeing",
+      "setup": "Missing/empty/multiple/uncovered style, absent vs malformed/stale source, outerwear included",
+      "expected": "no invented style or positive R; required gate Unknown; no baseline rescue",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "SS-E-HISTORY",
+      "situation": "leisure.city_sightseeing",
+      "setup": "Persist fresh key then change active bundle/preferences; replay/read old history",
+      "expected": "same exact stored request, objective, proof, score and IDs; no current-policy interpretation",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "SS-E-UI",
+      "situation": "leisure.city_sightseeing",
+      "setup": "Normal browser submission; success, no result and retry",
+      "expected": "goal and provisional limits, full exact R/C/P, visible outcome/focus; native source/build identity retained",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "TD-E-ADD",
+      "situation": "travel.journey",
+      "setup": "Normal automatic Add then fresh request; no review, confirmation or tagging POST; genuine valid singleton style",
+      "expected": "Selected or honest processing correction before wardrobe storage",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "TD-E-STRUCTURES",
+      "situation": "travel.journey",
+      "setup": "Audit all four candidates/structures from fixed source-labelled fixture",
+      "expected": "same R/C/P arithmetic and deterministic keys across compact/reference/public",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "TD-E-DENY",
+      "situation": "travel.journey",
+      "setup": "Existing exact rec:v1 occasion travel Deny on one selected member",
+      "expected": "every candidate containing that member fails before R; valid alternative or NoMatchingCandidates",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "TD-E-PARENT_ALLOW",
+      "situation": "travel.journey",
+      "setup": "Existing travel Allow with missing style and no scoped child permission",
+      "expected": "Unknown; broad positive declaration cannot supply missing child evidence",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "TD-E-CODE",
+      "situation": "travel.journey",
+      "setup": "Supported casual or smart-casual code; then unavailable formal and black tie",
+      "expected": "matching singleton admission; no default without explicit style; disclosed baseline only after Pass; formal/black tie unavailable",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "TD-E-OVERRIDE",
+      "situation": "travel.journey",
+      "setup": "Explicit supported style opposing the default",
+      "expected": "explicit objective; existing any-base hard style requirement preserved",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "TD-E-PREF",
+      "situation": "travel.journey",
+      "setup": "Independent green-colour preference on stipulated matching-style green base fixture",
+      "expected": "R=1,C=1/2,P=1,T=9/10; beats unpreferred blue pair at 4/5",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "TD-E-UNKNOWN",
+      "situation": "travel.journey",
+      "setup": "Missing/empty/multiple/uncovered style, absent vs malformed/stale source, outerwear included",
+      "expected": "no invented style or positive R; required gate Unknown; no baseline rescue",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "TD-E-HISTORY",
+      "situation": "travel.journey",
+      "setup": "Persist fresh key then change active bundle/preferences; replay/read old history",
+      "expected": "same exact stored request, objective, proof, score and IDs; no current-policy interpretation",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "TD-E-UI",
+      "situation": "travel.journey",
+      "setup": "Normal browser submission; success, no result and retry",
+      "expected": "goal and provisional limits, full exact R/C/P, visible outcome/focus; native source/build identity retained",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "G01",
+      "setup": "A1 legacy mode/default-off",
+      "expected": "all old outcomes/IDs remain; no expanded capability advertised",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "G02",
+      "setup": "Foreign owner/unavailable/unconfirmed/missing or failed linked job",
+      "expected": "strict source exclusion across old and new contexts",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "G03",
+      "setup": "Automatic Add/quota 99 plus two-item batch/concurrent last-slot jobs",
+      "expected": "full-batch atomicity, same IDs on repeated finalisation; no quota weakening",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "G04",
+      "setup": "Selected snapshot changes after rank, insert abort, same key retry",
+      "expected": "reject/rollback; no partial chat/result; recovery retains valid key semantics",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "G05",
+      "setup": "Logout copied bearer",
+      "expected": "durable denial through API and proxy",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "G06",
+      "setup": "Malformed/bad hash/unknown operator/duplicate ID/oversized bundle",
+      "expected": "configuration failure; no baseline fallback",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "G07",
+      "setup": "Forged compound facet/request/binding/proof revision",
+      "expected": "reject; no proof borrowing from a different context",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "G08",
+      "setup": "Unsupported role/venue/goal and unknown text in long natural sentence",
+      "expected": "controlled refusal; no meaningful-word deletion",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "G09",
+      "setup": "Retained 100-garment population, all old/new target selectors",
+      "expected": "same search formula; one acquisition/preference snapshot; preparation O(N); no candidate-loop I/O/NLP/config/model",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "G10",
+      "setup": "Library/cinema/sightseeing same casual goal and office/team smart goal",
+      "expected": "shared winners legitimate; no artificial differences or situation bonuses",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "G11",
+      "setup": "Conditional no-point/no-objective baseline, limited coverage and full certificate",
+      "expected": "distinct modes; no legacy Allow-to-child permission or hard-Unknown fallback",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "G12",
+      "setup": "Exact suppression denominator/known R=0/large exact integer/archive revision",
+      "expected": "unchanged maths; bounded exact strings; archived decoding never active-target reinterpretation",
+      "execution": "NOT RUN"
+    }
+  ]
+}

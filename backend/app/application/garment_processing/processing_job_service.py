@@ -4,6 +4,8 @@ import json
 import uuid
 from fastapi import HTTPException
 from app.application.ports.workflow_runtime import connection, utcnow, media_path_for_owner
+from app.application.wardrobe import owner_style_confirmation
+from app.application.garment_processing.automatic_garment_finalization import projection
 
 
 def create_job(source_media_id: str, user_id: str) -> str:
@@ -22,6 +24,9 @@ def get_job(job_id: str, user_id: str) -> dict:
         items = conn.execute("SELECT * FROM processing_items WHERE job_id=? ORDER BY created_at", (job_id,)).fetchall()
     result = dict(job)
     result["items"] = [{**{key: value for key, value in dict(item).items() if key != "attributes_json"}, "attributes": json.loads(item["attributes_json"]), "bounding_box": json.loads(item["bounding_box"] or "null"), "embedding": json.loads(item["embedding"] or "null")} for item in items]
+    for value, item in zip(result['items'], items):
+        value['style_confirmation'] = owner_style_confirmation.candidate_view(item, user_id)
+    result['admission'] = projection(items, user_id)
     return result
 
 

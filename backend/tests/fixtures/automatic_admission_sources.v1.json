@@ -1,0 +1,90 @@
+{
+  "version": "automatic-admission-1.0.0",
+  "default_activation": false,
+  "replacements": {
+    "backend/app/shared_contracts/confirmed_garment_snapshot.py": {
+      "before": "7f3e87e3c7499e3218ae7a4a7b5f2f86289062357663af2bf76e92a8c2635b11",
+      "after": "f7d317ccd30a3fefcdc8a72dd383dc4e616074623e686f824f25ffa47c2fd337"
+    },
+    "backend/app/infrastructure/persistence/confirmed_garment_query_adapter.py": {
+      "before": "b6e8dfa9e6aefd65363ec37d3f0790f60a5bd76832a536f9a246bd1a363db3e1",
+      "after": "551f8961b410ff9edfee746da328b784a6116e64e8d71b9a4eb3903f97108718"
+    },
+    "backend/app/application/recommendation/config/context_policy_registry.v1.json": {
+      "before": "5749e30498bac15c2566add14888272084c39643b711804b39fe6827d3548017",
+      "after": "3fbbdaa54ff495d4da54e0d1afa7f15954cf0b13128bb8ebd40c511c698a863f"
+    },
+    "backend/app/application/recommendation/context_policy_registry.py": {
+      "before": "706b542b5a2663751bddae6a20abb0643d291a9de8c7644b907742a6c780cc97",
+      "after": "6b14fef7555e9bc3282e6c18f0bc2a74860652965187e6850415986219ee2f9b"
+    },
+    "backend/app/application/recommendation/context_evidence_resolver.py": {
+      "before": "92eac2efd89ae8653a3aefa1b9a25552ba4e6d5fb2764dd41d157f673e1889b5",
+      "after": "81f4d68ef14d9127db51675901a086e72b5529469625a37424b56f9611413c56"
+    },
+    "backend/app/application/recommendation/general_context_evaluator.py": {
+      "before": "e8705be8b37c7bba012f3ee49ebca4dc03e860d7f35dac00916c43506c905ae8",
+      "after": "4158a108530051b9ac0c7bffbc1c051479c55a77e82937df97aecfd6987f2f83"
+    },
+    "backend/app/api/garment_processing_routes.py": {
+      "before": "a544820f6d92c73ca7d5a08569fdae022dd91d538eda1cc22c449b697c980cb9",
+      "after": "f88a68d15ce6c9337e42dbb925228ea8a64cfa36a7a9dac21a2432efa3fb373c"
+    },
+    "backend/app/domain/value_objects/requests.py": {
+      "before": "adeb1925261c4a2dfacad266356c00ec40390c0ea29e1490b02704e47ce7b970",
+      "after": "269a92d55939dd55ce3e99799810295b4943e798a9cc038afb1bd41805ab6a39"
+    },
+    "backend/app/application/ports/confirmed_garment_writer.py": {
+      "before": "fb60f7aa66bcd912afb7f845ca6097b2b1b9dc526b2cdddde94137adbe2f9f25",
+      "after": "12504faf206194ed926cb39b92441373049b9c28b84b69c5c7e2b5089ac77089"
+    },
+    "backend/app/application/garment_processing/garment_processing_orchestrator.py": {
+      "before": "600c201c8895acd68221d76c9a629f2e0a6a6f029ca71b9d9eef10f08aa490f2",
+      "after": "9197f6ec3a71ee418f3fe65d6fc14f0386141935beead0f7354c8cbf1e81017a"
+    },
+    "backend/app/application/garment_processing/processing_job_service.py": {
+      "before": "de83d7be86a44a0eede9b90f2ab79104a20a98464cd4d2b495e6267ec11cdb08",
+      "after": "442a97b4c0ebbac607e3c7d778d102586e147fb90b47595736b28d439c536f80"
+    },
+    "backend/app/application/garment_processing/review_service.py": {
+      "before": "97e0ab0f43c46078b9f9ad93928246df2ad7f06e7520de506dfbf6a317d695b0",
+      "after": "348ee59c02f601432fdc3fdb838b05b80e93b32f580cca572bf074546357abcf"
+    },
+    "backend/app/application/wardrobe/wardrobe_service.py": {
+      "before": "b966315446595d34eb366e6cb37bf29c5b17c7312b6b52114eda843853681678",
+      "after": "b06576a5e2b084ff9205ec645b94d94476fb8481d917feb437c15e6cecc95d76"
+    },
+    "frontend/lib/api.ts": {
+      "before": "9454efa15134ca1c10dbddfcbd2e47fbf560824bfc560acf91a14c5e174b31cc",
+      "after": "fd2df898f0df72019c7459c29e5469be0cb20080f39cb794071ef6c3d40c5028"
+    },
+    "frontend/lib/recommendation-messages.ts": {
+      "before": "50d8fb46bd2b7a66a63d817f16996a828597cec605b3ab3f159d0308cabdd71c",
+      "after": "a485319c84342b8f1b89ce5db1fa347e481c437914b4df3e155e0c236338f1e7"
+    },
+    "frontend/components/OutfitAssistant.tsx": {
+      "before": "33ae0ef69846dfa0e5885d6821ad49d5921e842b89bdded611ce679024d31824",
+      "after": "8a7c6d302e77987449b33cd065a661f436d7b90437d356fc16a795919d37f6e5"
+    },
+    "frontend/components/RecommendationResult.tsx": {
+      "before": "20f86df8b156fa2e2331f9c83f4831de07924bed75f7733f43b908167c432c8a",
+      "after": "d9d2e8a8c66222c43cb6c3d1ca8733db0bd160311ebd9f0e4b27424e4fdde5ee"
+    },
+    "frontend/app/wardrobe/page.tsx": {
+      "before": "feb5c34d627f928b52b0ec07394dfacc485514c34ddff66fe911a61043f23b19",
+      "after": "f026793b5315f38b25b7630ee38f4cd8e0e9677f6e4344275eeb5a0d7c3cafba"
+    },
+    "frontend/app/extract/page.tsx": {
+      "before": "92ce6d29e99822e685b7253aab8c38aa2288daff430f25c663244dcb3279b0ee",
+      "after": "538d50774824035f3ba32e6978f233253c5ec70fdbf2eaa51e1370ad3e26b988"
+    },
+    "frontend/app/extract/results/page.tsx": {
+      "before": "036463024568aae5b4400a53b839bebdd281a765a4da4498d77f50c37ca4c215",
+      "after": "b6b38fa51de6f70a4bd2bb7a9c22c5bdae088898407b191e13008c388fe1a16b"
+    }
+  },
+  "additions": {
+    "backend/app/domain/value_objects/saved_attribute_evidence.py": "23a65dc62abbf9043154b6b00775b11dd0a50756aabb7cfc2733b609645780b3",
+    "backend/app/application/garment_processing/automatic_garment_finalization.py": "f521564de15efd1428706fee9c77f9654308eadaeab4b1b68dbaf4a99f1f3d50"
+  }
+}

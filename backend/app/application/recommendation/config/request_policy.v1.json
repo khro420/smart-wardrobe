@@ -1,0 +1,12 @@
+{
+  "version": "1.0.0",
+  "exact_hex_source": "https://www.w3.org/TR/css-color-4/#named-colors",
+  "exact_hex_anchors": {
+    "#000000":"black", "#ffffff":"white", "#808080":"grey",
+    "#000080":"navy", "#0000ff":"blue", "#ff0000":"red",
+    "#008000":"green", "#ffff00":"yellow", "#ffa500":"orange",
+    "#ffc0cb":"pink", "#800080":"purple", "#a52a2a":"brown",
+    "#f5f5dc":"beige"
+  },
+  "deferred": ["approximate_hex", "occasion", "formality", "aesthetic_compatibility", "scoring"]
+}

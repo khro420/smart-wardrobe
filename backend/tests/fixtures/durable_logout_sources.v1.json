@@ -1,0 +1,33 @@
+{
+  "version": "durable-logout-1.0.0",
+  "replacements": {
+    "backend/app/infrastructure/security.py": {
+      "before": "2e2bddc52b2f426a5bb341a12accc1b7317a4f0d0142842591557d4fb93de9fb",
+      "after": "90a697837c99f9bf19ed59ff2cb722c55b819a8bad40447d0e5604560c6f26fa"
+    },
+    "backend/app/api/account_routes.py": {
+      "before": "d5e94e18d47142f5f3bb5276d2dcd2829dee317f6f567c68e6fdcaed3a5964b0",
+      "after": "407e8fab387f5aea272a88e3177a218ae62cb41aef5af5a436d72483dd4853d5"
+    },
+    "backend/app/application/account/account_service.py": {
+      "before": "7c958085a47915f6c06d1fea3f23e26d03ce5f40f83a7600fe7eaffea7e86982",
+      "after": "5c28d75148e670b0de27345073aae48c709e36fe80964758a7442aa206ab67ae"
+    },
+    "backend/app/infrastructure/persistence/postgresql_repository.py": {
+      "before": "063ca9d67fadd13a3c646b64447403587fb95c6d7084c2508507b91b245aca29",
+      "after": "41eadf98f56d4cf7ae4c8132ddb719de7cce31f260dd159ac52814ba9e845ade"
+    },
+    "frontend/lib/api.ts": {
+      "before": "7279714227c63c4e4e13f805e235a1f6928adf99f67d7533c97e804c5eb325b3",
+      "after": "5acada3cf1742ffcc7795b0641979e7d35e735dddbe93be2639a16c7eaa2ab5f"
+    },
+    "frontend/components/Layout.tsx": {
+      "before": "acdcc87e3d08f1c72876847eb8189e2965cb83e2e10f26a1477fafaf815daff0",
+      "after": "5135f2e2854eab9045c92e7a96f91dd61125becad36645a2ceec4498c8b4ff68"
+    }
+  },
+  "additions": {
+    "backend/app/infrastructure/persistence/session_revocation_store.py": "d010ad1e31606f72f01c3324e638658da9f847465babd0a9dd2c97cb8fc60243",
+    "backend/app/infrastructure/persistence/session_revocation_migrations.py": "d5f9e5832992e4d9b0b118e7ef726f4c0b71adc6127d2727b7e6b5dde1513458"
+  }
+}

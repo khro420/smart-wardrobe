@@ -1,0 +1,313 @@
+{
+  "version": "context-expansion-sources-1.0.0",
+  "default_activation": false,
+  "replacements": {
+    "backend/app/application/nlp/general_context_interpreter.py": {
+      "before": "f567e287422bb99a0a048a71542851bd8aba6979e36bdd643fa9d362ec5f1e94",
+      "after": "0a26f071528c81bbaa6c2ba81e3542f4670cec69090ee25352f3390efdf34426"
+    },
+    "backend/app/domain/value_objects/general_context_request.py": {
+      "before": "3fff5d4ff00d62f42d03d827e0370a8cc838f72f648fe0eb784eaf72e3ceb080",
+      "after": "cde4fe04e6aee6e19151bbea6d36a1d113b4946670ccbb1c46c5ba49899a68a5"
+    },
+    "backend/app/application/recommendation/contextual_selection.py": {
+      "before": "8c4409c06ede3bfc5a0ec00f001fffe8004a466cab64af1d835cfc4355dc4520",
+      "after": "1ef993e50e07cacbbada7dcdf40c1eab520f2d1b5cf45d319b6c77bc5ef04e4c"
+    },
+    "backend/app/application/recommendation/context_policy_registry.py": {
+      "before": "6b14fef7555e9bc3282e6c18f0bc2a74860652965187e6850415986219ee2f9b",
+      "after": "40a6bbb19b608b642e1bed84b042bdeb8d56ca988c0413f728b50e959f6760f7"
+    },
+    "backend/app/application/recommendation/context_constraint_compiler.py": {
+      "before": "cc89c13acfa65a25d4efb669f60b078093c97ef701ee9ed19b7967a9ef9461fb",
+      "after": "8ec9f710631bbe3d24d421866fdd52371f3440cae6365af4e69471691187e121"
+    },
+    "backend/app/application/recommendation/context_evidence_resolver.py": {
+      "before": "81f4d68ef14d9127db51675901a086e72b5529469625a37424b56f9611413c56",
+      "after": "6105a7d0bdf1c3b6078f4764922d1011ffa5e79c4daaab8adbf203f2516f67fe"
+    },
+    "backend/app/application/recommendation/general_context_evaluator.py": {
+      "before": "4158a108530051b9ac0c7bffbc1c051479c55a77e82937df97aecfd6987f2f83",
+      "after": "0e5fc116f594b846afb974d143163572ab3b1e0aabe2f5a0b3d593727eee81de"
+    },
+    "backend/app/application/recommendation/context_relevance_policy.py": {
+      "before": "16d2abd29044a2f6e39add57d1cbca4448ae0daf3a2bfe942bcea604c0fedefb",
+      "after": "db500db462ef764237ec50bb9796fcd943ae38e9702f8024a8a5b7b61c468ff3"
+    },
+    "backend/app/application/recommendation/context_relevance_scorer.py": {
+      "before": "ba97c04394e9c2455d921236e0f92cddbf8e426e4f80a4737641efe25781e3d5",
+      "after": "1beab66778fe79f1e417aba6f73b73cd81ecbc3aa222948ad3257b6b1f1c02e6"
+    },
+    "backend/app/application/recommendation/context_relevance_verifier.py": {
+      "before": "c24347ccbeb6d4b86c5af7a4501bf826fd610455bfa469f72d8de907fd16e342",
+      "after": "17d82c71f08df2f07235a0b530f953ff1194bf6d62fea4683891c2c35413045a"
+    },
+    "backend/app/application/recommendation/compact_exhaustive_scorer.py": {
+      "before": "d88ee3d32bb8d489b77f6763a3bde6a0348a35680a843c2688a3af294996ccad",
+      "after": "d0a8ad65e31207a0b2067db01efa7f6c10fc4ec610615f0e29e4d72ad724d6bb"
+    },
+    "backend/app/application/recommendation/compact_assistant_scorer.py": {
+      "before": "2900ef1db87606b7ad52f9b8a18dff5e11934c902fb3714ff7a5c7a1a212264f",
+      "after": "0e16e42935cd3d92d2c859c8c889efc21eda13a6ee025783f38f62a38212bf15"
+    },
+    "backend/app/application/recommendation/aggregated_decision_scorer.py": {
+      "before": "92270d36a72e0b3637896133e309df5da357d469c0880f2021cb271b1f2a40a5",
+      "after": "265c7ccd8444c3da096dad7f781d0ccdf7e815c1da508eaf73cbfdebbebbc849"
+    },
+    "backend/app/application/recommendation/outfit_assistant_service.py": {
+      "before": "5821a0c639a18201b34a2dfd6df3177832827694df5b9b09c5cfc5292ea1e0c0",
+      "after": "12b1484ce9e6c38faf1f68ee89b87351dedfd8843f3b205b1c3d69db0d37719a"
+    },
+    "backend/app/application/recommendation/decision_score_codec.py": {
+      "before": "933fcd87192a4e825d338cae2f9f13139695388384cd55b0f81c4b57868356e0",
+      "after": "d05ef97c24b9747898282b48926b47ee4afad48c2afebe2077b5d5e2c748bb9d"
+    },
+    "backend/app/application/recommendation/scoring_display.py": {
+      "before": "c038c895c0942859b90cb136da7d9bd30ca0109515af326d9c27c9bfb9693f33",
+      "after": "3bb63943e39541c52049f305b7c1bc4aab9ababcb208d55d9712cff5bfc8ac3d"
+    },
+    "backend/app/api/recommendation_routes.py": {
+      "before": "543fee486b649851ea9df819f1e7643e201cf080665451e4424aa1309904ffb8",
+      "after": "8dd68cccc8874744ff78d079afa6e187a4bbee96b6b879e8e14232e0721a41bd"
+    },
+    "backend/app/infrastructure/workflow_runtime.py": {
+      "before": "bc48d999eed93a97375b8e6721ac0a07b262d588d92c7de6d144f72ae2c0fcdc",
+      "after": "a43f8ff7c10dd069f3bec0b5c813953686e1e20a73de29cbf72f220ce8b65bf3"
+    },
+    "backend/app/infrastructure/persistence/recommendation_repository_adapter.py": {
+      "before": "7dd83c8889b09518a2fdf61010644172ae5a34c717b79184ed1edf1592869747",
+      "after": "e46d630d642afebe552f69003becd51f3431ce5786510c234e1b6458eb3c0895"
+    },
+    "backend/app/domain/value_objects/assistant_execution_context.py": {
+      "before": "33da92f53c6cafb92c0cb3c92b185bf16a8df05c339c373d1f987c9bf3256a50",
+      "after": "139d039ea263bc08aea3d52b84c6b0474aab5462e014fe9a2b63ec78171a43c8"
+    },
+    "frontend/lib/api.ts": {
+      "before": "7907c7c2640023c616f9df4781366704168c680b2cd4a85594b3f17384844d70",
+      "after": "52a6d78cd76a0e20976e273272729b7d9ebd07bc10ae569cb4c74ea09f116d86"
+    },
+    "frontend/lib/recommendation-messages.ts": {
+      "before": "3b5c33b1c416b4416c603f4f86a0e2236bdd435d5d96f77b00a3cff232f52642",
+      "after": "1d695dc2af1106b7c82c17346d03bf7714218ab1af4ad20c4ed4232dd06ece20"
+    },
+    "frontend/components/OutfitAssistant.tsx": {
+      "before": "7488d9adca945623634c2b7efff71984bec3213ae0836ac71d7b13110084700b",
+      "after": "53e06aa32481b5bcebf7f797a7d182f48e52b7f89b7f41a1251e8ce8d62586b5"
+    },
+    "frontend/components/RecommendationResult.tsx": {
+      "before": "d5a1caedfb7f89e9a8cff48a8fc8012723f616488c2e553c88e094e29468c92f",
+      "after": "aeaa716559868b0498ff1b15ab38951aee0900f2705ccdc31adbca461722b3d3"
+    }
+  },
+  "additions": {
+    "backend/app/application/recommendation/context_bundle.py": "491788fbc5ae23abcc11d32bc19e78ed913a33c3c9ed36db90a77ef3a3eda3b5",
+    "backend/app/application/nlp/context_expression_matcher.py": "8fc28a65ab1ea4ed12f809b8b192a08686e3f9c923f33bdc4f1ebc884332fc4e",
+    "backend/app/application/recommendation/config/context_expansion_bundle.v1.json": "04fc322dd1173471345141b003c668e4d9f59103a28a7c4f06435a5de768844e",
+    "backend/app/application/nlp/config/context_grammar.v2.json": "aba41acf6ff4f2892d656ecaa0a4698842d334d665e6ce3489745669af48388a",
+    "backend/app/application/recommendation/config/situation_taxonomy.v2.json": "b7886f3a3cf0b7dbd5db80aca4f2d323020a9be2dbadccdad98aa36f9b3c0aa5",
+    "backend/app/application/recommendation/config/context_policy_registry.v2.json": "8786cf22887c55c2b798592620ff4ed48bfd71878538622ffb68d27ab09bffd9",
+    "backend/app/application/recommendation/config/context_relevance_policy.v2.json": "0b3396fb639fb63f3a7ec5a7f0a506555dcc2077f9ad19e39322328488969c72",
+    "backend/app/application/recommendation/config/context_relevance_objectives.v2.json": "4839be5f166aff25cb223b4af09bc8e0346d8a9a5e74fa949bd169862feeeaa9"
+  },
+  "source_guard": {
+    "before": "551703653734a2c7d57f7d667586f356fdda1342c1e83e39cbb4a231ea61862a",
+    "after": "f1d36488acbdde1d2dc7b710fbfac5225e40e0d81f2345d4170a568dc903eebc"
+  },
+  "starting_authorities": {
+    "backend/app/application/nlp/general_context_interpreter.py": {
+      "fixture": "everyday_context_sources.v1.json",
+      "key_path": [
+        "replacements",
+        "backend/app/application/nlp/general_context_interpreter.py",
+        "after"
+      ]
+    },
+    "backend/app/domain/value_objects/general_context_request.py": {
+      "fixture": "general_context_sources.v1.json",
+      "key_path": [
+        "additions",
+        "backend/app/domain/value_objects/general_context_request.py"
+      ]
+    },
+    "backend/app/application/recommendation/contextual_selection.py": {
+      "fixture": "general_context_sources.v1.json",
+      "key_path": [
+        "replacements",
+        "backend/app/application/recommendation/contextual_selection.py",
+        "after"
+      ]
+    },
+    "backend/app/application/recommendation/context_policy_registry.py": {
+      "fixture": "automatic_admission_sources.v1.json",
+      "key_path": [
+        "replacements",
+        "backend/app/application/recommendation/context_policy_registry.py",
+        "after"
+      ]
+    },
+    "backend/app/application/recommendation/context_constraint_compiler.py": {
+      "fixture": "professional_academic_sources.v1.json",
+      "key_path": [
+        "replacements",
+        "backend/app/application/recommendation/context_constraint_compiler.py",
+        "after"
+      ]
+    },
+    "backend/app/application/recommendation/context_evidence_resolver.py": {
+      "fixture": "automatic_admission_sources.v1.json",
+      "key_path": [
+        "replacements",
+        "backend/app/application/recommendation/context_evidence_resolver.py",
+        "after"
+      ]
+    },
+    "backend/app/application/recommendation/general_context_evaluator.py": {
+      "fixture": "automatic_admission_sources.v1.json",
+      "key_path": [
+        "replacements",
+        "backend/app/application/recommendation/general_context_evaluator.py",
+        "after"
+      ]
+    },
+    "backend/app/application/recommendation/context_relevance_policy.py": {
+      "fixture": "context_relevance_sources.v1.json",
+      "key_path": [
+        "checkpoint_a",
+        "backend/app/application/recommendation/context_relevance_policy.py"
+      ]
+    },
+    "backend/app/application/recommendation/context_relevance_scorer.py": {
+      "fixture": "context_relevance_sources.v1.json",
+      "key_path": [
+        "additions",
+        "backend/app/application/recommendation/context_relevance_scorer.py"
+      ]
+    },
+    "backend/app/application/recommendation/context_relevance_verifier.py": {
+      "fixture": "context_relevance_sources.v1.json",
+      "key_path": [
+        "additions",
+        "backend/app/application/recommendation/context_relevance_verifier.py"
+      ]
+    },
+    "backend/app/application/recommendation/compact_exhaustive_scorer.py": {
+      "fixture": "context_relevance_sources.v1.json",
+      "key_path": [
+        "replacements",
+        "backend/app/application/recommendation/compact_exhaustive_scorer.py",
+        "after"
+      ]
+    },
+    "backend/app/application/recommendation/compact_assistant_scorer.py": {
+      "fixture": "context_relevance_sources.v1.json",
+      "key_path": [
+        "replacements",
+        "backend/app/application/recommendation/compact_assistant_scorer.py",
+        "after"
+      ]
+    },
+    "backend/app/application/recommendation/aggregated_decision_scorer.py": {
+      "fixture": "context_relevance_sources.v1.json",
+      "key_path": [
+        "replacements",
+        "backend/app/application/recommendation/aggregated_decision_scorer.py",
+        "after"
+      ]
+    },
+    "backend/app/application/recommendation/outfit_assistant_service.py": {
+      "fixture": "context_relevance_sources.v1.json",
+      "key_path": [
+        "replacements",
+        "backend/app/application/recommendation/outfit_assistant_service.py",
+        "after"
+      ]
+    },
+    "backend/app/application/recommendation/decision_score_codec.py": {
+      "fixture": "context_relevance_sources.v1.json",
+      "key_path": [
+        "replacements",
+        "backend/app/application/recommendation/decision_score_codec.py",
+        "after"
+      ]
+    },
+    "backend/app/application/recommendation/scoring_display.py": {
+      "fixture": "context_relevance_sources.v1.json",
+      "key_path": [
+        "replacements",
+        "backend/app/application/recommendation/scoring_display.py",
+        "after"
+      ]
+    },
+    "backend/app/api/recommendation_routes.py": {
+      "fixture": "context_relevance_sources.v1.json",
+      "key_path": [
+        "replacements",
+        "backend/app/api/recommendation_routes.py",
+        "after"
+      ]
+    },
+    "backend/app/infrastructure/workflow_runtime.py": {
+      "fixture": "context_relevance_sources.v1.json",
+      "key_path": [
+        "replacements",
+        "backend/app/infrastructure/workflow_runtime.py",
+        "after"
+      ]
+    },
+    "backend/app/infrastructure/persistence/recommendation_repository_adapter.py": {
+      "fixture": "context_relevance_sources.v1.json",
+      "key_path": [
+        "replacements",
+        "backend/app/infrastructure/persistence/recommendation_repository_adapter.py",
+        "after"
+      ]
+    },
+    "backend/app/domain/value_objects/assistant_execution_context.py": {
+      "fixture": "general_context_sources.v1.json",
+      "key_path": [
+        "replacements",
+        "backend/app/domain/value_objects/assistant_execution_context.py",
+        "after"
+      ]
+    },
+    "frontend/lib/api.ts": {
+      "fixture": "context_relevance_sources.v1.json",
+      "key_path": [
+        "replacements",
+        "frontend/lib/api.ts",
+        "after"
+      ]
+    },
+    "frontend/lib/recommendation-messages.ts": {
+      "fixture": "context_relevance_sources.v1.json",
+      "key_path": [
+        "replacements",
+        "frontend/lib/recommendation-messages.ts",
+        "after"
+      ]
+    },
+    "frontend/components/OutfitAssistant.tsx": {
+      "fixture": "context_relevance_sources.v1.json",
+      "key_path": [
+        "replacements",
+        "frontend/components/OutfitAssistant.tsx",
+        "after"
+      ]
+    },
+    "frontend/components/RecommendationResult.tsx": {
+      "fixture": "context_relevance_sources.v1.json",
+      "key_path": [
+        "replacements",
+        "frontend/components/RecommendationResult.tsx",
+        "after"
+      ]
+    }
+  },
+  "approved_nlp_labels_sha256": "4a7244ed31dbb05cff6a8436aa4e3f24d235bf257e60ae7b5931d603e192ec53",
+  "approved_workflow_labels_sha256": "6e3e72c61b4c6ce9c337dcd076cf8589d8683e404ae1d1d1576ddd53b5cc66a9",
+  "checkpoints": {
+    "wave-a": "da977f6ebe07bacbd99e62049429c32ec2b876346697b4aefe3b4d91727a2bdb",
+    "wave-b": "954ebe43ffd3156461f5dabea80f2338e47f66e7a648ee1985adcf9010ae2728",
+    "wave-c": "bc124f51a909ffe40948943432ef5f1e1d67d34123d4822ccca6ecee3d85e89e"
+  }
+}

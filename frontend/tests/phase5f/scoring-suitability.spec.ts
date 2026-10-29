@@ -1,0 +1,64 @@
+import { writeFile } from "node:fs/promises";
+﻿import { test,expect,type Page,type APIRequestContext } from "@playwright/test";
+
+async function setup(page:Page,request:APIRequestContext,tags:string[],style:null|[] = null) {
+  const auth=await request.post("http://127.0.0.1:3101/api/v1/account/login",{data:{email:"browser-owner@example.test",password:"Browser-test-password-123"}});
+  expect(auth.ok()).toBeTruthy();const {access_token:token}=await auth.json();const headers={Authorization:`Bearer ${token}`};
+  await page.addInitScript(value=>sessionStorage.setItem("smart_wardrobe_access_token",value),token);
+  await page.goto("/wardrobe");
+  const image=await page.evaluate(()=>{const c=document.createElement("canvas");c.width=256;c.height=256;const x=c.getContext("2d")!;x.fillStyle="blue";x.fillRect(0,0,256,256);return c.toDataURL("image/png").split(",")[1];});
+  const upload=await request.post("http://127.0.0.1:3101/api/v1/processing/jobs",{headers,multipart:{file:{name:"synthetic-suitability.png",mimeType:"image/png",buffer:Buffer.from(image,"base64")}}});
+  expect(upload.status()).toBe(202);const jobId=(await upload.json()).id;
+  const readJob=async()=>await(await request.get(`http://127.0.0.1:3101/api/v1/processing/jobs/${jobId}`,{headers})).json();
+  await expect.poll(async()=>(await readJob()).status).toBe("review_required");const item=(await readJob()).items[0].id;
+  expect((await request.post(`http://127.0.0.1:3101/api/v1/processing/jobs/${jobId}/review`,{headers,data:{items:[{item_id:item,decision:"accepted",category:"vest_dress",attributes:{style,custom_tags:tags}}]}})).status()).toBe(200);
+  const confirmed=await request.post(`http://127.0.0.1:3101/api/v1/processing/jobs/${jobId}/confirm`,{headers,data:{save_mode:"garments",item_ids:[item]}});
+  expect(confirmed.status()).toBe(201);const gid=(await confirmed.json()).garment_ids[0];
+  const read=async()=>{const rows=await(await request.get("http://127.0.0.1:3101/api/v1/wardrobe/garments",{headers})).json();return rows.find((g:{id:string})=>g.id===gid);};
+  await page.reload();
+  const card=page.locator(`[data-garment-id="${gid}"]`);
+  const edit=async()=>{await card.getByRole("button",{name:"Edit",exact:true}).click();return card.getByRole("form");};
+  const save=async()=>{const response=page.waitForResponse(r=>r.url().endsWith(`/garments/${gid}`)&&r.request().method()==="PATCH");await card.getByRole("button",{name:"Save changes",exact:true}).click();const result=await response;expect(result.status()).toBe(200);return result;};
+  return {gid,headers,read,card,edit,save};
+}
+
+test("experimental scoring with real suitability controls and immutable history",async({page,request},testInfo)=>{
+  const f=await setup(page,request,["ordinary note"]);
+  let form=await f.edit();
+  await form.getByLabel("Primary colour",{exact:true}).fill("blue");
+  await form.getByLabel("Styles (comma-separated)",{exact:true}).fill("vintage");
+  await form.getByRole("combobox",{name:"Occasion: Campus",exact:true}).selectOption("allow");
+  await form.getByRole("combobox",{name:"Formality: Casual",exact:true}).selectOption("allow");
+  const saved=await f.save();expect(saved.request().headers()["if-match"]).toBeTruthy();
+  await page.reload();form=await f.edit();
+  await expect(form.getByRole("combobox",{name:"Occasion: Campus",exact:true})).toHaveValue("allow");
+  const persisted=await f.read();expect(persisted.custom_tags).toContain("rec:v1:formality:casual:allow");
+  const text="Suggest a casual outfit for campus with vintage style using blue colours with a vest dress";
+  await page.goto("/assistant");
+  await page.getByLabel("What would you like to wear?").fill(text);
+  const pending=page.waitForResponse(r=>r.url().includes("/recommendations")&&r.request().method()==="POST");
+  await page.getByRole("button",{name:"Suggest an outfit",exact:true}).click();
+  const response=await pending;expect(response.status()).toBe(201);const first=await response.json();
+  expect(first.outcome).toBe("Selected");expect(first.items.map((i:{garment_id:string})=>i.garment_id)).toEqual([f.gid]);
+  expect(first.request_match_score).toBe(1);expect(first.total_score).toBe(.7);
+  await expect(page.getByTestId("recommendation-result")).toBeVisible();
+  await expect(page.getByText("Default contribution for a single-piece outfit",{exact:true})).toBeVisible();
+  expect(first.scoring_display.basis).toBe("NoPairReference");
+  expect(first.provenance.scoring_profile).toBe("experimental_compatibility_decision_v1");
+  await page.goto("/wardrobe");form=await f.edit();
+  await form.getByRole("combobox",{name:"Occasion: Campus",exact:true}).selectOption("deny");await f.save();
+  await page.reload();form=await f.edit();await expect(form.getByRole("combobox",{name:"Occasion: Campus",exact:true})).toHaveValue("deny");
+  await page.goto("/assistant");await page.getByRole("button",{name:"New Chat",exact:true}).click();
+  await page.getByLabel("What would you like to wear?").fill(text);
+  const freshResponse=page.waitForResponse(r=>r.url().includes("/recommendations")&&r.request().method()==="POST");
+  await page.getByRole("button",{name:"Suggest an outfit",exact:true}).click();
+  const fresh=await(await freshResponse).json();expect(fresh.outcome).toBe("NoMatchingCandidates");
+  await expect(page.getByTestId("recommendation-result")).toHaveCount(0);
+  const replay=await request.post("http://127.0.0.1:3101/api/v1/recommendations?pipeline=integrated",{headers:f.headers,data:response.request().postDataJSON()});
+  const restored=await replay.json();expect(restored.replayed).toBe(true);expect(restored.id).toBe(first.id);expect(restored.score_metadata).toEqual(first.score_metadata);expect(restored.items).toEqual(first.items);
+  const history=await request.get(`http://127.0.0.1:3101/api/v1/chats/${first.chat_id}`,{headers:f.headers});
+  expect(history.status()).toBe(200);expect((await history.json()).recommendation.id).toBe(first.id);
+  const evidence=testInfo.outputPath("actual-suitability-flow.json");
+  await writeFile(evidence,JSON.stringify({persisted,first,fresh,replay:restored},null,2));
+  await testInfo.attach("actual-suitability-flow.json",{path:evidence,contentType:"application/json"});
+});

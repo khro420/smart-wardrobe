@@ -2,10 +2,19 @@
 
 import json
 import uuid
+import hmac
 from fastapi import HTTPException
 
 from app.application.ports.workflow_runtime import connection, utcnow, media_path_for_owner, runtime
 from app.domain.value_objects.garment_attributes import GARMENT_STRUCTURE, GarmentAttributes
+from app.application.wardrobe.garment_tag_edit import tag_edit_view, tag_revision
+from app.application.wardrobe import contextual_review
+from app.application.wardrobe import owner_style_confirmation
+from app.application.wardrobe import attribute_evidence_review
+from app.domain.value_objects.general_context_evidence import KEY as APPEARANCE_KEY
+from app.domain.value_objects.contextual_garment_evidence import KEY as CONTEXT_KEY
+from app.domain.value_objects.saved_attribute_evidence import KEY as SOURCE_KEY, source_record
+from app.application.garment_processing import automatic_garment_finalization as automatic
 
 
 SORT_SQL = {
@@ -24,10 +33,50 @@ OUTFIT_SORT_SQL = {
 }
 
 
+WARDROBE_GARMENT_LIMIT = 100
+
+
+def _quota_on_connection(conn, user_id: str) -> dict:
+    used = conn.execute(
+        "SELECT COUNT(*) FROM garments WHERE user_id=? AND (status IS NULL OR status<>'archived')",
+        (user_id,),
+    ).fetchone()[0]
+    return {"policy_version": "wardrobe-active-entries-1.0.0",
+            "scope": "non_archived_garment_entries", "limit": WARDROBE_GARMENT_LIMIT,
+            "used": used, "remaining": max(0, WARDROBE_GARMENT_LIMIT-used),
+            "over_limit": used > WARDROBE_GARMENT_LIMIT, "pending_reserved": 0}
+
+
+def get_wardrobe_quota(user_id: str) -> dict:
+    with connection() as conn:
+        return _quota_on_connection(conn, user_id)
+
+
+def _require_capacity(quota: dict, requested: int | None, stage: str) -> None:
+    if quota["used"] + (requested if requested is not None else 1) <= quota["limit"]:
+        return
+    if requested is None:
+        message = f"Your wardrobe is full ({quota['used']}/{quota['limit']}). Archive a garment before adding another image."
+    else:
+        needed = quota["used"] + requested - quota["limit"]
+        message = (f"You have {quota['used']} of {quota['limit']} active garments and selected {requested}. "
+                   f"Archive at least {needed} garment(s) or select fewer candidates.")
+    raise HTTPException(409, {"code": "WardrobeQuotaExceeded", "stage": stage,
+                              "message": message, **quota, "requested": requested})
+
+
+def check_upload_capacity(user_id: str) -> None:
+    # Advisory only: uploads/candidates do not reserve slots. Confirmation recounts.
+    _require_capacity(get_wardrobe_quota(user_id), None, "upload")
+
+
 class WardrobeWriter:
     """ConfirmedGarmentWriter implementation supplied to candidate review."""
     def save_confirmed_candidates(self, job_id: str, user_id: str, item_ids: list[str], save_mode: str, outfit_name: str | None) -> dict:
         return confirm_candidates(job_id, user_id, item_ids, save_mode, outfit_name)
+
+    def save_automatically_processed_candidates(self, job_id: str, user_id: str, item_ids: list[str] | None = None) -> dict:
+        return finalize_automatic_candidates(job_id, user_id, item_ids)
 
 
 def _serialise_garment(row) -> dict:
@@ -36,28 +85,67 @@ def _serialise_garment(row) -> dict:
     data["attributes"] = json.loads(data.pop("attributes_json"))
     for key in ("style_tags", "custom_tags", "structural_scores", "additional_attributes", "embedding"):
         data[key] = json.loads(data[key]) if data.get(key) else None
+    data["tag_edit"] = tag_edit_view(row, data)
+    data['contextual_edit'] = contextual_review.view(row)
+    data['style_confirmation'] = owner_style_confirmation.garment_view(row, data['contextual_edit']['review_current'])
+    data['appearance_edit'] = attribute_evidence_review.view(row)
     return data
 
 
-def _write_representation(conn, garment_id: str, attrs: dict) -> None:
+def _write_representation(conn, garment_id: str, attrs: dict, *, write_style: bool = True, write_tags: bool = True) -> None:
     styles = attrs.get("style")
     if isinstance(styles, str):
-        styles = [styles] if styles else []
+        styles = [styles]
+    additional_json = json.dumps(attrs, allow_nan=False)
+    if not write_style or not write_tags:
+        # Preserve omitted evidence in the legacy mirror too: Phase 1 can use it
+        # when the dedicated/canonical representation is absent. Never reconcile
+        # these historical representations merely because another field changed.
+        raw = conn.execute("SELECT additional_attributes FROM garments WHERE id=?", (garment_id,)).fetchone()["additional_attributes"]
+        try:
+            previous = json.loads(raw) if raw is not None else {}
+        except (ValueError, TypeError):
+            previous = None
+        if isinstance(previous, dict):
+            mirrored = dict(attrs)
+            for field, changed in (("style", write_style), ("custom_tags", write_tags)):
+                if not changed:
+                    if field in previous:
+                        mirrored[field] = previous[field]
+                    else:
+                        mirrored.pop(field, None)
+            additional_json = json.dumps(mirrored, allow_nan=False)
+        else:
+            additional_json = raw  # Preserve malformed evidence, not a guessed repair.
     palette = attrs.get("color_palette", [])
     secondary = palette[1].get("hex") if len(palette) > 1 else None
-    conn.execute("UPDATE garments SET secondary_colour=?, style_tags=?, custom_tags=?, structural_scores=?, additional_attributes=?, embedding=? WHERE id=?", (
-        secondary, json.dumps(styles or []), json.dumps(attrs.get("custom_tags", [])),
+    conn.execute("UPDATE garments SET secondary_colour=?, structural_scores=?, additional_attributes=?, embedding=? WHERE id=?", (
+        secondary,
         json.dumps({"garment_role": attrs.get("garment_type"), "layering_index": attrs.get("layering_index")}),
-        json.dumps(attrs, allow_nan=False), json.dumps(attrs.get("embedding"), allow_nan=False), garment_id,
+        additional_json, json.dumps(attrs.get("embedding"), allow_nan=False), garment_id,
     ))
+    # Forward writes retain missing (JSON null), deliberate [], and assigned tags.
+    # Omission on PATCH must not rewrite an existing authoritative representation.
+    if write_style:
+        conn.execute("UPDATE garments SET style_tags=? WHERE id=?", (json.dumps(styles), garment_id))
+    if write_tags:
+        conn.execute("UPDATE garments SET custom_tags=? WHERE id=?", (json.dumps(attrs.get("custom_tags", [])), garment_id))
 
 
 def list_garments(
     user_id: str, query: str = "", category: str | None = None,
     favourite: bool | None = None, sort: str = "updated_desc",
+    colour: str | None = None, style: str | None = None, availability: str = "available",
 ) -> list[dict]:
-    sql = "SELECT * FROM garments WHERE user_id=? AND status='available'"
+    if availability not in {"available", "unavailable", "archived", "all"}:
+        raise HTTPException(422, "Choose a supported availability filter.")
+    sql = "SELECT * FROM garments WHERE user_id=?"
     parameters: list[object] = [user_id]
+    if availability == "unavailable":
+        sql += " AND (status IS NULL OR status NOT IN ('available','archived'))"
+    elif availability != "all":
+        sql += " AND status=?"
+        parameters.append(availability)
     if query:
         sql += " AND (LOWER(name) LIKE ? OR LOWER(category) LIKE ?)"
         parameters.extend([f"%{query.lower()}%", f"%{query.lower()}%"])
@@ -67,9 +155,59 @@ def list_garments(
     if favourite is not None:
         sql += " AND is_favourite=?"
         parameters.append(int(favourite))
+    if colour and colour.strip():
+        sql += " AND LOWER(TRIM(primary_colour))=?"
+        parameters.append(colour.strip().lower())
     sql += f" ORDER BY {SORT_SQL.get(sort, SORT_SQL['updated_desc'])}"
     with connection() as conn:
-        return [_serialise_garment(row) for row in conn.execute(sql, parameters).fetchall()]
+        garments = [_serialise_garment(row) for row in conn.execute(sql, parameters).fetchall()]
+    if style and style.strip():
+        target = style.strip().casefold()
+        def matches(garment):
+            # Listing compares stored labels only. Explicit empty lists remain empty.
+            values = garment["style_tags"]
+            if values is None:
+                values = garment["attributes"].get("style")
+            if isinstance(values, str):
+                values = [values]
+            return isinstance(values, list) and any(isinstance(value, str) and value.strip().casefold() == target for value in values)
+        garments = [garment for garment in garments if matches(garment)]
+    return garments
+
+
+def _materialise_candidates(conn, job_id, user_id, items, save_mode, outfit_name, automatic_mode=False):
+    now, garment_ids = utcnow(), []
+    for item in items:
+        garment_id = str(uuid.uuid4())
+        attrs = json.loads(item["attributes_json"])
+        # Automatic processing cannot attest to an authenticated owner review.
+        attrs.pop(CONTEXT_KEY, None)
+        attrs.pop(APPEARANCE_KEY, None)
+        owner_style_confirmation.transfer(item, user_id, attrs)
+        attrs["requires_review"] = attrs.get("requires_review", True) if automatic_mode else False
+        if automatic_mode:
+            attrs[automatic.KEY] = automatic.record(user_id, job_id, item['id'], 'saved', garment_id=garment_id)
+            role, layer = GARMENT_STRUCTURE[attrs.get('reviewed_category') or item['detected_category']]
+            attrs.update(garment_type=role, layering_index=layer)
+        conn.execute("INSERT INTO garments (id, user_id, processing_item_id, preferred_media_id, name, category, primary_colour, pattern, attributes_json, status, is_favourite, created_at, updated_at, deleted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'available', 0, ?, ?, NULL)", (
+            garment_id, user_id, item["id"], item["preferred_media_id"], attrs.get("name") or attrs.get("reviewed_category") or item["detected_category"],
+            attrs.get("reviewed_category") or item["detected_category"], attrs.get("primary_colour"), attrs.get("pattern"), json.dumps(attrs), now, now,
+        ))
+        _write_representation(conn, garment_id, attrs)
+        if automatic_mode:
+            conn.execute("UPDATE processing_items SET review_status='confirmed',attributes_json=? WHERE id=?", (json.dumps(attrs, allow_nan=False), item['id']))
+        else:
+            conn.execute("UPDATE processing_items SET review_status='confirmed' WHERE id=?", (item["id"],))
+        garment_ids.append(garment_id)
+    outfit_id = None
+    if save_mode == "outfit":
+        outfit_id = str(uuid.uuid4())
+        conn.execute("INSERT INTO outfits VALUES (?, ?, ?, NULL, 'image_upload', 'available', 0, ?, ?)", (outfit_id, user_id, outfit_name, now, now))
+        for order, (garment_id, item) in enumerate(zip(garment_ids, items), start=1):
+            role = json.loads(item["attributes_json"]).get("garment_type", "garment")
+            conn.execute("INSERT INTO outfit_items VALUES (?, ?, ?, ?)", (outfit_id, garment_id, role, order))
+    conn.execute("UPDATE processing_jobs SET status='completed', updated_at=?, completed_at=? WHERE id=?", (now, now, job_id))
+    return {"garment_ids": garment_ids, "outfit_id": outfit_id}
 
 
 def confirm_candidates(job_id: str, user_id: str, item_ids: list[str], save_mode: str, outfit_name: str | None) -> dict:
@@ -87,6 +225,9 @@ def confirm_candidates(job_id: str, user_id: str, item_ids: list[str], save_mode
             raise HTTPException(404, "Processing job was not found.")
         if job["status"] != "review_required":
             raise HTTPException(409, "This job is not ready to be saved.")
+        all_attributes = conn.execute('SELECT attributes_json FROM processing_items WHERE job_id=?', (job_id,)).fetchall()
+        if any(automatic.KEY in json.loads(value['attributes_json']) for value in all_attributes):
+            raise HTTPException(409, 'Use the complete automatic submission protocol for this job.')
         placeholders = ",".join("?" for _ in item_ids)
         items = conn.execute(f"SELECT * FROM processing_items WHERE job_id=? AND id IN ({placeholders}) AND review_status='accepted'", [job_id, *item_ids]).fetchall()
         if len(items) != len(set(item_ids)):
@@ -101,34 +242,80 @@ def confirm_candidates(job_id: str, user_id: str, item_ids: list[str], save_mode
             if item["preferred_media_id"] not in {item["crop_media_id"], item["vtoff_media_id"]}:
                 raise HTTPException(409, "Review a valid garment representation before saving.")
             media_path_for_owner(item["preferred_media_id"], user_id)
-        now, garment_ids = utcnow(), []
-        for item in items:
-            garment_id = str(uuid.uuid4())
-            attrs = json.loads(item["attributes_json"])
-            attrs["requires_review"] = False
-            conn.execute("INSERT INTO garments (id, user_id, processing_item_id, preferred_media_id, name, category, primary_colour, pattern, attributes_json, status, is_favourite, created_at, updated_at, deleted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'available', 0, ?, ?, NULL)", (
-                garment_id, user_id, item["id"], item["preferred_media_id"], attrs.get("name") or attrs.get("reviewed_category") or item["detected_category"],
-                attrs.get("reviewed_category") or item["detected_category"], attrs.get("primary_colour"), attrs.get("pattern"), json.dumps(attrs), now, now,
-            ))
-            _write_representation(conn, garment_id, attrs)
-            conn.execute("UPDATE processing_items SET review_status='confirmed' WHERE id=?", (item["id"],))
-            garment_ids.append(garment_id)
-        outfit_id = None
-        if save_mode == "outfit":
-            outfit_id = str(uuid.uuid4())
-            conn.execute("INSERT INTO outfits VALUES (?, ?, ?, NULL, 'image_upload', 'available', 0, ?, ?)", (outfit_id, user_id, outfit_name, now, now))
-            for order, (garment_id, item) in enumerate(zip(garment_ids, items), start=1):
-                role = json.loads(item["attributes_json"]).get("garment_type", "garment")
-                conn.execute("INSERT INTO outfit_items VALUES (?, ?, ?, ?)", (outfit_id, garment_id, role, order))
-        conn.execute("UPDATE processing_jobs SET status='completed', updated_at=?, completed_at=? WHERE id=?", (now, now, job_id))
-    return {"garment_ids": garment_ids, "outfit_id": outfit_id}
+        # The same write transaction owns the count and every subsequent insert.
+        # Completed-job retries were already rejected above; they are never charged.
+        _require_capacity(_quota_on_connection(conn, user_id), len(items), "confirmation")
+        result = _materialise_candidates(conn, job_id, user_id, items, save_mode, outfit_name)
+    return result
 
 
-def update_garment(garment_id: str, user_id: str, payload: dict) -> dict:
+def finalize_automatic_candidates(job_id: str, user_id: str, item_ids: list[str] | None = None) -> dict:
+    """The same locked writer materialises complete automatic batches only."""
     with connection() as conn:
+        conn.execute('BEGIN IMMEDIATE')
+        job = conn.execute('SELECT * FROM processing_jobs WHERE id=? AND user_id=?', (job_id, user_id)).fetchone()
+        if job is None:
+            raise HTTPException(404, 'Processing job was not found.')
+        items = conn.execute('SELECT * FROM processing_items WHERE job_id=? ORDER BY created_at,id', (job_id,)).fetchall()
+        if item_ids is not None and (len(item_ids) != len(items) or len(set(item_ids)) != len(item_ids) or set(item_ids) != {item['id'] for item in items}):
+            raise HTTPException(409, 'Automatic saving requires the original complete batch.')
+        attrs = [json.loads(item['attributes_json']) for item in items]
+        if not items or not all(automatic.current(value.get(automatic.KEY), item, user_id) for item, value in zip(items, attrs)):
+            raise HTTPException(409, 'This job does not have a valid automatic submission contract.')
+        if job['status'] == 'completed':
+            saved = automatic.projection(items, user_id)
+            if saved['state'] != 'saved' or any(item['review_status'] != 'confirmed' for item in items):
+                raise HTTPException(409, 'Automatic completion metadata is inconsistent.')
+            return {'garment_ids': saved['garment_ids'], 'outfit_id': None, 'replayed': True, 'admission': saved}
+        if job['status'] != 'review_required':
+            raise HTTPException(409, 'This processing job is not ready for automatic saving.')
+        reason = next((problem for item, value in zip(items, attrs) if (problem := automatic.readiness(item, value, user_id))), None)
+        if reason is None:
+            try:
+                from PIL import Image
+                media_path_for_owner(job['source_media_id'], user_id)
+                for item, value in zip(items, attrs):
+                    GarmentAttributes(value).validate_embedding(runtime().embedding_dimension)
+                    path, mime = media_path_for_owner(item['preferred_media_id'], user_id)
+                    if mime not in ('image/jpeg', 'image/png'):
+                        raise ValueError('Invalid representation.')
+                    with Image.open(path) as image:
+                        image.verify()
+            except (HTTPException, ValueError, OSError):
+                reason = 'representation_or_processing_data_invalid'
+        if reason is None:
+            try:
+                _require_capacity(_quota_on_connection(conn, user_id), len(items), 'automatic_finalisation')
+            except HTTPException:
+                reason = 'WardrobeQuotaExceeded'
+        if reason is not None:
+            state = 'incomplete' if reason in ('category_missing_or_unsupported', 'candidate_not_ready') else 'blocked'
+            for item, value in zip(items, attrs):
+                value[automatic.KEY] = automatic.record(user_id, job_id, item['id'], state, reason)
+                conn.execute('UPDATE processing_items SET attributes_json=? WHERE id=?', (json.dumps(value, allow_nan=False), item['id']))
+            conn.execute('UPDATE processing_jobs SET progress_message=?,updated_at=? WHERE id=?',
+                         ('Automatic saving needs attention: '+reason, utcnow(), job_id))
+            return {'garment_ids': [], 'outfit_id': None, 'admission': {'mode': automatic.MODE, 'state': state, 'reason': reason, 'garment_ids': []}}
+        result = _materialise_candidates(conn, job_id, user_id, items, 'garments', None, automatic_mode=True)
+        conn.execute('UPDATE processing_jobs SET error_message=NULL,progress_message=? WHERE id=?', ('Garments automatically added to your wardrobe.', job_id))
+        result['admission'] = {'mode': automatic.MODE, 'state': 'saved', 'reason': None, 'garment_ids': result['garment_ids']}
+        return result
+
+
+def update_garment(garment_id: str, user_id: str, payload: dict, expected_tag_revision: str | None = None) -> dict:
+    if {CONTEXT_KEY, APPEARANCE_KEY, owner_style_confirmation.KEY, SOURCE_KEY, automatic.KEY}.intersection(payload.get('attributes') or {}):
+        raise HTTPException(422, 'Use the contextual suitability review action.')
+    with connection() as conn:
+        # Keep the read/merge/write atomic so an unrelated PATCH cannot restore stale style evidence.
+        conn.execute("BEGIN IMMEDIATE")
         row = conn.execute("SELECT * FROM garments WHERE id=? AND user_id=? AND status='available'", (garment_id, user_id)).fetchone()
         if not row:
             raise HTTPException(404, "Garment was not found.")
+        if "custom_tags" in (payload.get("attributes") or {}):
+            if expected_tag_revision is None:
+                raise HTTPException(428, "Reload the garment before editing its tags; a tag revision is required.")
+            if not isinstance(expected_tag_revision, str) or not expected_tag_revision.isascii() or not hmac.compare_digest(expected_tag_revision, tag_revision(row)):
+                raise HTTPException(409, "Tags changed in another session. Your changes were not saved. Reload and review before retrying.")
         data = _serialise_garment(row)
         for key in ("name", "category", "primary_colour", "pattern", "is_favourite"):
             if payload.get(key) is not None:
@@ -144,11 +331,96 @@ def update_garment(garment_id: str, user_id: str, payload: dict) -> dict:
         if "pattern" in payload:
             data["pattern"] = payload["pattern"]
             data["attributes"]["pattern"] = payload["pattern"]
+        if 'category' in payload or 'style' in (payload.get('attributes') or {}):
+            contextual_review.invalidate_review(data['attributes'])
+            data['attributes'].pop(owner_style_confirmation.KEY, None)
+        action = payload.get('style_confirmation')
+        if action is not None:
+            if 'style' not in (payload.get('attributes') or {}):
+                raise HTTPException(422, 'Explicitly select the style to confirm.')
+            owner_style_confirmation.require_consistent_mirror(row)
+            # Validate the old container before replacing its style proof.
+            original_attrs = json.loads(row['attributes_json'])
+            style = owner_style_confirmation.validate_action(action, owner_style_confirmation.garment_revision(row), data['attributes'], data['category'])
+            confirmation = owner_style_confirmation.event(user_id, garment_id, None, data['category'],
+                row['preferred_media_id'], style, utcnow(), 'garment_edit')
+            owner_style_confirmation.admit(original_attrs, confirmation)
+            data['attributes'][CONTEXT_KEY] = original_attrs[CONTEXT_KEY]
+            data['attributes'][owner_style_confirmation.KEY] = original_attrs[owner_style_confirmation.KEY]
+        if 'category' in payload:
+            attribute_evidence_review.invalidate(data['attributes'])
+        if 'category' in payload or 'style' in (payload.get('attributes') or {}):
+            prior = data['attributes'].get(SOURCE_KEY)
+            # A category-only correction does not prove who supplied its old style.
+            origin = 'owner_supplied' if 'style' in (payload.get('attributes') or {}) else 'unknown'
+            contributor = 'authenticated_garment_edit' if origin == 'owner_supplied' else 'unrecorded_prior_style'
+            if origin == 'unknown' and isinstance(prior, dict) and isinstance(prior.get('style'), dict):
+                origin = prior['style'].get('origin', 'unknown')
+                contributor = prior['style'].get('contributor', 'unrecorded_prior_style')
+            source_attrs = data['attributes']
+            if 'style' not in (payload.get('attributes') or {}) and row['style_tags'] is not None:
+                source_attrs = {**source_attrs, 'style': json.loads(row['style_tags'])}
+            data['attributes'][SOURCE_KEY] = source_record(source_attrs, user_id, data['category'], row['preferred_media_id'], utcnow(), origin, contributor)
         conn.execute("UPDATE garments SET name=?, category=?, primary_colour=?, pattern=?, is_favourite=?, attributes_json=?, updated_at=? WHERE id=?", (
             data["name"], data["category"], data["primary_colour"], data["pattern"], int(data["is_favourite"]), json.dumps(data["attributes"]), utcnow(), garment_id
         ))
-        _write_representation(conn, garment_id, data["attributes"])
+        _write_representation(
+            conn, garment_id, data["attributes"],
+            write_style="style" in (payload.get("attributes") or {}),
+            write_tags="custom_tags" in (payload.get("attributes") or {}),
+        )
         result = _serialise_garment(conn.execute("SELECT * FROM garments WHERE id=?", (garment_id,)).fetchone())
+    return result
+
+
+def review_contextual_suitability(garment_id: str, user_id: str, payload: dict) -> dict:
+    with connection() as conn:
+        conn.execute('BEGIN IMMEDIATE')
+        row = conn.execute("SELECT * FROM garments WHERE id=? AND user_id=? AND status='available'", (garment_id, user_id)).fetchone()
+        if row is None:
+            raise HTTPException(404, 'Garment was not found.')
+        if payload.get('appearance_review') is not None:
+            attribute_evidence_review.save(conn, row, payload, utcnow())
+            return _serialise_garment(conn.execute('SELECT * FROM garments WHERE id=?', (garment_id,)).fetchone())
+        if not hmac.compare_digest(payload['revision'], contextual_review.revision(row)):
+            raise HTTPException(409, 'Garment evidence changed. Reload and review before retrying.')
+        attrs = json.loads(row['attributes_json'])
+        try:
+            mirror = json.loads(row['additional_attributes']) if row['additional_attributes'] is not None else {}
+        except (ValueError, TypeError):
+            raise HTTPException(422, 'Stored attribute mirror needs explicit repair before editing.') from None
+        if not isinstance(mirror, dict) or ((CONTEXT_KEY in attrs or CONTEXT_KEY in mirror)
+                and attrs.get(CONTEXT_KEY) != mirror.get(CONTEXT_KEY)):
+            raise HTTPException(422, 'Stored contextual evidence is inconsistent and needs explicit repair.')
+        raw = attrs.get(CONTEXT_KEY, {'schema_version': '1.0.0', 'style_review': None, 'occasion_overrides': {}})
+        if (not isinstance(raw, dict) or set(raw) != {'schema_version', 'style_review', 'occasion_overrides'}
+                or raw['schema_version'] != '1.0.0' or not isinstance(raw['occasion_overrides'], dict)
+                or set(raw['occasion_overrides']) - {'wedding'}):
+            raise HTTPException(422, 'Stored contextual evidence needs explicit repair before editing.')
+        raw = {**raw, 'occasion_overrides': dict(raw['occasion_overrides'])}
+        if payload.get('review_style') is True:
+            projection = contextual_review.view(row)
+            if projection['style_state'] != 'Known' or len(projection['styles']) != 1 or row['category'] not in GARMENT_STRUCTURE:
+                raise HTTPException(422, 'Choose one supported style and a supported category before reviewing it.')
+            raw['style_review'] = {'source': 'owner_review', 'styles': projection['styles'], 'category': row['category'], 'reviewed_at': utcnow()}
+        elif payload.get('review_style') is False:
+            raw['style_review'] = None
+        if payload.get('review_style') is not None:
+            attrs.pop(owner_style_confirmation.KEY, None)
+            mirror.pop(owner_style_confirmation.KEY, None)
+        if payload.get('wedding_choice') is not None:
+            choice = payload['wedding_choice']
+            if choice == 'unknown':
+                raw['occasion_overrides'].pop('wedding', None)
+            else:
+                raw['occasion_overrides']['wedding'] = [choice]
+        attrs[CONTEXT_KEY] = raw
+        conn.execute('UPDATE garments SET attributes_json=?, updated_at=? WHERE id=?', (json.dumps(attrs), utcnow(), garment_id))
+        # Update only this namespace in the mirror: do not repair or overwrite
+        # unrelated historical style/custom-tag representations.
+        mirror[CONTEXT_KEY] = raw
+        conn.execute('UPDATE garments SET additional_attributes=? WHERE id=?', (json.dumps(mirror), garment_id))
+        result = _serialise_garment(conn.execute('SELECT * FROM garments WHERE id=?', (garment_id,)).fetchone())
     return result
 
 

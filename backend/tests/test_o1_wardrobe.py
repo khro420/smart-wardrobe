@@ -54,6 +54,7 @@ class O1WardrobeTests(unittest.TestCase):
 
         updated = self.client.patch(
             f"/api/v1/wardrobe/garments/{shirt['id']}",
+            headers={"If-Match": shirt["tag_edit"]["revision"]},
             json={
                 "name": "Blue Oxford Shirt",
                 "category": "long_sleeve_top",

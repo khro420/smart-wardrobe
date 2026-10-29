@@ -1,0 +1,13 @@
+{
+  "replacements": {
+    "app/application/recommendation/assistant_scoring_selection.py": {
+      "before": "8091f05b482b1204de16bee3f1ce2cac455fd0647e6b084a7793bdf77b393b38",
+      "after": "f92a0ec90a4acc308ca744252a42af1bc6fa5e7e76ea758c4f8dd79c8073048c"
+    }
+  },
+  "additions": {
+    "app/application/recommendation/prepared_compatibility_aggregation.py": "4f71b743eca69da80e1787f6e54552042c21dee33e3f92043ca46e679a44d042",
+    "app/application/recommendation/aggregated_decision_scorer.py": "437952fb38f29181e99a7b44c134c6ac9b82507190410acf87849a20e00af9f4"
+  },
+  "version": "critical-path-aggregation-1.0.0"
+}

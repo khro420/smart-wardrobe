@@ -1,0 +1,10 @@
+{
+  "schema_version": "1.0.0",
+  "version": "holistic-references-1.0.0",
+  "kind": "reviewed_reference_policy",
+  "available": true,
+  "activation_approved": false,
+  "rubric": {"minimum":0,"maximum":4,"normalization":"mean_individual_ratings_divided_by_4"},
+  "patterns": ["plain","abstract","cartoon","letters, numbers","camouflage","check","dot","fair isle","floral","geometric","paisley","stripe","houndstooth","herringbone","chevron","argyle","leopard","snakeskin","cheetah","peacock","zebra","giraffe","toile de jouy","plant"],
+  "references": []
+}

@@ -6,6 +6,8 @@ import logging
 
 from app.domain.value_objects.garment_attributes import GarmentAttributes
 from app.application.ports.garment_standardisation_port import GarmentStandardisationInput
+from app.application.garment_processing import automatic_garment_finalization as automatic
+from app.domain.value_objects.saved_attribute_evidence import KEY as SOURCE_KEY, source_record
 
 from app.application.ports.workflow_runtime import (
     connection, utcnow, media_path_for_owner, store_media_bytes,
@@ -18,7 +20,9 @@ from app.application.garment_processing.processing_job_service import create_job
 from app.application.garment_processing.review_service import review_job
 
 
-def run_job(job_id: str, user_id: str) -> None:
+def run_job(job_id: str, user_id: str, admission_mode: str = automatic.MANUAL) -> None:
+    if admission_mode not in (automatic.MANUAL, automatic.MODE):
+        raise ValueError('Unapproved admission mode.')
     with connection() as conn:
         job = conn.execute("SELECT * FROM processing_jobs WHERE id = ? AND user_id = ?", (job_id, user_id)).fetchone()
         if not job:
@@ -57,6 +61,27 @@ def run_job(job_id: str, user_id: str) -> None:
                                     "used_fallback": standardisation.used_fallback,
                                     "vtoff": standardisation.metadata,
                                     "embedding_status": "unavailable" if attributes.get("embedding") is None else "available"}
+            # Automatic adapters cannot attest an authenticated owner's style choice.
+            from app.application.wardrobe.owner_style_confirmation import KEY as STYLE_CONFIRMATION_KEY
+            for reserved in (STYLE_CONFIRMATION_KEY, SOURCE_KEY, automatic.KEY, 'contextual_suitability_v1', 'appearance_evidence_v1'):
+                candidate_attributes.pop(reserved, None)
+            if admission_mode == automatic.MODE:
+                # Adapter annotations are not authenticated owner declarations.
+                tags = candidate_attributes.get('custom_tags')
+                if isinstance(tags, list):
+                    reserved_tags = [tag for tag in tags if isinstance(tag, str) and tag.casefold().startswith('rec:')]
+                    candidate_attributes['custom_tags'] = [tag for tag in tags if tag not in reserved_tags]
+                    if reserved_tags:
+                        candidate_attributes['untrusted_model_declarations'] = [tag[:200] for tag in reserved_tags[:20]]
+            contributor = 'garment_adapter' if 'style' in detection.attributes else 'attribute_adapter' if 'style' in attributes else 'unavailable'
+            supplied = detection.attributes if contributor == 'garment_adapter' else attributes
+            reported = supplied.get('style_source')
+            origin = reported if reported in ('model_reported', 'synthetic') else 'adapter_output' if contributor != 'unavailable' else 'unknown'
+            candidate_attributes[SOURCE_KEY] = source_record(candidate_attributes, user_id, detection.category,
+                standardisation.preferred_media_id, utcnow(), origin, contributor)
+            item_id = str(uuid.uuid4())
+            if admission_mode == automatic.MODE:
+                candidate_attributes[automatic.KEY] = automatic.record(user_id, job_id, item_id)
             # Necklines and sleeve lengths only describe upper-body garments
             # and dresses. Do not present an otherwise valid Fashionpedia
             # prediction for trousers, skirts, or shorts.
@@ -71,7 +96,7 @@ def run_job(job_id: str, user_id: str) -> None:
                 ]
             GarmentAttributes(candidate_attributes).validate_embedding(runtime().embedding_dimension)
             prepared_items.append((
-                str(uuid.uuid4()),
+                item_id,
                 detection.category,
                 detection.confidence,
                 candidate_attributes,
@@ -92,6 +117,8 @@ def run_job(job_id: str, user_id: str) -> None:
                     (item_id, job_id, category, confidence, crop_id, preferred_id,
                      json.dumps(attributes, allow_nan=False), utcnow(), box, mask_id, vtoff_id, json.dumps(attributes.get("embedding"), allow_nan=False)),
                 )
+        if admission_mode == automatic.MODE:
+            runtime().confirmed_writer.save_automatically_processed_candidates(job_id, user_id)
     except Exception:
         logging.getLogger(__name__).exception("Garment processing failed for job %s", job_id)
         with connection() as conn:

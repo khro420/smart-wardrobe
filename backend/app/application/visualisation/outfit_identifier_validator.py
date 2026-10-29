@@ -2,6 +2,8 @@
 from fastapi import HTTPException
 
 from app.application.ports.visualisation_repository import connection, runtime
+from app.application.ports.recommendation_runtime import transaction_garment_query
+from app.application.recommendation.recommendation_actions import strict_items
 from app.domain.value_objects.visualisation_plan import (
     CAPTURE_GUIDANCE,
     VTONConfiguration,
@@ -39,8 +41,33 @@ def resolve_source(conn, user_id, outfit_id=None, recommendation_id=None):
     if not members or len({row["garment_id"] for row in members}) != len(members):
         raise HTTPException(422, "The source must contain unique confirmed garments.")
 
+    if recommendation_id:
+        # Same caller-owned transaction used to create/prepare the request.
+        strict_items(conn, user_id, recommendation_id)
+    else:
+        # Same trusted confirmation proof as Phase 1, on the caller's transaction.
+        # Manual outfit assembly is not itself garment confirmation.
+        eligible = {
+            garment.garment_id
+            for garment in transaction_garment_query(conn).get_confirmed_available_garments(user_id)
+        }
+        if any(member["garment_id"] not in eligible for member in members):
+            raise HTTPException(
+                409,
+                "The source contains a garment that is no longer confirmed, owned and available.",
+            )
+        if [member["item_order"] for member in members] != list(range(1, len(members) + 1)):
+            raise HTTPException(422, "The outfit must have a complete, unique garment ordering.")
+        # Existing wardrobe roles and recommendation-saved roles are both supported.
+        # Categories still determine VTON modes; no recommendation composition rule.
+        if any(member["role"] not in (
+            "top", "bottom", "dress", "upper", "lower", "one_piece", "garment", "accessory"
+        ) for member in members):
+            raise HTTPException(422, "Outfit contains an unsupported visualisation role; outerwear is not supported.")
     garments, previews = [], []
     for member in members:
+        if recommendation_id and member["role"] not in ("upper", "lower", "one_piece", "garment", "accessory"):
+            raise HTTPException(422, "Recommendation contains an unsupported visualisation role; outerwear is not supported.")
         row = conn.execute(
             "SELECT g.*, p.review_status FROM garments g "
             "LEFT JOIN processing_items p ON p.id=g.processing_item_id "
@@ -99,6 +126,7 @@ def resolve_source(conn, user_id, outfit_id=None, recommendation_id=None):
 
 def prepare_visualisation(user_id, outfit_id=None, recommendation_id=None):
     with connection() as conn:
+        conn.execute("BEGIN")
         return resolve_source(conn, user_id, outfit_id, recommendation_id)[1]
 
 

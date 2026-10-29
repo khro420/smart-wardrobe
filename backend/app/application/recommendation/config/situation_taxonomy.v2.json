@@ -1,0 +1,278 @@
+{
+  "version": "situation-taxonomy-2.0.0",
+  "situations": [
+    {
+      "id": "ceremony.wedding",
+      "label": "Wedding",
+      "phrases": [
+        "wedding"
+      ],
+      "activity": "attending",
+      "venue": null,
+      "projection_occasion": "wedding"
+    },
+    {
+      "id": "professional.job_interview",
+      "label": "Job interview",
+      "phrases": [
+        "job interview",
+        "employment interview",
+        "interviewed for a job"
+      ],
+      "activity": "interview_participation",
+      "venue": null,
+      "projection_occasion": "professional.job_interview"
+    },
+    {
+      "id": "social.date",
+      "label": "Date",
+      "phrases": [
+        "date"
+      ],
+      "activity": "socialising",
+      "venue": null,
+      "projection_occasion": "date"
+    },
+    {
+      "id": "leisure.beach_visit",
+      "label": "Beach visit",
+      "phrases": [
+        "beach"
+      ],
+      "activity": null,
+      "venue": "beach",
+      "projection_occasion": "leisure.beach_visit"
+    },
+    {
+      "id": "academic.presentation",
+      "label": "University presentation",
+      "phrases": [
+        "university presentation"
+      ],
+      "activity": "presentation_related",
+      "venue": "university",
+      "projection_occasion": "academic.presentation"
+    },
+    {
+      "id": "ceremony.graduation",
+      "label": "Graduation",
+      "phrases": [
+        "graduation"
+      ],
+      "activity": "attending",
+      "venue": null,
+      "projection_occasion": "ceremony.graduation"
+    },
+    {
+      "id": "outdoor.hiking",
+      "label": "Hiking",
+      "phrases": [
+        "hiking"
+      ],
+      "activity": "hiking",
+      "venue": null,
+      "projection_occasion": "outdoor.hiking"
+    },
+    {
+      "id": "social.meal",
+      "label": "Dinner",
+      "phrases": [
+        "dinner"
+      ],
+      "activity": "dining",
+      "venue": null,
+      "projection_occasion": "dinner"
+    },
+    {
+      "id": "travel.journey",
+      "label": "Travel",
+      "phrases": [
+        "travelling",
+        "traveling",
+        "travel"
+      ],
+      "activity": "travelling",
+      "venue": null,
+      "projection_occasion": "travel.journey"
+    },
+    {
+      "id": "interview.unspecified",
+      "label": "Interview (domain unspecified)",
+      "phrases": [
+        "interview",
+        "interviewing"
+      ],
+      "activity": "interview_participation",
+      "venue": null,
+      "projection_occasion": "interview.unspecified"
+    },
+    {
+      "id": "presentation.unspecified",
+      "label": "Presentation (domain unspecified)",
+      "phrases": [
+        "presentation",
+        "presenting my project"
+      ],
+      "activity": "presentation_related",
+      "venue": null,
+      "projection_occasion": "presentation.unspecified"
+    },
+    {
+      "id": "everyday.academic_attendance",
+      "label": "Ordinary academic attendance",
+      "phrases": [
+        "campus",
+        "university",
+        "college",
+        "class",
+        "classes",
+        "lecture",
+        "lectures"
+      ],
+      "activity": "academic_attendance",
+      "venue": null,
+      "projection_occasion": "campus"
+    },
+    {
+      "id": "everyday.shopping",
+      "label": "Ordinary shopping",
+      "phrases": [
+        "shopping",
+        "shopping trip"
+      ],
+      "activity": "shopping",
+      "venue": null,
+      "projection_occasion": "shopping"
+    },
+    {
+      "id": "everyday.casual_outing",
+      "label": "Ordinary casual outing",
+      "phrases": [
+        "casual outing",
+        "going out casually",
+        "going out with friends",
+        "meeting friends"
+      ],
+      "activity": "casual_outing",
+      "venue": null,
+      "projection_occasion": "casual_outing"
+    },
+    {
+      "id": "academic.library_study",
+      "label": "Library study",
+      "phrases": [
+        "study at the library",
+        "study at a library",
+        "studying at the library",
+        "library study session",
+        "library study"
+      ],
+      "activity": "studying",
+      "venue": null,
+      "projection_occasion": "academic.library_study"
+    },
+    {
+      "id": "academic.group_study",
+      "label": "Group study",
+      "phrases": [
+        "group project meeting",
+        "group study",
+        "study session"
+      ],
+      "activity": "collaborative_study",
+      "venue": null,
+      "projection_occasion": "academic.group_study"
+    },
+    {
+      "id": "professional.office_day",
+      "label": "Office day",
+      "phrases": [
+        "office workday",
+        "office day",
+        "office"
+      ],
+      "activity": "office_work",
+      "venue": null,
+      "projection_occasion": "professional.office_day"
+    },
+    {
+      "id": "professional.workplace_meeting",
+      "label": "Workplace meeting",
+      "phrases": [
+        "workplace meeting",
+        "team meeting",
+        "office meeting",
+        "meeting"
+      ],
+      "activity": "workplace_meeting",
+      "venue": null,
+      "projection_occasion": "professional.workplace_meeting"
+    },
+    {
+      "id": "social.birthday_gathering",
+      "label": "Birthday gathering",
+      "phrases": [
+        "birthday party",
+        "birthday gathering",
+        "birthday celebration",
+        "birthday"
+      ],
+      "activity": "birthday_celebration",
+      "venue": null,
+      "projection_occasion": "social.birthday_gathering"
+    },
+    {
+      "id": "social.house_gathering",
+      "label": "House gathering",
+      "phrases": [
+        "casual gathering at a friend's house",
+        "friend's house",
+        "friends' house",
+        "friend's place",
+        "house gathering"
+      ],
+      "activity": "social_house_visit",
+      "venue": null,
+      "projection_occasion": "social.house_gathering"
+    },
+    {
+      "id": "leisure.cinema_outing",
+      "label": "Cinema outing",
+      "phrases": [
+        "watch a movie",
+        "watching a movie",
+        "see a film",
+        "seeing a film",
+        "movie outing",
+        "cinema"
+      ],
+      "activity": "watching_film",
+      "venue": null,
+      "projection_occasion": "leisure.cinema_outing"
+    },
+    {
+      "id": "social.cafe_meetup",
+      "label": "Cafe meetup",
+      "phrases": [
+        "cafe meetup",
+        "coffee meetup",
+        "coffee at a cafe",
+        "cafe"
+      ],
+      "activity": "social_meetup",
+      "venue": null,
+      "projection_occasion": "social.cafe_meetup"
+    },
+    {
+      "id": "leisure.city_sightseeing",
+      "label": "City sightseeing",
+      "phrases": [
+        "city sightseeing",
+        "sightseeing"
+      ],
+      "activity": "city_sightseeing",
+      "venue": null,
+      "projection_occasion": "leisure.city_sightseeing"
+    }
+  ]
+}

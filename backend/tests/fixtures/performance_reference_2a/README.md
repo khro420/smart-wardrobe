@@ -1,0 +1,1 @@
+Completed Phase 5F-2D-2A reference frozen before any 2B production edits. Complete application Python/JSON dependencies execute from this archive in an isolated process; SHA256 manifest checks every member. Older performance_reference and fingerprints retained.

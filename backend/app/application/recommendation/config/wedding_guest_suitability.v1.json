@@ -1,0 +1,16 @@
+{
+  "version": "wedding-guest-suitability-1.0.0",
+  "context_version": "contextual-nlp-1.0.0",
+  "occasion": "wedding",
+  "default_activation": false,
+  "assumed_role_when_unspecified": "guest",
+  "rules": {
+    "W01": {"dress_code": null, "reviewed_style": "smart casual"},
+    "W02": {"dress_code": "smart_casual", "reviewed_style": "smart casual"},
+    "W03": {"dress_code": "casual", "reviewed_style": "casual"}
+  },
+  "unknown_rule": "W04",
+  "unavailable_rule": "W05",
+  "declaration_precedence": "deny_then_malformed_then_allow_then_inference",
+  "aggregation": "all_members_fail_then_unknown"
+}

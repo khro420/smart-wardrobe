@@ -13,7 +13,7 @@ import uuid
 from fastapi import HTTPException
 
 from app.infrastructure.persistence.postgresql_repository import connection, utcnow
-from app.infrastructure.persistence.confirmed_garment_query_adapter import get_confirmed_garment_query
+from app.application.ports.recommendation_runtime import confirmed_garment_query
 
 
 def _role_for(category: str, order: int) -> str:
@@ -31,21 +31,12 @@ def _role_for(category: str, order: int) -> str:
 
 def _recommended_garments(user_id: str) -> list[dict]:
     """Pick a compact outfit from confirmed, currently available wardrobe items."""
-    boundary_ids = get_confirmed_garment_query().list_available_garment_ids(user_id)
-    if not boundary_ids:
-        return []
-    placeholders = ",".join("?" for _ in boundary_ids)
-    with connection() as conn:
-        rows = conn.execute(
-            "SELECT id, name, category, preferred_media_id, is_favourite FROM garments "
-            f"WHERE user_id=? AND status='available' AND id IN ({placeholders}) "
-            "ORDER BY is_favourite DESC, updated_at DESC, id ASC",
-            (user_id, *boundary_ids),
-        ).fetchall()
+    rows = confirmed_garment_query().get_confirmed_available_garments(user_id)
     picked: list[dict] = []
     used_roles: set[str] = set()
     for row in rows:
-        item = dict(row)
+        item = {"id": row.garment_id, "name": row.name, "category": row.category,
+                "preferred_media_id": row.preferred_media_id, "is_favourite": int(row.is_favourite)}
         role = _role_for(item["category"], len(picked) + 1)
         # A recommendation should not contain two competing top/lower/etc. slots.
         if role in used_roles and role != "accessory":
@@ -128,45 +119,54 @@ def get_recommendation(recommendation_id: str, user_id: str) -> dict:
 def list_recommendations(user_id: str) -> list[dict]:
     with connection() as conn:
         identifiers = conn.execute(
-            "SELECT id FROM recommendations WHERE user_id=? AND status IN ('available', 'saved') ORDER BY created_at DESC",
+            "SELECT id FROM recommendations WHERE user_id=? AND chat_id IS NOT NULL AND status IN ('available', 'saved') ORDER BY created_at DESC",
             (user_id,),
         ).fetchall()
     return [get_recommendation(row["id"], user_id) for row in identifiers]
 
 
 def validated_recommendation_items(user_id: str, recommendation_id: str) -> list[dict]:
+    from app.application.recommendation.recommendation_actions import strict_items
     with connection() as conn:
-        recommendation = conn.execute(
-            "SELECT id FROM recommendations WHERE id=? AND user_id=? AND status IN ('available', 'saved')",
-            (recommendation_id, user_id),
-        ).fetchone()
-        recorded_item_count = conn.execute(
-            "SELECT COUNT(*) FROM recommendation_items WHERE recommendation_id=?",
-            (recommendation_id,),
-        ).fetchone()[0]
-    if not recommendation:
-        raise HTTPException(404, "Recommendation was not found or is unavailable.")
-    items = _items(recommendation_id, user_id)
-    if not items:
-        raise HTTPException(409, "This recommendation contains no confirmed garments.")
-    if len(items) != recorded_item_count:
-        raise HTTPException(409, "This recommendation contains a garment that is no longer owned and available.")
-    return items
+        conn.execute("BEGIN")
+        return strict_items(conn, user_id, recommendation_id)
+
+
+def saved_outfit_state(recommendation_id: str, user_id: str) -> dict:
+    from app.application.recommendation.recommendation_actions import saved_outfit_id
+    with connection() as conn:
+        if not conn.execute("SELECT 1 FROM recommendations WHERE id=? AND user_id=?", (recommendation_id,user_id)).fetchone():
+            raise HTTPException(404, "Recommendation was not found.")
+        row = conn.execute("SELECT id FROM outfits WHERE id=? AND user_id=? AND creation_type='recommendation' AND status='available'",
+                           (saved_outfit_id(user_id,recommendation_id),user_id)).fetchone()
+    return {"saved": row is not None, "outfit_id": row["id"] if row else None}
 
 
 def save_as_outfit(recommendation_id: str, user_id: str, name: str | None) -> dict:
-    items = validated_recommendation_items(user_id, recommendation_id)
-    outfit_id, now = str(uuid.uuid4()), utcnow()
+    from app.application.recommendation.recommendation_actions import strict_items, saved_outfit_id
+    outfit_id, now = saved_outfit_id(user_id,recommendation_id), utcnow()
     with connection() as conn:
-        conn.execute(
-            "INSERT INTO outfits (id, user_id, name, description, creation_type, status, is_favourite, created_at, updated_at) "
-            "VALUES (?, ?, ?, ?, 'recommendation', 'available', 0, ?, ?)",
-            (outfit_id, user_id, name or "Recommended outfit", "Saved from a wardrobe recommendation.", now, now),
-        )
-        for item in items:
+        conn.execute("BEGIN IMMEDIATE")
+        try:
+            items = strict_items(conn, user_id, recommendation_id)
+            existing = conn.execute("SELECT * FROM outfits WHERE id=?", (outfit_id,)).fetchone()
+            if existing:
+                if existing["user_id"] != user_id or existing["creation_type"] != "recommendation" or existing["status"] != "available":
+                    raise HTTPException(409, "The previously saved outfit is no longer available.")
+                saved_items = conn.execute("SELECT garment_id FROM outfit_items WHERE outfit_id=? ORDER BY item_order", (outfit_id,)).fetchall()
+                return {"id":outfit_id,"name":existing["name"],"garment_ids":[x["garment_id"] for x in saved_items]}
+            if conn.execute("SELECT status FROM recommendations WHERE id=?", (recommendation_id,)).fetchone()[0] == "saved":
+                raise HTTPException(409, "This legacy recommendation was already saved. Open the existing Outfits collection.")
             conn.execute(
-                "INSERT INTO outfit_items (outfit_id, garment_id, role, item_order) VALUES (?, ?, ?, ?)",
-                (outfit_id, item["garment_id"], item["garment_role"], item["item_order"]),
+                "INSERT INTO outfits (id,user_id,name,description,creation_type,status,is_favourite,created_at,updated_at) "
+                "VALUES (?,?,?,?,'recommendation','available',0,?,?)",
+                (outfit_id,user_id,name or "Recommended outfit","Saved from a wardrobe recommendation.",now,now),
             )
-        conn.execute("UPDATE recommendations SET status='saved' WHERE id=?", (recommendation_id,))
-    return {"id": outfit_id, "name": name or "Recommended outfit", "garment_ids": [item["garment_id"] for item in items]}
+            for item in items:
+                conn.execute("INSERT INTO outfit_items (outfit_id,garment_id,role,item_order) VALUES (?,?,?,?)",
+                             (outfit_id,item["garment_id"],item["garment_role"],item["item_order"]))
+            # Original recommendation, scores, snapshots and chat stay unchanged.
+        except BaseException:
+            conn.rollback()
+            raise
+    return {"id":outfit_id,"name":name or "Recommended outfit","garment_ids":[x["garment_id"] for x in items]}

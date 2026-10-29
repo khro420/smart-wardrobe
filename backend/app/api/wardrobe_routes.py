@@ -1,13 +1,19 @@
 from typing import Literal
 
-from fastapi import APIRouter, Depends, Query, Response
+from fastapi import APIRouter, Depends, Header, Query, Response
 
 from app.infrastructure.security import current_user_id
-from app.domain.value_objects.requests import GarmentUpdate, OutfitCreate, OutfitUpdate
+from app.domain.value_objects.requests import GarmentUpdate, OutfitCreate, OutfitUpdate, ContextualSuitabilityReview
 from app.application.wardrobe import wardrobe_service as wardrobe
 
 router = APIRouter(prefix="/wardrobe", tags=["digital wardrobe"])
 WardrobeSort = Literal["updated_desc", "updated_asc", "name_asc", "name_desc", "favourites"]
+
+
+@router.get("/quota")
+def quota(response: Response, user_id: str = Depends(current_user_id)) -> dict:
+    response.headers["Cache-Control"] = "private, no-store"
+    return wardrobe.get_wardrobe_quota(user_id)
 
 
 @router.get("/garments")
@@ -16,9 +22,12 @@ def garments(
     category: str | None = Query(default=None, max_length=50),
     favourite: bool | None = None,
     sort: WardrobeSort = "updated_desc",
+    colour: str | None = Query(default=None, max_length=50),
+    style: str | None = Query(default=None, max_length=100),
+    availability: Literal["available", "unavailable", "archived", "all"] = "available",
     user_id: str = Depends(current_user_id),
 ) -> list[dict]:
-    return wardrobe.list_garments(user_id, query.strip(), category, favourite, sort)
+    return wardrobe.list_garments(user_id, query.strip(), category, favourite, sort, colour, style, availability)
 
 
 @router.get("/garments/{garment_id}/dependencies")
@@ -27,14 +36,22 @@ def garment_dependencies(garment_id: str, user_id: str = Depends(current_user_id
 
 
 @router.patch("/garments/{garment_id}")
-def update_garment(garment_id: str, body: GarmentUpdate, user_id: str = Depends(current_user_id)) -> dict:
-    return wardrobe.update_garment(garment_id, user_id, body.model_dump(exclude_unset=True))
+def update_garment(garment_id: str, body: GarmentUpdate, user_id: str = Depends(current_user_id), if_match: str | None = Header(default=None)) -> dict:
+    return wardrobe.update_garment(garment_id, user_id, body.model_dump(exclude_unset=True), expected_tag_revision=if_match)
 
 
 @router.delete("/garments/{garment_id}", status_code=204)
 def archive_garment(garment_id: str, user_id: str = Depends(current_user_id)) -> Response:
     wardrobe.archive_garment(garment_id, user_id)
     return Response(status_code=204)
+
+
+@router.post('/garments/{garment_id}/contextual-suitability')
+def contextual_suitability(garment_id: str, body: ContextualSuitabilityReview, user_id: str = Depends(current_user_id)) -> dict:
+    payload = body.model_dump(exclude_none=True)
+    if body.appearance_review is not None:
+        payload['appearance_review'] = body.appearance_review.model_dump(exclude_none=False)
+    return wardrobe.review_contextual_suitability(garment_id, user_id, payload)
 
 
 @router.get("/outfits")

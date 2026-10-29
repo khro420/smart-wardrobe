@@ -1,0 +1,29 @@
+{
+  "version": "suitability-controls-1.0.0",
+  "replacements": {
+    "app/api/wardrobe_routes.py": {
+      "after": "7c51823932fcc3e7077c5a271df5d534d7bcf1f7db7c94664fa5daaadabdfac3",
+      "before": "2e5ed786097bacdecd76d58809ed4fc69d102e5ea82999bd54ca7d87a0a9c1d1"
+    },
+    "app/application/wardrobe/wardrobe_service.py": {
+      "after": "a93ebf4a0330f256d9e547626d1b623a264b0bd225c1d3a285e2d1fa8f49fabb",
+      "before": "5f6318edb08134b52575e6e182592c01aebdc5bb3edac9b65550cb253a0c6737"
+    }
+  },
+  "additions": {
+    "app/application/wardrobe/garment_tag_edit.py": "dd37ff02e41c9c45d05c2b92f25f424a7145657a4896d2f2c836f7cc8559537f"
+  },
+  "frontend_additions": {
+    "frontend/components/GarmentSuitabilityFields.tsx": "06340a28cf71e2d2cdcc85747917aee0a7794ac14fc41e24853cb8fc388f15e4"
+  },
+  "frontend_replacements": {
+    "frontend/app/wardrobe/page.tsx": {
+      "after": "05ba80b543580965182f8edbb511e0feedb10b4ca4625cee24ebd730a436ecf7",
+      "before": "920d8e6a1e76956306fcd1045d9d63b571bff7b4d81336a11cc6fbc78ed636c1"
+    },
+    "frontend/lib/api.ts": {
+      "after": "378b9f02ed0809ee83704cdcc8e78530815ad3ae4ecb3aa912ac4d17f4444f35",
+      "before": "379301a9abe17b930784a33fd93d2e6debb3e68f2d7e6ceee8814c68e4203440"
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "app/application/ports/recommendation_runtime.py": "f88b4cb3287472a1d54342dceefee4208faafe59d263120544b210bbfa0805f2",
+  "app/infrastructure/workflow_runtime.py": "c0c856e3b139a6ef8c863ab8bb6be8ac64d86f566aa9d00fefcfa6fb224de471",
+  "app/application/recommendation/recommendation_actions.py": "12ffcc4917d3994e0d9d6f8676799725070d3c772539a8e7937c180badfbedd4",
+  "app/application/recommendation/recommendation_service.py": "9781534427e2dedaa727c3c24b83908b2e8be01e0bc970c1a588183f9a95f614",
+  "app/api/recommendation_routes.py": "9ae2de147d08dd9b0c7459698d96a2dad8d4ed50dffd1fc72a61de9599883f8a",
+  "app/application/visualisation/outfit_identifier_validator.py": "1b97e9c214b6737587ab4715c57c4ccde0072d5513f77ec99fae62817e6095a7",
+  "app/application/visualisation/outfit_visualisation_service.py": "0b7e9821d3fac058495a693aa339f6725ba3f6deb5b36e202e3620a5e7ef84a1"
+}

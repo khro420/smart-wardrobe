@@ -1,0 +1,991 @@
+{
+  "version": "context-expansion-nlp-labels-1.0.0",
+  "authority": "owner_approved_author_labelled_prototype",
+  "independent_validation": "OPEN",
+  "cases": [
+    {
+      "id": "LS-N01",
+      "text": "I'm going to study at the library.",
+      "classification": "B",
+      "expected": "Supported",
+      "expected_slots": {
+        "situation": "academic.library_study",
+        "activity": "studying",
+        "role": "Unspecified",
+        "style": "Unspecified",
+        "dress_code": "Unspecified",
+        "venue": "library"
+      },
+      "binding": "library_study_appearance_v1",
+      "objective": "casual",
+      "partition": "development_candidate"
+    },
+    {
+      "id": "LS-N02",
+      "text": "What should I wear for a library study session?",
+      "classification": "B",
+      "expected": "Supported",
+      "expected_slots": {
+        "situation": "academic.library_study",
+        "activity": "studying",
+        "role": "Unspecified",
+        "style": "Unspecified",
+        "dress_code": "Unspecified",
+        "venue": "library"
+      },
+      "binding": "library_study_appearance_v1",
+      "objective": "casual",
+      "partition": "development_candidate"
+    },
+    {
+      "id": "LS-N03",
+      "text": "I will study at the library tomorrow.",
+      "classification": "B",
+      "expected": "Supported",
+      "expected_slots": {
+        "situation": "academic.library_study",
+        "activity": "studying",
+        "role": "Unspecified",
+        "style": "Unspecified",
+        "dress_code": "Unspecified",
+        "venue": "library",
+        "temporal": "tomorrow"
+      },
+      "binding": "library_study_appearance_v1",
+      "objective": "casual",
+      "partition": "review_candidate_not_blind_holdout"
+    },
+    {
+      "id": "LS-X01",
+      "text": "I'm going to the library laboratory.",
+      "classification": "D",
+      "expected": "controlled_non_selection",
+      "forbidden": [
+        "silent coercion to academic.library_study",
+        "discarding stated modifiers"
+      ],
+      "note": "GS-X02 needs presentation role; CM-X02 is not an ordinary cinema alias; separate compound scope is deferred."
+    },
+    {
+      "id": "LS-X02",
+      "text": "I need a uniform for library duty.",
+      "classification": "D",
+      "expected": "controlled_non_selection",
+      "forbidden": [
+        "silent coercion to academic.library_study",
+        "discarding stated modifiers"
+      ],
+      "note": "GS-X02 needs presentation role; CM-X02 is not an ordinary cinema alias; separate compound scope is deferred."
+    },
+    {
+      "id": "GS-N01",
+      "text": "I have a group project meeting at university.",
+      "classification": "B",
+      "expected": "Supported",
+      "expected_slots": {
+        "situation": "academic.group_study",
+        "activity": "collaborative_study",
+        "role": "Unspecified",
+        "style": "Unspecified",
+        "dress_code": "Unspecified",
+        "venue": "university"
+      },
+      "binding": "group_study_appearance_v1",
+      "objective": "casual",
+      "partition": "development_candidate"
+    },
+    {
+      "id": "GS-N02",
+      "text": "What should I wear to group study on campus?",
+      "classification": "B",
+      "expected": "Supported",
+      "expected_slots": {
+        "situation": "academic.group_study",
+        "activity": "collaborative_study",
+        "role": "Unspecified",
+        "style": "Unspecified",
+        "dress_code": "Unspecified",
+        "venue": "campus"
+      },
+      "binding": "group_study_appearance_v1",
+      "objective": "casual",
+      "partition": "development_candidate"
+    },
+    {
+      "id": "GS-N03",
+      "text": "I'm meeting classmates for a study session at the library.",
+      "classification": "B",
+      "expected": "Supported",
+      "expected_slots": {
+        "situation": "academic.group_study",
+        "activity": "collaborative_study",
+        "role": "Unspecified",
+        "style": "Unspecified",
+        "dress_code": "Unspecified",
+        "venue": "library",
+        "companions": "classmates"
+      },
+      "binding": "group_study_appearance_v1",
+      "objective": "casual",
+      "partition": "review_candidate_not_blind_holdout"
+    },
+    {
+      "id": "GS-X01",
+      "text": "I have a client project meeting.",
+      "classification": "D",
+      "expected": "controlled_non_selection",
+      "forbidden": [
+        "silent coercion to academic.group_study",
+        "discarding stated modifiers"
+      ],
+      "note": "GS-X02 needs presentation role; CM-X02 is not an ordinary cinema alias; separate compound scope is deferred."
+    },
+    {
+      "id": "GS-X02",
+      "text": "I have a group project presentation at university.",
+      "classification": "D",
+      "expected": "controlled_non_selection",
+      "forbidden": [
+        "silent coercion to academic.group_study",
+        "discarding stated modifiers"
+      ],
+      "note": "GS-X02 needs presentation role; CM-X02 is not an ordinary cinema alias; separate compound scope is deferred."
+    },
+    {
+      "id": "OW-N01",
+      "text": "I need to go to the office tomorrow.",
+      "classification": "B",
+      "expected": "Supported",
+      "expected_slots": {
+        "situation": "professional.office_day",
+        "activity": "office_work",
+        "role": "Unspecified",
+        "style": "Unspecified",
+        "dress_code": "Unspecified",
+        "venue": "office",
+        "temporal": "tomorrow"
+      },
+      "binding": "office_day_appearance_v1",
+      "objective": "smart casual",
+      "partition": "development_candidate"
+    },
+    {
+      "id": "OW-N02",
+      "text": "What should I wear for an office workday?",
+      "classification": "B",
+      "expected": "Supported",
+      "expected_slots": {
+        "situation": "professional.office_day",
+        "activity": "office_work",
+        "role": "Unspecified",
+        "style": "Unspecified",
+        "dress_code": "Unspecified",
+        "venue": "office"
+      },
+      "binding": "office_day_appearance_v1",
+      "objective": "smart casual",
+      "partition": "development_candidate"
+    },
+    {
+      "id": "OW-N03",
+      "text": "I'm working at the office today.",
+      "classification": "B",
+      "expected": "Supported",
+      "expected_slots": {
+        "situation": "professional.office_day",
+        "activity": "office_work",
+        "role": "Unspecified",
+        "style": "Unspecified",
+        "dress_code": "Unspecified",
+        "venue": "office"
+      },
+      "binding": "office_day_appearance_v1",
+      "objective": "smart casual",
+      "partition": "review_candidate_not_blind_holdout"
+    },
+    {
+      "id": "OW-X01",
+      "text": "I'm working from home.",
+      "classification": "D",
+      "expected": "controlled_non_selection",
+      "forbidden": [
+        "silent coercion to professional.office_day",
+        "discarding stated modifiers"
+      ],
+      "note": "GS-X02 needs presentation role; CM-X02 is not an ordinary cinema alias; separate compound scope is deferred."
+    },
+    {
+      "id": "OW-X02",
+      "text": "I need PPE for work at a construction site.",
+      "classification": "D",
+      "expected": "controlled_non_selection",
+      "forbidden": [
+        "silent coercion to professional.office_day",
+        "discarding stated modifiers"
+      ],
+      "note": "GS-X02 needs presentation role; CM-X02 is not an ordinary cinema alias; separate compound scope is deferred."
+    },
+    {
+      "id": "WM-N01",
+      "text": "I have a meeting with my colleagues.",
+      "classification": "B",
+      "expected": "Supported",
+      "expected_slots": {
+        "situation": "professional.workplace_meeting",
+        "activity": "workplace_meeting",
+        "role": "Unspecified",
+        "style": "Unspecified",
+        "dress_code": "Unspecified"
+      },
+      "binding": "workplace_meeting_appearance_v1",
+      "objective": "smart casual",
+      "partition": "development_candidate"
+    },
+    {
+      "id": "WM-N02",
+      "text": "I'm attending a team meeting at the office.",
+      "classification": "B",
+      "expected": "Supported",
+      "expected_slots": {
+        "situation": "professional.workplace_meeting",
+        "activity": "workplace_meeting",
+        "role": "Unspecified",
+        "style": "Unspecified",
+        "dress_code": "Unspecified",
+        "venue": "office"
+      },
+      "binding": "workplace_meeting_appearance_v1",
+      "objective": "smart casual",
+      "partition": "development_candidate"
+    },
+    {
+      "id": "WM-N03",
+      "text": "What should I wear for a workplace meeting tomorrow?",
+      "classification": "B",
+      "expected": "Supported",
+      "expected_slots": {
+        "situation": "professional.workplace_meeting",
+        "activity": "workplace_meeting",
+        "role": "Unspecified",
+        "style": "Unspecified",
+        "dress_code": "Unspecified",
+        "temporal": "tomorrow"
+      },
+      "binding": "workplace_meeting_appearance_v1",
+      "objective": "smart casual",
+      "partition": "review_candidate_not_blind_holdout"
+    },
+    {
+      "id": "WM-X01",
+      "text": "I have a formal office event.",
+      "classification": "D",
+      "expected": "controlled_non_selection",
+      "forbidden": [
+        "silent coercion to professional.workplace_meeting",
+        "discarding stated modifiers"
+      ],
+      "note": "GS-X02 needs presentation role; CM-X02 is not an ordinary cinema alias; separate compound scope is deferred."
+    },
+    {
+      "id": "WM-X02",
+      "text": "I'm presenting to clients at a board meeting.",
+      "classification": "D",
+      "expected": "controlled_non_selection",
+      "forbidden": [
+        "silent coercion to professional.workplace_meeting",
+        "discarding stated modifiers"
+      ],
+      "note": "GS-X02 needs presentation role; CM-X02 is not an ordinary cinema alias; separate compound scope is deferred."
+    },
+    {
+      "id": "BG-N01",
+      "text": "I'm attending a birthday party.",
+      "classification": "B",
+      "expected": "Supported",
+      "expected_slots": {
+        "situation": "social.birthday_gathering",
+        "activity": "birthday_celebration",
+        "role": "Unspecified",
+        "style": "Unspecified",
+        "dress_code": "Unspecified"
+      },
+      "binding": "birthday_gathering_appearance_v1",
+      "objective": "casual",
+      "partition": "development_candidate"
+    },
+    {
+      "id": "BG-N02",
+      "text": "What should I wear to a birthday gathering?",
+      "classification": "B",
+      "expected": "Supported",
+      "expected_slots": {
+        "situation": "social.birthday_gathering",
+        "activity": "birthday_celebration",
+        "role": "Unspecified",
+        "style": "Unspecified",
+        "dress_code": "Unspecified"
+      },
+      "binding": "birthday_gathering_appearance_v1",
+      "objective": "casual",
+      "partition": "development_candidate"
+    },
+    {
+      "id": "BG-N03",
+      "text": "I have a birthday celebration with friends tonight.",
+      "classification": "B",
+      "expected": "Supported",
+      "expected_slots": {
+        "situation": "social.birthday_gathering",
+        "activity": "birthday_celebration",
+        "role": "Unspecified",
+        "style": "Unspecified",
+        "dress_code": "Unspecified",
+        "temporal": "tonight",
+        "companions": "friends"
+      },
+      "binding": "birthday_gathering_appearance_v1",
+      "objective": "casual",
+      "partition": "review_candidate_not_blind_holdout"
+    },
+    {
+      "id": "BG-X01",
+      "text": "I have a black tie birthday party.",
+      "classification": "D",
+      "expected": "controlled_non_selection",
+      "forbidden": [
+        "silent coercion to social.birthday_gathering",
+        "discarding stated modifiers"
+      ],
+      "note": "GS-X02 needs presentation role; CM-X02 is not an ordinary cinema alias; separate compound scope is deferred."
+    },
+    {
+      "id": "BG-X02",
+      "text": "I'm attending a themed costume birthday party.",
+      "classification": "D",
+      "expected": "controlled_non_selection",
+      "forbidden": [
+        "silent coercion to social.birthday_gathering",
+        "discarding stated modifiers"
+      ],
+      "note": "GS-X02 needs presentation role; CM-X02 is not an ordinary cinema alias; separate compound scope is deferred."
+    },
+    {
+      "id": "HG-N01",
+      "text": "I'm visiting my friend's house.",
+      "classification": "B",
+      "expected": "Supported",
+      "expected_slots": {
+        "situation": "social.house_gathering",
+        "activity": "social_house_visit",
+        "role": "Unspecified",
+        "style": "Unspecified",
+        "dress_code": "Unspecified",
+        "venue": "friend_home",
+        "companions": "friends"
+      },
+      "binding": "house_gathering_appearance_v1",
+      "objective": "casual",
+      "partition": "development_candidate"
+    },
+    {
+      "id": "HG-N02",
+      "text": "What should I wear for a casual gathering at a friend's house?",
+      "classification": "B",
+      "expected": "Supported",
+      "expected_slots": {
+        "situation": "social.house_gathering",
+        "activity": "social_house_visit",
+        "role": "Unspecified",
+        "style": "Unspecified",
+        "dress_code": "Unspecified",
+        "venue": "friend_home",
+        "companions": "friends"
+      },
+      "binding": "house_gathering_appearance_v1",
+      "objective": "casual",
+      "partition": "development_candidate"
+    },
+    {
+      "id": "HG-N03",
+      "text": "I'm going to a friend's place tonight.",
+      "classification": "B",
+      "expected": "Supported",
+      "expected_slots": {
+        "situation": "social.house_gathering",
+        "activity": "social_house_visit",
+        "role": "Unspecified",
+        "style": "Unspecified",
+        "dress_code": "Unspecified",
+        "venue": "friend_home",
+        "companions": "friends",
+        "temporal": "tonight"
+      },
+      "binding": "house_gathering_appearance_v1",
+      "objective": "casual",
+      "partition": "review_candidate_not_blind_holdout"
+    },
+    {
+      "id": "HG-X01",
+      "text": "I'm repairing a friend's roof.",
+      "classification": "D",
+      "expected": "controlled_non_selection",
+      "forbidden": [
+        "silent coercion to social.house_gathering",
+        "discarding stated modifiers"
+      ],
+      "note": "GS-X02 needs presentation role; CM-X02 is not an ordinary cinema alias; separate compound scope is deferred."
+    },
+    {
+      "id": "HG-X02",
+      "text": "I'm attending a formal reception at my friend's house.",
+      "classification": "D",
+      "expected": "controlled_non_selection",
+      "forbidden": [
+        "silent coercion to social.house_gathering",
+        "discarding stated modifiers"
+      ],
+      "note": "GS-X02 needs presentation role; CM-X02 is not an ordinary cinema alias; separate compound scope is deferred."
+    },
+    {
+      "id": "CM-N01",
+      "text": "I'm going to watch a movie.",
+      "classification": "B",
+      "expected": "Supported",
+      "expected_slots": {
+        "situation": "leisure.cinema_outing",
+        "activity": "watching_film",
+        "role": "Unspecified",
+        "style": "Unspecified",
+        "dress_code": "Unspecified"
+      },
+      "binding": "cinema_outing_appearance_v1",
+      "objective": "casual",
+      "partition": "development_candidate"
+    },
+    {
+      "id": "CM-N02",
+      "text": "What should I wear to the cinema?",
+      "classification": "B",
+      "expected": "Supported",
+      "expected_slots": {
+        "situation": "leisure.cinema_outing",
+        "activity": "watching_film",
+        "role": "Unspecified",
+        "style": "Unspecified",
+        "dress_code": "Unspecified",
+        "venue": "cinema"
+      },
+      "binding": "cinema_outing_appearance_v1",
+      "objective": "casual",
+      "partition": "development_candidate"
+    },
+    {
+      "id": "CM-N03",
+      "text": "I'm seeing a film with friends tonight.",
+      "classification": "B",
+      "expected": "Supported",
+      "expected_slots": {
+        "situation": "leisure.cinema_outing",
+        "activity": "watching_film",
+        "role": "Unspecified",
+        "style": "Unspecified",
+        "dress_code": "Unspecified",
+        "temporal": "tonight",
+        "companions": "friends"
+      },
+      "binding": "cinema_outing_appearance_v1",
+      "objective": "casual",
+      "partition": "review_candidate_not_blind_holdout"
+    },
+    {
+      "id": "CM-X01",
+      "text": "I'm attending a red carpet movie premiere.",
+      "classification": "D",
+      "expected": "controlled_non_selection",
+      "forbidden": [
+        "silent coercion to leisure.cinema_outing",
+        "discarding stated modifiers"
+      ],
+      "note": "GS-X02 needs presentation role; CM-X02 is not an ordinary cinema alias; separate compound scope is deferred."
+    },
+    {
+      "id": "CM-X02",
+      "text": "I'm going on a movie date.",
+      "classification": "D",
+      "expected": "controlled_non_selection",
+      "forbidden": [
+        "silent coercion to leisure.cinema_outing",
+        "discarding stated modifiers"
+      ],
+      "note": "GS-X02 needs presentation role; CM-X02 is not an ordinary cinema alias; separate compound scope is deferred."
+    },
+    {
+      "id": "CF-N01",
+      "text": "I'm meeting someone at a café.",
+      "classification": "B",
+      "expected": "Supported",
+      "expected_slots": {
+        "situation": "social.cafe_meetup",
+        "activity": "social_meetup",
+        "role": "Unspecified",
+        "style": "Unspecified",
+        "dress_code": "Unspecified",
+        "venue": "cafe",
+        "companions": "someone"
+      },
+      "binding": "cafe_meetup_appearance_v1",
+      "objective": "casual",
+      "partition": "development_candidate"
+    },
+    {
+      "id": "CF-N02",
+      "text": "What should I wear for a cafe meetup?",
+      "classification": "B",
+      "expected": "Supported",
+      "expected_slots": {
+        "situation": "social.cafe_meetup",
+        "activity": "social_meetup",
+        "role": "Unspecified",
+        "style": "Unspecified",
+        "dress_code": "Unspecified",
+        "venue": "cafe",
+        "companions": "Unspecified"
+      },
+      "binding": "cafe_meetup_appearance_v1",
+      "objective": "casual",
+      "partition": "development_candidate"
+    },
+    {
+      "id": "CF-N03",
+      "text": "I'm meeting a friend for coffee at a cafe tomorrow.",
+      "classification": "B",
+      "expected": "Supported",
+      "expected_slots": {
+        "situation": "social.cafe_meetup",
+        "activity": "social_meetup",
+        "role": "Unspecified",
+        "style": "Unspecified",
+        "dress_code": "Unspecified",
+        "venue": "cafe",
+        "companions": "friends",
+        "temporal": "tomorrow"
+      },
+      "binding": "cafe_meetup_appearance_v1",
+      "objective": "casual",
+      "partition": "review_candidate_not_blind_holdout"
+    },
+    {
+      "id": "CF-X01",
+      "text": "I have a job interview at a cafe.",
+      "classification": "D",
+      "expected": "controlled_non_selection",
+      "forbidden": [
+        "silent coercion to social.cafe_meetup",
+        "discarding stated modifiers"
+      ],
+      "note": "GS-X02 needs presentation role; CM-X02 is not an ordinary cinema alias; separate compound scope is deferred."
+    },
+    {
+      "id": "CF-X02",
+      "text": "I have a client business meeting at a cafe.",
+      "classification": "D",
+      "expected": "controlled_non_selection",
+      "forbidden": [
+        "silent coercion to social.cafe_meetup",
+        "discarding stated modifiers"
+      ],
+      "note": "GS-X02 needs presentation role; CM-X02 is not an ordinary cinema alias; separate compound scope is deferred."
+    },
+    {
+      "id": "SS-N01",
+      "text": "I'm sightseeing around the city.",
+      "classification": "B",
+      "expected": "Supported",
+      "expected_slots": {
+        "situation": "leisure.city_sightseeing",
+        "activity": "city_sightseeing",
+        "role": "Unspecified",
+        "style": "Unspecified",
+        "dress_code": "Unspecified",
+        "venue": "city"
+      },
+      "binding": "city_sightseeing_appearance_v1",
+      "objective": "casual",
+      "partition": "development_candidate"
+    },
+    {
+      "id": "SS-N02",
+      "text": "What should I wear for city sightseeing?",
+      "classification": "B",
+      "expected": "Supported",
+      "expected_slots": {
+        "situation": "leisure.city_sightseeing",
+        "activity": "city_sightseeing",
+        "role": "Unspecified",
+        "style": "Unspecified",
+        "dress_code": "Unspecified",
+        "venue": "city"
+      },
+      "binding": "city_sightseeing_appearance_v1",
+      "objective": "casual",
+      "partition": "development_candidate"
+    },
+    {
+      "id": "SS-N03",
+      "text": "I'm going sightseeing in the city tomorrow.",
+      "classification": "B",
+      "expected": "Supported",
+      "expected_slots": {
+        "situation": "leisure.city_sightseeing",
+        "activity": "city_sightseeing",
+        "role": "Unspecified",
+        "style": "Unspecified",
+        "dress_code": "Unspecified",
+        "venue": "city",
+        "temporal": "tomorrow"
+      },
+      "binding": "city_sightseeing_appearance_v1",
+      "objective": "casual",
+      "partition": "review_candidate_not_blind_holdout"
+    },
+    {
+      "id": "SS-X01",
+      "text": "I'm sightseeing at the beach.",
+      "classification": "D",
+      "expected": "controlled_non_selection",
+      "forbidden": [
+        "silent coercion to leisure.city_sightseeing",
+        "discarding stated modifiers"
+      ],
+      "note": "GS-X02 needs presentation role; CM-X02 is not an ordinary cinema alias; separate compound scope is deferred."
+    },
+    {
+      "id": "SS-X02",
+      "text": "I'm going sightseeing while hiking in snow.",
+      "classification": "D",
+      "expected": "controlled_non_selection",
+      "forbidden": [
+        "silent coercion to leisure.city_sightseeing",
+        "discarding stated modifiers"
+      ],
+      "note": "GS-X02 needs presentation role; CM-X02 is not an ordinary cinema alias; separate compound scope is deferred."
+    },
+    {
+      "id": "TD-N01",
+      "text": "I'm taking a train for a trip.",
+      "classification": "B-existing-unavailable-ID",
+      "expected": "Supported",
+      "expected_slots": {
+        "situation": "travel.journey",
+        "activity": "travelling",
+        "role": "Unspecified",
+        "style": "Unspecified",
+        "dress_code": "Unspecified",
+        "facets": [
+          "transport:train"
+        ]
+      },
+      "binding": "ordinary_transit_appearance_v1",
+      "objective": "casual",
+      "partition": "development_candidate"
+    },
+    {
+      "id": "TD-N02",
+      "text": "What should I wear for an ordinary travel day?",
+      "classification": "B-existing-unavailable-ID",
+      "expected": "Supported",
+      "expected_slots": {
+        "situation": "travel.journey",
+        "activity": "travelling",
+        "role": "Unspecified",
+        "style": "Unspecified",
+        "dress_code": "Unspecified"
+      },
+      "binding": "ordinary_transit_appearance_v1",
+      "objective": "casual",
+      "partition": "development_candidate"
+    },
+    {
+      "id": "TD-N03",
+      "text": "I'm taking a flight tomorrow.",
+      "classification": "B-existing-unavailable-ID",
+      "expected": "Supported",
+      "expected_slots": {
+        "situation": "travel.journey",
+        "activity": "travelling",
+        "role": "Unspecified",
+        "style": "Unspecified",
+        "dress_code": "Unspecified",
+        "facets": [
+          "transport:flight"
+        ],
+        "temporal": "tomorrow"
+      },
+      "binding": "ordinary_transit_appearance_v1",
+      "objective": "casual",
+      "partition": "review_candidate_not_blind_holdout"
+    },
+    {
+      "id": "TD-X01",
+      "text": "I'm travelling on a mountaineering expedition.",
+      "classification": "D",
+      "expected": "controlled_non_selection",
+      "forbidden": [
+        "silent coercion to travel.journey",
+        "discarding stated modifiers"
+      ],
+      "note": "GS-X02 needs presentation role; CM-X02 is not an ordinary cinema alias; separate compound scope is deferred."
+    },
+    {
+      "id": "TD-X02",
+      "text": "I need safety equipment for a motorcycle trip.",
+      "classification": "D",
+      "expected": "controlled_non_selection",
+      "forbidden": [
+        "silent coercion to travel.journey",
+        "discarding stated modifiers"
+      ],
+      "note": "GS-X02 needs presentation role; CM-X02 is not an ordinary cinema alias; separate compound scope is deferred."
+    },
+    {
+      "id": "EX01",
+      "text": "What should I wear to university?",
+      "classification": "A",
+      "expected_situation": "everyday.academic_attendance",
+      "expected": "existing ordinary-attendance convention; role unspecified",
+      "partition": "cross_context_review_candidate"
+    },
+    {
+      "id": "EX02",
+      "text": "I'm having dinner with my family.",
+      "classification": "A",
+      "expected_situation": "social.meal",
+      "expected": "companions=family; target smart casual",
+      "partition": "cross_context_review_candidate"
+    },
+    {
+      "id": "EX03",
+      "text": "I'm hanging out with my friends.",
+      "classification": "A",
+      "expected_situation": "everyday.casual_outing",
+      "expected": "companions=friends; target casual",
+      "partition": "cross_context_review_candidate"
+    },
+    {
+      "id": "EX04",
+      "text": "I have a dinner date.",
+      "classification": "A",
+      "expected_situation": "social.date",
+      "expected": "facet meal:dinner; intersect date+dinner gates; one smart-casual goal",
+      "partition": "cross_context_review_candidate"
+    },
+    {
+      "id": "EX05",
+      "text": "What should I wear for shopping?",
+      "classification": "A",
+      "expected_situation": "everyday.shopping",
+      "expected": "no semantic change",
+      "partition": "cross_context_review_candidate"
+    },
+    {
+      "id": "EX06",
+      "text": "I'm going on a date at a café.",
+      "classification": "A",
+      "expected_situation": "social.date",
+      "expected": "venue=cafe; preserve date; no cafe-meetup substitution",
+      "partition": "cross_context_review_candidate"
+    },
+    {
+      "id": "EX07",
+      "text": "I'm attending a birthday dinner.",
+      "classification": "A",
+      "expected_situation": "social.meal",
+      "expected": "facet celebration:birthday; dinner+party negative scopes; one dinner smart goal",
+      "partition": "cross_context_review_candidate"
+    },
+    {
+      "id": "EX08",
+      "text": "I have a meeting.",
+      "classification": "C",
+      "expected_situation": null,
+      "expected": "ask workplace or study; no invented domain",
+      "partition": "cross_context_review_candidate"
+    },
+    {
+      "id": "EX09",
+      "text": "I have a project meeting.",
+      "classification": "C",
+      "expected_situation": null,
+      "expected": "ask workplace or university; no automatic presentation",
+      "partition": "cross_context_review_candidate"
+    },
+    {
+      "id": "EX10",
+      "text": "I'm going to work.",
+      "classification": "C",
+      "expected_situation": null,
+      "expected": "ask ordinary office or specialised work; office not assumed",
+      "partition": "cross_context_review_candidate"
+    },
+    {
+      "id": "EX11",
+      "text": "I'm working from home.",
+      "classification": "D",
+      "expected_situation": null,
+      "expected": "no office appearance inference",
+      "partition": "cross_context_review_candidate"
+    },
+    {
+      "id": "EX12",
+      "text": "I'm going to class at university.",
+      "classification": "A",
+      "expected_situation": "everyday.academic_attendance",
+      "expected": "university is same-request venue; no multiple-event rejection",
+      "partition": "cross_context_review_candidate"
+    },
+    {
+      "id": "EX13",
+      "text": "I'm going shopping and hiking.",
+      "classification": "D",
+      "expected_situation": null,
+      "expected": "unrelated multiple occasions refused",
+      "partition": "cross_context_review_candidate"
+    },
+    {
+      "id": "EX14",
+      "text": "I'm not going shopping.",
+      "classification": "D",
+      "expected_situation": null,
+      "expected": "negation preserved/refused",
+      "partition": "cross_context_review_candidate"
+    },
+    {
+      "id": "EX15",
+      "text": "Suggest an outfit for a team meeting with casual style.",
+      "classification": "B",
+      "expected_situation": "professional.workplace_meeting",
+      "expected": "style=casual hard gate; override smart default",
+      "partition": "cross_context_review_candidate"
+    },
+    {
+      "id": "EX16",
+      "text": "I have a formal office meeting.",
+      "classification": "D",
+      "expected_situation": null,
+      "expected": "formal support unavailable; no smart-casual substitution",
+      "partition": "cross_context_review_candidate"
+    },
+    {
+      "id": "EX17",
+      "text": "I have a meeting with colleagues. The dress code is casual and smart casual.",
+      "classification": "D",
+      "expected_situation": null,
+      "expected": "conflicting dress codes",
+      "partition": "cross_context_review_candidate"
+    },
+    {
+      "id": "EX18",
+      "text": "I prefer something comfortable for sightseeing.",
+      "classification": "D",
+      "expected_situation": null,
+      "expected": "no comfort evidence or unsupported soft-goal removal",
+      "partition": "cross_context_review_candidate"
+    },
+    {
+      "id": "EX19",
+      "text": "I'm going hiking.",
+      "classification": "D",
+      "expected_situation": "outdoor.hiking",
+      "expected": "recognised specialist unavailable",
+      "partition": "cross_context_review_candidate"
+    },
+    {
+      "id": "EX20",
+      "text": "I'm attending graduation as a guest.",
+      "classification": "D",
+      "expected_situation": "ceremony.graduation",
+      "expected": "recognised specialist unavailable",
+      "partition": "cross_context_review_candidate"
+    },
+    {
+      "id": "EX21",
+      "text": "I'm going to the gym.",
+      "classification": "D",
+      "expected_situation": null,
+      "expected": "specialist controlled refusal",
+      "partition": "cross_context_review_candidate"
+    },
+    {
+      "id": "EX22",
+      "text": "I'm going to a laboratory class.",
+      "classification": "D",
+      "expected_situation": null,
+      "expected": "ordinary class not substituted",
+      "partition": "cross_context_review_candidate"
+    },
+    {
+      "id": "EX23",
+      "text": "I'm going swimming at the beach.",
+      "classification": "D",
+      "expected_situation": null,
+      "expected": "no casual sightseeing substitute",
+      "partition": "cross_context_review_candidate"
+    },
+    {
+      "id": "EX24",
+      "text": "Suggest an outfit for shopping using blue colours with trousers.",
+      "classification": "A",
+      "expected_situation": "everyday.shopping",
+      "expected": "global blue colour plus category constraint, existing representable form",
+      "partition": "cross_context_review_candidate"
+    },
+    {
+      "id": "EX25",
+      "text": "Suggest a casual outfit.",
+      "classification": "A",
+      "expected_situation": null,
+      "expected": "existing generic formality request, not style objective",
+      "partition": "cross_context_review_candidate"
+    },
+    {
+      "id": "EX26",
+      "text": "I'm meeting someone at a cafe and then going hiking.",
+      "classification": "D",
+      "expected_situation": null,
+      "expected": "no partial first-event selection",
+      "partition": "cross_context_review_candidate"
+    },
+    {
+      "id": "EX27",
+      "text": "I'm attending a university presentation as a presenter.",
+      "classification": "A",
+      "expected_situation": "academic.presentation",
+      "expected": "strict reviewed evidence; old dispatch",
+      "partition": "cross_context_review_candidate"
+    },
+    {
+      "id": "EX28",
+      "text": "I'm attending a wedding as a guest.",
+      "classification": "A",
+      "expected_situation": "ceremony.wedding",
+      "expected": "old guest policy and evidence unchanged",
+      "partition": "cross_context_review_candidate"
+    },
+    {
+      "id": "EX29",
+      "text": "I'm going to a job interview as a candidate. The dress code is smart casual.",
+      "classification": "A",
+      "expected_situation": "professional.job_interview",
+      "expected": "construction/condition/review contract remains strict",
+      "partition": "cross_context_review_candidate"
+    },
+    {
+      "id": "EX30",
+      "text": "I have a team meeting at university.",
+      "classification": "C",
+      "expected_situation": null,
+      "expected": "work team vs study team unresolved; clarify rather than treat as presentation",
+      "partition": "cross_context_review_candidate"
+    }
+  ]
+}

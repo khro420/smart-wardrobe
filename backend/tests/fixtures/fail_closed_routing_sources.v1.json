@@ -1,0 +1,13 @@
+{
+  "version": "fail-closed-recommendation-routing-1.0.0",
+  "replacements": {
+    "backend/app/api/recommendation_routes.py": {
+      "before": "9ae2de147d08dd9b0c7459698d96a2dad8d4ed50dffd1fc72a61de9599883f8a",
+      "after": "a68bbc0700c0389feff8ec7ef210b6bdfa880efe2e4c822ed612c93261150903"
+    },
+    "frontend/lib/api.ts": {
+      "before": "8a9efa8b02c6145efd3d2f672e4073fbfc0c116806e7216187c49a1c7a83a05d",
+      "after": "2a68a628bd0877531f2f505aa85f01d0dff247cad6dec8defee181b38e84c467"
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "version": "functional-gap-closure-1.0.0",
+  "replacements": {
+    "backend/app/api/account_routes.py": {
+      "before": "7453a98c5346a7a57d3d138c64c8f6e0cba5dc9b64597e4eb3d924e226d1e29c",
+      "after": "d5e94e18d47142f5f3bb5276d2dcd2829dee317f6f567c68e6fdcaed3a5964b0"
+    },
+    "backend/app/application/account/account_service.py": {
+      "before": "0fba8d1c9dce910da5926700128533aa1bf81bf006d92ff6b49ab02f6e18e97f",
+      "after": "7c958085a47915f6c06d1fea3f23e26d03ce5f40f83a7600fe7eaffea7e86982"
+    },
+    "backend/app/domain/value_objects/requests.py": {
+      "before": "50dc4b9b58bff05441be346c8375b58913f224f57f0702530ce3e59a169344b9",
+      "after": "82a8e4358d3ea3458f0457683df450ac206967b8c7c4f90146614902fae081b9"
+    },
+    "backend/app/application/wardrobe/wardrobe_service.py": {
+      "before": "5029e889596e6218bd4f4e0811d4b68338efdf5e955c7e1cff483f629ad53e27",
+      "after": "79a35f80c592afed20bc6ff40f14449d5e714cf544bae917aa39e145023b004b"
+    },
+    "backend/app/api/wardrobe_routes.py": {
+      "before": "d58d98af8fa98ac112e0f720ccfa56c6b9e769846724aafa671dc2cfcf3cf6f4",
+      "after": "e681a73864eb7483c1a112c9a58014159ed4546e265fd6d6c9f7d841169d1ef9"
+    },
+    "backend/app/application/nlp/config/vocabulary.v1.json": {
+      "before": "20ea4e9307cf1e65f319b40c2d7a23ff6fb6bd2ea77d4543625be166f27b39cb",
+      "after": "7b89581608d61e2249733f801a1b592cc43077a77eb13a18f233697c84efed96"
+    },
+    "frontend/app/auth/page.tsx": {
+      "before": "f9fde79daa77b53d603bd3aa72c9d2500bf87583809355bc8ecb620e46311a0e",
+      "after": "279ce3e2d2630b2e7156af36454da4715bab3d65bb62369f06bb70de7d11687b"
+    },
+    "frontend/app/profile/page.tsx": {
+      "before": "9bd6b24db0e3fbc599efe98f03110c4ceab4a91e934c9390013456d290c3b91f",
+      "after": "5428c4c56e18f5c9d03c7e5de1a77b3439a7be67866d13d4b770af08d746a92c"
+    },
+    "frontend/app/wardrobe/page.tsx": {
+      "before": "c1604f09edd15ff9772a24cee5ea703960c93a054f4402bd35d3a7f2aa5eea27",
+      "after": "5611056ff4b28af83c1072f6215b4c84592cc03a041b07408fc129524005dc9b"
+    },
+    "frontend/lib/api.ts": {
+      "before": "2a68a628bd0877531f2f505aa85f01d0dff247cad6dec8defee181b38e84c467",
+      "after": "7279714227c63c4e4e13f805e235a1f6928adf99f67d7533c97e804c5eb325b3"
+    }
+  }
+}

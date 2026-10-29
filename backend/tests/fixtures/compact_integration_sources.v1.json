@@ -1,0 +1,21 @@
+{
+  "default_engine": "reference",
+  "archive_sha256": "ec513fe26e5da6408447b70f36d6b294bc679750682fdff1e8e9da731917022c",
+  "default_profile": "compatibility_deferred",
+  "replacements": {
+    "app/application/recommendation/outfit_assistant_service.py": {
+      "before": "293443f9d229e54add1e0183c3df5f4ac5ed5f2703d7b051421cf4f5cc328aac",
+      "after": "6ba022403938a2f1de14369095447d9b539480745c8402d812dfb44c46653d78"
+    },
+    "app/infrastructure/workflow_runtime.py": {
+      "before": "1b9858e8aaea44584ad08b5c96708953c82ae330015cf135a825f284bf2bec60",
+      "after": "80744287b115da2af2d732eef73c8dbd4684226ca448541d6040d997e9b121d4"
+    }
+  },
+  "version": "compact-assistant-integration-1.0.0",
+  "additions": {
+    "app/application/recommendation/compact_assistant_scorer.py": "a2ce3fdc169af4b7d8545160c5b237387dff0ced3290d9768ec744cfe5a2482a",
+    "app/domain/value_objects/assistant_execution_context.py": "6b7b0b042b62c27d81b852ca1abffe3a6a4320073a1fc079b681fddc239d269a",
+    "app/application/recommendation/assistant_execution_selection.py": "c59e56603e880f22de471326e6f2d28f1f03b3d98ab2a1e6bfc6b46b64b11612"
+  }
+}

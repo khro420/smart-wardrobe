@@ -1,0 +1,66 @@
+{
+  "version": "1.0.0",
+  "fields": {
+    "occasion": [
+      {"value":"campus","aliases":["campus","university","college","class","classes","lecture","lectures"]},
+      {"value":"work","aliases":["work","office"]},
+      {"value":"casual_outing","aliases":["casual outing","going out casually"]},
+      {"value":"shopping","aliases":["shopping","shopping trip"]},
+      {"value":"dinner","aliases":["dinner","dinner outing"]},
+      {"value":"party","aliases":["party"]},
+      {"value":"date","aliases":["date","date night"]},
+      {"value":"travel","aliases":["travel","travelling","traveling","trip"]},
+      {"value":"exercise","aliases":["exercise","workout","working out","gym"]}
+    ],
+    "style": [
+      {"value":"casual","aliases":["casual style","casual look"]},
+      {"value":"classic","aliases":["classic style","classic look","classic outfit"]},
+      {"value":"formal","aliases":["formal style","formal look"]},
+      {"value":"minimal","aliases":["minimal","minimalist","minimalist style"]},
+      {"value":"smart casual","aliases":["smart casual style","smart casual look"]},
+      {"value":"sporty","aliases":["sporty","sporty style","athletic look"]},
+      {"value":"streetwear","aliases":["streetwear","streetwear style"]},
+      {"value":"vintage","aliases":["vintage","vintage style"]},
+      {"value":"bohemian","aliases":["bohemian","boho","boho style"]}
+    ],
+    "colours": [
+      {"value":"black","aliases":["black"]}, {"value":"white","aliases":["white"]},
+      {"value":"grey","aliases":["grey","gray"]}, {"value":"navy","aliases":["navy","navy blue"]},
+      {"value":"blue","aliases":["blue"]}, {"value":"red","aliases":["red"]},
+      {"value":"green","aliases":["green"]}, {"value":"yellow","aliases":["yellow"]},
+      {"value":"orange","aliases":["orange"]}, {"value":"pink","aliases":["pink"]},
+      {"value":"purple","aliases":["purple"]}, {"value":"brown","aliases":["brown"]},
+      {"value":"beige","aliases":["beige"]}, {"value":"cream","aliases":["cream"]}
+    ],
+    "garment_categories": [
+      {"kind":"category","value":"short_sleeve_top","aliases":["short sleeve top","short sleeved top"]},
+      {"kind":"category","value":"long_sleeve_top","aliases":["long sleeve top","long sleeved top"]},
+      {"kind":"category","value":"short_sleeve_outwear","aliases":["short sleeve outerwear","short sleeved outerwear"]},
+      {"kind":"category","value":"long_sleeve_outwear","aliases":["long sleeve outerwear","long sleeved outerwear"]},
+      {"kind":"category","value":"vest","aliases":["vest"]},
+      {"kind":"category","value":"sling","aliases":["sling top"]},
+      {"kind":"category","value":"shorts","aliases":["shorts"]},
+      {"kind":"category","value":"trousers","aliases":["trousers","pants"]},
+      {"kind":"category","value":"skirt","aliases":["skirt"]},
+      {"kind":"category","value":"short_sleeve_dress","aliases":["short sleeve dress","short sleeved dress"]},
+      {"kind":"category","value":"long_sleeve_dress","aliases":["long sleeve dress","long sleeved dress"]},
+      {"kind":"category","value":"vest_dress","aliases":["vest dress"]},
+      {"kind":"category","value":"sling_dress","aliases":["sling dress"]},
+      {"kind":"group","value":"top","aliases":["top","tops"]},
+      {"kind":"group","value":"bottom","aliases":["bottom","bottoms"]},
+      {"kind":"group","value":"dress","aliases":["dress","dresses"]},
+      {"kind":"group","value":"outerwear","aliases":["outerwear"]}
+    ],
+    "formality": [
+      {"value":"casual","aliases":["casual outfit","casual clothes","casually dressed"]},
+      {"value":"smart_casual","aliases":["smart casual outfit","smart casual clothes"]},
+      {"value":"formal","aliases":["formal outfit","formal clothes","formally dressed"]}
+    ]
+  },
+  "category_groups": {
+    "top":["short_sleeve_top","long_sleeve_top","vest","sling"],
+    "bottom":["shorts","trousers","skirt"],
+    "dress":["short_sleeve_dress","long_sleeve_dress","vest_dress","sling_dress"],
+    "outerwear":["short_sleeve_outwear","long_sleeve_outwear"]
+  }
+}

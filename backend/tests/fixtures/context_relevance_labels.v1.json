@@ -1,0 +1,423 @@
+{
+  "version": "context-relevance-labels-1.0.0",
+  "authority": "Owner product approval D01-D03 and D06, attachment retained; no shared-owner or independent fashion approval claimed",
+  "status": "FROZEN MECHANICS INPUTS BEFORE SCORER IMPLEMENTATION; NOT EXECUTED SCORER RESULTS",
+  "cases": [
+    {
+      "id": "A101",
+      "context": "shopping",
+      "goal": "casual",
+      "eligible": 20,
+      "winner": [
+        "G01",
+        "G04"
+      ],
+      "profile_kind": "relative",
+      "R": "1",
+      "C": "1",
+      "P": "0",
+      "T": "4/5"
+    },
+    {
+      "id": "A102",
+      "context": "campus",
+      "goal": "casual",
+      "eligible": 20,
+      "winner": [
+        "G01",
+        "G04"
+      ],
+      "profile_kind": "relative",
+      "R": "1",
+      "C": "1",
+      "P": "0",
+      "T": "4/5"
+    },
+    {
+      "id": "A103",
+      "context": "casual_outing",
+      "goal": "casual",
+      "eligible": 20,
+      "winner": [
+        "G01",
+        "G04"
+      ],
+      "profile_kind": "relative",
+      "R": "1",
+      "C": "1",
+      "P": "0",
+      "T": "4/5"
+    },
+    {
+      "id": "A104",
+      "context": "date",
+      "goal": "smart casual",
+      "eligible": 20,
+      "winner": [
+        "G06",
+        "G07"
+      ],
+      "profile_kind": "relative",
+      "R": "1",
+      "C": "1",
+      "P": "0",
+      "T": "4/5"
+    },
+    {
+      "id": "A105",
+      "context": "dinner",
+      "goal": "smart casual",
+      "eligible": 20,
+      "winner": [
+        "G06",
+        "G07"
+      ],
+      "profile_kind": "relative",
+      "R": "1",
+      "C": "1",
+      "P": "0",
+      "T": "4/5"
+    },
+    {
+      "id": "A106",
+      "context": "dinner",
+      "explicit_style": "casual",
+      "goal": "casual",
+      "eligible": 16,
+      "winner": [
+        "G01",
+        "G04"
+      ],
+      "profile_kind": "relative",
+      "R": "1",
+      "C": "1",
+      "P": "0",
+      "T": "4/5"
+    },
+    {
+      "id": "A107",
+      "context": "dinner",
+      "deny": "G06",
+      "goal": "smart casual",
+      "eligible": 18,
+      "winner": [
+        "G02",
+        "G03"
+      ],
+      "profile_kind": "relative",
+      "R": "1",
+      "C": "1",
+      "P": "0",
+      "T": "4/5"
+    },
+    {
+      "id": "A108",
+      "context": "dinner",
+      "missing_style": "G06",
+      "allow_missing": true,
+      "preference": "dress",
+      "goal": "smart casual",
+      "eligible": 20,
+      "winner": [
+        "G02",
+        "G03"
+      ],
+      "profile_kind": "relative",
+      "global_optimum_certified": false,
+      "R": "1",
+      "C": "1",
+      "P": "0",
+      "T": "4/5"
+    },
+    {
+      "id": "A109",
+      "context": "dinner",
+      "missing_style": "G06",
+      "allow_missing": true,
+      "goal": "smart casual",
+      "eligible": 20,
+      "winner": [
+        "G02",
+        "G03"
+      ],
+      "profile_kind": "relative",
+      "global_optimum_certified": true,
+      "R": "1",
+      "C": "1",
+      "P": "0",
+      "T": "4/5"
+    },
+    {
+      "id": "A110",
+      "context": "shopping",
+      "preference": "green",
+      "goal": "casual",
+      "eligible": 20,
+      "winner": [
+        "G08",
+        "G04"
+      ],
+      "profile_kind": "relative",
+      "R": "1",
+      "C": "1/2",
+      "P": "1",
+      "T": "9/10"
+    },
+    {
+      "id": "A111",
+      "context": "shopping",
+      "preference": "casual_style",
+      "goal": "casual",
+      "eligible": 20,
+      "winner": [
+        "G01",
+        "G04"
+      ],
+      "profile_kind": "relative",
+      "R": "1",
+      "C": "1",
+      "P": "0",
+      "T": "4/5",
+      "P_note": "Exact duplicate suppressed; preserve-P alternative yields 1"
+    },
+    {
+      "id": "A112",
+      "context": "shopping",
+      "objective_absent": true,
+      "eligible": 20,
+      "winner": [
+        "G06",
+        "G07"
+      ],
+      "profile_kind": "baseline_fallback",
+      "R": "1",
+      "C": "1",
+      "P": "0",
+      "T": "4/5",
+      "R_note": "Legacy request-match R, not relative relevance"
+    },
+    {
+      "id": "A113",
+      "context": "shopping",
+      "all_base_styles_missing": true,
+      "allow_missing": true,
+      "eligible": 20,
+      "winner": [
+        "G06",
+        "G07"
+      ],
+      "profile_kind": "baseline_fallback",
+      "R": "1",
+      "C": "3/4",
+      "P": "0",
+      "T": "3/4",
+      "R_note": "Relative R unavailable; stored legacy request-match R is 1"
+    },
+    {
+      "id": "A114",
+      "context": "shopping",
+      "all_base_styles_missing": true,
+      "allow_missing": false,
+      "eligible": 0,
+      "profile_kind": "no_result",
+      "expected": "Mandatory InsufficientEvidence; no fallback can admit these candidates"
+    }
+  ],
+  "columns": [
+    "key",
+    "R_casual",
+    "R_smart",
+    "C_decision",
+    "P",
+    "T_casual",
+    "T_smart"
+  ],
+  "point_rows": [
+    [
+      "G06+G07",
+      "0",
+      "1",
+      "1",
+      "0",
+      "1/5",
+      "4/5"
+    ],
+    [
+      "G01+G04",
+      "1",
+      "0",
+      "1",
+      "0",
+      "4/5",
+      "1/5"
+    ],
+    [
+      "G02+G03",
+      "0",
+      "1",
+      "1",
+      "0",
+      "1/5",
+      "4/5"
+    ],
+    [
+      "G02+G03+G07",
+      "0",
+      "1",
+      "1",
+      "0",
+      "1/5",
+      "4/5"
+    ],
+    [
+      "G01+G03+G07",
+      "1/2",
+      "1/2",
+      "2/3",
+      "0",
+      "13/30",
+      "13/30"
+    ],
+    [
+      "G01+G04+G07",
+      "1",
+      "0",
+      "2/3",
+      "0",
+      "11/15",
+      "2/15"
+    ],
+    [
+      "G02+G04+G07",
+      "1/2",
+      "1/2",
+      "2/3",
+      "0",
+      "13/30",
+      "13/30"
+    ],
+    [
+      "G02+G05+G07",
+      "1/2",
+      "1/2",
+      "2/3",
+      "0",
+      "13/30",
+      "13/30"
+    ],
+    [
+      "G08+G03+G07",
+      "1/2",
+      "1/2",
+      "2/3",
+      "0",
+      "13/30",
+      "13/30"
+    ],
+    [
+      "G06",
+      "0",
+      "1",
+      "1/2",
+      "0",
+      "1/10",
+      "7/10"
+    ],
+    [
+      "G01+G03",
+      "1/2",
+      "1/2",
+      "1/2",
+      "0",
+      "2/5",
+      "2/5"
+    ],
+    [
+      "G01+G05",
+      "1",
+      "0",
+      "1/2",
+      "0",
+      "7/10",
+      "1/10"
+    ],
+    [
+      "G01+G05+G07",
+      "1",
+      "0",
+      "1/2",
+      "0",
+      "7/10",
+      "1/10"
+    ],
+    [
+      "G02+G04",
+      "1/2",
+      "1/2",
+      "1/2",
+      "0",
+      "2/5",
+      "2/5"
+    ],
+    [
+      "G02+G05",
+      "1/2",
+      "1/2",
+      "1/2",
+      "0",
+      "2/5",
+      "2/5"
+    ],
+    [
+      "G08+G03",
+      "1/2",
+      "1/2",
+      "1/2",
+      "0",
+      "2/5",
+      "2/5"
+    ],
+    [
+      "G08+G04",
+      "1",
+      "0",
+      "1/2",
+      "0",
+      "7/10",
+      "1/10"
+    ],
+    [
+      "G08+G04+G07",
+      "1",
+      "0",
+      "1/2",
+      "0",
+      "7/10",
+      "1/10"
+    ],
+    [
+      "G08+G05",
+      "1",
+      "0",
+      "1/2",
+      "0",
+      "7/10",
+      "1/10"
+    ],
+    [
+      "G08+G05+G07",
+      "1",
+      "0",
+      "1/2",
+      "0",
+      "7/10",
+      "1/10"
+    ]
+  ],
+  "historical_transition": {
+    "AR03": "Approved disclosed baseline for missing objective",
+    "AR09": "Approved best-evidenced result with coverage limitation",
+    "AR14": "Code admission remains mandatory; absent default may use disclosed baseline"
+  },
+  "fashion_validation": "OPEN"
+}

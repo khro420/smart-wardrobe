@@ -14,6 +14,7 @@ os.environ["SMART_WARDROBE_ALLOW_DEV_IDENTITY"] = "true"
 from fastapi.testclient import TestClient  # noqa: E402
 from PIL import Image  # noqa: E402
 from app.main import app  # noqa: E402
+from app.application.recommendation import recommendation_service  # noqa: E402
 from app.infrastructure.ai.attribute_embedding_adapter import get_attribute_adapter  # noqa: E402
 
 
@@ -63,18 +64,19 @@ class WorkflowTests(unittest.TestCase):
 
     def test_registration_and_bearer_token(self):
         with TestClient(app, headers={"X-User-Id": "demo-user"}) as client:
-            registered = client.post("/api/v1/account/register", json={"email": "student@example.com", "password": "A-long-test-password", "display_name": "Student"})
+            registered = client.post("/api/v1/account/register", json={"email": "student@example.com", "password": "A-long-test-password", "password_confirmation": "A-long-test-password", "display_name": "Student"})
             self.assertEqual(registered.status_code, 201)
-            token = registered.json()["access_token"]
+            self.assertNotIn("access_token", registered.json())
+            token = client.post("/api/v1/account/login", json={"email": "student@example.com", "password": "A-long-test-password"}).json()["access_token"]
             bearer = {"Authorization": f"Bearer {token}"}
             self.assertEqual(client.get("/api/v1/account/profile", headers=bearer).json()["display_name"], "Student")
             preference = client.put(
                 "/api/v1/account/preferences/style_note",
                 headers=bearer,
-                json={"preference_value": {"value": "minimal neutral outfits"}, "weight": 0.9},
+                json={"preference_value": {"value": "minimal"}, "weight": 0.9},
             )
             self.assertEqual(preference.status_code, 200)
-            self.assertEqual(preference.json()["preference_value"]["value"], "minimal neutral outfits")
+            self.assertEqual(preference.json()["preference_value"]["value"], "minimal")
             self.assertEqual(client.get("/api/v1/account/preferences", headers=bearer).json()[0]["weight"], 0.9)
             self.assertEqual(client.post("/api/v1/account/login", json={"email": "student@example.com", "password": "A-long-test-password"}).status_code, 200)
 
@@ -106,22 +108,21 @@ class WorkflowTests(unittest.TestCase):
             self.assertEqual(
                 client.put(
                     "/api/v1/account/preferences/style_note",
-                    json={"preference_value": {"value": "comfortable campus outfits"}, "weight": 1},
+                    json={"preference_value": {"value": "vintage"}, "weight": 1},
                 ).status_code,
                 200,
             )
 
-            recommendation = client.post(
-                "/api/v1/recommendations",
-                json={"request_text": "Suggest an outfit from my confirmed wardrobe"},
-            )
-            self.assertEqual(recommendation.status_code, 201)
-            self.assertEqual(recommendation.json()["items"][0]["garment_id"], garments[0]["id"])
-            self.assertEqual(recommendation.json()["request_text"], "Suggest an outfit from my confirmed wardrobe")
-            self.assertEqual(recommendation.json()["preference_score"], 1.0)
+            # Seed a pre-existing legacy record; its API read/save/VIS paths remain supported.
+            legacy = recommendation_service.create_recommendation("demo-user", "Suggest an outfit from my confirmed wardrobe")
+            recommendation = client.get("/api/v1/recommendations").json()[0]
+            self.assertEqual(recommendation["id"], legacy["id"])
+            self.assertEqual(recommendation["items"][0]["garment_id"], garments[0]["id"])
+            self.assertEqual(recommendation["request_text"], "Suggest an outfit from my confirmed wardrobe")
+            self.assertEqual(recommendation["preference_score"], 1.0)
             self.assertEqual(len(client.get("/api/v1/recommendations").json()), 1)
             saved_recommendation = client.post(
-                f"/api/v1/recommendations/{recommendation.json()['id']}/save-as-outfit",
+                f"/api/v1/recommendations/{recommendation['id']}/save-as-outfit",
                 json={"name": "Saved recommendation"},
             )
             self.assertEqual(saved_recommendation.status_code, 201)
@@ -137,7 +138,7 @@ class WorkflowTests(unittest.TestCase):
 
             recommendation_visual = client.post(
                 "/api/v1/visualisations",
-                json={"recommendation_id": recommendation.json()["id"], "person_image_id": person.json()["id"]},
+                json={"recommendation_id": recommendation["id"], "person_image_id": person.json()["id"]},
             )
             self.assertEqual(recommendation_visual.status_code, 202)
             recommendation_result = client.get(f"/api/v1/visualisations/{recommendation_visual.json()['id']}").json()
@@ -146,7 +147,7 @@ class WorkflowTests(unittest.TestCase):
             self.assertEqual(
                 client.post(
                     "/api/v1/visualisations",
-                    json={"outfit_id": confirmed.json()["outfit_id"], "recommendation_id": recommendation.json()["id"], "person_image_id": person.json()["id"]},
+                    json={"outfit_id": confirmed.json()["outfit_id"], "recommendation_id": recommendation["id"], "person_image_id": person.json()["id"]},
                 ).status_code,
                 422,
             )

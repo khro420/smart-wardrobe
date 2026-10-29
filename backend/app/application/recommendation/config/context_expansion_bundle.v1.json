@@ -1,0 +1,51 @@
+{
+  "version": "context-expansion-bundle-1.0.0",
+  "id": "context_18_v1",
+  "wave": "C",
+  "default_activation": false,
+  "resources": {
+    "application/nlp/config/context_grammar.v2.json": "aba41acf6ff4f2892d656ecaa0a4698842d334d665e6ce3489745669af48388a",
+    "application/recommendation/config/situation_taxonomy.v2.json": "b7886f3a3cf0b7dbd5db80aca4f2d323020a9be2dbadccdad98aa36f9b3c0aa5",
+    "application/recommendation/config/context_policy_registry.v2.json": "8786cf22887c55c2b798592620ff4ed48bfd71878538622ffb68d27ab09bffd9",
+    "application/recommendation/config/context_relevance_policy.v2.json": "0b3396fb639fb63f3a7ec5a7f0a506555dcc2077f9ad19e39322328488969c72",
+    "application/recommendation/config/context_relevance_objectives.v2.json": "4839be5f166aff25cb223b4af09bc8e0346d8a9a5e74fa949bd169862feeeaa9"
+  },
+  "active_situations": [
+    "ceremony.wedding",
+    "social.date",
+    "social.meal",
+    "professional.job_interview",
+    "academic.presentation",
+    "everyday.academic_attendance",
+    "everyday.shopping",
+    "everyday.casual_outing",
+    "academic.library_study",
+    "academic.group_study",
+    "professional.office_day",
+    "professional.workplace_meeting",
+    "social.birthday_gathering",
+    "social.house_gathering",
+    "leisure.cinema_outing",
+    "social.cafe_meetup",
+    "leisure.city_sightseeing",
+    "travel.journey"
+  ],
+  "relative_situations": [
+    "everyday.shopping",
+    "everyday.academic_attendance",
+    "everyday.casual_outing",
+    "social.date",
+    "social.meal",
+    "academic.library_study",
+    "academic.group_study",
+    "professional.office_day",
+    "professional.workplace_meeting",
+    "social.birthday_gathering",
+    "social.house_gathering",
+    "leisure.cinema_outing",
+    "social.cafe_meetup",
+    "leisure.city_sightseeing",
+    "travel.journey"
+  ],
+  "independent_validation": "OPEN"
+}

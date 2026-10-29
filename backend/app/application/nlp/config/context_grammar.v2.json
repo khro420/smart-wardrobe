@@ -1,0 +1,203 @@
+{
+  "version": "context-grammar-2.0.0",
+  "frames": [
+    "going",
+    "attending",
+    "having",
+    "meeting",
+    "wanting",
+    "command",
+    "going_out",
+    "outfit_question",
+    "presenting",
+    "being_interviewed",
+    "conducting_interview",
+    "need_to_go",
+    "future_action",
+    "ordinary_activity",
+    "having_event"
+  ],
+  "roles": [
+    "guest",
+    "bride",
+    "groom",
+    "bridesmaid",
+    "groomsman",
+    "presenter",
+    "attendee",
+    "candidate",
+    "graduate",
+    "interviewer",
+    "employee",
+    "staff"
+  ],
+  "dress_codes": {
+    "smart casual": "smart_casual",
+    "casual": "casual",
+    "formal": "formal",
+    "black tie": "black_tie"
+  },
+  "venues": [
+    "hotel",
+    "office",
+    "restaurant",
+    "university",
+    "outdoors",
+    "indoors",
+    "company",
+    "campus",
+    "library",
+    "cinema",
+    "cafe",
+    "city",
+    "friend_home"
+  ],
+  "temporal": [
+    "tomorrow",
+    "tonight",
+    "today"
+  ],
+  "goals": [
+    "comfortable"
+  ],
+  "temporal_contract": "current_wardrobe_no_forecast_or_future_availability",
+  "companions": [
+    "friends",
+    "family",
+    "colleagues",
+    "classmates",
+    "someone"
+  ],
+  "facets": [
+    "meal:dinner",
+    "celebration:birthday",
+    "transport:train",
+    "transport:bus",
+    "transport:flight"
+  ],
+  "expressions": [
+    {
+      "situation": "academic.library_study",
+      "anchors": [
+        "study at the library",
+        "study at a library",
+        "studying at the library",
+        "library study session",
+        "library study"
+      ],
+      "required_any": []
+    },
+    {
+      "situation": "academic.group_study",
+      "anchors": [
+        "group project meeting",
+        "group study",
+        "study session"
+      ],
+      "required_any": [
+        "university",
+        "campus",
+        "library",
+        "classmates",
+        "group study"
+      ]
+    },
+    {
+      "situation": "professional.office_day",
+      "anchors": [
+        "office workday",
+        "office day",
+        "office"
+      ],
+      "required_any": []
+    },
+    {
+      "situation": "professional.workplace_meeting",
+      "anchors": [
+        "workplace meeting",
+        "team meeting",
+        "office meeting",
+        "meeting"
+      ],
+      "required_any": [
+        "office",
+        "company",
+        "colleagues",
+        "workplace",
+        "team meeting"
+      ]
+    },
+    {
+      "situation": "social.birthday_gathering",
+      "anchors": [
+        "birthday party",
+        "birthday gathering",
+        "birthday celebration",
+        "birthday"
+      ],
+      "required_any": []
+    },
+    {
+      "situation": "social.house_gathering",
+      "anchors": [
+        "casual gathering at a friend's house",
+        "friend's house",
+        "friends' house",
+        "friend's place",
+        "house gathering"
+      ],
+      "required_any": []
+    },
+    {
+      "situation": "leisure.cinema_outing",
+      "anchors": [
+        "watch a movie",
+        "watching a movie",
+        "see a film",
+        "seeing a film",
+        "movie outing",
+        "cinema"
+      ],
+      "required_any": []
+    },
+    {
+      "situation": "social.cafe_meetup",
+      "anchors": [
+        "cafe meetup",
+        "coffee meetup",
+        "coffee at a cafe",
+        "cafe"
+      ],
+      "required_any": []
+    },
+    {
+      "situation": "leisure.city_sightseeing",
+      "anchors": [
+        "city sightseeing",
+        "sightseeing"
+      ],
+      "required_any": [
+        "city"
+      ]
+    },
+    {
+      "situation": "travel.journey",
+      "anchors": [
+        "ordinary travel day",
+        "transit day",
+        "travel day",
+        "travelling",
+        "traveling",
+        "travel",
+        "trip",
+        "flight"
+      ],
+      "required_any": []
+    }
+  ],
+  "compounds": [
+    "dinner_date",
+    "birthday_dinner",
+    "cafe_date"
+  ]
+}

@@ -1,0 +1,478 @@
+{
+  "version": "date-dinner-proposed-labels-1.0.0",
+  "status": "OWNER-APPROVED LABELS; EXECUTION RECORDED SEPARATELY",
+  "method": "Author-labelled contract examples created independently of future policy implementation. Not user/expert fashion-quality validation.",
+  "fixtures": {
+    "F0": "One synthetic owned/available/confirmed blue vest_dress, current singleton owner-reviewed style casual, clean contextual namespace, no applicable declarations or preferences.",
+    "F1": "F0 with current singleton style smart casual and matching review.",
+    "F2": "F0 with canonical style classic, no review, clean or absent review namespace. No positive inference rule covers classic.",
+    "F4": "Four synthetic owned/available/confirmed garments: top-A long_sleeve_top, bottom-A trousers, dress-A vest_dress, outer-A long_sleeve_outwear; all blue, singleton current owner-reviewed casual; no declarations/preferences."
+  },
+  "cases": [
+    {
+      "id": "N01",
+      "request": "I'm going on a date.",
+      "fixture": "F0",
+      "occasion_target": "date",
+      "expected_outcome": "Selected",
+      "assertion": "DT01; reviewed casual; total 7/10"
+    },
+    {
+      "id": "N02",
+      "request": "I have a date tonight.",
+      "fixture": "F0",
+      "occasion_target": "date",
+      "expected_outcome": "Selected",
+      "assertion": "Same eligibility/scores/winner as N01; time retained without forecast"
+    },
+    {
+      "id": "N03",
+      "request": "Suggest an outfit for a date.",
+      "fixture": "F0",
+      "occasion_target": "date",
+      "expected_outcome": "Selected",
+      "assertion": "Same declaration target and exact scores as N01"
+    },
+    {
+      "id": "N04",
+      "request": "I'm meeting friends for dinner.",
+      "fixture": "F1",
+      "occasion_target": "dinner",
+      "expected_outcome": "Selected",
+      "assertion": "DN01; friends retained, no code or score inferred; total 7/10"
+    },
+    {
+      "id": "N05",
+      "request": "I'm going out for dinner tonight.",
+      "fixture": "F1",
+      "occasion_target": "dinner",
+      "expected_outcome": "Selected",
+      "assertion": "Shared going-out frame; same outfit/scores as N04; no outdoor assumption"
+    },
+    {
+      "id": "N06",
+      "request": "Suggest an outfit for a casual dinner.",
+      "fixture": "F0",
+      "occasion_target": "dinner",
+      "expected_outcome": "Selected",
+      "assertion": "DN02; occasion and casual formality gates both Pass; total 7/10"
+    },
+    {
+      "id": "N07",
+      "request": "I'm going on a casual date.",
+      "fixture": "F0",
+      "occasion_target": "date",
+      "expected_outcome": "Selected",
+      "assertion": "DT02; explicit casual code retained separately from formality slot"
+    },
+    {
+      "id": "N08",
+      "request": "Suggest a smart casual outfit for a date.",
+      "fixture": "F1",
+      "occasion_target": "date",
+      "expected_outcome": "Selected",
+      "assertion": "DT03; explicitly requested smart_casual formality; total 7/10"
+    },
+    {
+      "id": "N09",
+      "request": "Suggest an outfit for a smart-casual dinner.",
+      "fixture": "F1",
+      "occasion_target": "dinner",
+      "expected_outcome": "Selected",
+      "assertion": "DN03; same effective gate as explicit smart-casual code"
+    },
+    {
+      "id": "N10",
+      "request": "I'm going on a date at a restaurant.",
+      "fixture": "F0",
+      "occasion_target": "date",
+      "expected_outcome": "Selected",
+      "assertion": "Plain restaurant admitted as stated context; no upscale/code assumption"
+    },
+    {
+      "id": "N11",
+      "request": "I'm meeting friends for dinner at a restaurant.",
+      "fixture": "F0",
+      "occasion_target": "dinner",
+      "expected_outcome": "Selected",
+      "assertion": "Venue/companions add no scoring terms; total 7/10"
+    },
+    {
+      "id": "N12",
+      "request": "I'm going to dinner.",
+      "fixture": "F0",
+      "occasion_target": "dinner",
+      "expected_outcome": "Selected",
+      "assertion": "No friends or restaurant fabricated"
+    },
+    {
+      "id": "U01",
+      "request": "I'm going on a formal date.",
+      "fixture": "F0 + exact date Allow",
+      "occasion_target": "date",
+      "expected_outcome": "PolicyUnavailable",
+      "assertion": "Formal capability unavailable even with owner Allow"
+    },
+    {
+      "id": "U02",
+      "request": "I'm going to a formal dinner.",
+      "fixture": "F1 + exact dinner Allow",
+      "occasion_target": "dinner",
+      "expected_outcome": "PolicyUnavailable",
+      "assertion": "No substitution of smart casual for formal"
+    },
+    {
+      "id": "U03",
+      "request": "Suggest an outfit for dinner; the dress code is black tie.",
+      "fixture": "F1",
+      "occasion_target": "dinner",
+      "expected_outcome": "PolicyUnavailable",
+      "assertion": "Recognised unsupported dress code"
+    },
+    {
+      "id": "U04",
+      "request": "I'm going to dinner at a hotel.",
+      "fixture": "F0",
+      "occasion_target": "dinner",
+      "expected_outcome": "PolicyUnavailable",
+      "assertion": "Hotel is not silently converted to an ordinary restaurant"
+    },
+    {
+      "id": "U05",
+      "request": "I'm going on a date with friends.",
+      "fixture": "F0",
+      "occasion_target": "date",
+      "expected_outcome": "PolicyUnavailable",
+      "assertion": "Group-date companions are outside this proposed date binding"
+    },
+    {
+      "id": "U06",
+      "request": "Suggest an outfit for dinner; prefer blue.",
+      "fixture": "F0",
+      "occasion_target": "dinner",
+      "expected_outcome": "PolicyUnavailable",
+      "assertion": "Request-time soft ranking is still unavailable; blue not promoted to a hard requirement"
+    },
+    {
+      "id": "E01",
+      "request": "I'm going on a date.",
+      "fixture": "F0 + rec:v1:occasion:date:deny",
+      "occasion_target": "date",
+      "expected_outcome": "NoMatchingCandidates",
+      "assertion": "Explicit applicable Deny beats reviewed inference"
+    },
+    {
+      "id": "E02",
+      "request": "Suggest an outfit for a date.",
+      "fixture": "F0 + rec:v1:occasion:date:deny",
+      "occasion_target": "date",
+      "expected_outcome": "NoMatchingCandidates",
+      "assertion": "Equivalent command cannot bypass E01 Deny"
+    },
+    {
+      "id": "E03",
+      "request": "I'm meeting friends for dinner.",
+      "fixture": "F1 + rec:v1:occasion:dinner:deny",
+      "occasion_target": "dinner",
+      "expected_outcome": "NoMatchingCandidates",
+      "assertion": "Explicit applicable dinner Deny"
+    },
+    {
+      "id": "E04",
+      "request": "I'm going out for dinner tonight.",
+      "fixture": "F1 + rec:v1:occasion:dinner:deny",
+      "occasion_target": "dinner",
+      "expected_outcome": "NoMatchingCandidates",
+      "assertion": "Equivalent outgoing phrase cannot bypass E03 Deny"
+    },
+    {
+      "id": "E05",
+      "request": "I'm going on a date.",
+      "fixture": "F2 + rec:v1:occasion:date:allow",
+      "occasion_target": "date",
+      "expected_outcome": "Selected",
+      "assertion": "Exact clean occasion Allow; style review unnecessary for that condition; total 7/10"
+    },
+    {
+      "id": "E06",
+      "request": "I'm going to dinner.",
+      "fixture": "F2 + rec:v1:occasion:dinner:allow",
+      "occasion_target": "dinner",
+      "expected_outcome": "Selected",
+      "assertion": "Exact explicit Allow distinguished from inference"
+    },
+    {
+      "id": "E07",
+      "request": "I'm going on a date.",
+      "fixture": "F0 + exact date Allow and Deny",
+      "occasion_target": "date",
+      "expected_outcome": "NoMatchingCandidates",
+      "assertion": "Context resolver Deny wins; original legacy conflict state remains Unknown and blocked"
+    },
+    {
+      "id": "E08",
+      "request": "I'm going to dinner.",
+      "fixture": "F0 + exact dinner Allow + malformed reserved occasion tag",
+      "occasion_target": "dinner",
+      "expected_outcome": "InsufficientEvidence",
+      "assertion": "Malformed authoritative collection cannot be bypassed by Allow"
+    },
+    {
+      "id": "E09",
+      "request": "I'm going on a date.",
+      "fixture": "F0 + exact date Deny + malformed reserved tag",
+      "occasion_target": "date",
+      "expected_outcome": "NoMatchingCandidates",
+      "assertion": "Identifiable valid Deny retained before malformed handling"
+    },
+    {
+      "id": "E10",
+      "request": "I'm going to dinner.",
+      "fixture": "F0 + rec:v1:occasion:date:deny",
+      "occasion_target": "dinner",
+      "expected_outcome": "Selected",
+      "assertion": "Date restriction is not automatically a dinner restriction"
+    },
+    {
+      "id": "E11",
+      "request": "I'm going on a date.",
+      "fixture": "F2 + rec:v1:occasion:dinner:allow",
+      "occasion_target": "date",
+      "expected_outcome": "InsufficientEvidence",
+      "assertion": "Dinner Allow supplies no date evidence"
+    },
+    {
+      "id": "E12",
+      "request": "I'm going on a date.",
+      "fixture": "F2 + valid wedding override Allow",
+      "occasion_target": "date",
+      "expected_outcome": "InsufficientEvidence",
+      "assertion": "Wedding namespace supplies no date evidence"
+    },
+    {
+      "id": "E13",
+      "request": "Suggest an outfit for a casual dinner.",
+      "fixture": "F0 + dinner Allow + formality casual Deny",
+      "occasion_target": "dinner",
+      "expected_outcome": "NoMatchingCandidates",
+      "assertion": "Occasion Allow does not waive the requested formality condition"
+    },
+    {
+      "id": "E14",
+      "request": "Suggest an outfit for a casual date.",
+      "fixture": "F0 + date Deny + formality casual Allow",
+      "occasion_target": "date",
+      "expected_outcome": "NoMatchingCandidates",
+      "assertion": "Formality Allow does not waive date Deny"
+    },
+    {
+      "id": "E15",
+      "request": "Suggest an outfit for a casual dinner.",
+      "fixture": "F1",
+      "occasion_target": "dinner",
+      "expected_outcome": "InsufficientEvidence",
+      "assertion": "Smart-casual review is not casual evidence; no hierarchy"
+    },
+    {
+      "id": "E16",
+      "request": "I'm going on a date.",
+      "fixture": "F0 without style review",
+      "occasion_target": "date",
+      "expected_outcome": "InsufficientEvidence",
+      "assertion": "Known AI/saved style alone is not admitted review evidence"
+    },
+    {
+      "id": "E17",
+      "request": "I'm going to dinner.",
+      "fixture": "F0 with stale value/category-bound review",
+      "occasion_target": "dinner",
+      "expected_outcome": "InsufficientEvidence",
+      "assertion": "Staleness never becomes Allow"
+    },
+    {
+      "id": "E18",
+      "request": "I'm going to dinner.",
+      "fixture": "F2 with current valid singleton classic review",
+      "occasion_target": "dinner",
+      "expected_outcome": "InsufficientEvidence",
+      "assertion": "Uncovered classic style is Unknown, not a claim that classic is unsuitable"
+    },
+    {
+      "id": "E19",
+      "request": "I'm going on a date.",
+      "fixture": "F0 + empty custom_tags",
+      "occasion_target": "date",
+      "expected_outcome": "Selected",
+      "assertion": "Genuinely absent declarations permit approved reviewed inference"
+    },
+    {
+      "id": "E20",
+      "request": "I'm going to dinner.",
+      "fixture": "F0 + malformed contextual namespace + exact dinner Allow",
+      "occasion_target": "dinner",
+      "expected_outcome": "InsufficientEvidence",
+      "assertion": "Proposed conservative shared malformed-namespace barrier retained"
+    },
+    {
+      "id": "E21",
+      "request": "I'm going to dinner.",
+      "fixture": "F0 + rec:v1:formality:smart_casual:deny",
+      "occasion_target": "dinner",
+      "expected_outcome": "Selected",
+      "assertion": "Unrequested formality is not silently made an occasion condition"
+    },
+    {
+      "id": "G01",
+      "request": "I'm going on a date.",
+      "fixture": "F0 archived only",
+      "occasion_target": "date",
+      "expected_outcome": "NoEligibleGarments",
+      "assertion": "Archive remains outside ConfirmedGarmentQuery"
+    },
+    {
+      "id": "G02",
+      "request": "I'm going to dinner.",
+      "fixture": "F0 unavailable only",
+      "occasion_target": "dinner",
+      "expected_outcome": "NoEligibleGarments",
+      "assertion": "Unavailable garment never retrieved"
+    },
+    {
+      "id": "G03",
+      "request": "I'm going on a date.",
+      "fixture": "F0 foreign owner only",
+      "occasion_target": "date",
+      "expected_outcome": "NoEligibleGarments",
+      "assertion": "Owner isolation unchanged"
+    },
+    {
+      "id": "G04",
+      "request": "I'm going to dinner.",
+      "fixture": "F0 not confirmed",
+      "occasion_target": "dinner",
+      "expected_outcome": "NoEligibleGarments",
+      "assertion": "No unconfirmed or legacy-null-link trust"
+    },
+    {
+      "id": "G05",
+      "request": "I'm going on a date.",
+      "fixture": "One reviewed available upper only",
+      "occasion_target": "date",
+      "expected_outcome": "InsufficientStructure",
+      "assertion": "No invented lower garment"
+    },
+    {
+      "id": "G06",
+      "request": "I'm going to dinner.",
+      "fixture": "Reviewed blue/casual upper + lower + outer with dinner Deny",
+      "occasion_target": "dinner",
+      "expected_outcome": "Selected",
+      "assertion": "Two candidates examined; only upper+lower passes; total 4/5"
+    },
+    {
+      "id": "G07",
+      "request": "I'm going on a date.",
+      "fixture": "F0 + outerwear with missing review",
+      "occasion_target": "date",
+      "expected_outcome": "Selected",
+      "assertion": "Dress passes; dress+outerwear Unknown; outerwear not implicitly accepted"
+    },
+    {
+      "id": "G08",
+      "request": "I'm going on a date.",
+      "fixture": "F4",
+      "occasion_target": "date",
+      "expected_outcome": "Selected",
+      "assertion": "Four structures; exact total 4/5; stable-key winner dress-A + outer-A"
+    },
+    {
+      "id": "G09",
+      "request": "Suggest an outfit for a date with red.",
+      "fixture": "F0",
+      "occasion_target": "date",
+      "expected_outcome": "NoMatchingCandidates",
+      "assertion": "Known hard colour contradiction still fails before scoring"
+    },
+    {
+      "id": "G10",
+      "request": "Suggest an outfit for a date with trousers.",
+      "fixture": "F0",
+      "occasion_target": "date",
+      "expected_outcome": "NoMatchingCandidates",
+      "assertion": "Category requirement not relaxed by contextual inference"
+    },
+    {
+      "id": "H01",
+      "request": "I'm not going on a date.",
+      "fixture": "F0",
+      "occasion_target": null,
+      "expected_outcome": "UnsupportedRequest",
+      "assertion": "Negation never stripped"
+    },
+    {
+      "id": "H02",
+      "request": "I'm going on a dinner date.",
+      "fixture": "F0 + date Deny",
+      "occasion_target": null,
+      "expected_outcome": "UnsupportedRequest",
+      "assertion": "Compound date/dinner not silently mapped to the more permissive occasion"
+    },
+    {
+      "id": "H03",
+      "request": "Suggest an outfit for a formal and casual dinner.",
+      "fixture": "F0",
+      "occasion_target": null,
+      "expected_outcome": "UnsupportedRequest",
+      "assertion": "Conflicting requested codes"
+    },
+    {
+      "id": "H04",
+      "request": "What date is it?",
+      "fixture": "F0",
+      "occasion_target": null,
+      "expected_outcome": "UnsupportedRequest",
+      "assertion": "Calendar question is not a social outing"
+    },
+    {
+      "id": "H05",
+      "request": "I'm going to dinner in hot weather.",
+      "fixture": "F0",
+      "occasion_target": null,
+      "expected_outcome": "UnsupportedRequest",
+      "assertion": "No weather requirement silently dropped"
+    },
+    {
+      "id": "H06",
+      "request": "Suggest an outfit for dinner; the dress code is festive.",
+      "fixture": "F0",
+      "occasion_target": null,
+      "expected_outcome": "UnsupportedRequest",
+      "assertion": "Unrepresentable code retains controlled interpretation rejection"
+    },
+    {
+      "id": "P01",
+      "request": "Replay exact successful key/text after bundle/profile change",
+      "fixture": "Retained old wedding or legacy date result",
+      "occasion_target": null,
+      "expected_outcome": "Selected",
+      "assertion": "Stored result, score and provenance identical; no reinterpretation"
+    },
+    {
+      "id": "P02",
+      "request": "I'm going on a date.",
+      "fixture": "F0; style/review changes after ranking before commit",
+      "occasion_target": "date",
+      "expected_outcome": "WardrobeChanged",
+      "assertion": "No partial chat/recommendation; rollback/retry preserved"
+    },
+    {
+      "id": "P03",
+      "request": "Same key with changed paraphrase",
+      "fixture": "Existing successful submission",
+      "occasion_target": null,
+      "expected_outcome": "IdempotencyConflict",
+      "assertion": "Semantic equivalence does not change exact keyed-text contract"
+    }
+  ],
+  "approved_source_sha256": "24faca229362d923ba4af370b5c0831fce1d5f5b92a008195e9d36367337f19f"
+}

@@ -1,0 +1,19 @@
+{
+  "note": "Documentation record only; runtime uses the central Python default. v1 remains the historical pre-approval proposal.",
+  "restart_required": true,
+  "applied_to_code": true,
+  "status": "owner_approved_code_activation",
+  "version": "assistant-execution-transition-2.0.0",
+  "database_migration": false,
+  "rollback": {
+    "SMART_WARDROBE_ASSISTANT_EXECUTION_ENGINE": "reference",
+    "SMART_WARDROBE_ASSISTANT_SCORING_PROFILE": "compatibility_deferred"
+  },
+  "defaults": {
+    "SMART_WARDROBE_ASSISTANT_EXECUTION_ENGINE": "compact_exhaustive",
+    "SMART_WARDROBE_ASSISTANT_SCORING_PROFILE": "compatibility_deferred"
+  },
+  "deployment_verified": false,
+  "runtime_hot_reload": false,
+  "nfr02_formally_accepted": false
+}

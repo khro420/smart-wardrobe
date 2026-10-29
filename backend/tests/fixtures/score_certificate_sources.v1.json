@@ -1,0 +1,16 @@
+{
+  "semantics": "unchanged; replace total-only LRU with complete validated numeric certificate LRU; original bound retained",
+  "version": "score-certificate-reuse-1.0.0",
+  "default_profile": "compatibility_deferred",
+  "default_engine": "compact_exhaustive",
+  "reference": {
+    "sha256": "cb09e9ab2f86ffc2e65681f021bdf95322461ddefd4f920fad349e392f7933dc",
+    "file": "tests/fixtures/score_certificate_reference/compact_scoring_facts.py"
+  },
+  "replacements": {
+    "app/application/recommendation/compact_scoring_facts.py": {
+      "before": "cb09e9ab2f86ffc2e65681f021bdf95322461ddefd4f920fad349e392f7933dc",
+      "after": "612bf357c8f1c27edb6344297f4c45358f23546f212b29ebdedf1a263b7d3128"
+    }
+  }
+}

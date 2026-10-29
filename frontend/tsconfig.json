@@ -34,7 +34,9 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
-    "**/*.mts"
+    "**/*.mts",
+    ".next-integration-run/manual-j22-dev-20261024/types/**/*.ts",
+    ".next-integration-run/manual-j22-dev-20261024/dev/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"

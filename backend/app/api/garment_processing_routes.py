@@ -1,19 +1,23 @@
-from fastapi import APIRouter, BackgroundTasks, Depends, UploadFile
+from typing import Literal
+from fastapi import APIRouter, BackgroundTasks, Depends, UploadFile, Query
 
 from app.infrastructure.security import current_user_id
 from app.domain.value_objects.requests import ConfirmRequest, ReviewRequest
 from app.application.garment_processing import garment_processing_orchestrator as processing
 from app.application.garment_processing import processing_job_service, review_service, upload_validator
+from app.application.wardrobe.wardrobe_service import check_upload_capacity
 
 router = APIRouter(prefix="/processing/jobs", tags=["garment processing"])
 
 
 @router.post("", status_code=202)
-async def submit_image(file: UploadFile, background_tasks: BackgroundTasks, user_id: str = Depends(current_user_id)) -> dict:
+async def submit_image(file: UploadFile, background_tasks: BackgroundTasks, user_id: str = Depends(current_user_id),
+                       admission_mode: Literal['manual_review_v1', 'automatic_structural_v1'] = Query('manual_review_v1')) -> dict:
+    check_upload_capacity(user_id)
     media_id = await upload_validator.validate_and_store_wardrobe_image(file, user_id)
     job_id = processing_job_service.create_job(media_id, user_id)
-    background_tasks.add_task(processing.run_job, job_id, user_id)
-    return {"id": job_id, "status": "queued"}
+    background_tasks.add_task(processing.run_job, job_id, user_id, admission_mode)
+    return {"id": job_id, "status": "queued", "admission_mode": admission_mode}
 
 
 @router.get("/{job_id}")
@@ -28,7 +32,7 @@ def review(job_id: str, body: ReviewRequest, user_id: str = Depends(current_user
 
 @router.post("/{job_id}/confirm", status_code=201)
 def confirm(job_id: str, body: ConfirmRequest, user_id: str = Depends(current_user_id)) -> dict:
-    return review_service.confirm_reviewed_candidates(job_id, user_id, body.item_ids, body.save_mode, body.outfit_name)
+    return review_service.confirm_reviewed_candidates(job_id, user_id, body.item_ids, body.save_mode, body.outfit_name, body.admission_mode)
 
 
 @router.post("/{job_id}/cancel", status_code=204)

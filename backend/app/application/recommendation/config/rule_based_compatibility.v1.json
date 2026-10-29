@@ -1,0 +1,17 @@
+{
+  "colour_rule": "identical_or_achromatic",
+  "default_activation": false,
+  "style_rule": "sorensen_dice",
+  "version": "rule-based-compatibility-1.0.0",
+  "achromatic": [
+    "black",
+    "white",
+    "grey"
+  ],
+  "approximate_hex_enabled": false,
+  "internal_weights": [
+    "1/2",
+    "1/2"
+  ],
+  "pattern_enabled": false
+}

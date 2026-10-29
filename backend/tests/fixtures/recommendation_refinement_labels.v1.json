@@ -1,0 +1,2362 @@
+{
+  "version": "recommendation-refinement-labels-1.0.0",
+  "authority": "owner-approved author-labelled mechanics; independent human evaluation OPEN",
+  "approval": {
+    "status": "APPROVED FOR IMPLEMENTATION A-D; NOT ACTIVATION",
+    "RF01-RF05_RF08": "owner-implementation-request.txt",
+    "RF06": "User confirms actual named backend owners granted exact scope",
+    "RF07": "User confirms actual named frontend owners granted exact scope",
+    "confirmation_call": "call_34181bbafd7048e2aef9ea55c5c6cd47",
+    "exact_answers": [
+      "Confirm those owners granted this exact scope",
+      "Confirm those owners granted this exact scope"
+    ],
+    "scope_sha256": "e95d367a0b99bd536ca5bd791996129226a886313022bdb00676ba8059fbcbc1"
+  },
+  "frozen_inputs": {
+    "independent-acceptance-candidates.json": "6f1f62a1347f0a26359ec649ed1581bbd03ea8c5d84add78669e0f121122a546",
+    "retained-independent-ledgers.json": "669f6c504354c1b9bb9064aa46bd4c2880173a1d13760ae403e958dccf598773",
+    "proposed-contracts.json": "4ad261f1533a64d7c68de91fecb5137cf96eb94e687d50b1aebf5115ae794543"
+  },
+  "cases": {
+    "status": "DRAFT; NOT APPROVED OR RUN AGAINST A REFINEMENT IMPLEMENTATION",
+    "authoring_utc": "2026-10-28T05:35:19.244550+00:00",
+    "cases": [
+      {
+        "id": "A",
+        "kind": "unchanged initial",
+        "expected": {
+          "winner": [
+            "G01",
+            "G04"
+          ],
+          "R": "1",
+          "C": "1",
+          "P": "0",
+          "T": "4/5"
+        }
+      },
+      {
+        "id": "B",
+        "kind": "casual base-distinct sequence",
+        "expected": {
+          "members": [
+            [
+              "G01",
+              "G04"
+            ],
+            [
+              "G01",
+              "G05"
+            ],
+            [
+              "G08",
+              "G04"
+            ],
+            [
+              "G08",
+              "G05"
+            ]
+          ],
+          "totals": [
+            "4/5",
+            "7/10",
+            "7/10",
+            "7/10"
+          ],
+          "R_floor": "1",
+          "post_sequence": "RefinementExhausted"
+        }
+      },
+      {
+        "id": "C",
+        "kind": "smart base-distinct sequence",
+        "expected": {
+          "members": [
+            [
+              "G06",
+              "G07"
+            ],
+            [
+              "G02",
+              "G03"
+            ]
+          ],
+          "totals": [
+            "4/5",
+            "4/5"
+          ],
+          "R_floor": "1",
+          "post_sequence": "RefinementExhausted"
+        }
+      },
+      {
+        "id": "D",
+        "kind": "exclude all four dress categories; smart",
+        "expected": {
+          "winner": [
+            "G02",
+            "G03"
+          ],
+          "structural_candidates": 18,
+          "T": "4/5"
+        }
+      },
+      {
+        "id": "E",
+        "kind": "exclude trousers; casual",
+        "expected": {
+          "winner": [
+            "G01",
+            "G05"
+          ],
+          "structural_candidates": 8,
+          "R": "1",
+          "T": "7/10"
+        }
+      },
+      {
+        "id": "F",
+        "kind": "exclude all eleven base categories",
+        "expected": {
+          "structural_candidates": 0,
+          "status": "InsufficientStructure",
+          "cause": "request_category_exclusion"
+        }
+      },
+      {
+        "id": "G",
+        "kind": "repeated alternative",
+        "expected": "No repeated exact base tuples; fixed root R floor, not the previous result R; cap distinct from exhaustion"
+      },
+      {
+        "id": "H",
+        "kind": "changed active preferences or candidate snapshot",
+        "expected": "Completed-key replay unchanged; a new continuation rejects RefinementScopeChanged; starting fresh creates a new root"
+      },
+      {
+        "id": "I",
+        "kind": "request requires trousers, excludes trousers",
+        "expected": "422 RefinementConflict; no ranking or persistence"
+      },
+      {
+        "id": "J",
+        "kind": "immutable historical replay",
+        "expected": "Exact stored score/evidence/display snapshots/lineage returned; current media visibility remains the existing separate projection"
+      },
+      {
+        "id": "K01",
+        "kind": "exclude outerwear; smart",
+        "expected": {
+          "winner": [
+            "G02",
+            "G03"
+          ],
+          "structural_candidates": 10,
+          "T": "4/5"
+        }
+      },
+      {
+        "id": "K02",
+        "kind": "exclude all lowers",
+        "expected": {
+          "winner": [
+            "G06",
+            "G07"
+          ],
+          "structural_candidates": 2,
+          "T": "4/5"
+        }
+      },
+      {
+        "id": "K03",
+        "kind": "unknown potential remaining candidate",
+        "expected": "No point at floor + unresolved high bound reaches floor => RefinementInsufficientEvidence, not exhausted"
+      },
+      {
+        "id": "K04",
+        "kind": "known remaining candidates below floor",
+        "expected": "RefinementExhausted, no silent relaxation"
+      },
+      {
+        "id": "K05",
+        "kind": "two simultaneous same-parent actions",
+        "expected": "Same canonical server step key; one inserted child and one exact replay, no branch or repeated base"
+      },
+      {
+        "id": "K06",
+        "kind": "new key for an old parent or invented future slot",
+        "expected": "Reject noncanonical action key; do not automatically advance to the latest child"
+      },
+      {
+        "id": "K07",
+        "kind": "same key, changed parent/text/action/categories",
+        "expected": "409 IdempotencyConflict before reinterpretation or ranking"
+      },
+      {
+        "id": "K08",
+        "kind": "forged owner/root/R/seen fields",
+        "expected": "Unknown fields reject 422; foreign parent returns generic 404 without owner details"
+      },
+      {
+        "id": "K09",
+        "kind": "changed selected/competitor snapshot or preferences at commit",
+        "expected": "Rollback the new-mode transaction; no child/slot/chat/item metadata committed"
+      },
+      {
+        "id": "K10",
+        "kind": "fault at each existing writer checkpoint",
+        "expected": "Rollback; exact same slot key can recover once; no extra branch"
+      },
+      {
+        "id": "K11",
+        "kind": "unsupported category, alias, duplicate, scalar or excess list",
+        "expected": "422; nothing silently normalised into permission"
+      },
+      {
+        "id": "K12",
+        "kind": "specialist, generic, legacy or baseline result",
+        "expected": "Initial paths unchanged; explicit refinement returns RefinementUnavailable; historical record never retrofitted"
+      },
+      {
+        "id": "K13",
+        "kind": "durable logout",
+        "expected": "Copied bearer cannot request, inspect or continue a lineage after revocation"
+      },
+      {
+        "id": "K14",
+        "kind": "cancel changed exclusion draft",
+        "expected": "No request/key, account preference write or historical mutation"
+      },
+      {
+        "id": "K15",
+        "kind": "native zoom/narrow/keyboard/retry",
+        "expected": "Visible current result, optional controls, scoped message/focus; same action key on technical retry"
+      },
+      {
+        "id": "K16",
+        "kind": "100 garments and long user history",
+        "expected": "One ranking snapshot pair; fixed ten-slot PK lookup; no JSON history scan or candidate-loop I/O"
+      },
+      {
+        "id": "K17",
+        "kind": "unknown/stale/forged archive version or proof",
+        "expected": "Fail safely, no legacy reinterpretation or baseline workaround"
+      },
+      {
+        "id": "K18",
+        "kind": "valid extreme exact fractions",
+        "expected": "Original 4096-digit boundaries unchanged; new bounded envelope, no float or encoded difference fraction"
+      },
+      {
+        "id": "K19",
+        "kind": "feature flag default/off invalid combinations",
+        "expected": "Current initial paths and old completed replay readable; new action rejects unless approved relative/context_18 prerequisites selected"
+      },
+      {
+        "id": "K20",
+        "kind": "Deny, Unknown, explicit style, compounds and automatic Add",
+        "expected": "Existing hard gates and source barriers retain precedence; all four structures, quota and complete processing joins preserved"
+      }
+    ]
+  },
+  "ledgers": {
+    "status": "AUTHOR-ASSIGNED INVESTIGATION EXPECTATIONS; WRITTEN BEFORE APPLICATION RUN; NOT FASHION VALIDATION",
+    "utc": "2026-10-28T04:46:33.340483+00:00",
+    "facts": [
+      [
+        "G01",
+        "Blue T-shirt",
+        "short_sleeve_top",
+        "blue",
+        "casual"
+      ],
+      [
+        "G02",
+        "White Shirt",
+        "long_sleeve_top",
+        "white",
+        "smart casual"
+      ],
+      [
+        "G03",
+        "Black Trousers",
+        "trousers",
+        "black",
+        "smart casual"
+      ],
+      [
+        "G04",
+        "Blue Jeans",
+        "trousers",
+        "blue",
+        "casual"
+      ],
+      [
+        "G05",
+        "Beige Shorts",
+        "shorts",
+        "beige",
+        "casual"
+      ],
+      [
+        "G06",
+        "Navy Dress",
+        "vest_dress",
+        "navy",
+        "smart casual"
+      ],
+      [
+        "G07",
+        "Grey Jacket",
+        "long_sleeve_outwear",
+        "grey",
+        "smart casual"
+      ],
+      [
+        "G08",
+        "Green Sweatshirt",
+        "long_sleeve_top",
+        "green",
+        "casual"
+      ]
+    ],
+    "contexts": [
+      [
+        "everyday.shopping",
+        "I'm going shopping.",
+        "casual"
+      ],
+      [
+        "everyday.academic_attendance",
+        "I'm going to class.",
+        "casual"
+      ],
+      [
+        "everyday.casual_outing",
+        "I'm going out with friends.",
+        "casual"
+      ],
+      [
+        "social.date",
+        "I'm going on a date tonight.",
+        "smart casual"
+      ],
+      [
+        "social.meal",
+        "I'm meeting friends for dinner.",
+        "smart casual"
+      ],
+      [
+        "academic.library_study",
+        "I'm going to study at the library.",
+        "casual"
+      ],
+      [
+        "academic.group_study",
+        "I have a group project meeting at university.",
+        "casual"
+      ],
+      [
+        "professional.office_day",
+        "I need to go to the office tomorrow.",
+        "smart casual"
+      ],
+      [
+        "professional.workplace_meeting",
+        "I have a meeting with my colleagues.",
+        "smart casual"
+      ],
+      [
+        "social.birthday_gathering",
+        "I'm attending a birthday party.",
+        "casual"
+      ],
+      [
+        "social.house_gathering",
+        "I'm visiting my friend's house.",
+        "casual"
+      ],
+      [
+        "leisure.cinema_outing",
+        "I'm going to watch a movie.",
+        "casual"
+      ],
+      [
+        "social.cafe_meetup",
+        "I'm meeting someone at a café.",
+        "casual"
+      ],
+      [
+        "leisure.city_sightseeing",
+        "I'm sightseeing around the city.",
+        "casual"
+      ],
+      [
+        "travel.journey",
+        "I'm taking a train for a trip.",
+        "casual"
+      ]
+    ],
+    "point_ledgers": {
+      "casual|none": [
+        {
+          "ids": [
+            "G01",
+            "G04"
+          ],
+          "key": [
+            [
+              "upper",
+              "G01"
+            ],
+            [
+              "lower",
+              "G04"
+            ]
+          ],
+          "R": "1",
+          "C": "1",
+          "P": "0",
+          "T": "4/5"
+        },
+        {
+          "ids": [
+            "G01",
+            "G04",
+            "G07"
+          ],
+          "key": [
+            [
+              "upper",
+              "G01"
+            ],
+            [
+              "lower",
+              "G04"
+            ],
+            [
+              "outerwear",
+              "G07"
+            ]
+          ],
+          "R": "1",
+          "C": "2/3",
+          "P": "0",
+          "T": "11/15"
+        },
+        {
+          "ids": [
+            "G01",
+            "G05"
+          ],
+          "key": [
+            [
+              "upper",
+              "G01"
+            ],
+            [
+              "lower",
+              "G05"
+            ]
+          ],
+          "R": "1",
+          "C": "1/2",
+          "P": "0",
+          "T": "7/10"
+        },
+        {
+          "ids": [
+            "G01",
+            "G05",
+            "G07"
+          ],
+          "key": [
+            [
+              "upper",
+              "G01"
+            ],
+            [
+              "lower",
+              "G05"
+            ],
+            [
+              "outerwear",
+              "G07"
+            ]
+          ],
+          "R": "1",
+          "C": "1/2",
+          "P": "0",
+          "T": "7/10"
+        },
+        {
+          "ids": [
+            "G08",
+            "G04"
+          ],
+          "key": [
+            [
+              "upper",
+              "G08"
+            ],
+            [
+              "lower",
+              "G04"
+            ]
+          ],
+          "R": "1",
+          "C": "1/2",
+          "P": "0",
+          "T": "7/10"
+        },
+        {
+          "ids": [
+            "G08",
+            "G04",
+            "G07"
+          ],
+          "key": [
+            [
+              "upper",
+              "G08"
+            ],
+            [
+              "lower",
+              "G04"
+            ],
+            [
+              "outerwear",
+              "G07"
+            ]
+          ],
+          "R": "1",
+          "C": "1/2",
+          "P": "0",
+          "T": "7/10"
+        },
+        {
+          "ids": [
+            "G08",
+            "G05"
+          ],
+          "key": [
+            [
+              "upper",
+              "G08"
+            ],
+            [
+              "lower",
+              "G05"
+            ]
+          ],
+          "R": "1",
+          "C": "1/2",
+          "P": "0",
+          "T": "7/10"
+        },
+        {
+          "ids": [
+            "G08",
+            "G05",
+            "G07"
+          ],
+          "key": [
+            [
+              "upper",
+              "G08"
+            ],
+            [
+              "lower",
+              "G05"
+            ],
+            [
+              "outerwear",
+              "G07"
+            ]
+          ],
+          "R": "1",
+          "C": "1/2",
+          "P": "0",
+          "T": "7/10"
+        },
+        {
+          "ids": [
+            "G01",
+            "G03",
+            "G07"
+          ],
+          "key": [
+            [
+              "upper",
+              "G01"
+            ],
+            [
+              "lower",
+              "G03"
+            ],
+            [
+              "outerwear",
+              "G07"
+            ]
+          ],
+          "R": "1/2",
+          "C": "2/3",
+          "P": "0",
+          "T": "13/30"
+        },
+        {
+          "ids": [
+            "G02",
+            "G04",
+            "G07"
+          ],
+          "key": [
+            [
+              "upper",
+              "G02"
+            ],
+            [
+              "lower",
+              "G04"
+            ],
+            [
+              "outerwear",
+              "G07"
+            ]
+          ],
+          "R": "1/2",
+          "C": "2/3",
+          "P": "0",
+          "T": "13/30"
+        },
+        {
+          "ids": [
+            "G02",
+            "G05",
+            "G07"
+          ],
+          "key": [
+            [
+              "upper",
+              "G02"
+            ],
+            [
+              "lower",
+              "G05"
+            ],
+            [
+              "outerwear",
+              "G07"
+            ]
+          ],
+          "R": "1/2",
+          "C": "2/3",
+          "P": "0",
+          "T": "13/30"
+        },
+        {
+          "ids": [
+            "G08",
+            "G03",
+            "G07"
+          ],
+          "key": [
+            [
+              "upper",
+              "G08"
+            ],
+            [
+              "lower",
+              "G03"
+            ],
+            [
+              "outerwear",
+              "G07"
+            ]
+          ],
+          "R": "1/2",
+          "C": "2/3",
+          "P": "0",
+          "T": "13/30"
+        },
+        {
+          "ids": [
+            "G01",
+            "G03"
+          ],
+          "key": [
+            [
+              "upper",
+              "G01"
+            ],
+            [
+              "lower",
+              "G03"
+            ]
+          ],
+          "R": "1/2",
+          "C": "1/2",
+          "P": "0",
+          "T": "2/5"
+        },
+        {
+          "ids": [
+            "G02",
+            "G04"
+          ],
+          "key": [
+            [
+              "upper",
+              "G02"
+            ],
+            [
+              "lower",
+              "G04"
+            ]
+          ],
+          "R": "1/2",
+          "C": "1/2",
+          "P": "0",
+          "T": "2/5"
+        },
+        {
+          "ids": [
+            "G02",
+            "G05"
+          ],
+          "key": [
+            [
+              "upper",
+              "G02"
+            ],
+            [
+              "lower",
+              "G05"
+            ]
+          ],
+          "R": "1/2",
+          "C": "1/2",
+          "P": "0",
+          "T": "2/5"
+        },
+        {
+          "ids": [
+            "G08",
+            "G03"
+          ],
+          "key": [
+            [
+              "upper",
+              "G08"
+            ],
+            [
+              "lower",
+              "G03"
+            ]
+          ],
+          "R": "1/2",
+          "C": "1/2",
+          "P": "0",
+          "T": "2/5"
+        },
+        {
+          "ids": [
+            "G06",
+            "G07"
+          ],
+          "key": [
+            [
+              "one_piece",
+              "G06"
+            ],
+            [
+              "outerwear",
+              "G07"
+            ]
+          ],
+          "R": "0",
+          "C": "1",
+          "P": "0",
+          "T": "1/5"
+        },
+        {
+          "ids": [
+            "G02",
+            "G03"
+          ],
+          "key": [
+            [
+              "upper",
+              "G02"
+            ],
+            [
+              "lower",
+              "G03"
+            ]
+          ],
+          "R": "0",
+          "C": "1",
+          "P": "0",
+          "T": "1/5"
+        },
+        {
+          "ids": [
+            "G02",
+            "G03",
+            "G07"
+          ],
+          "key": [
+            [
+              "upper",
+              "G02"
+            ],
+            [
+              "lower",
+              "G03"
+            ],
+            [
+              "outerwear",
+              "G07"
+            ]
+          ],
+          "R": "0",
+          "C": "1",
+          "P": "0",
+          "T": "1/5"
+        },
+        {
+          "ids": [
+            "G06"
+          ],
+          "key": [
+            [
+              "one_piece",
+              "G06"
+            ]
+          ],
+          "R": "0",
+          "C": "1/2",
+          "P": "0",
+          "T": "1/10"
+        }
+      ],
+      "casual|green": [
+        {
+          "ids": [
+            "G08",
+            "G04"
+          ],
+          "key": [
+            [
+              "upper",
+              "G08"
+            ],
+            [
+              "lower",
+              "G04"
+            ]
+          ],
+          "R": "1",
+          "C": "1/2",
+          "P": "1",
+          "T": "9/10"
+        },
+        {
+          "ids": [
+            "G08",
+            "G04",
+            "G07"
+          ],
+          "key": [
+            [
+              "upper",
+              "G08"
+            ],
+            [
+              "lower",
+              "G04"
+            ],
+            [
+              "outerwear",
+              "G07"
+            ]
+          ],
+          "R": "1",
+          "C": "1/2",
+          "P": "1",
+          "T": "9/10"
+        },
+        {
+          "ids": [
+            "G08",
+            "G05"
+          ],
+          "key": [
+            [
+              "upper",
+              "G08"
+            ],
+            [
+              "lower",
+              "G05"
+            ]
+          ],
+          "R": "1",
+          "C": "1/2",
+          "P": "1",
+          "T": "9/10"
+        },
+        {
+          "ids": [
+            "G08",
+            "G05",
+            "G07"
+          ],
+          "key": [
+            [
+              "upper",
+              "G08"
+            ],
+            [
+              "lower",
+              "G05"
+            ],
+            [
+              "outerwear",
+              "G07"
+            ]
+          ],
+          "R": "1",
+          "C": "1/2",
+          "P": "1",
+          "T": "9/10"
+        },
+        {
+          "ids": [
+            "G01",
+            "G04"
+          ],
+          "key": [
+            [
+              "upper",
+              "G01"
+            ],
+            [
+              "lower",
+              "G04"
+            ]
+          ],
+          "R": "1",
+          "C": "1",
+          "P": "0",
+          "T": "4/5"
+        },
+        {
+          "ids": [
+            "G01",
+            "G04",
+            "G07"
+          ],
+          "key": [
+            [
+              "upper",
+              "G01"
+            ],
+            [
+              "lower",
+              "G04"
+            ],
+            [
+              "outerwear",
+              "G07"
+            ]
+          ],
+          "R": "1",
+          "C": "2/3",
+          "P": "0",
+          "T": "11/15"
+        },
+        {
+          "ids": [
+            "G01",
+            "G05"
+          ],
+          "key": [
+            [
+              "upper",
+              "G01"
+            ],
+            [
+              "lower",
+              "G05"
+            ]
+          ],
+          "R": "1",
+          "C": "1/2",
+          "P": "0",
+          "T": "7/10"
+        },
+        {
+          "ids": [
+            "G01",
+            "G05",
+            "G07"
+          ],
+          "key": [
+            [
+              "upper",
+              "G01"
+            ],
+            [
+              "lower",
+              "G05"
+            ],
+            [
+              "outerwear",
+              "G07"
+            ]
+          ],
+          "R": "1",
+          "C": "1/2",
+          "P": "0",
+          "T": "7/10"
+        },
+        {
+          "ids": [
+            "G08",
+            "G03",
+            "G07"
+          ],
+          "key": [
+            [
+              "upper",
+              "G08"
+            ],
+            [
+              "lower",
+              "G03"
+            ],
+            [
+              "outerwear",
+              "G07"
+            ]
+          ],
+          "R": "1/2",
+          "C": "2/3",
+          "P": "1",
+          "T": "19/30"
+        },
+        {
+          "ids": [
+            "G08",
+            "G03"
+          ],
+          "key": [
+            [
+              "upper",
+              "G08"
+            ],
+            [
+              "lower",
+              "G03"
+            ]
+          ],
+          "R": "1/2",
+          "C": "1/2",
+          "P": "1",
+          "T": "3/5"
+        },
+        {
+          "ids": [
+            "G01",
+            "G03",
+            "G07"
+          ],
+          "key": [
+            [
+              "upper",
+              "G01"
+            ],
+            [
+              "lower",
+              "G03"
+            ],
+            [
+              "outerwear",
+              "G07"
+            ]
+          ],
+          "R": "1/2",
+          "C": "2/3",
+          "P": "0",
+          "T": "13/30"
+        },
+        {
+          "ids": [
+            "G02",
+            "G04",
+            "G07"
+          ],
+          "key": [
+            [
+              "upper",
+              "G02"
+            ],
+            [
+              "lower",
+              "G04"
+            ],
+            [
+              "outerwear",
+              "G07"
+            ]
+          ],
+          "R": "1/2",
+          "C": "2/3",
+          "P": "0",
+          "T": "13/30"
+        },
+        {
+          "ids": [
+            "G02",
+            "G05",
+            "G07"
+          ],
+          "key": [
+            [
+              "upper",
+              "G02"
+            ],
+            [
+              "lower",
+              "G05"
+            ],
+            [
+              "outerwear",
+              "G07"
+            ]
+          ],
+          "R": "1/2",
+          "C": "2/3",
+          "P": "0",
+          "T": "13/30"
+        },
+        {
+          "ids": [
+            "G01",
+            "G03"
+          ],
+          "key": [
+            [
+              "upper",
+              "G01"
+            ],
+            [
+              "lower",
+              "G03"
+            ]
+          ],
+          "R": "1/2",
+          "C": "1/2",
+          "P": "0",
+          "T": "2/5"
+        },
+        {
+          "ids": [
+            "G02",
+            "G04"
+          ],
+          "key": [
+            [
+              "upper",
+              "G02"
+            ],
+            [
+              "lower",
+              "G04"
+            ]
+          ],
+          "R": "1/2",
+          "C": "1/2",
+          "P": "0",
+          "T": "2/5"
+        },
+        {
+          "ids": [
+            "G02",
+            "G05"
+          ],
+          "key": [
+            [
+              "upper",
+              "G02"
+            ],
+            [
+              "lower",
+              "G05"
+            ]
+          ],
+          "R": "1/2",
+          "C": "1/2",
+          "P": "0",
+          "T": "2/5"
+        },
+        {
+          "ids": [
+            "G06",
+            "G07"
+          ],
+          "key": [
+            [
+              "one_piece",
+              "G06"
+            ],
+            [
+              "outerwear",
+              "G07"
+            ]
+          ],
+          "R": "0",
+          "C": "1",
+          "P": "0",
+          "T": "1/5"
+        },
+        {
+          "ids": [
+            "G02",
+            "G03"
+          ],
+          "key": [
+            [
+              "upper",
+              "G02"
+            ],
+            [
+              "lower",
+              "G03"
+            ]
+          ],
+          "R": "0",
+          "C": "1",
+          "P": "0",
+          "T": "1/5"
+        },
+        {
+          "ids": [
+            "G02",
+            "G03",
+            "G07"
+          ],
+          "key": [
+            [
+              "upper",
+              "G02"
+            ],
+            [
+              "lower",
+              "G03"
+            ],
+            [
+              "outerwear",
+              "G07"
+            ]
+          ],
+          "R": "0",
+          "C": "1",
+          "P": "0",
+          "T": "1/5"
+        },
+        {
+          "ids": [
+            "G06"
+          ],
+          "key": [
+            [
+              "one_piece",
+              "G06"
+            ]
+          ],
+          "R": "0",
+          "C": "1/2",
+          "P": "0",
+          "T": "1/10"
+        }
+      ],
+      "smart casual|none": [
+        {
+          "ids": [
+            "G06",
+            "G07"
+          ],
+          "key": [
+            [
+              "one_piece",
+              "G06"
+            ],
+            [
+              "outerwear",
+              "G07"
+            ]
+          ],
+          "R": "1",
+          "C": "1",
+          "P": "0",
+          "T": "4/5"
+        },
+        {
+          "ids": [
+            "G02",
+            "G03"
+          ],
+          "key": [
+            [
+              "upper",
+              "G02"
+            ],
+            [
+              "lower",
+              "G03"
+            ]
+          ],
+          "R": "1",
+          "C": "1",
+          "P": "0",
+          "T": "4/5"
+        },
+        {
+          "ids": [
+            "G02",
+            "G03",
+            "G07"
+          ],
+          "key": [
+            [
+              "upper",
+              "G02"
+            ],
+            [
+              "lower",
+              "G03"
+            ],
+            [
+              "outerwear",
+              "G07"
+            ]
+          ],
+          "R": "1",
+          "C": "1",
+          "P": "0",
+          "T": "4/5"
+        },
+        {
+          "ids": [
+            "G06"
+          ],
+          "key": [
+            [
+              "one_piece",
+              "G06"
+            ]
+          ],
+          "R": "1",
+          "C": "1/2",
+          "P": "0",
+          "T": "7/10"
+        },
+        {
+          "ids": [
+            "G01",
+            "G03",
+            "G07"
+          ],
+          "key": [
+            [
+              "upper",
+              "G01"
+            ],
+            [
+              "lower",
+              "G03"
+            ],
+            [
+              "outerwear",
+              "G07"
+            ]
+          ],
+          "R": "1/2",
+          "C": "2/3",
+          "P": "0",
+          "T": "13/30"
+        },
+        {
+          "ids": [
+            "G02",
+            "G04",
+            "G07"
+          ],
+          "key": [
+            [
+              "upper",
+              "G02"
+            ],
+            [
+              "lower",
+              "G04"
+            ],
+            [
+              "outerwear",
+              "G07"
+            ]
+          ],
+          "R": "1/2",
+          "C": "2/3",
+          "P": "0",
+          "T": "13/30"
+        },
+        {
+          "ids": [
+            "G02",
+            "G05",
+            "G07"
+          ],
+          "key": [
+            [
+              "upper",
+              "G02"
+            ],
+            [
+              "lower",
+              "G05"
+            ],
+            [
+              "outerwear",
+              "G07"
+            ]
+          ],
+          "R": "1/2",
+          "C": "2/3",
+          "P": "0",
+          "T": "13/30"
+        },
+        {
+          "ids": [
+            "G08",
+            "G03",
+            "G07"
+          ],
+          "key": [
+            [
+              "upper",
+              "G08"
+            ],
+            [
+              "lower",
+              "G03"
+            ],
+            [
+              "outerwear",
+              "G07"
+            ]
+          ],
+          "R": "1/2",
+          "C": "2/3",
+          "P": "0",
+          "T": "13/30"
+        },
+        {
+          "ids": [
+            "G01",
+            "G03"
+          ],
+          "key": [
+            [
+              "upper",
+              "G01"
+            ],
+            [
+              "lower",
+              "G03"
+            ]
+          ],
+          "R": "1/2",
+          "C": "1/2",
+          "P": "0",
+          "T": "2/5"
+        },
+        {
+          "ids": [
+            "G02",
+            "G04"
+          ],
+          "key": [
+            [
+              "upper",
+              "G02"
+            ],
+            [
+              "lower",
+              "G04"
+            ]
+          ],
+          "R": "1/2",
+          "C": "1/2",
+          "P": "0",
+          "T": "2/5"
+        },
+        {
+          "ids": [
+            "G02",
+            "G05"
+          ],
+          "key": [
+            [
+              "upper",
+              "G02"
+            ],
+            [
+              "lower",
+              "G05"
+            ]
+          ],
+          "R": "1/2",
+          "C": "1/2",
+          "P": "0",
+          "T": "2/5"
+        },
+        {
+          "ids": [
+            "G08",
+            "G03"
+          ],
+          "key": [
+            [
+              "upper",
+              "G08"
+            ],
+            [
+              "lower",
+              "G03"
+            ]
+          ],
+          "R": "1/2",
+          "C": "1/2",
+          "P": "0",
+          "T": "2/5"
+        },
+        {
+          "ids": [
+            "G01",
+            "G04"
+          ],
+          "key": [
+            [
+              "upper",
+              "G01"
+            ],
+            [
+              "lower",
+              "G04"
+            ]
+          ],
+          "R": "0",
+          "C": "1",
+          "P": "0",
+          "T": "1/5"
+        },
+        {
+          "ids": [
+            "G01",
+            "G04",
+            "G07"
+          ],
+          "key": [
+            [
+              "upper",
+              "G01"
+            ],
+            [
+              "lower",
+              "G04"
+            ],
+            [
+              "outerwear",
+              "G07"
+            ]
+          ],
+          "R": "0",
+          "C": "2/3",
+          "P": "0",
+          "T": "2/15"
+        },
+        {
+          "ids": [
+            "G01",
+            "G05"
+          ],
+          "key": [
+            [
+              "upper",
+              "G01"
+            ],
+            [
+              "lower",
+              "G05"
+            ]
+          ],
+          "R": "0",
+          "C": "1/2",
+          "P": "0",
+          "T": "1/10"
+        },
+        {
+          "ids": [
+            "G01",
+            "G05",
+            "G07"
+          ],
+          "key": [
+            [
+              "upper",
+              "G01"
+            ],
+            [
+              "lower",
+              "G05"
+            ],
+            [
+              "outerwear",
+              "G07"
+            ]
+          ],
+          "R": "0",
+          "C": "1/2",
+          "P": "0",
+          "T": "1/10"
+        },
+        {
+          "ids": [
+            "G08",
+            "G04"
+          ],
+          "key": [
+            [
+              "upper",
+              "G08"
+            ],
+            [
+              "lower",
+              "G04"
+            ]
+          ],
+          "R": "0",
+          "C": "1/2",
+          "P": "0",
+          "T": "1/10"
+        },
+        {
+          "ids": [
+            "G08",
+            "G04",
+            "G07"
+          ],
+          "key": [
+            [
+              "upper",
+              "G08"
+            ],
+            [
+              "lower",
+              "G04"
+            ],
+            [
+              "outerwear",
+              "G07"
+            ]
+          ],
+          "R": "0",
+          "C": "1/2",
+          "P": "0",
+          "T": "1/10"
+        },
+        {
+          "ids": [
+            "G08",
+            "G05"
+          ],
+          "key": [
+            [
+              "upper",
+              "G08"
+            ],
+            [
+              "lower",
+              "G05"
+            ]
+          ],
+          "R": "0",
+          "C": "1/2",
+          "P": "0",
+          "T": "1/10"
+        },
+        {
+          "ids": [
+            "G08",
+            "G05",
+            "G07"
+          ],
+          "key": [
+            [
+              "upper",
+              "G08"
+            ],
+            [
+              "lower",
+              "G05"
+            ],
+            [
+              "outerwear",
+              "G07"
+            ]
+          ],
+          "R": "0",
+          "C": "1/2",
+          "P": "0",
+          "T": "1/10"
+        }
+      ],
+      "smart casual|green": [
+        {
+          "ids": [
+            "G06",
+            "G07"
+          ],
+          "key": [
+            [
+              "one_piece",
+              "G06"
+            ],
+            [
+              "outerwear",
+              "G07"
+            ]
+          ],
+          "R": "1",
+          "C": "1",
+          "P": "0",
+          "T": "4/5"
+        },
+        {
+          "ids": [
+            "G02",
+            "G03"
+          ],
+          "key": [
+            [
+              "upper",
+              "G02"
+            ],
+            [
+              "lower",
+              "G03"
+            ]
+          ],
+          "R": "1",
+          "C": "1",
+          "P": "0",
+          "T": "4/5"
+        },
+        {
+          "ids": [
+            "G02",
+            "G03",
+            "G07"
+          ],
+          "key": [
+            [
+              "upper",
+              "G02"
+            ],
+            [
+              "lower",
+              "G03"
+            ],
+            [
+              "outerwear",
+              "G07"
+            ]
+          ],
+          "R": "1",
+          "C": "1",
+          "P": "0",
+          "T": "4/5"
+        },
+        {
+          "ids": [
+            "G06"
+          ],
+          "key": [
+            [
+              "one_piece",
+              "G06"
+            ]
+          ],
+          "R": "1",
+          "C": "1/2",
+          "P": "0",
+          "T": "7/10"
+        },
+        {
+          "ids": [
+            "G08",
+            "G03",
+            "G07"
+          ],
+          "key": [
+            [
+              "upper",
+              "G08"
+            ],
+            [
+              "lower",
+              "G03"
+            ],
+            [
+              "outerwear",
+              "G07"
+            ]
+          ],
+          "R": "1/2",
+          "C": "2/3",
+          "P": "1",
+          "T": "19/30"
+        },
+        {
+          "ids": [
+            "G08",
+            "G03"
+          ],
+          "key": [
+            [
+              "upper",
+              "G08"
+            ],
+            [
+              "lower",
+              "G03"
+            ]
+          ],
+          "R": "1/2",
+          "C": "1/2",
+          "P": "1",
+          "T": "3/5"
+        },
+        {
+          "ids": [
+            "G01",
+            "G03",
+            "G07"
+          ],
+          "key": [
+            [
+              "upper",
+              "G01"
+            ],
+            [
+              "lower",
+              "G03"
+            ],
+            [
+              "outerwear",
+              "G07"
+            ]
+          ],
+          "R": "1/2",
+          "C": "2/3",
+          "P": "0",
+          "T": "13/30"
+        },
+        {
+          "ids": [
+            "G02",
+            "G04",
+            "G07"
+          ],
+          "key": [
+            [
+              "upper",
+              "G02"
+            ],
+            [
+              "lower",
+              "G04"
+            ],
+            [
+              "outerwear",
+              "G07"
+            ]
+          ],
+          "R": "1/2",
+          "C": "2/3",
+          "P": "0",
+          "T": "13/30"
+        },
+        {
+          "ids": [
+            "G02",
+            "G05",
+            "G07"
+          ],
+          "key": [
+            [
+              "upper",
+              "G02"
+            ],
+            [
+              "lower",
+              "G05"
+            ],
+            [
+              "outerwear",
+              "G07"
+            ]
+          ],
+          "R": "1/2",
+          "C": "2/3",
+          "P": "0",
+          "T": "13/30"
+        },
+        {
+          "ids": [
+            "G01",
+            "G03"
+          ],
+          "key": [
+            [
+              "upper",
+              "G01"
+            ],
+            [
+              "lower",
+              "G03"
+            ]
+          ],
+          "R": "1/2",
+          "C": "1/2",
+          "P": "0",
+          "T": "2/5"
+        },
+        {
+          "ids": [
+            "G02",
+            "G04"
+          ],
+          "key": [
+            [
+              "upper",
+              "G02"
+            ],
+            [
+              "lower",
+              "G04"
+            ]
+          ],
+          "R": "1/2",
+          "C": "1/2",
+          "P": "0",
+          "T": "2/5"
+        },
+        {
+          "ids": [
+            "G02",
+            "G05"
+          ],
+          "key": [
+            [
+              "upper",
+              "G02"
+            ],
+            [
+              "lower",
+              "G05"
+            ]
+          ],
+          "R": "1/2",
+          "C": "1/2",
+          "P": "0",
+          "T": "2/5"
+        },
+        {
+          "ids": [
+            "G08",
+            "G04"
+          ],
+          "key": [
+            [
+              "upper",
+              "G08"
+            ],
+            [
+              "lower",
+              "G04"
+            ]
+          ],
+          "R": "0",
+          "C": "1/2",
+          "P": "1",
+          "T": "3/10"
+        },
+        {
+          "ids": [
+            "G08",
+            "G04",
+            "G07"
+          ],
+          "key": [
+            [
+              "upper",
+              "G08"
+            ],
+            [
+              "lower",
+              "G04"
+            ],
+            [
+              "outerwear",
+              "G07"
+            ]
+          ],
+          "R": "0",
+          "C": "1/2",
+          "P": "1",
+          "T": "3/10"
+        },
+        {
+          "ids": [
+            "G08",
+            "G05"
+          ],
+          "key": [
+            [
+              "upper",
+              "G08"
+            ],
+            [
+              "lower",
+              "G05"
+            ]
+          ],
+          "R": "0",
+          "C": "1/2",
+          "P": "1",
+          "T": "3/10"
+        },
+        {
+          "ids": [
+            "G08",
+            "G05",
+            "G07"
+          ],
+          "key": [
+            [
+              "upper",
+              "G08"
+            ],
+            [
+              "lower",
+              "G05"
+            ],
+            [
+              "outerwear",
+              "G07"
+            ]
+          ],
+          "R": "0",
+          "C": "1/2",
+          "P": "1",
+          "T": "3/10"
+        },
+        {
+          "ids": [
+            "G01",
+            "G04"
+          ],
+          "key": [
+            [
+              "upper",
+              "G01"
+            ],
+            [
+              "lower",
+              "G04"
+            ]
+          ],
+          "R": "0",
+          "C": "1",
+          "P": "0",
+          "T": "1/5"
+        },
+        {
+          "ids": [
+            "G01",
+            "G04",
+            "G07"
+          ],
+          "key": [
+            [
+              "upper",
+              "G01"
+            ],
+            [
+              "lower",
+              "G04"
+            ],
+            [
+              "outerwear",
+              "G07"
+            ]
+          ],
+          "R": "0",
+          "C": "2/3",
+          "P": "0",
+          "T": "2/15"
+        },
+        {
+          "ids": [
+            "G01",
+            "G05"
+          ],
+          "key": [
+            [
+              "upper",
+              "G01"
+            ],
+            [
+              "lower",
+              "G05"
+            ]
+          ],
+          "R": "0",
+          "C": "1/2",
+          "P": "0",
+          "T": "1/10"
+        },
+        {
+          "ids": [
+            "G01",
+            "G05",
+            "G07"
+          ],
+          "key": [
+            [
+              "upper",
+              "G01"
+            ],
+            [
+              "lower",
+              "G05"
+            ],
+            [
+              "outerwear",
+              "G07"
+            ]
+          ],
+          "R": "0",
+          "C": "1/2",
+          "P": "0",
+          "T": "1/10"
+        }
+      ]
+    },
+    "controls": [
+      {
+        "id": "C01",
+        "case": "campus Deny on G01; library versus cinema",
+        "expected": {
+          "library_pass": 14,
+          "library_winner": [
+            "G08",
+            "G04"
+          ],
+          "library_T": "7/10",
+          "cinema_pass": 20,
+          "cinema_winner": [
+            "G01",
+            "G04"
+          ],
+          "cinema_T": "4/5"
+        }
+      },
+      {
+        "id": "C02",
+        "case": "party Deny on G06; dinner versus birthday dinner",
+        "expected": {
+          "dinner_pass": 20,
+          "dinner_winner": [
+            "G06",
+            "G07"
+          ],
+          "birthday_dinner_pass": 18,
+          "birthday_dinner_winner": [
+            "G02",
+            "G03"
+          ],
+          "T": "4/5"
+        }
+      },
+      {
+        "id": "C03",
+        "case": "supported explicit casual dinner style",
+        "expected": {
+          "pass": 16,
+          "winner": [
+            "G01",
+            "G04"
+          ],
+          "T": "4/5"
+        }
+      },
+      {
+        "id": "C04",
+        "case": "change only material fit pattern secondary colour",
+        "expected": "All exact numerical rankings stay equal to original within each preference/goal; no physical utility is currently consumed"
+      },
+      {
+        "id": "C05",
+        "case": "positive short_sleeve_top preference with only dress and jacket",
+        "expected": {
+          "pass": 2,
+          "winner": [
+            "G06",
+            "G07"
+          ],
+          "P": "0",
+          "T": "4/5"
+        }
+      },
+      {
+        "id": "C06",
+        "case": "positive trousers preference on smart target",
+        "expected": {
+          "winner": [
+            "G02",
+            "G03"
+          ],
+          "P": "1",
+          "T": "1"
+        }
+      },
+      {
+        "id": "C07",
+        "case": "equivalent casual style preference duplicate mask",
+        "expected": {
+          "winner": [
+            "G01",
+            "G04"
+          ],
+          "P": "0",
+          "T": "4/5",
+          "state": "NotApplicable"
+        }
+      },
+      {
+        "id": "C08",
+        "case": "reverse input garment order",
+        "expected": "All numeric rankings and actual garment-key order remain equal"
+      },
+      {
+        "id": "C09",
+        "case": "missing optional jacket style",
+        "expected": {
+          "pass": 10,
+          "casual_winner": [
+            "G01",
+            "G04"
+          ],
+          "smart_winner": [
+            "G02",
+            "G03"
+          ],
+          "T": "4/5"
+        }
+      },
+      {
+        "id": "C10",
+        "case": "negative preference type is not supported",
+        "expected": "Direct normalizer reports unsupported_type; no hard avoid is inferred; public account validation rejects unsupported type by source inspection"
+      }
+    ],
+    "proposal": {
+      "status": "COUNTERFACTUAL DESIGN MECHANICS ONLY; NOT AN IMPLEMENTED APPLICATION FEATURE",
+      "exclude_dress": {
+        "smart_winner": [
+          "G02",
+          "G03"
+        ],
+        "pass": 18,
+        "T": "4/5"
+      },
+      "exclude_trousers": {
+        "casual_winner": [
+          "G01",
+          "G05"
+        ],
+        "pass": 8,
+        "T": "7/10"
+      },
+      "exclude_all_lowers": {
+        "smart_winner": [
+          "G06",
+          "G07"
+        ],
+        "pass": 2,
+        "T": "4/5"
+      },
+      "exclude_all_bases": {
+        "status": "InsufficientStructure"
+      },
+      "same_R_base_distinct_casual": [
+        [
+          "G01",
+          "G04"
+        ],
+        [
+          "G01",
+          "G05"
+        ],
+        [
+          "G08",
+          "G04"
+        ],
+        [
+          "G08",
+          "G05"
+        ]
+      ],
+      "same_R_base_distinct_smart": [
+        [
+          "G06",
+          "G07"
+        ],
+        [
+          "G02",
+          "G03"
+        ]
+      ],
+      "casual_totals": [
+        "4/5",
+        "7/10",
+        "7/10",
+        "7/10"
+      ],
+      "smart_totals": [
+        "4/5",
+        "4/5"
+      ],
+      "exact_numeric_tie_only_base_distinct_capacity": {
+        "casual": 1,
+        "smart casual": 2
+      }
+    }
+  }
+}

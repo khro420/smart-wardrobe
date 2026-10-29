@@ -25,6 +25,7 @@ function OutfitVisualisationContent() {
   }, [invalidSource, outfitId, recommendationId]);
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
+  const createLock = useRef(false);
   const [images, setImages] = useState<PersonImage[]>([]);
   const [preparation, setPreparation] = useState<VisualisationPreparation>();
   const [selectedId, setSelectedId] = useState("");
@@ -83,7 +84,8 @@ function OutfitVisualisationContent() {
   };
 
   const visualise = async () => {
-    if (!source || !preparation || !selectedId) return;
+    if (createLock.current || !source || !preparedForSource || !selectedId) return;
+    createLock.current = true;
     setCreating(true);
     setError("");
     try {
@@ -91,6 +93,7 @@ function OutfitVisualisationContent() {
       router.push(`/try-on/result?id=${visualisation.id}`);
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : "Could not start visualisation.");
+      createLock.current = false;
       setCreating(false);
     }
   };

@@ -1,0 +1,8 @@
+{
+  "version": "phase4a-1.0.0",
+  "default_activation": false,
+  "profiles": {
+    "compatibility_deferred": {"weights":["0.70","0.00","0.30"],"compatibility":"disabled"},
+    "three_component_experimental": {"weights":["0.50","0.30","0.20"],"compatibility":"shared_style_jaccard","reject_unpaired_candidates":true}
+  }
+}

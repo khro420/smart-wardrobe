@@ -1,8 +1,55 @@
 from typing import Literal
-from pydantic import BaseModel, Field, field_validator, model_validator
+from pydantic import BaseModel, Field, StrictBool, field_validator, model_validator, ConfigDict
+
+
+class ConstructionFeatures(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    collared_neckline: StrictBool | None
+    tailored_cut: StrictBool | None
+    structured_shape: StrictBool | None
+
+
+class AppearanceReview(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    withdraw: StrictBool = False
+    construction_features: ConstructionFeatures | None = None
+    condition_observation: Literal['clean_intact', 'needs_attention', 'unknown'] | None = None
+
+    @model_validator(mode='after')
+    def complete_action(self):
+        if self.withdraw:
+            if self.construction_features is not None or self.condition_observation is not None:
+                raise ValueError('Withdrawal cannot include new observations.')
+        elif self.construction_features is None or self.condition_observation is None:
+            raise ValueError('Review the construction facts and dated condition observation.')
+        return self
+
+
+class ContextualSuitabilityReview(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    revision: str = Field(pattern=r'^[0-9a-f]{64}$')
+    review_style: StrictBool | None = None
+    wedding_choice: Literal['unknown', 'allow', 'deny'] | None = None
+    appearance_review: AppearanceReview | None = None
+
+    @model_validator(mode='after')
+    def requires_action(self):
+        if self.appearance_review is not None and (self.review_style is not None or self.wedding_choice is not None):
+            raise ValueError('Save appearance observations separately from style or wedding actions.')
+        if self.review_style is None and self.wedding_choice is None and self.appearance_review is None:
+            raise ValueError('Choose a review or override action.')
+        return self
+
+
+class OwnerStyleConfirmation(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    contract: Literal['owner-style-confirmation-1.0.0']
+    expected_revision: str = Field(pattern=r'^[0-9a-f]{64}$')
+    style: str = Field(min_length=1, max_length=100)
 
 
 class ReviewItem(BaseModel):
+    style_confirmation: OwnerStyleConfirmation | None = None
     item_id: str
     decision: Literal["accepted", "rejected"]
     name: str | None = Field(default=None, max_length=100)
@@ -52,6 +99,7 @@ class ReviewRequest(BaseModel):
 
 
 class ConfirmRequest(BaseModel):
+    admission_mode: Literal['manual_review_v1', 'automatic_structural_v1'] = 'manual_review_v1'
     save_mode: Literal["garments", "outfit"]
     item_ids: list[str] = Field(min_length=1, max_length=100)
     outfit_name: str | None = Field(default=None, max_length=100)
@@ -64,10 +112,13 @@ class ConfirmRequest(BaseModel):
             self.outfit_name = self.outfit_name.strip()
         if self.save_mode == "outfit" and not self.outfit_name:
             raise ValueError("An outfit name is required.")
+        if self.admission_mode == 'automatic_structural_v1' and self.save_mode != 'garments':
+            raise ValueError('Automatic finalisation saves garments only.')
         return self
 
 
 class GarmentUpdate(BaseModel):
+    style_confirmation: OwnerStyleConfirmation | None = None
     name: str | None = Field(default=None, max_length=100)
     category: str | None = Field(default=None, max_length=50)
     primary_colour: str | None = Field(default=None, max_length=50)
@@ -175,3 +226,10 @@ class RecommendationSaveAsOutfit(BaseModel):
 class PreferenceUpsert(BaseModel):
     preference_value: dict[str, object] = Field(default_factory=dict)
     weight: float | None = Field(default=None, ge=0, le=1)
+
+    @field_validator("weight", mode="before")
+    @classmethod
+    def numeric_weight(cls, value):
+        if isinstance(value, bool):
+            raise ValueError("Weight must be a number from 0 to 1.")
+        return value

@@ -1,9 +1,9 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Response
 from pydantic import BaseModel, Field
 
 from app.application.account import account_service
 from app.domain.value_objects.requests import PreferenceUpsert
-from app.infrastructure.security import current_user_id
+from app.infrastructure.security import current_user_id, logout_bearer, VerifiedBearer
 
 router = APIRouter(prefix="/account", tags=["account"])
 
@@ -15,6 +15,7 @@ class ProfileUpdate(BaseModel):
 class RegisterRequest(BaseModel):
     email: str = Field(min_length=3, max_length=320)
     password: str = Field(min_length=12, max_length=256)
+    password_confirmation: str = Field(min_length=12, max_length=256)
     display_name: str = Field(min_length=1, max_length=100)
 
 
@@ -25,7 +26,7 @@ class LoginRequest(BaseModel):
 
 @router.post("/register", status_code=201)
 def register(body: RegisterRequest) -> dict:
-    return account_service.register(body.email, body.password, body.display_name)
+    return account_service.register(body.email, body.password, body.display_name, body.password_confirmation)
 
 
 @router.post("/login")
@@ -38,6 +39,12 @@ def profile(user_id: str = Depends(current_user_id)) -> dict:
     return account_service.get_profile(user_id)
 
 
+@router.post("/logout", status_code=204)
+def logout(claims: VerifiedBearer = Depends(logout_bearer)) -> Response:
+    account_service.logout(claims)
+    return Response(status_code=204)
+
+
 @router.patch("/profile")
 def update_profile(body: ProfileUpdate, user_id: str = Depends(current_user_id)) -> dict:
     return account_service.update_profile(user_id, body.display_name)
@@ -46,6 +53,11 @@ def update_profile(body: ProfileUpdate, user_id: str = Depends(current_user_id))
 @router.get("/preferences")
 def preferences(user_id: str = Depends(current_user_id)) -> list[dict]:
     return account_service.list_preferences(user_id)
+
+
+@router.get("/preference-options")
+def preference_options(user_id: str = Depends(current_user_id)) -> dict:
+    return account_service.preference_options()
 
 
 @router.put("/preferences/{preference_type}")

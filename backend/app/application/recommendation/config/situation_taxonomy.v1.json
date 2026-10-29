@@ -1,0 +1,161 @@
+{
+  "version": "situation-taxonomy-1.3.0",
+  "situations": [
+    {
+      "id": "ceremony.wedding",
+      "label": "Wedding",
+      "phrases": [
+        "wedding"
+      ],
+      "activity": "attending",
+      "venue": null,
+      "projection_occasion": "wedding"
+    },
+    {
+      "id": "professional.job_interview",
+      "label": "Job interview",
+      "phrases": [
+        "job interview",
+        "employment interview",
+        "interviewed for a job"
+      ],
+      "activity": "interview_participation",
+      "venue": null,
+      "projection_occasion": "professional.job_interview"
+    },
+    {
+      "id": "social.date",
+      "label": "Date",
+      "phrases": [
+        "date"
+      ],
+      "activity": "socialising",
+      "venue": null,
+      "projection_occasion": "date"
+    },
+    {
+      "id": "leisure.beach_visit",
+      "label": "Beach visit",
+      "phrases": [
+        "beach"
+      ],
+      "activity": null,
+      "venue": "beach",
+      "projection_occasion": "leisure.beach_visit"
+    },
+    {
+      "id": "academic.presentation",
+      "label": "University presentation",
+      "phrases": [
+        "university presentation"
+      ],
+      "activity": "presentation_related",
+      "venue": "university",
+      "projection_occasion": "academic.presentation"
+    },
+    {
+      "id": "ceremony.graduation",
+      "label": "Graduation",
+      "phrases": [
+        "graduation"
+      ],
+      "activity": "attending",
+      "venue": null,
+      "projection_occasion": "ceremony.graduation"
+    },
+    {
+      "id": "outdoor.hiking",
+      "label": "Hiking",
+      "phrases": [
+        "hiking"
+      ],
+      "activity": "hiking",
+      "venue": null,
+      "projection_occasion": "outdoor.hiking"
+    },
+    {
+      "id": "social.meal",
+      "label": "Dinner",
+      "phrases": [
+        "dinner"
+      ],
+      "activity": "dining",
+      "venue": null,
+      "projection_occasion": "dinner"
+    },
+    {
+      "id": "travel.journey",
+      "label": "Travel",
+      "phrases": [
+        "travelling",
+        "traveling",
+        "travel"
+      ],
+      "activity": "travelling",
+      "venue": null,
+      "projection_occasion": "travel.journey"
+    },
+    {
+      "id": "interview.unspecified",
+      "label": "Interview (domain unspecified)",
+      "phrases": [
+        "interview",
+        "interviewing"
+      ],
+      "activity": "interview_participation",
+      "venue": null,
+      "projection_occasion": "interview.unspecified"
+    },
+    {
+      "id": "presentation.unspecified",
+      "label": "Presentation (domain unspecified)",
+      "phrases": [
+        "presentation",
+        "presenting my project"
+      ],
+      "activity": "presentation_related",
+      "venue": null,
+      "projection_occasion": "presentation.unspecified"
+    },
+    {
+      "id": "everyday.academic_attendance",
+      "label": "Ordinary academic attendance",
+      "phrases": [
+        "campus",
+        "university",
+        "college",
+        "class",
+        "classes",
+        "lecture",
+        "lectures"
+      ],
+      "activity": "academic_attendance",
+      "venue": null,
+      "projection_occasion": "campus"
+    },
+    {
+      "id": "everyday.shopping",
+      "label": "Ordinary shopping",
+      "phrases": [
+        "shopping",
+        "shopping trip"
+      ],
+      "activity": "shopping",
+      "venue": null,
+      "projection_occasion": "shopping"
+    },
+    {
+      "id": "everyday.casual_outing",
+      "label": "Ordinary casual outing",
+      "phrases": [
+        "casual outing",
+        "going out casually",
+        "going out with friends",
+        "meeting friends"
+      ],
+      "activity": "casual_outing",
+      "venue": null,
+      "projection_occasion": "casual_outing"
+    }
+  ]
+}

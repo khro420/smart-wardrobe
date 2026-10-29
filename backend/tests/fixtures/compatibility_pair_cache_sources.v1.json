@@ -1,0 +1,5 @@
+{
+  "app/application/recommendation/cached_rule_based_compatibility_scorer.py": "4bb511bdf4e1d4d413ab3fee2dc17133e7799e3c969b067e119abf04af3e5b9e",
+  "app/application/recommendation/cached_rule_based_recommendation_scorer.py": "414240ad1a9ebc529592c1f7aedc8fd6fcfb543ff1982dc42df9e792099095f4",
+  "app/application/recommendation/compatibility_pair_cache.py": "a00ae847211040ad79c7baaebf0beb53dc97e606c1f8c71fc3ea3a0f893be3f5"
+}

@@ -1,0 +1,28 @@
+{
+  "version": "assistant-execution-transition-1.0.0",
+  "status": "pending_owner_approval",
+  "applied": false,
+  "purpose": "Review-only deployment plan; not loaded by the application",
+  "current_defaults": {
+    "SMART_WARDROBE_ASSISTANT_EXECUTION_ENGINE": "reference",
+    "SMART_WARDROBE_ASSISTANT_SCORING_PROFILE": "compatibility_deferred"
+  },
+  "proposed_defaults": {
+    "SMART_WARDROBE_ASSISTANT_EXECUTION_ENGINE": "compact_exhaustive",
+    "SMART_WARDROBE_ASSISTANT_SCORING_PROFILE": "compatibility_deferred"
+  },
+  "explicit_rollout_environment_after_approval": {
+    "SMART_WARDROBE_ASSISTANT_EXECUTION_ENGINE": "compact_exhaustive",
+    "SMART_WARDROBE_ASSISTANT_SCORING_PROFILE": "compatibility_deferred"
+  },
+  "explicit_rollback_environment": {
+    "SMART_WARDROBE_ASSISTANT_EXECUTION_ENGINE": "reference",
+    "SMART_WARDROBE_ASSISTANT_SCORING_PROFILE": "compatibility_deferred"
+  },
+  "restart_required": true,
+  "runtime_hot_reload": false,
+  "database_migration": false,
+  "preserve_assistant_feature_flag": true,
+  "preserve_submission_keys_and_historical_records": true,
+  "production_activation_requires_separate_approval": true
+}

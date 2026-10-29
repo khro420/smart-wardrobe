@@ -1,0 +1,783 @@
+{
+  "version": "phase4-proposed-everyday-acceptance-1.0.0",
+  "approved": true,
+  "method": "Review-authored expectations from EC01-EC10; not copied from parser output and not executed. Freeze/review these labels before a future patch.",
+  "fixtures": {
+    "R": "One owned, available, confirmed blue dress with valid current owner-reviewed casual singleton style; no occasion/formality declarations; absent unrelated appearance evidence.",
+    "R_smart": "R with valid reviewed smart casual instead.",
+    "U": "R with absent/unreviewed style evidence.",
+    "D": "R with exact occasion Deny.",
+    "A": "Complete owned available confirmed dress with clean exact occasion Allow, absent style review.",
+    "X": "R with exact occasion Allow and Deny.",
+    "M": "R with malformed authoritative occasion data and no identifiable Deny.",
+    "C": "R with current reviewed classic style.",
+    "R_blue": "R with known primary blue.",
+    "R_red": "R with known primary red and no blue in any member.",
+    "R_missing_appearance": "R with construction/condition entirely absent.",
+    "R_stale": "R whose style review no longer binds current category/value.",
+    "R_outer_unknown": "R plus otherwise eligible outerwear missing required style/occasion evidence; base-only dress remains valid.",
+    "empty": "No eligible snapshots (parameterise actual owner/status/confirmation exclusions).",
+    "only_upper": "One qualifying upper member, no lower/dress.",
+    "occasion_allow_formality_deny": "Complete dress with exact occasion Allow and requested formality Deny.",
+    "R_unrequested_formality_deny": "R with formality smart_casual Deny but no requested formality.",
+    "old_wedding": "Retained independent wedding labels/fixtures.",
+    "old_date": "Retained Date labels/fixtures.",
+    "old_dinner": "Retained Dinner labels/fixtures.",
+    "legacy_formality_allow": "Complete eligible dress with exact legacy casual formality Allow."
+  },
+  "scenarios": [
+    {
+      "id": "CA01",
+      "text": "I'm going to class.",
+      "fixture": "R",
+      "expected": "Selected",
+      "assertion": "Exact existing occasion target; no formality field inferred; recorded appearance convention.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "CA02",
+      "text": "I'm going to class.",
+      "fixture": "R_smart",
+      "expected": "Selected",
+      "assertion": "Reviewed smart casual also supplies unspecified-code appearance evidence.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "CA03",
+      "text": "I'm going to class.",
+      "fixture": "U",
+      "expected": "InsufficientEvidence",
+      "assertion": "Unreviewed AI style cannot supply a mandatory fact.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "CA04",
+      "text": "I'm going to class.",
+      "fixture": "D",
+      "expected": "NoMatchingCandidates",
+      "assertion": "Exact applicable Deny vetoes reviewed positives; no substitute outfit.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "CA05",
+      "text": "I'm going to class.",
+      "fixture": "A",
+      "expected": "Selected",
+      "assertion": "Clean exact occasion Allow is recorded as declaration, not inferred review.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "CA06",
+      "text": "I'm going to class.",
+      "fixture": "X",
+      "expected": "NoMatchingCandidates",
+      "assertion": "Identifiable Deny wins Allow+Deny.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "CA07",
+      "text": "I'm going to class.",
+      "fixture": "M",
+      "expected": "InsufficientEvidence",
+      "assertion": "Malformed authoritative evidence cannot be bypassed by inference.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "CA08",
+      "text": "I'm going to class.",
+      "fixture": "C",
+      "expected": "InsufficientEvidence",
+      "assertion": "Correct classic style is uncovered, not unsuitable or relabelled.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "CA09",
+      "text": "I'm going to class.",
+      "fixture": "R_missing_appearance",
+      "expected": "Selected",
+      "assertion": "No construction/condition observation is required by this binding.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "CA10",
+      "text": "I'm going to class. The dress code is casual.",
+      "fixture": "R",
+      "expected": "Selected",
+      "assertion": "Explicit casual uses matching reviewed style and separate mandatory code gate.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "CA11",
+      "text": "I'm going to class. The dress code is smart casual.",
+      "fixture": "R_smart",
+      "expected": "Selected",
+      "assertion": "Explicit smart casual uses matching reviewed style and separate code gate.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "CA12",
+      "text": "I'm going to class. The dress code is smart casual.",
+      "fixture": "R",
+      "expected": "InsufficientEvidence",
+      "assertion": "A casual review alone does not satisfy smart-casual requirements.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "CA13",
+      "text": "I'm going to class. The dress code is formal.",
+      "fixture": "A",
+      "expected": "PolicyUnavailable",
+      "assertion": "An Allow cannot enable unsupported formal capability.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "SH01",
+      "text": "I'm going shopping.",
+      "fixture": "R",
+      "expected": "Selected",
+      "assertion": "Exact existing occasion target; no formality field inferred; recorded appearance convention.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "SH02",
+      "text": "I'm going shopping.",
+      "fixture": "R_smart",
+      "expected": "Selected",
+      "assertion": "Reviewed smart casual also supplies unspecified-code appearance evidence.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "SH03",
+      "text": "I'm going shopping.",
+      "fixture": "U",
+      "expected": "InsufficientEvidence",
+      "assertion": "Unreviewed AI style cannot supply a mandatory fact.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "SH04",
+      "text": "I'm going shopping.",
+      "fixture": "D",
+      "expected": "NoMatchingCandidates",
+      "assertion": "Exact applicable Deny vetoes reviewed positives; no substitute outfit.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "SH05",
+      "text": "I'm going shopping.",
+      "fixture": "A",
+      "expected": "Selected",
+      "assertion": "Clean exact occasion Allow is recorded as declaration, not inferred review.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "SH06",
+      "text": "I'm going shopping.",
+      "fixture": "X",
+      "expected": "NoMatchingCandidates",
+      "assertion": "Identifiable Deny wins Allow+Deny.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "SH07",
+      "text": "I'm going shopping.",
+      "fixture": "M",
+      "expected": "InsufficientEvidence",
+      "assertion": "Malformed authoritative evidence cannot be bypassed by inference.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "SH08",
+      "text": "I'm going shopping.",
+      "fixture": "C",
+      "expected": "InsufficientEvidence",
+      "assertion": "Correct classic style is uncovered, not unsuitable or relabelled.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "SH09",
+      "text": "I'm going shopping.",
+      "fixture": "R_missing_appearance",
+      "expected": "Selected",
+      "assertion": "No construction/condition observation is required by this binding.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "SH10",
+      "text": "I'm going shopping. The dress code is casual.",
+      "fixture": "R",
+      "expected": "Selected",
+      "assertion": "Explicit casual uses matching reviewed style and separate mandatory code gate.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "SH11",
+      "text": "I'm going shopping. The dress code is smart casual.",
+      "fixture": "R_smart",
+      "expected": "Selected",
+      "assertion": "Explicit smart casual uses matching reviewed style and separate code gate.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "SH12",
+      "text": "I'm going shopping. The dress code is smart casual.",
+      "fixture": "R",
+      "expected": "InsufficientEvidence",
+      "assertion": "A casual review alone does not satisfy smart-casual requirements.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "SH13",
+      "text": "I'm going shopping. The dress code is formal.",
+      "fixture": "A",
+      "expected": "PolicyUnavailable",
+      "assertion": "An Allow cannot enable unsupported formal capability.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "CO01",
+      "text": "I'm going out with friends.",
+      "fixture": "R",
+      "expected": "Selected",
+      "assertion": "Exact existing occasion target; no formality field inferred; recorded appearance convention.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "CO02",
+      "text": "I'm going out with friends.",
+      "fixture": "R_smart",
+      "expected": "Selected",
+      "assertion": "Reviewed smart casual also supplies unspecified-code appearance evidence.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "CO03",
+      "text": "I'm going out with friends.",
+      "fixture": "U",
+      "expected": "InsufficientEvidence",
+      "assertion": "Unreviewed AI style cannot supply a mandatory fact.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "CO04",
+      "text": "I'm going out with friends.",
+      "fixture": "D",
+      "expected": "NoMatchingCandidates",
+      "assertion": "Exact applicable Deny vetoes reviewed positives; no substitute outfit.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "CO05",
+      "text": "I'm going out with friends.",
+      "fixture": "A",
+      "expected": "Selected",
+      "assertion": "Clean exact occasion Allow is recorded as declaration, not inferred review.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "CO06",
+      "text": "I'm going out with friends.",
+      "fixture": "X",
+      "expected": "NoMatchingCandidates",
+      "assertion": "Identifiable Deny wins Allow+Deny.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "CO07",
+      "text": "I'm going out with friends.",
+      "fixture": "M",
+      "expected": "InsufficientEvidence",
+      "assertion": "Malformed authoritative evidence cannot be bypassed by inference.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "CO08",
+      "text": "I'm going out with friends.",
+      "fixture": "C",
+      "expected": "InsufficientEvidence",
+      "assertion": "Correct classic style is uncovered, not unsuitable or relabelled.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "CO09",
+      "text": "I'm going out with friends.",
+      "fixture": "R_missing_appearance",
+      "expected": "Selected",
+      "assertion": "No construction/condition observation is required by this binding.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "CO10",
+      "text": "I'm going out with friends. The dress code is casual.",
+      "fixture": "R",
+      "expected": "Selected",
+      "assertion": "Explicit casual uses matching reviewed style and separate mandatory code gate.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "CO11",
+      "text": "I'm going out with friends. The dress code is smart casual.",
+      "fixture": "R_smart",
+      "expected": "Selected",
+      "assertion": "Explicit smart casual uses matching reviewed style and separate code gate.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "CO12",
+      "text": "I'm going out with friends. The dress code is smart casual.",
+      "fixture": "R",
+      "expected": "InsufficientEvidence",
+      "assertion": "A casual review alone does not satisfy smart-casual requirements.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "CO13",
+      "text": "I'm going out with friends. The dress code is formal.",
+      "fixture": "A",
+      "expected": "PolicyUnavailable",
+      "assertion": "An Allow cannot enable unsupported formal capability.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "N01",
+      "text": "I have university tomorrow.",
+      "fixture": "R",
+      "expected": "Selected",
+      "assertion": "Campus day; temporal literal retained; no forecast or future wardrobe claim.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "N02",
+      "text": "Suggest an outfit for class.",
+      "fixture": "R",
+      "expected": "Selected",
+      "assertion": "Same binding and Deny scope as natural class phrasing in the revised general profile.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "N03",
+      "text": "Suggest something blue for shopping.",
+      "fixture": "R_blue",
+      "expected": "Selected",
+      "assertion": "Hard global blue retains existing any-member semantics; no bonus for companions/time.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "N04",
+      "text": "Suggest something blue for shopping.",
+      "fixture": "R_red",
+      "expected": "NoMatchingCandidates",
+      "assertion": "Known absent required colour fails; do not relax it.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "N05",
+      "text": "I'm going shopping, prefer blue.",
+      "fixture": "R",
+      "expected": "PolicyUnavailable",
+      "assertion": "Soft request preference not promoted to hard constraint or persisted preference.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "N06",
+      "text": "I'm going to a fitness class.",
+      "fixture": "R",
+      "expected": "UnsupportedRequest",
+      "assertion": "Specialised activity is not deleted to obtain an academic outfit.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "N07",
+      "text": "I'm going to university for a chemistry lab.",
+      "fixture": "R",
+      "expected": "UnsupportedRequest",
+      "assertion": "Lab safety and equipment remain unsupported.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "N08",
+      "text": "I'm going to class and a wedding.",
+      "fixture": "R",
+      "expected": "UnsupportedRequest",
+      "assertion": "Multiple meaningful situations not shortened to one.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "N09",
+      "text": "I'm not going shopping.",
+      "fixture": "R",
+      "expected": "UnsupportedRequest",
+      "assertion": "Negation rejected before an outfit is selected.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "N10",
+      "text": "I'm going shopping or to class.",
+      "fixture": "R",
+      "expected": "UnsupportedRequest",
+      "assertion": "Alternative contexts remain unsupported.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "N11",
+      "text": "I'm going to class, the dress code is casual, the dress code is smart casual.",
+      "fixture": "R",
+      "expected": "UnsupportedRequest",
+      "assertion": "Conflicting explicit codes do not select the last code.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "N12",
+      "text": "I'm going out with friends in the rain.",
+      "fixture": "R",
+      "expected": "UnsupportedRequest",
+      "assertion": "No weather protection invented.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "N13",
+      "text": "Suggest an outfit with shoes for shopping.",
+      "fixture": "R",
+      "expected": "UnsupportedRequest",
+      "assertion": "No new equipment/category capability.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "N14",
+      "text": "Suggest a turquoise outfit for shopping.",
+      "fixture": "R",
+      "expected": "UnsupportedRequest",
+      "assertion": "No general colour expansion.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "N15",
+      "text": "I'm going shopping at an upscale restaurant.",
+      "fixture": "R",
+      "expected": "UnsupportedRequest",
+      "assertion": "Unknown specialised venue/modifier is not dropped.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "N16",
+      "text": "I'm going out with friends at a hotel.",
+      "fixture": "R",
+      "expected": "PolicyUnavailable",
+      "assertion": "Represented hotel venue is outside the proposed everyday binding.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "N17",
+      "text": "I'm going shopping.",
+      "fixture": "R_stale",
+      "expected": "InsufficientEvidence",
+      "assertion": "Value/category-bound style review must still be current.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "N18",
+      "text": "I'm going shopping.",
+      "fixture": "R_outer_unknown",
+      "expected": "Selected",
+      "assertion": "An otherwise eligible supported base-only outfit remains selectable; unknown outerwear is excluded.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "N19",
+      "text": "I'm going shopping.",
+      "fixture": "empty",
+      "expected": "NoEligibleGarments",
+      "assertion": "Strict owner/availability/confirmation applies before any outfit can be formed.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "N20",
+      "text": "I'm going shopping.",
+      "fixture": "only_upper",
+      "expected": "InsufficientStructure",
+      "assertion": "No invented lower garment or incomplete outfit.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "N21",
+      "text": "I'm going shopping, the dress code is casual.",
+      "fixture": "occasion_allow_formality_deny",
+      "expected": "NoMatchingCandidates",
+      "assertion": "Occasion Allow does not waive the separately required formality Deny.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "N22",
+      "text": "I'm going shopping.",
+      "fixture": "R_unrequested_formality_deny",
+      "expected": "Selected",
+      "assertion": "Unrequested formality is not manufactured; exact occasion evidence still required.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "N23",
+      "text": "I'm going to a wedding.",
+      "fixture": "old_wedding",
+      "expected": "Preserved",
+      "assertion": "Frozen W01-W05 outcomes, exact scores and provenance rendering preserved.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "N24",
+      "text": "I'm going on a date tonight.",
+      "fixture": "old_date",
+      "expected": "Preserved",
+      "assertion": "DT01-DT05 unchanged, including declared Deny and timing contract.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "N25",
+      "text": "I'm meeting friends for dinner.",
+      "fixture": "old_dinner",
+      "expected": "Preserved",
+      "assertion": "DN01-DN05 unchanged; no automatic family-dinner scope extension.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "N26",
+      "text": "I have a university presentation.",
+      "fixture": "R",
+      "expected": "PolicyUnavailable",
+      "assertion": "Ordinary campus aliases must not swallow the specialised presentation or invent a role.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "N27",
+      "text": "I have a job interview.",
+      "fixture": "R",
+      "expected": "PolicyUnavailable",
+      "assertion": "Existing required role/code remains missing.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "N28",
+      "text": "I'm attending a graduation as a guest.",
+      "fixture": "R",
+      "expected": "PolicyUnavailable",
+      "assertion": "Graduation stays recognised/inactive, with no inherited wedding rule.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "N29",
+      "text": "I'm going hiking.",
+      "fixture": "A",
+      "expected": "PolicyUnavailable",
+      "assertion": "Allow never enables specialised activity capability.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "N30",
+      "text": "I'm going to the beach.",
+      "fixture": "R",
+      "expected": "PolicyUnavailable",
+      "assertion": "No swimming/activity/weather assumptions.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "N31",
+      "text": "Suggest an outfit for travel.",
+      "fixture": "A",
+      "expected": "PolicyUnavailable",
+      "assertion": "General-profile travel remains inactive; old disabled/wedding-profile declared travel remains preserved.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "N32",
+      "text": "Suggest a casual outfit.",
+      "fixture": "legacy_formality_allow",
+      "expected": "Selected",
+      "assertion": "General no-situation formality path retains legacy evidence semantics.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "N33",
+      "text": "I want something smart casual.",
+      "fixture": "R",
+      "expected": "UnsupportedRequest",
+      "assertion": "Standalone want/style ambiguity is deferred; no quiet policy remapping in this batch.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    },
+    {
+      "id": "N34",
+      "text": "I'm having dinner with my family.",
+      "fixture": "R",
+      "expected": "UnsupportedRequest",
+      "assertion": "Family/having extension is a separately proposed usability increment, not this batch.",
+      "execution": "NOT RUN",
+      "approval": "PROPOSED"
+    }
+  ],
+  "invariants": [
+    {
+      "id": "I01",
+      "assertion": "All four structures: enumerate all eligible candidates and compare exact Fraction component/total scores, ties and winners against independent reference.",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "I02",
+      "assertion": "Foreign, archived, unavailable, unconfirmed and mismatched processing-owner rows never enter the ranking snapshot.",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "I03",
+      "assertion": "Review or availability changed between ranking and locked commit yields WardrobeChanged with zero partial writes.",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "I04",
+      "assertion": "Identical key/text replay returns original snapshots/provenance/scores after profile change and actual process restart; changed text conflicts.",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "I05",
+      "assertion": "Current legacy/wedding/general accepted labels remain frozen; versioned new labels record intentional everyday command-path transitions separately.",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "I06",
+      "assertion": "100 non-archived-entry quota, saved preferences, Homepage no-chat selection and durable copied-token logout remain unchanged.",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "I07",
+      "assertion": "At 100 current snapshots, evidence/compilation work is bounded outside candidate iteration; no DB/model/network calls in the hot loop.",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "I08",
+      "assertion": "Missing unrelated appearance observations cannot change an everyday result; requested-code or style review Unknown can.",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "I09",
+      "assertion": "Reject forged frame/bundle/condition proofs, unknown operators, over-depth/size configuration and missing registry references.",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "I10",
+      "assertion": "Adding temporal/companions metadata without changing mandatory facts adds no score term; changing saved preferences uses existing snapshot/P semantics only.",
+      "execution": "NOT RUN"
+    }
+  ],
+  "browser_acceptance": [
+    {
+      "id": "B01",
+      "assertion": "Real register/login on disposable DB; class/shopping/friends requests through ordinary production component and API proxy.",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "B02",
+      "assertion": "Review a truthful reusable style once; reuse across the three bindings without occasion grids; Cancel/failure preserve draft/storage.",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "B03",
+      "assertion": "Missing or uncovered review: correct field guidance, no prompt to relabel classic; explicit Deny retains controlled no-result.",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "B04",
+      "assertion": "Missing interview role/code, inactive graduation/hiking and unsupported modifiers show distinct explanations; no generic auto-resubmission.",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "B05",
+      "assertion": "History search/open/replay, Save as outfit and VIS source eligibility retain exact names/scores/proofs without real inference.",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "B06",
+      "assertion": "360/390/768/1280/1920 widths, valid 100-character name, Tab/Enter and browser-native 200% for added explanations.",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "B07",
+      "assertion": "Existing wedding/date/dinner/presentation/interview and durable logout smoke journeys remain correct; production build pins final sources.",
+      "execution": "NOT RUN"
+    },
+    {
+      "id": "B08",
+      "assertion": "No manual services/private accounts involved; actual browser product/version recorded, no bundled Chromium substitution for a product claim.",
+      "execution": "NOT RUN"
+    }
+  ],
+  "approval_record": "storage/verification/everyday_context_v1/ownership-approval.json",
+  "execution": "Recorded separately; approval is not a pass."
+}

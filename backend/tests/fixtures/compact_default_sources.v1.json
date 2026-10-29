@@ -1,0 +1,19 @@
+{
+  "default_profile": "compatibility_deferred",
+  "replacements": {
+    "app/application/recommendation/outfit_assistant_service.py": {
+      "after": "005b8acd14128f6d6945356cb1c8861ac29eb29743bb7ed544ad4726be06e615",
+      "before": "6ba022403938a2f1de14369095447d9b539480745c8402d812dfb44c46653d78"
+    },
+    "app/application/recommendation/assistant_execution_selection.py": {
+      "after": "83f5ecd644e9bf8205bfb66881088f7839b2b2a436843fa182a7ba2993ace99d",
+      "before": "c59e56603e880f22de471326e6f2d28f1f03b3d98ab2a1e6bfc6b46b64b11612"
+    },
+    "app/infrastructure/workflow_runtime.py": {
+      "after": "fc2bf4e01e5f8824efed512f5bbec940d92ee61f83d87ca3d989a58e91216614",
+      "before": "80744287b115da2af2d732eef73c8dbd4684226ca448541d6040d997e9b121d4"
+    }
+  },
+  "version": "compact-default-activation-1.0.0",
+  "default_engine": "compact_exhaustive"
+}

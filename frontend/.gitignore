@@ -12,9 +12,15 @@
 
 # testing
 /coverage
+/test-results/
+/playwright-report/
 
 # next.js
 /.next/
+/.next-browser-verification/
+/.next-phase5e-build/
+/.next-phase5f-build/
+/.next-phase5f-final/
 /out/
 
 # production
@@ -39,3 +45,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+# Isolated integration verification artifacts (retain locally, never source).
+.next-integration-verification/
+.next-integration-browser-final/
+.next-integration-run/

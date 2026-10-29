@@ -1,0 +1,17 @@
+{
+ "version":"1.0.0",
+ "examples":[
+  ["Suggest an outfit", "Supported"],
+  ["Suggest a casual outfit with a vintage look.", "Supported"],
+  ["Suggest something with navy and white.", "Supported"],
+  ["Recommend something in a minimalist style.", "Supported"],
+  ["What should I wear for college?", "Supported"],
+  ["Suggest an outfit with a top.", "Supported"],
+  ["Suggest an outfit with a blue top.", "UnsupportedRequest"],
+  ["Suggest an outfit with a top that is black.", "UnsupportedRequest"],
+  ["Suggest an outfit avoiding green.", "UnsupportedRequest"],
+  ["What should I wear for skiing?", "UnsupportedRequest"],
+  ["Recommend an outfit with oversized fit.", "UnsupportedRequest"],
+  ["Recommend an outfit instead of a dress.", "UnsupportedRequest"]
+ ]
+}

@@ -1,0 +1,22 @@
+{
+  "version": "approved-policy-scenarios-1.0.0",
+  "kind": "synthetic executable policy expectations; not independent garment suitability labels",
+  "cases": [
+    {"id":"campus-allow","tags":["rec:v1:occasion:campus:allow"],"request":{"occasion":"campus"},"expected":"MatchingCandidates"},
+    {"id":"work-allow","tags":["rec:v1:occasion:work:allow"],"request":{"occasion":"work"},"expected":"MatchingCandidates"},
+    {"id":"outing-allow","tags":["rec:v1:occasion:casual_outing:allow"],"request":{"occasion":"casual_outing"},"expected":"MatchingCandidates"},
+    {"id":"shopping-allow","tags":["rec:v1:occasion:shopping:allow"],"request":{"occasion":"shopping"},"expected":"MatchingCandidates"},
+    {"id":"dinner-deny","tags":["rec:v1:occasion:dinner:deny"],"request":{"occasion":"dinner"},"expected":"NoMatchingCandidates"},
+    {"id":"party-conflict","tags":["rec:v1:occasion:party:allow","rec:v1:occasion:party:deny"],"request":{"occasion":"party"},"expected":"InsufficientEvidence"},
+    {"id":"date-missing","tags":null,"request":{"occasion":"date"},"expected":"InsufficientEvidence"},
+    {"id":"travel-empty","tags":[],"request":{"occasion":"travel"},"expected":"InsufficientEvidence"},
+    {"id":"casual-allow","tags":["rec:v1:formality:casual:allow"],"request":{"formality":"casual"},"expected":"MatchingCandidates"},
+    {"id":"smart-casual-allow","tags":["rec:v1:formality:smart_casual:allow"],"request":{"formality":"smart_casual"},"expected":"MatchingCandidates"},
+    {"id":"no-hierarchy","tags":["rec:v1:formality:smart_casual:allow"],"request":{"formality":"casual"},"expected":"InsufficientEvidence"},
+    {"id":"exercise-unavailable","tags":["sporty"],"request":{"occasion":"exercise"},"expected":"PolicyUnavailable"},
+    {"id":"formal-unavailable","tags":["formal"],"request":{"formality":"formal"},"expected":"PolicyUnavailable"},
+    {"id":"ordinary-tags","tags":["campus","casual","office"],"request":{"occasion":"campus"},"expected":"InsufficientEvidence"},
+    {"id":"unknown-version","tags":["rec:v2:occasion:campus:allow"],"request":{"occasion":"campus"},"expected":"InsufficientEvidence"},
+    {"id":"failure-precedence","tags":["rec:v1:occasion:work:deny"],"request":{"occasion":"work","formality":"casual"},"expected":"NoMatchingCandidates"}
+  ]
+}

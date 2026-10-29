@@ -1,0 +1,8 @@
+{
+  "version": "phase4ba-1.0.0",
+  "default_activation": false,
+  "compatibility": "reviewed_holistic",
+  "profiles": {
+    "holistic_experimental": ["0.50","0.30","0.20"]
+  }
+}

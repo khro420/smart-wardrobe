@@ -1,0 +1,248 @@
+{
+  "cases": [
+    {
+      "preferences": [
+        {
+          "values": [
+            "red"
+          ],
+          "type": "colours"
+        },
+        {
+          "values": [
+            {
+              "value": "top",
+              "kind": "group"
+            }
+          ],
+          "type": "garment_categories"
+        }
+      ],
+      "garments": [
+        [
+          "t",
+          "vest",
+          "blue",
+          [
+            "vintage"
+          ]
+        ],
+        [
+          "b1",
+          "trousers",
+          "white",
+          [
+            "vintage"
+          ]
+        ],
+        [
+          "b2",
+          "trousers",
+          "red",
+          [
+            "classic"
+          ]
+        ],
+        [
+          "d",
+          "vest_dress",
+          "blue",
+          [
+            "vintage"
+          ]
+        ],
+        [
+          "o",
+          "long_sleeve_outwear",
+          "red",
+          [
+            "classic"
+          ]
+        ]
+      ],
+      "text": "Suggest an outfit with vintage style",
+      "style": "vintage",
+      "id": "mixed"
+    },
+    {
+      "garments": [
+        [
+          "t",
+          "vest",
+          "blue",
+          [
+            "classic"
+          ]
+        ],
+        [
+          "b",
+          "trousers",
+          "red",
+          [
+            "sporty"
+          ]
+        ]
+      ],
+      "text": "Suggest an outfit",
+      "id": "known_zero"
+    },
+    {
+      "garments": [
+        [
+          "t",
+          "vest",
+          "blue",
+          [
+            "vintage"
+          ]
+        ],
+        [
+          "b",
+          "trousers",
+          "white",
+          null
+        ]
+      ],
+      "text": "Suggest an outfit",
+      "id": "partial"
+    },
+    {
+      "garments": [
+        [
+          "t",
+          "vest",
+          null,
+          null
+        ],
+        [
+          "b",
+          "trousers",
+          null,
+          null
+        ]
+      ],
+      "text": "Suggest an outfit",
+      "id": "unknown"
+    },
+    {
+      "garments": [
+        [
+          "t",
+          "vest",
+          "blue",
+          []
+        ],
+        [
+          "b",
+          "trousers",
+          "white",
+          []
+        ]
+      ],
+      "text": "Suggest an outfit",
+      "id": "empty"
+    },
+    {
+      "preferences": [
+        {
+          "values": [
+            "classic"
+          ],
+          "type": "styles"
+        }
+      ],
+      "garments": [
+        [
+          "t",
+          "vest",
+          "blue",
+          [
+            "vintage",
+            "classic"
+          ]
+        ],
+        [
+          "b",
+          "trousers",
+          "blue",
+          [
+            "vintage"
+          ]
+        ]
+      ],
+      "text": "Suggest an outfit with vintage style",
+      "style": "vintage",
+      "id": "multi_style"
+    },
+    {
+      "garments": [
+        [
+          "d",
+          "vest_dress",
+          "blue",
+          [
+            "vintage"
+          ]
+        ]
+      ],
+      "text": "Suggest an outfit",
+      "id": "dress"
+    },
+    {
+      "outerwear": true,
+      "garments": [
+        [
+          "d",
+          "vest_dress",
+          "blue",
+          [
+            "vintage"
+          ]
+        ],
+        [
+          "o",
+          "long_sleeve_outwear",
+          "white",
+          [
+            "vintage"
+          ]
+        ]
+      ],
+      "text": "Suggest an outfit including outerwear",
+      "id": "layered_dress"
+    },
+    {
+      "outerwear": true,
+      "garments": [
+        [
+          "t",
+          "vest",
+          "blue",
+          [
+            "vintage"
+          ]
+        ],
+        [
+          "b",
+          "trousers",
+          "white",
+          [
+            "vintage"
+          ]
+        ],
+        [
+          "o",
+          "long_sleeve_outwear",
+          "red",
+          [
+            "classic"
+          ]
+        ]
+      ],
+      "text": "Suggest an outfit including outerwear",
+      "id": "trio"
+    }
+  ],
+  "version": "scoring-acceptance-1.0.0",
+  "methodology": "Fixed synthetic descriptors for policy arithmetic and ranking verification. No independent fashion ratings. Labels and oracle formulas are test expectations, not production predictions. Frozen before execution."
+}

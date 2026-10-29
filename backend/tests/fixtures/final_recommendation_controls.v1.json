@@ -1,0 +1,112 @@
+{
+  "version": "final-recommendation-controls-1.0.0",
+  "reason": "Retain S07/S15 mismatches without relabelling; use unchanged original P25 supported text to isolate downstream style evidence. Frozen before control execution.",
+  "cases": [
+    {
+      "id": "S31",
+      "group": "supplementary",
+      "scenario": "no_style",
+      "text": "Recommend a classic look.",
+      "intent": "Supported",
+      "fields": {
+        "style": "classic"
+      },
+      "expected_outcome": "NoMatchingCandidates",
+      "garments": [
+        {
+          "name": "top",
+          "category": "vest",
+          "colour": "blue",
+          "styles": [
+            "vintage"
+          ],
+          "tags": [
+            "rec:v1:occasion:campus:allow",
+            "rec:v1:occasion:work:allow",
+            "rec:v1:occasion:casual_outing:allow",
+            "rec:v1:occasion:shopping:allow",
+            "rec:v1:occasion:dinner:allow",
+            "rec:v1:occasion:party:allow",
+            "rec:v1:occasion:date:allow",
+            "rec:v1:occasion:travel:allow",
+            "rec:v1:formality:casual:allow",
+            "rec:v1:formality:smart_casual:allow"
+          ],
+          "status": "available",
+          "review_status": "confirmed",
+          "owner": "self",
+          "job_owner": "self",
+          "linked": true,
+          "media": true
+        },
+        {
+          "name": "bottom",
+          "category": "trousers",
+          "colour": "white",
+          "styles": [
+            "vintage"
+          ],
+          "tags": [
+            "rec:v1:occasion:campus:allow",
+            "rec:v1:occasion:work:allow",
+            "rec:v1:occasion:casual_outing:allow",
+            "rec:v1:occasion:shopping:allow",
+            "rec:v1:occasion:dinner:allow",
+            "rec:v1:occasion:party:allow",
+            "rec:v1:occasion:date:allow",
+            "rec:v1:occasion:travel:allow",
+            "rec:v1:formality:casual:allow",
+            "rec:v1:formality:smart_casual:allow"
+          ],
+          "status": "available",
+          "review_status": "confirmed",
+          "owner": "self",
+          "job_owner": "self",
+          "linked": true,
+          "media": true
+        }
+      ],
+      "preferences": [],
+      "control_for": "S07"
+    },
+    {
+      "id": "S32",
+      "group": "supplementary",
+      "scenario": "missing_style",
+      "text": "Recommend a classic look.",
+      "intent": "Supported",
+      "fields": {
+        "style": "classic"
+      },
+      "expected_outcome": "InsufficientEvidence",
+      "garments": [
+        {
+          "name": "unknown_style",
+          "category": "vest_dress",
+          "colour": "blue",
+          "styles": null,
+          "tags": [
+            "rec:v1:occasion:campus:allow",
+            "rec:v1:occasion:work:allow",
+            "rec:v1:occasion:casual_outing:allow",
+            "rec:v1:occasion:shopping:allow",
+            "rec:v1:occasion:dinner:allow",
+            "rec:v1:occasion:party:allow",
+            "rec:v1:occasion:date:allow",
+            "rec:v1:occasion:travel:allow",
+            "rec:v1:formality:casual:allow",
+            "rec:v1:formality:smart_casual:allow"
+          ],
+          "status": "available",
+          "review_status": "confirmed",
+          "owner": "self",
+          "job_owner": "self",
+          "linked": true,
+          "media": true
+        }
+      ],
+      "preferences": [],
+      "control_for": "S15"
+    }
+  ]
+}

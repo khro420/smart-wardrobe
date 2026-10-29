@@ -1,0 +1,5 @@
+{
+  "version": "1.0.0",
+  "role_map": {"top":"upper", "bottom":"lower", "dress":"one_piece", "outerwear":"outerwear"},
+  "compositions": [["upper","lower"],["upper","lower","outerwear"],["one_piece"],["one_piece","outerwear"]]
+}

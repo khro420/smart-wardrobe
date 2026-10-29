@@ -1,0 +1,1303 @@
+{
+  "version": "context-registry-2.0.0",
+  "schema_version": "general-context-1.1.0",
+  "default_activation": false,
+  "evidence_contracts": [
+    "current_owner_reviewed_singleton_style_v1",
+    "owner_appearance_observations_v1",
+    "saved_singleton_style_provisional_v1"
+  ],
+  "bindings": [
+    {
+      "id": "wedding_guest_equivalent_v1",
+      "situation": "ceremony.wedding",
+      "declaration_target": "wedding",
+      "roles": [
+        "unspecified",
+        "guest"
+      ],
+      "assumed_role": "guest",
+      "required_context": [
+        "situation"
+      ],
+      "evidence_contract": "current_owner_reviewed_singleton_style_v1",
+      "predicates": [
+        {
+          "id": "W01",
+          "dress_code": null,
+          "operator": "reviewed_style_equals",
+          "value": "smart casual"
+        },
+        {
+          "id": "W02",
+          "dress_code": "smart_casual",
+          "operator": "reviewed_style_equals",
+          "value": "smart casual"
+        },
+        {
+          "id": "W03",
+          "dress_code": "casual",
+          "operator": "reviewed_style_equals",
+          "value": "casual"
+        }
+      ],
+      "unknown_rule": "W04",
+      "unavailable_rule": "W05"
+    },
+    {
+      "id": "date_appearance_v1",
+      "situation": "social.date",
+      "declaration_target": "date",
+      "roles": [
+        "unspecified"
+      ],
+      "assumed_role": null,
+      "required_context": [
+        "situation"
+      ],
+      "evidence_contract": "saved_singleton_style_provisional_v1",
+      "predicates": [
+        {
+          "id": "DT2-01",
+          "dress_code": null,
+          "operator": "saved_style_in",
+          "values": [
+            "casual",
+            "smart casual"
+          ]
+        },
+        {
+          "id": "DT2-02",
+          "dress_code": "casual",
+          "operator": "saved_style_in",
+          "values": [
+            "casual"
+          ]
+        },
+        {
+          "id": "DT2-03",
+          "dress_code": "smart_casual",
+          "operator": "saved_style_in",
+          "values": [
+            "smart casual"
+          ]
+        }
+      ],
+      "unknown_rule": "DT2-04",
+      "unavailable_rule": "DT2-05",
+      "policy_version": "date-appearance-2.1.0",
+      "declaration_source": "legacy_exact_declarations_v1",
+      "allowed_venues": [
+        "restaurant",
+        "cafe"
+      ],
+      "allowed_companions": [],
+      "unspecified_note": "No dress code was supplied. This provisional date appearance suggestion uses saved casual/smart-casual styles, which may be unreviewed. No dress code was inferred.",
+      "limits_note": "This is a provisional appearance suggestion using saved labels, which may be unreviewed. It does not establish dress-code compliance, lab, PE, uniform, specialised activity, weather protection, comfort, shoes or accessories."
+    },
+    {
+      "id": "dinner_appearance_v1",
+      "situation": "social.meal",
+      "declaration_target": "dinner",
+      "roles": [
+        "unspecified"
+      ],
+      "assumed_role": null,
+      "required_context": [
+        "situation"
+      ],
+      "evidence_contract": "saved_singleton_style_provisional_v1",
+      "predicates": [
+        {
+          "id": "DN2-01",
+          "dress_code": null,
+          "operator": "saved_style_in",
+          "values": [
+            "casual",
+            "smart casual"
+          ]
+        },
+        {
+          "id": "DN2-02",
+          "dress_code": "casual",
+          "operator": "saved_style_in",
+          "values": [
+            "casual"
+          ]
+        },
+        {
+          "id": "DN2-03",
+          "dress_code": "smart_casual",
+          "operator": "saved_style_in",
+          "values": [
+            "smart casual"
+          ]
+        }
+      ],
+      "unknown_rule": "DN2-04",
+      "unavailable_rule": "DN2-05",
+      "policy_version": "dinner-appearance-2.1.0",
+      "declaration_source": "legacy_exact_declarations_v1",
+      "allowed_venues": [
+        "restaurant"
+      ],
+      "allowed_companions": [
+        "friends",
+        "family"
+      ],
+      "unspecified_note": "No dress code was supplied. This provisional dinner appearance suggestion uses saved casual/smart-casual styles, which may be unreviewed. No dress code was inferred.",
+      "limits_note": "This is a provisional appearance suggestion using saved labels, which may be unreviewed. It does not establish dress-code compliance, lab, PE, uniform, specialised activity, weather protection, comfort, shoes or accessories."
+    },
+    {
+      "assumed_role": null,
+      "required_context": [
+        "situation",
+        "role"
+      ],
+      "declaration_source": "parent_negative_only_v1",
+      "allowed_companions": [],
+      "unspecified_note": null,
+      "limits_note": "This is a provisional appearance suggestion, not proof of dress-code compliance, professional suitability, current physical condition, wearer fit, shoes or accessories.",
+      "id": "job_interview_appearance_v1",
+      "situation": "professional.job_interview",
+      "declaration_target": "professional.job_interview",
+      "roles": [
+        "candidate",
+        "interviewer"
+      ],
+      "evidence_contract": "owner_appearance_observations_v1",
+      "predicates": [
+        {
+          "id": "IP01",
+          "role": "candidate",
+          "dress_code": "smart_casual",
+          "expressions_by_member_role": {
+            "upper": {
+              "operator": "all",
+              "children": [
+                {
+                  "operator": "reviewed_style_in",
+                  "values": [
+                    "smart casual"
+                  ]
+                },
+                {
+                  "operator": "reviewed_observation_equals",
+                  "field": "collared_neckline",
+                  "value": true
+                },
+                {
+                  "operator": "reviewed_observation_equals",
+                  "field": "condition_observation",
+                  "value": "clean_intact"
+                }
+              ]
+            },
+            "lower": {
+              "operator": "all",
+              "children": [
+                {
+                  "operator": "reviewed_style_in",
+                  "values": [
+                    "smart casual"
+                  ]
+                },
+                {
+                  "operator": "reviewed_observation_equals",
+                  "field": "tailored_cut",
+                  "value": true
+                },
+                {
+                  "operator": "reviewed_observation_equals",
+                  "field": "condition_observation",
+                  "value": "clean_intact"
+                }
+              ]
+            },
+            "one_piece": {
+              "operator": "all",
+              "children": [
+                {
+                  "operator": "reviewed_style_in",
+                  "values": [
+                    "smart casual"
+                  ]
+                },
+                {
+                  "operator": "reviewed_observation_equals",
+                  "field": "structured_shape",
+                  "value": true
+                },
+                {
+                  "operator": "reviewed_observation_equals",
+                  "field": "condition_observation",
+                  "value": "clean_intact"
+                }
+              ]
+            },
+            "outerwear": {
+              "operator": "all",
+              "children": [
+                {
+                  "operator": "reviewed_style_in",
+                  "values": [
+                    "smart casual"
+                  ]
+                },
+                {
+                  "operator": "any",
+                  "children": [
+                    {
+                      "operator": "reviewed_observation_equals",
+                      "field": "structured_shape",
+                      "value": true
+                    },
+                    {
+                      "operator": "reviewed_observation_equals",
+                      "field": "tailored_cut",
+                      "value": true
+                    }
+                  ]
+                },
+                {
+                  "operator": "reviewed_observation_equals",
+                  "field": "condition_observation",
+                  "value": "clean_intact"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "IP01",
+          "role": "interviewer",
+          "dress_code": "smart_casual",
+          "expressions_by_member_role": {
+            "upper": {
+              "operator": "all",
+              "children": [
+                {
+                  "operator": "reviewed_style_in",
+                  "values": [
+                    "smart casual"
+                  ]
+                },
+                {
+                  "operator": "reviewed_observation_equals",
+                  "field": "collared_neckline",
+                  "value": true
+                },
+                {
+                  "operator": "reviewed_observation_equals",
+                  "field": "condition_observation",
+                  "value": "clean_intact"
+                }
+              ]
+            },
+            "lower": {
+              "operator": "all",
+              "children": [
+                {
+                  "operator": "reviewed_style_in",
+                  "values": [
+                    "smart casual"
+                  ]
+                },
+                {
+                  "operator": "reviewed_observation_equals",
+                  "field": "tailored_cut",
+                  "value": true
+                },
+                {
+                  "operator": "reviewed_observation_equals",
+                  "field": "condition_observation",
+                  "value": "clean_intact"
+                }
+              ]
+            },
+            "one_piece": {
+              "operator": "all",
+              "children": [
+                {
+                  "operator": "reviewed_style_in",
+                  "values": [
+                    "smart casual"
+                  ]
+                },
+                {
+                  "operator": "reviewed_observation_equals",
+                  "field": "structured_shape",
+                  "value": true
+                },
+                {
+                  "operator": "reviewed_observation_equals",
+                  "field": "condition_observation",
+                  "value": "clean_intact"
+                }
+              ]
+            },
+            "outerwear": {
+              "operator": "all",
+              "children": [
+                {
+                  "operator": "reviewed_style_in",
+                  "values": [
+                    "smart casual"
+                  ]
+                },
+                {
+                  "operator": "any",
+                  "children": [
+                    {
+                      "operator": "reviewed_observation_equals",
+                      "field": "structured_shape",
+                      "value": true
+                    },
+                    {
+                      "operator": "reviewed_observation_equals",
+                      "field": "tailored_cut",
+                      "value": true
+                    }
+                  ]
+                },
+                {
+                  "operator": "reviewed_observation_equals",
+                  "field": "condition_observation",
+                  "value": "clean_intact"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "unknown_rule": "IP05",
+      "unavailable_rule": "IP04",
+      "policy_version": "job-interview-appearance-1.0.0",
+      "allowed_venues": [
+        "company",
+        "office"
+      ],
+      "parent_negative": "work",
+      "appearance_required": true,
+      "role_notes": {}
+    },
+    {
+      "assumed_role": null,
+      "required_context": [
+        "situation",
+        "role"
+      ],
+      "declaration_source": "parent_negative_only_v1",
+      "allowed_companions": [],
+      "unspecified_note": null,
+      "limits_note": "This is a provisional appearance suggestion, not proof of dress-code compliance, professional suitability, current physical condition, wearer fit, shoes or accessories.",
+      "id": "university_presentation_appearance_v1",
+      "situation": "academic.presentation",
+      "declaration_target": "academic.presentation",
+      "roles": [
+        "presenter",
+        "attendee"
+      ],
+      "evidence_contract": "current_owner_reviewed_singleton_style_v1",
+      "predicates": [
+        {
+          "id": "AP01",
+          "role": "presenter",
+          "dress_code": null,
+          "expressions_by_member_role": {
+            "upper": {
+              "operator": "reviewed_style_in",
+              "values": [
+                "smart casual"
+              ]
+            },
+            "lower": {
+              "operator": "reviewed_style_in",
+              "values": [
+                "smart casual"
+              ]
+            },
+            "one_piece": {
+              "operator": "reviewed_style_in",
+              "values": [
+                "smart casual"
+              ]
+            },
+            "outerwear": {
+              "operator": "reviewed_style_in",
+              "values": [
+                "smart casual"
+              ]
+            }
+          }
+        },
+        {
+          "id": "AP03",
+          "role": "presenter",
+          "dress_code": "casual",
+          "expressions_by_member_role": {
+            "upper": {
+              "operator": "reviewed_style_in",
+              "values": [
+                "casual"
+              ]
+            },
+            "lower": {
+              "operator": "reviewed_style_in",
+              "values": [
+                "casual"
+              ]
+            },
+            "one_piece": {
+              "operator": "reviewed_style_in",
+              "values": [
+                "casual"
+              ]
+            },
+            "outerwear": {
+              "operator": "reviewed_style_in",
+              "values": [
+                "casual"
+              ]
+            }
+          }
+        },
+        {
+          "id": "AP04",
+          "role": "presenter",
+          "dress_code": "smart_casual",
+          "expressions_by_member_role": {
+            "upper": {
+              "operator": "reviewed_style_in",
+              "values": [
+                "smart casual"
+              ]
+            },
+            "lower": {
+              "operator": "reviewed_style_in",
+              "values": [
+                "smart casual"
+              ]
+            },
+            "one_piece": {
+              "operator": "reviewed_style_in",
+              "values": [
+                "smart casual"
+              ]
+            },
+            "outerwear": {
+              "operator": "reviewed_style_in",
+              "values": [
+                "smart casual"
+              ]
+            }
+          }
+        },
+        {
+          "id": "AP02",
+          "role": "attendee",
+          "dress_code": null,
+          "expressions_by_member_role": {
+            "upper": {
+              "operator": "reviewed_style_in",
+              "values": [
+                "casual",
+                "smart casual"
+              ]
+            },
+            "lower": {
+              "operator": "reviewed_style_in",
+              "values": [
+                "casual",
+                "smart casual"
+              ]
+            },
+            "one_piece": {
+              "operator": "reviewed_style_in",
+              "values": [
+                "casual",
+                "smart casual"
+              ]
+            },
+            "outerwear": {
+              "operator": "reviewed_style_in",
+              "values": [
+                "casual",
+                "smart casual"
+              ]
+            }
+          }
+        },
+        {
+          "id": "AP03",
+          "role": "attendee",
+          "dress_code": "casual",
+          "expressions_by_member_role": {
+            "upper": {
+              "operator": "reviewed_style_in",
+              "values": [
+                "casual"
+              ]
+            },
+            "lower": {
+              "operator": "reviewed_style_in",
+              "values": [
+                "casual"
+              ]
+            },
+            "one_piece": {
+              "operator": "reviewed_style_in",
+              "values": [
+                "casual"
+              ]
+            },
+            "outerwear": {
+              "operator": "reviewed_style_in",
+              "values": [
+                "casual"
+              ]
+            }
+          }
+        },
+        {
+          "id": "AP04",
+          "role": "attendee",
+          "dress_code": "smart_casual",
+          "expressions_by_member_role": {
+            "upper": {
+              "operator": "reviewed_style_in",
+              "values": [
+                "smart casual"
+              ]
+            },
+            "lower": {
+              "operator": "reviewed_style_in",
+              "values": [
+                "smart casual"
+              ]
+            },
+            "one_piece": {
+              "operator": "reviewed_style_in",
+              "values": [
+                "smart casual"
+              ]
+            },
+            "outerwear": {
+              "operator": "reviewed_style_in",
+              "values": [
+                "smart casual"
+              ]
+            }
+          }
+        }
+      ],
+      "unknown_rule": "AP06",
+      "unavailable_rule": "AP05",
+      "policy_version": "university-presentation-appearance-1.0.0",
+      "allowed_venues": [
+        "university"
+      ],
+      "parent_negative": "campus",
+      "appearance_required": false,
+      "role_notes": {
+        "presenter": "No dress code was supplied. This provisional university-presenter suggestion uses reviewed smart-casual appearance; it does not establish a course requirement or infer a dress code.",
+        "attendee": "No dress code was supplied. This provisional university-attendee suggestion uses reviewed casual/smart-casual appearance; it does not establish a course requirement or infer a dress code."
+      }
+    },
+    {
+      "id": "campus_day_appearance_v1",
+      "situation": "everyday.academic_attendance",
+      "declaration_target": "campus",
+      "roles": [
+        "unspecified"
+      ],
+      "assumed_role": null,
+      "required_context": [
+        "situation"
+      ],
+      "evidence_contract": "saved_singleton_style_provisional_v1",
+      "predicates": [
+        {
+          "id": "CA2-01",
+          "dress_code": null,
+          "operator": "saved_style_in",
+          "values": [
+            "casual",
+            "smart casual"
+          ]
+        },
+        {
+          "id": "CA2-02",
+          "dress_code": "casual",
+          "operator": "saved_style_in",
+          "values": [
+            "casual"
+          ]
+        },
+        {
+          "id": "CA2-03",
+          "dress_code": "smart_casual",
+          "operator": "saved_style_in",
+          "values": [
+            "smart casual"
+          ]
+        }
+      ],
+      "unknown_rule": "CA2-04",
+      "unavailable_rule": "CA2-05",
+      "policy_version": "campus-appearance-2.0.0",
+      "declaration_source": "legacy_exact_declarations_v1",
+      "allowed_venues": [
+        "university",
+        "campus"
+      ],
+      "allowed_companions": [],
+      "unspecified_note": "No dress code was supplied. This provisional ordinary academic attendance appearance suggestion uses saved casual/smart-casual styles, which may be unreviewed. No dress code was inferred.",
+      "limits_note": "This is a provisional appearance suggestion using saved labels, which may be unreviewed. It does not establish dress-code compliance, lab, PE, uniform, specialised activity, weather protection, comfort, shoes or accessories."
+    },
+    {
+      "id": "shopping_appearance_v1",
+      "situation": "everyday.shopping",
+      "declaration_target": "shopping",
+      "roles": [
+        "unspecified"
+      ],
+      "assumed_role": null,
+      "required_context": [
+        "situation"
+      ],
+      "evidence_contract": "saved_singleton_style_provisional_v1",
+      "predicates": [
+        {
+          "id": "SH2-01",
+          "dress_code": null,
+          "operator": "saved_style_in",
+          "values": [
+            "casual",
+            "smart casual"
+          ]
+        },
+        {
+          "id": "SH2-02",
+          "dress_code": "casual",
+          "operator": "saved_style_in",
+          "values": [
+            "casual"
+          ]
+        },
+        {
+          "id": "SH2-03",
+          "dress_code": "smart_casual",
+          "operator": "saved_style_in",
+          "values": [
+            "smart casual"
+          ]
+        }
+      ],
+      "unknown_rule": "SH2-04",
+      "unavailable_rule": "SH2-05",
+      "policy_version": "shopping-appearance-2.0.0",
+      "declaration_source": "legacy_exact_declarations_v1",
+      "allowed_venues": [],
+      "allowed_companions": [],
+      "unspecified_note": "No dress code was supplied. This provisional ordinary shopping appearance suggestion uses saved casual/smart-casual styles, which may be unreviewed. No dress code was inferred.",
+      "limits_note": "This is a provisional appearance suggestion using saved labels, which may be unreviewed. It does not establish dress-code compliance, lab, PE, uniform, specialised activity, weather protection, comfort, shoes or accessories."
+    },
+    {
+      "id": "casual_outing_appearance_v1",
+      "situation": "everyday.casual_outing",
+      "declaration_target": "casual_outing",
+      "roles": [
+        "unspecified"
+      ],
+      "assumed_role": null,
+      "required_context": [
+        "situation"
+      ],
+      "evidence_contract": "saved_singleton_style_provisional_v1",
+      "predicates": [
+        {
+          "id": "CO2-01",
+          "dress_code": null,
+          "operator": "saved_style_in",
+          "values": [
+            "casual",
+            "smart casual"
+          ]
+        },
+        {
+          "id": "CO2-02",
+          "dress_code": "casual",
+          "operator": "saved_style_in",
+          "values": [
+            "casual"
+          ]
+        },
+        {
+          "id": "CO2-03",
+          "dress_code": "smart_casual",
+          "operator": "saved_style_in",
+          "values": [
+            "smart casual"
+          ]
+        }
+      ],
+      "unknown_rule": "CO2-04",
+      "unavailable_rule": "CO2-05",
+      "policy_version": "casual_outing-appearance-2.0.0",
+      "declaration_source": "legacy_exact_declarations_v1",
+      "allowed_venues": [],
+      "allowed_companions": [
+        "friends"
+      ],
+      "unspecified_note": "No dress code was supplied. This provisional an ordinary casual outing appearance suggestion uses saved casual/smart-casual styles, which may be unreviewed. No dress code was inferred.",
+      "limits_note": "This is a provisional appearance suggestion using saved labels, which may be unreviewed. It does not establish dress-code compliance, lab, PE, uniform, specialised activity, weather protection, comfort, shoes or accessories."
+    },
+    {
+      "id": "library_study_appearance_v1",
+      "situation": "academic.library_study",
+      "declaration_target": "academic.library_study",
+      "roles": [
+        "unspecified"
+      ],
+      "assumed_role": null,
+      "required_context": [
+        "situation"
+      ],
+      "evidence_contract": "saved_singleton_style_provisional_v1",
+      "predicates": [
+        {
+          "id": "LI0-1",
+          "dress_code": null,
+          "operator": "saved_style_in",
+          "values": [
+            "casual",
+            "smart casual"
+          ]
+        },
+        {
+          "id": "LI0-2",
+          "dress_code": "casual",
+          "operator": "saved_style_in",
+          "values": [
+            "casual"
+          ]
+        },
+        {
+          "id": "LI0-3",
+          "dress_code": "smart_casual",
+          "operator": "saved_style_in",
+          "values": [
+            "smart casual"
+          ]
+        }
+      ],
+      "unknown_rule": "LI0-U",
+      "unavailable_rule": "LI0-X",
+      "policy_version": "ordinary-saved-style-appearance-1.0.0",
+      "declaration_source": "ordinary_parent_negative_v1",
+      "parent_negative": "campus",
+      "allowed_venues": [
+        "library",
+        "university",
+        "campus"
+      ],
+      "allowed_companions": [
+        "friends",
+        "classmates"
+      ],
+      "unspecified_note": "No dress code was supplied. Ordinary appearance inference uses saved casual/smart-casual labels, which may be unreviewed.",
+      "limits_note": "Provisional appearance only; no code compliance, physical fit, comfort, weather protection, safety, footwear or independent fashion accuracy is established."
+    },
+    {
+      "id": "group_study_appearance_v1",
+      "situation": "academic.group_study",
+      "declaration_target": "academic.group_study",
+      "roles": [
+        "unspecified"
+      ],
+      "assumed_role": null,
+      "required_context": [
+        "situation"
+      ],
+      "evidence_contract": "saved_singleton_style_provisional_v1",
+      "predicates": [
+        {
+          "id": "GR1-1",
+          "dress_code": null,
+          "operator": "saved_style_in",
+          "values": [
+            "casual",
+            "smart casual"
+          ]
+        },
+        {
+          "id": "GR1-2",
+          "dress_code": "casual",
+          "operator": "saved_style_in",
+          "values": [
+            "casual"
+          ]
+        },
+        {
+          "id": "GR1-3",
+          "dress_code": "smart_casual",
+          "operator": "saved_style_in",
+          "values": [
+            "smart casual"
+          ]
+        }
+      ],
+      "unknown_rule": "GR1-U",
+      "unavailable_rule": "GR1-X",
+      "policy_version": "ordinary-saved-style-appearance-1.0.0",
+      "declaration_source": "ordinary_parent_negative_v1",
+      "parent_negative": "campus",
+      "allowed_venues": [
+        "university",
+        "campus",
+        "library"
+      ],
+      "allowed_companions": [
+        "friends",
+        "classmates"
+      ],
+      "unspecified_note": "No dress code was supplied. Ordinary appearance inference uses saved casual/smart-casual labels, which may be unreviewed.",
+      "limits_note": "Provisional appearance only; no code compliance, physical fit, comfort, weather protection, safety, footwear or independent fashion accuracy is established."
+    },
+    {
+      "id": "office_day_appearance_v1",
+      "situation": "professional.office_day",
+      "declaration_target": "professional.office_day",
+      "roles": [
+        "unspecified"
+      ],
+      "assumed_role": null,
+      "required_context": [
+        "situation"
+      ],
+      "evidence_contract": "saved_singleton_style_provisional_v1",
+      "predicates": [
+        {
+          "id": "OF2-1",
+          "dress_code": null,
+          "operator": "saved_style_in",
+          "values": [
+            "casual",
+            "smart casual"
+          ]
+        },
+        {
+          "id": "OF2-2",
+          "dress_code": "casual",
+          "operator": "saved_style_in",
+          "values": [
+            "casual"
+          ]
+        },
+        {
+          "id": "OF2-3",
+          "dress_code": "smart_casual",
+          "operator": "saved_style_in",
+          "values": [
+            "smart casual"
+          ]
+        }
+      ],
+      "unknown_rule": "OF2-U",
+      "unavailable_rule": "OF2-X",
+      "policy_version": "ordinary-saved-style-appearance-1.0.0",
+      "declaration_source": "ordinary_parent_negative_v1",
+      "parent_negative": "work",
+      "allowed_venues": [
+        "office",
+        "company"
+      ],
+      "allowed_companions": [
+        "colleagues"
+      ],
+      "unspecified_note": "No dress code was supplied. Ordinary appearance inference uses saved casual/smart-casual labels, which may be unreviewed.",
+      "limits_note": "Provisional appearance only; no code compliance, physical fit, comfort, weather protection, safety, footwear or independent fashion accuracy is established."
+    },
+    {
+      "id": "workplace_meeting_appearance_v1",
+      "situation": "professional.workplace_meeting",
+      "declaration_target": "professional.workplace_meeting",
+      "roles": [
+        "unspecified"
+      ],
+      "assumed_role": null,
+      "required_context": [
+        "situation"
+      ],
+      "evidence_contract": "saved_singleton_style_provisional_v1",
+      "predicates": [
+        {
+          "id": "WO3-1",
+          "dress_code": null,
+          "operator": "saved_style_in",
+          "values": [
+            "casual",
+            "smart casual"
+          ]
+        },
+        {
+          "id": "WO3-2",
+          "dress_code": "casual",
+          "operator": "saved_style_in",
+          "values": [
+            "casual"
+          ]
+        },
+        {
+          "id": "WO3-3",
+          "dress_code": "smart_casual",
+          "operator": "saved_style_in",
+          "values": [
+            "smart casual"
+          ]
+        }
+      ],
+      "unknown_rule": "WO3-U",
+      "unavailable_rule": "WO3-X",
+      "policy_version": "ordinary-saved-style-appearance-1.0.0",
+      "declaration_source": "ordinary_parent_negative_v1",
+      "parent_negative": "work",
+      "allowed_venues": [
+        "office",
+        "company"
+      ],
+      "allowed_companions": [
+        "colleagues"
+      ],
+      "unspecified_note": "No dress code was supplied. Ordinary appearance inference uses saved casual/smart-casual labels, which may be unreviewed.",
+      "limits_note": "Provisional appearance only; no code compliance, physical fit, comfort, weather protection, safety, footwear or independent fashion accuracy is established."
+    },
+    {
+      "id": "birthday_gathering_appearance_v1",
+      "situation": "social.birthday_gathering",
+      "declaration_target": "social.birthday_gathering",
+      "roles": [
+        "unspecified"
+      ],
+      "assumed_role": null,
+      "required_context": [
+        "situation"
+      ],
+      "evidence_contract": "saved_singleton_style_provisional_v1",
+      "predicates": [
+        {
+          "id": "BI4-1",
+          "dress_code": null,
+          "operator": "saved_style_in",
+          "values": [
+            "casual",
+            "smart casual"
+          ]
+        },
+        {
+          "id": "BI4-2",
+          "dress_code": "casual",
+          "operator": "saved_style_in",
+          "values": [
+            "casual"
+          ]
+        },
+        {
+          "id": "BI4-3",
+          "dress_code": "smart_casual",
+          "operator": "saved_style_in",
+          "values": [
+            "smart casual"
+          ]
+        }
+      ],
+      "unknown_rule": "BI4-U",
+      "unavailable_rule": "BI4-X",
+      "policy_version": "ordinary-saved-style-appearance-1.0.0",
+      "declaration_source": "ordinary_parent_negative_v1",
+      "parent_negative": "party",
+      "allowed_venues": [
+        "friend_home",
+        "restaurant"
+      ],
+      "allowed_companions": [
+        "friends",
+        "family"
+      ],
+      "unspecified_note": "No dress code was supplied. Ordinary appearance inference uses saved casual/smart-casual labels, which may be unreviewed.",
+      "limits_note": "Provisional appearance only; no code compliance, physical fit, comfort, weather protection, safety, footwear or independent fashion accuracy is established."
+    },
+    {
+      "id": "house_gathering_appearance_v1",
+      "situation": "social.house_gathering",
+      "declaration_target": "social.house_gathering",
+      "roles": [
+        "unspecified"
+      ],
+      "assumed_role": null,
+      "required_context": [
+        "situation"
+      ],
+      "evidence_contract": "saved_singleton_style_provisional_v1",
+      "predicates": [
+        {
+          "id": "HO5-1",
+          "dress_code": null,
+          "operator": "saved_style_in",
+          "values": [
+            "casual",
+            "smart casual"
+          ]
+        },
+        {
+          "id": "HO5-2",
+          "dress_code": "casual",
+          "operator": "saved_style_in",
+          "values": [
+            "casual"
+          ]
+        },
+        {
+          "id": "HO5-3",
+          "dress_code": "smart_casual",
+          "operator": "saved_style_in",
+          "values": [
+            "smart casual"
+          ]
+        }
+      ],
+      "unknown_rule": "HO5-U",
+      "unavailable_rule": "HO5-X",
+      "policy_version": "ordinary-saved-style-appearance-1.0.0",
+      "declaration_source": "ordinary_parent_negative_v1",
+      "parent_negative": "casual_outing",
+      "allowed_venues": [
+        "friend_home"
+      ],
+      "allowed_companions": [
+        "friends"
+      ],
+      "unspecified_note": "No dress code was supplied. Ordinary appearance inference uses saved casual/smart-casual labels, which may be unreviewed.",
+      "limits_note": "Provisional appearance only; no code compliance, physical fit, comfort, weather protection, safety, footwear or independent fashion accuracy is established."
+    },
+    {
+      "id": "cinema_outing_appearance_v1",
+      "situation": "leisure.cinema_outing",
+      "declaration_target": "leisure.cinema_outing",
+      "roles": [
+        "unspecified"
+      ],
+      "assumed_role": null,
+      "required_context": [
+        "situation"
+      ],
+      "evidence_contract": "saved_singleton_style_provisional_v1",
+      "predicates": [
+        {
+          "id": "CI6-1",
+          "dress_code": null,
+          "operator": "saved_style_in",
+          "values": [
+            "casual",
+            "smart casual"
+          ]
+        },
+        {
+          "id": "CI6-2",
+          "dress_code": "casual",
+          "operator": "saved_style_in",
+          "values": [
+            "casual"
+          ]
+        },
+        {
+          "id": "CI6-3",
+          "dress_code": "smart_casual",
+          "operator": "saved_style_in",
+          "values": [
+            "smart casual"
+          ]
+        }
+      ],
+      "unknown_rule": "CI6-U",
+      "unavailable_rule": "CI6-X",
+      "policy_version": "ordinary-saved-style-appearance-1.0.0",
+      "declaration_source": "ordinary_parent_negative_v1",
+      "parent_negative": "casual_outing",
+      "allowed_venues": [
+        "cinema"
+      ],
+      "allowed_companions": [
+        "friends",
+        "family",
+        "someone"
+      ],
+      "unspecified_note": "No dress code was supplied. Ordinary appearance inference uses saved casual/smart-casual labels, which may be unreviewed.",
+      "limits_note": "Provisional appearance only; no code compliance, physical fit, comfort, weather protection, safety, footwear or independent fashion accuracy is established."
+    },
+    {
+      "id": "cafe_meetup_appearance_v1",
+      "situation": "social.cafe_meetup",
+      "declaration_target": "social.cafe_meetup",
+      "roles": [
+        "unspecified"
+      ],
+      "assumed_role": null,
+      "required_context": [
+        "situation"
+      ],
+      "evidence_contract": "saved_singleton_style_provisional_v1",
+      "predicates": [
+        {
+          "id": "CA7-1",
+          "dress_code": null,
+          "operator": "saved_style_in",
+          "values": [
+            "casual",
+            "smart casual"
+          ]
+        },
+        {
+          "id": "CA7-2",
+          "dress_code": "casual",
+          "operator": "saved_style_in",
+          "values": [
+            "casual"
+          ]
+        },
+        {
+          "id": "CA7-3",
+          "dress_code": "smart_casual",
+          "operator": "saved_style_in",
+          "values": [
+            "smart casual"
+          ]
+        }
+      ],
+      "unknown_rule": "CA7-U",
+      "unavailable_rule": "CA7-X",
+      "policy_version": "ordinary-saved-style-appearance-1.0.0",
+      "declaration_source": "ordinary_parent_negative_v1",
+      "parent_negative": "casual_outing",
+      "allowed_venues": [
+        "cafe"
+      ],
+      "allowed_companions": [
+        "friends",
+        "family",
+        "someone"
+      ],
+      "unspecified_note": "No dress code was supplied. Ordinary appearance inference uses saved casual/smart-casual labels, which may be unreviewed.",
+      "limits_note": "Provisional appearance only; no code compliance, physical fit, comfort, weather protection, safety, footwear or independent fashion accuracy is established."
+    },
+    {
+      "id": "city_sightseeing_appearance_v1",
+      "situation": "leisure.city_sightseeing",
+      "declaration_target": "leisure.city_sightseeing",
+      "roles": [
+        "unspecified"
+      ],
+      "assumed_role": null,
+      "required_context": [
+        "situation"
+      ],
+      "evidence_contract": "saved_singleton_style_provisional_v1",
+      "predicates": [
+        {
+          "id": "CI8-1",
+          "dress_code": null,
+          "operator": "saved_style_in",
+          "values": [
+            "casual",
+            "smart casual"
+          ]
+        },
+        {
+          "id": "CI8-2",
+          "dress_code": "casual",
+          "operator": "saved_style_in",
+          "values": [
+            "casual"
+          ]
+        },
+        {
+          "id": "CI8-3",
+          "dress_code": "smart_casual",
+          "operator": "saved_style_in",
+          "values": [
+            "smart casual"
+          ]
+        }
+      ],
+      "unknown_rule": "CI8-U",
+      "unavailable_rule": "CI8-X",
+      "policy_version": "ordinary-saved-style-appearance-1.0.0",
+      "declaration_source": "ordinary_parent_negative_v1",
+      "parent_negative": "travel",
+      "allowed_venues": [
+        "city"
+      ],
+      "allowed_companions": [
+        "friends",
+        "family",
+        "someone"
+      ],
+      "unspecified_note": "No dress code was supplied. Ordinary appearance inference uses saved casual/smart-casual labels, which may be unreviewed.",
+      "limits_note": "Provisional appearance only; no code compliance, physical fit, comfort, weather protection, safety, footwear or independent fashion accuracy is established."
+    },
+    {
+      "id": "ordinary_transit_appearance_v1",
+      "situation": "travel.journey",
+      "declaration_target": "travel.journey",
+      "roles": [
+        "unspecified"
+      ],
+      "assumed_role": null,
+      "required_context": [
+        "situation"
+      ],
+      "evidence_contract": "saved_singleton_style_provisional_v1",
+      "predicates": [
+        {
+          "id": "OR9-1",
+          "dress_code": null,
+          "operator": "saved_style_in",
+          "values": [
+            "casual",
+            "smart casual"
+          ]
+        },
+        {
+          "id": "OR9-2",
+          "dress_code": "casual",
+          "operator": "saved_style_in",
+          "values": [
+            "casual"
+          ]
+        },
+        {
+          "id": "OR9-3",
+          "dress_code": "smart_casual",
+          "operator": "saved_style_in",
+          "values": [
+            "smart casual"
+          ]
+        }
+      ],
+      "unknown_rule": "OR9-U",
+      "unavailable_rule": "OR9-X",
+      "policy_version": "ordinary-saved-style-appearance-1.0.0",
+      "declaration_source": "ordinary_parent_negative_v1",
+      "parent_negative": "travel",
+      "allowed_venues": [],
+      "allowed_companions": [
+        "friends",
+        "family",
+        "someone"
+      ],
+      "unspecified_note": "No dress code was supplied. Ordinary appearance inference uses saved casual/smart-casual labels, which may be unreviewed.",
+      "limits_note": "Provisional appearance only; no code compliance, physical fit, comfort, weather protection, safety, footwear or independent fashion accuracy is established."
+    }
+  ]
+}

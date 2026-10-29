@@ -1,0 +1,55 @@
+{
+  "methodology": "Additional fixed synthetic competition fixture, frozen before its first execution. Supplements the unchanged initial nine cases; no labels tuned from scorer output or human ratings claimed.",
+  "case": {
+    "text": "Suggest an outfit with vintage style",
+    "style": "vintage",
+    "id": "competing_missing",
+    "garments": [
+      [
+        "t",
+        "vest",
+        "blue",
+        [
+          "vintage"
+        ]
+      ],
+      [
+        "b_known",
+        "trousers",
+        "red",
+        [
+          "classic"
+        ]
+      ],
+      [
+        "b_missing",
+        "trousers",
+        null,
+        null
+      ],
+      [
+        "b_empty",
+        "trousers",
+        "white",
+        []
+      ],
+      [
+        "d",
+        "vest_dress",
+        "blue",
+        [
+          "vintage"
+        ]
+      ],
+      [
+        "o",
+        "long_sleeve_outwear",
+        "white",
+        [
+          "vintage"
+        ]
+      ]
+    ]
+  },
+  "version": "scoring-evidence-competition-1.0.0"
+}

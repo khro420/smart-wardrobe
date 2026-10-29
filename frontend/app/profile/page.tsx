@@ -1,70 +1,94 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
-import { ShieldCheck, User } from "lucide-react";
-
 import Layout from "@/components/Layout";
-import { getPreferences, getProfile, savePreference, type Profile, updateProfile } from "@/lib/api";
+import { getPreferences, getPreferenceOptions, getProfile, savePreference, updateProfile, type Profile, type PreferenceOptions, type UserPreference } from "@/lib/api";
+
+type Kind = keyof PreferenceOptions;
+type Draft = { values: string[]; weight: number };
+const LABELS: Record<Kind, string> = { colours: "Colours", styles: "Styles", garment_categories: "Garment categories", formality: "Formality" };
+const KINDS = Object.keys(LABELS) as Kind[];
+const emptyDraft = (): Draft => ({ values: [], weight: 1 });
+function storedDraft(kind: Kind, rows: UserPreference[]): Draft {
+  const row = rows.find((item) => item.preference_type === kind);
+  const raw = row?.preference_value.values;
+  const values = Array.isArray(raw) ? raw.flatMap((value) => {
+    if (typeof value === "string") return [value];
+    if (kind === "garment_categories" && value && typeof value === "object" && "kind" in value && "value" in value) return [`${value.kind}:${value.value}`];
+    return [];
+  }) : [];
+  return { values, weight: row?.weight ?? 1 };
+}
+
+function PreferenceEditor({ kind, options, stored, onSaved }: { kind: Kind; options: string[]; stored: Draft; onSaved: (next: Draft) => void }) {
+  const [draft, setDraft] = useState<Draft>(stored);
+  const [busy, setBusy] = useState(false);
+  const [message, setMessage] = useState("");
+  const [failed, setFailed] = useState(false);
+  const save = async (event: FormEvent) => {
+    event.preventDefault(); setBusy(true); setMessage("");
+    try {
+      const values = kind === "garment_categories" ? draft.values.map((value) => { const [kind, category] = value.split(":"); return { kind, value: category }; }) : draft.values;
+      await savePreference(kind, { values }, draft.weight);
+      onSaved({ values: [...draft.values], weight: draft.weight });
+      setFailed(false); setMessage(draft.values.length ? "Preference saved for future recommendations." : "Preference cleared.");
+    } catch (error) {
+      setFailed(true); setMessage(error instanceof Error ? error.message : "Could not save preference. Your edits are retained; try again.");
+    } finally { setBusy(false); }
+  };
+  return <form onSubmit={save} aria-label={`${LABELS[kind]} preferences`} aria-busy={busy} className="space-y-4 border-2 border-black bg-white p-6">
+    <fieldset disabled={busy}><legend className="text-xl font-black">{LABELS[kind]}</legend>
+      <div className="mt-3 grid gap-2 sm:grid-cols-2">{options.map((value) => <label key={value} className="flex min-h-10 items-center gap-2 text-sm"><input type="checkbox" checked={draft.values.includes(value)} onChange={(event) => setDraft({ ...draft, values: event.target.checked ? [...draft.values, value] : draft.values.filter((item) => item !== value) })} />{value.replace(":", ": ").replaceAll("_", " ")}</label>)}</div>
+      {draft.values.some((value) => !options.includes(value)) && <p className="mt-2 text-sm">This stored preference includes values outside the supported choices. Existing records remain stored until you save supported choices.</p>}
+      <label className="mt-4 block text-sm font-bold">{LABELS[kind]} importance<input type="number" required min={0} max={1} step="0.01" value={draft.weight} onChange={(event) => setDraft({ ...draft, weight: event.target.valueAsNumber })} className="ml-3 w-24 border-2 border-black p-2" /></label>
+    </fieldset>
+    <p className="text-xs text-zinc-600">Importance ranges from 0 (ignored) to 1. Clear every selection and save to remove this preference. Preferences influence ranking within mandatory request constraints.</p>
+    {message && <p role={failed ? "alert" : "status"}>{message}</p>}
+    <div className="flex flex-wrap gap-3"><button disabled={busy} className="min-h-11 bg-black px-4 py-2 font-bold text-white disabled:opacity-40">Save {LABELS[kind].toLowerCase()}</button><button type="button" disabled={busy} onClick={() => setDraft({ ...draft, values: [] })} className="min-h-11 border-2 border-black px-4 py-2">Clear {LABELS[kind].toLowerCase()} selection</button><button type="button" disabled={busy} onClick={() => { setDraft({ values: [...stored.values], weight: stored.weight }); setMessage("Edits cancelled."); setFailed(false); }} className="min-h-11 border-2 border-black px-4 py-2">Cancel {LABELS[kind].toLowerCase()}</button></div>
+  </form>;
+}
 
 export default function ProfilePage() {
   const [profile, setProfile] = useState<Profile>();
   const [name, setName] = useState("");
-  const [styleNote, setStyleNote] = useState("");
+  const [options, setOptions] = useState<PreferenceOptions>();
+  const [saved, setSaved] = useState<Record<Kind, Draft>>({ colours: emptyDraft(), styles: emptyDraft(), garment_categories: emptyDraft(), formality: emptyDraft() });
+  const [legacyNote, setLegacyNote] = useState<string>();
   const [message, setMessage] = useState("");
-  const [messageIsError, setMessageIsError] = useState(false);
+  const [failed, setFailed] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [savingProfile, setSavingProfile] = useState(false);
-  const [savingStyle, setSavingStyle] = useState(false);
-
+  const [busy, setBusy] = useState(false);
   useEffect(() => {
     let active = true;
-    void Promise.all([getProfile(), getPreferences()]).then(([nextProfile, preferences]) => {
+    void Promise.all([getProfile(), getPreferences(), getPreferenceOptions()]).then(([next, rows, choices]) => {
       if (!active) return;
-      setProfile(nextProfile);
-      setName(nextProfile.display_name);
-      const savedStyle = preferences.find((preference) => preference.preference_type === "style_note");
-      setStyleNote(typeof savedStyle?.preference_value.value === "string" ? savedStyle.preference_value.value : "");
-      setMessageIsError(false);
-    }).catch((error: unknown) => {
-      if (active) { setMessage(error instanceof Error ? error.message : "Could not load profile."); setMessageIsError(true); }
-    }).finally(() => {
-      if (active) setLoading(false);
-    });
+      setProfile(next); setName(next.display_name); setOptions(choices);
+      setSaved({ colours: storedDraft("colours", rows), styles: storedDraft("styles", rows), garment_categories: storedDraft("garment_categories", rows), formality: storedDraft("formality", rows) });
+      const note = rows.find((row) => row.preference_type === "style_note")?.preference_value.value;
+      setLegacyNote(typeof note === "string" ? note : undefined);
+    }).catch((error: unknown) => { if (active) { setFailed(true); setMessage(error instanceof Error ? error.message : "Could not load profile."); } }).finally(() => { if (active) setLoading(false); });
     return () => { active = false; };
   }, []);
-
-  const saveProfile = async (event: FormEvent) => {
-    event.preventDefault();
-    setSavingProfile(true);
-    setMessage("");
-    try {
-      const next = await updateProfile(name.trim());
-      setProfile(next);
-      setMessage("Profile updated.");
-      setMessageIsError(false);
-    } catch (error) {
-      setMessage(error instanceof Error ? error.message : "Could not update profile.");
-      setMessageIsError(true);
-    } finally {
-      setSavingProfile(false);
-    }
+  const save = async (event: FormEvent) => {
+    event.preventDefault(); setBusy(true); setMessage("");
+    try { const next = await updateProfile(name.trim()); setProfile(next); setName(next.display_name); setFailed(false); setMessage("Profile updated."); }
+    catch (error) { setFailed(true); setMessage(error instanceof Error ? error.message : "Could not save profile. Your edits are retained."); }
+    finally { setBusy(false); }
   };
-
-  const saveStylePreference = async (event: FormEvent) => {
-    event.preventDefault();
-    setSavingStyle(true);
-    setMessage("");
-    try {
-      await savePreference("style_note", { value: styleNote.trim() }, 1);
-      setMessage("Style preference saved for future recommendations.");
-      setMessageIsError(false);
-    } catch (error) {
-      setMessage(error instanceof Error ? error.message : "Could not save the preference.");
-      setMessageIsError(true);
-    } finally {
-      setSavingStyle(false);
-    }
-  };
-
-  return <Layout><div className="mx-auto max-w-2xl space-y-6" aria-busy={loading}><div className="border-2 border-black bg-white p-6"><div className="flex items-center gap-3"><User className="h-8 w-8" aria-hidden="true" /><div><p className="font-mono text-[10px] font-black tracking-widest text-zinc-500">ACCOUNT</p><h1 className="text-2xl font-black">Your profile</h1></div></div><p className="mt-4 text-sm text-zinc-600">Only the authenticated account can retrieve or update this profile and its wardrobe records.</p></div>{message && <p role={messageIsError ? "alert" : "status"} className={`border-2 p-3 text-sm ${messageIsError ? "border-rose-600 bg-rose-50 text-rose-700" : "border-emerald-600 bg-emerald-50 text-emerald-800"}`}>{message}</p>}{loading && <div className="ui-skeleton h-44 rounded-xl" role="status" aria-label="Loading profile" />}<form onSubmit={saveProfile} className={`space-y-4 border-2 border-black bg-white p-6 ${loading ? "hidden" : ""}`}><label className="block text-sm font-bold">Display name<input value={name} onChange={(event) => setName(event.target.value)} required maxLength={100} disabled={savingProfile} className="mt-1 w-full border-2 border-black p-2" /></label><label className="block text-sm font-bold">Email<input value={profile?.email ?? ""} readOnly aria-describedby="email-help" className="mt-1 w-full border-2 border-zinc-300 bg-zinc-100 p-2 text-zinc-600" /><span id="email-help" className="mt-1 block text-xs font-normal text-zinc-500">Your sign-in email cannot be changed here.</span></label><button disabled={!profile || !name.trim() || savingProfile} aria-busy={savingProfile} className="min-h-11 bg-black px-4 py-3 text-sm font-bold text-white disabled:opacity-40">{savingProfile ? "Saving…" : "Save profile"}</button></form><form onSubmit={saveStylePreference} className={`space-y-4 border-2 border-black bg-zinc-50 p-6 ${loading ? "hidden" : ""}`}><div><p className="font-mono text-[10px] font-black tracking-widest text-zinc-500">USER PREFERENCE</p><h2 className="text-xl font-black">Style note</h2><p className="mt-1 text-sm text-zinc-600">This private preference is attached to recommendation requests from your confirmed wardrobe.</p></div><label className="block text-sm font-bold">What should your recommendations prioritise?<textarea value={styleNote} onChange={(event) => setStyleNote(event.target.value)} maxLength={300} disabled={savingStyle} className="mt-1 min-h-24 w-full resize-y border-2 border-black bg-white p-3" placeholder="For example: relaxed neutral outfits for campus." /><span className="mt-1 block text-right text-xs font-normal text-zinc-500">{styleNote.length}/300</span></label><button disabled={!profile || !styleNote.trim() || savingStyle} aria-busy={savingStyle} className="min-h-11 bg-black px-4 py-3 text-sm font-bold text-white disabled:opacity-40">{savingStyle ? "Saving…" : "Save style note"}</button></form><aside className="border-2 border-black bg-zinc-50 p-5"><div className="flex items-center gap-2"><ShieldCheck className="h-5 w-5" aria-hidden="true" /><h2 className="font-bold">Privacy and media</h2></div><p className="mt-2 text-sm text-zinc-600">Wardrobe uploads, personal images, preferences, and generated visualisations are private by default and served through owner-checked API routes.</p></aside></div></Layout>;
+  return <Layout><div className="mx-auto max-w-2xl space-y-6" aria-busy={loading}>
+    <h1 className="text-2xl font-black">Your profile</h1>
+    {message && <p role={failed ? "alert" : "status"} className="border-2 border-black p-3">{message}</p>}
+    {loading && <p role="status">Loading profile…</p>}
+    {profile && options && <>
+      <form onSubmit={save} aria-label="Profile information" className="space-y-4 border-2 border-black bg-white p-6">
+        <label className="block text-sm font-bold">Display name<input required maxLength={100} value={name} disabled={busy} onChange={(event) => setName(event.target.value)} className="mt-1 w-full border-2 border-black p-2" /></label>
+        <label className="block text-sm font-bold">Email<input readOnly value={profile.email} className="mt-1 w-full border-2 border-zinc-300 bg-zinc-100 p-2" /></label>
+        <div className="flex flex-wrap gap-3"><button disabled={busy || !name.trim()} className="min-h-11 bg-black px-4 py-2 font-bold text-white disabled:opacity-40">Save profile</button><button type="button" disabled={busy} onClick={() => { setName(profile.display_name); setFailed(false); setMessage("Edits cancelled."); }} className="min-h-11 border-2 border-black px-4 py-2">Cancel profile</button></div>
+      </form>
+      <h2 className="text-xl font-black">Clothing preferences</h2>
+      {legacyNote !== undefined && <aside className="border-2 border-black p-4 text-sm"><p className="font-bold">Earlier style note</p><p className="whitespace-pre-wrap break-words">{legacyNote}</p><p className="mt-2">Only a supported whole style name influences ranking; structured styles take precedence when selected. This earlier note is retained.</p></aside>}
+      {KINDS.map((kind) => <PreferenceEditor key={kind} kind={kind} stored={saved[kind]} options={kind === "garment_categories" ? options.garment_categories.map((item) => `${item.kind}:${item.value}`) : options[kind]} onSaved={(next) => setSaved((current) => ({ ...current, [kind]: next }))} />)}
+      <p className="text-sm text-zinc-600">Your profile, wardrobe and preferences are private to your account. Your sign-in email cannot be changed here.</p>
+    </>}
+  </div></Layout>;
 }

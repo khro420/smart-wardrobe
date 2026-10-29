@@ -1,0 +1,13 @@
+{
+  "version": "saved-outfit-visualisation-1.0.0",
+  "replacements": {
+    "app/application/visualisation/outfit_visualisation_service.py": {
+      "after": "151ed2084bb27d2afeaff49c209d5c309ab5e457d45f806558fb220b1a155240",
+      "before": "0b7e9821d3fac058495a693aa339f6725ba3f6deb5b36e202e3620a5e7ef84a1"
+    },
+    "app/application/visualisation/outfit_identifier_validator.py": {
+      "after": "d19a17b6cc8f6ddd989ee3f469ef92b791919497db762c04dbf86e0883c40561",
+      "before": "1b97e9c214b6737587ab4715c57c4ccde0072d5513f77ec99fae62817e6095a7"
+    }
+  }
+}

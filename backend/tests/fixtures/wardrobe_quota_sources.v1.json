@@ -1,0 +1,34 @@
+{
+  "replacements": {
+    "frontend/app/extract/page.tsx": {
+      "after": "92ce6d29e99822e685b7253aab8c38aa2288daff430f25c663244dcb3279b0ee",
+      "before": "f09c7fd7b0f2ccee6e7d972456ef0bdf2e6f99e0ee35318860bff83ea3a082dd"
+    },
+    "backend/app/application/wardrobe/wardrobe_service.py": {
+      "after": "5029e889596e6218bd4f4e0811d4b68338efdf5e955c7e1cff483f629ad53e27",
+      "before": "a93ebf4a0330f256d9e547626d1b623a264b0bd225c1d3a285e2d1fa8f49fabb"
+    },
+    "frontend/lib/api.ts": {
+      "after": "8a9efa8b02c6145efd3d2f672e4073fbfc0c116806e7216187c49a1c7a83a05d",
+      "before": "378b9f02ed0809ee83704cdcc8e78530815ad3ae4ecb3aa912ac4d17f4444f35"
+    },
+    "backend/app/api/garment_processing_routes.py": {
+      "after": "a544820f6d92c73ca7d5a08569fdae022dd91d538eda1cc22c449b697c980cb9",
+      "before": "76480b5ab143c167734125e439fd4fd4eefedc47e669473afd5e92d2892cf825"
+    },
+    "frontend/app/wardrobe/page.tsx": {
+      "after": "c1604f09edd15ff9772a24cee5ea703960c93a054f4402bd35d3a7f2aa5eea27",
+      "before": "05ba80b543580965182f8edbb511e0feedb10b4ca4625cee24ebd730a436ecf7"
+    },
+    "backend/app/api/wardrobe_routes.py": {
+      "after": "d58d98af8fa98ac112e0f720ccfa56c6b9e769846724aafa671dc2cfcf3cf6f4",
+      "before": "7c51823932fcc3e7077c5a271df5d534d7bcf1f7db7c94664fa5daaadabdfac3"
+    },
+    "frontend/app/extract/results/page.tsx": {
+      "after": "5ccc0562a422d45059521f81fa7d647c6b15a745d9a64d6c1e75f5dac5460cbc",
+      "before": "925506b4985e8110c3450075c97510d6bef97e79a1e2c9eafd25c58d3b7b0056"
+    }
+  },
+  "limit": 100,
+  "version": "wardrobe-active-entries-1.0.0"
+}

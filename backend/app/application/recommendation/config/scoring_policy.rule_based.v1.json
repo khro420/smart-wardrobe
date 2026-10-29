@@ -1,0 +1,16 @@
+{
+  "profiles": {
+    "rule_based_balanced": [
+      "0.50",
+      "0.30",
+      "0.20"
+    ],
+    "rule_based_request_led": [
+      "0.60",
+      "0.20",
+      "0.20"
+    ]
+  },
+  "default_activation": false,
+  "version": "rule-based-scoring-1.0.0"
+}

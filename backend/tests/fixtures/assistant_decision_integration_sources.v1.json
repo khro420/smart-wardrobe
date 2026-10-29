@@ -1,0 +1,21 @@
+{
+  "version": "assistant-decision-integration-1.0.0",
+  "replacements": {
+    "app/infrastructure/workflow_runtime.py": {
+      "after": "1b9858e8aaea44584ad08b5c96708953c82ae330015cf135a825f284bf2bec60",
+      "before": "c0c856e3b139a6ef8c863ab8bb6be8ac64d86f566aa9d00fefcfa6fb224de471"
+    },
+    "app/application/recommendation/outfit_assistant_service.py": {
+      "after": "293443f9d229e54add1e0183c3df5f4ac5ed5f2703d7b051421cf4f5cc328aac",
+      "before": "c1de97680f912bcdea7c06a94b5bbb196f5c4e72c209b874e9779eebdbdaf3c7"
+    },
+    "app/application/chat_history/chat_history_service.py": {
+      "after": "8b172edcaba06fef4829c78f2b1d9351746959323a3756979d45b7ca1e8ed3e9",
+      "before": "fcf99dbd5b3414f03dcebe3f8639ff5c13833fcc69ff04bc81daa6c63cc3aafd"
+    }
+  },
+  "additions": {
+    "app/application/recommendation/scoring_display.py": "c9251aec413a15ffb31a7da327dcd5b991bec51d1d8212fc7212b0e171296525",
+    "app/application/recommendation/assistant_scoring_selection.py": "8091f05b482b1204de16bee3f1ce2cac455fd0647e6b084a7793bdf77b393b38"
+  }
+}

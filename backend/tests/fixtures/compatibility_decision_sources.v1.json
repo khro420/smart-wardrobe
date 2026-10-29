@@ -1,0 +1,7 @@
+{
+  "app/domain/value_objects/compatibility_decision.py": "85cf864f7474753202aa05f6c3cbf1057dd96a14d8787ce1aa503a92e664bb09",
+  "app/application/recommendation/decision_score_codec.py": "c97e3e6bee58d185b5cbec70a07b129a1cdcb027538cdaba6c3ffd830d1e8523",
+  "app/application/recommendation/config/compatibility_decision.v1.json": "cf16b2e0103de7169cbeea4acc084df6bd0c4ef41862feb805364b21e7affd1a",
+  "app/application/recommendation/decision_recommendation_scorer.py": "44bc7928a3f3e946dcc223fb88e8946819ffbe869d7a7b1b28c4d594d6a4f38b",
+  "app/application/recommendation/compatibility_decision_policy.py": "6c72d342aec617abfb2fcda77abd7e0d806f476c4ab62883ccbd838156b6e911"
+}

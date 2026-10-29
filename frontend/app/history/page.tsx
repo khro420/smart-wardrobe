@@ -1,27 +1,47 @@
-"use client";
-
-import { useEffect, useState } from "react";
+﻿"use client";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { History, WandSparkles } from "lucide-react";
 import Layout from "@/components/Layout";
-import { getRecommendations, type Recommendation } from "@/lib/api";
+import { getChatHistory, type ChatPage } from "@/lib/api";
+import { errorMessage } from "@/lib/recommendation-messages";
 
 export default function RecommendationHistoryPage() {
-  const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
+  const [input,setInput] = useState("");
+  const [term,setTerm] = useState("");
+  const [page,setPage] = useState<{ term: string; value: ChatPage }>();
+  const [error,setError] = useState<{ term: string; message: string }>();
+  const [loadingMore,setLoadingMore] = useState(false);
+  const generation = useRef(0);
+  const moreBusy = useRef(false);
   useEffect(() => {
     let active = true;
-    getRecommendations().then((rows) => { if (active) setRecommendations(rows); })
-      .catch((cause: unknown) => { if (active) setError(cause instanceof Error ? cause.message : "Could not load recommendation history."); })
-      .finally(() => { if (active) setLoading(false); });
+    const version = generation.current;
+    getChatHistory(term).then(value => { if (active && version === generation.current) setPage({ term,value }); }).catch(cause => { if (active && version === generation.current) setError({ term,message:errorMessage(cause) }); });
     return () => { active = false; };
-  }, []);
-
-  return <Layout><div className="space-y-6">
-    <header className="border-2 border-black bg-white p-6"><div className="flex items-center gap-3"><History className="h-7 w-7" aria-hidden="true" /><div><p className="font-mono text-[10px] font-black tracking-widest text-zinc-500">PRIVATE HISTORY</p><h1 className="text-3xl font-black">Recommendation history</h1></div></div><p className="mt-3 max-w-2xl text-sm text-zinc-600">Review your persisted requests and the confirmed wardrobe garments selected for each response.</p></header>
-    {error && <p role="alert" className="border-2 border-rose-600 bg-rose-50 p-3 text-sm text-rose-700">{error}</p>}
-    {loading ? <div className="grid gap-4 md:grid-cols-2" role="status" aria-label="Loading recommendation history">{[0, 1].map((item) => <div key={item} className="ui-skeleton h-48 rounded-xl" />)}</div> : recommendations.length ? <div className="grid gap-4 md:grid-cols-2">{recommendations.map((recommendation) => <article key={recommendation.id} className="border-2 border-black bg-white p-5"><div className="flex items-start justify-between gap-3"><p className="font-mono text-[10px] font-black tracking-widest text-zinc-500">{recommendation.status.toUpperCase()}</p>{recommendation.created_at && <time className="text-xs text-zinc-500">{new Date(recommendation.created_at).toLocaleString()}</time>}</div><h2 className="mt-2 font-black">{recommendation.request_text ?? "Wardrobe recommendation"}</h2><p className="mt-2 text-sm text-zinc-600">{recommendation.items.map((item) => item.name).join(" · ")}</p><p className="mt-2 text-xs text-zinc-500">Recorded score: {Math.round(recommendation.total_score * 100)}%</p><Link href={`/try-on?recommendation=${recommendation.id}`} className="mt-4 inline-flex min-h-10 items-center gap-2 bg-black px-3 py-2 text-xs font-bold text-white"><WandSparkles className="h-4 w-4" aria-hidden="true" /> Visualise</Link></article>)}</div> : <div className="border-2 border-dashed border-zinc-400 p-8 text-center"><p className="font-bold">No recommendation history yet.</p><Link href="/" className="mt-3 inline-flex min-h-10 items-center underline">Request your first recommendation</Link></div>}
+  },[term]);
+  const current = page?.term === term ? page.value : undefined;
+  const message = error?.term === term ? error.message : "";
+  const more = async () => {
+    if (!current?.next_cursor || moreBusy.current) return;
+    const version = generation.current;
+    moreBusy.current = true; setLoadingMore(true);
+    try {
+      const next = await getChatHistory(term,current.next_cursor);
+      if (version === generation.current) setPage({ term,value:{ ...next,items:[...current.items,...next.items] } });
+    } catch (cause) { if (version === generation.current) setError({ term,message:errorMessage(cause) }); }
+    finally { moreBusy.current = false; setLoadingMore(false); }
+  };
+  const search = () => {
+    if (input === term) return;
+    generation.current++; setError(undefined); setTerm(input);
+  };
+  return <Layout><div className="space-y-5"><h1 className="text-3xl font-semibold">Recommendation history</h1><p className="text-sm text-slate-600">Search your completed, read-only requests. Opening history never generates a new outfit.</p>
+    <form onSubmit={event => { event.preventDefault(); search(); }} className="flex flex-wrap items-end gap-3"><label className="flex-1 text-sm font-semibold">Search original requests<input value={input} onChange={event => setInput(event.target.value)} maxLength={500} className="mt-1 min-h-11 w-full rounded-xl border border-slate-300 bg-white px-3" /></label><button className="min-h-11 rounded-xl bg-[#6d335b] px-4 text-sm font-semibold text-white">Search history</button></form>
+    {message && <p role="alert" className="text-sm text-rose-800">{message}</p>}
+    {!current && !message && <p role="status">Loading history…</p>}
+    {current && <><p role="status" className="text-sm text-slate-500">{current.total} completed interaction{current.total === 1 ? "" : "s"}{term ? ` matching “${term}”` : ""}</p>
+      {!current.items.length ? <p className="rounded-xl bg-white p-5 text-sm text-slate-600">No completed chats found.</p> : <div className="grid gap-4 md:grid-cols-2">{current.items.map(chat => <article key={chat.chat_id} className="rounded-2xl border border-slate-200 bg-white p-5"><p className="text-xs text-slate-500">{new Date(chat.created_at).toLocaleString()} · Read-only</p><h2 className="mt-2 whitespace-pre-wrap font-semibold">{chat.request_text}</h2><Link href={`/history/${encodeURIComponent(chat.chat_id)}`} className="mt-3 inline-flex min-h-11 items-center text-sm font-semibold underline">Open completed interaction</Link></article>)}</div>}
+      {current.next_cursor && <button disabled={loadingMore} onClick={() => void more()} className="min-h-11 rounded-xl border border-slate-300 bg-white px-4 text-sm font-semibold disabled:opacity-50">{loadingMore ? "Loading more…" : "Load more chats"}</button>}
+    </>}
   </div></Layout>;
 }

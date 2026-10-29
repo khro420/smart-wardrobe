@@ -1,0 +1,32 @@
+{
+  "version": "context-relevance-policy-1.0.0",
+  "profile": "context_relevance_decision_v1",
+  "default_activation": false,
+  "objective_contract": "context-relevance-objective-1.0.0",
+  "resolution_contract": "context-relevance-resolution-1.0.0",
+  "operator": "base_member_canonical_style_mean_v1",
+  "weights": [
+    "3/5",
+    "1/5",
+    "1/5"
+  ],
+  "selection_mode": "best_evidenced_with_coverage_v1",
+  "fallback_mode": "baseline_disclosed_v1",
+  "fallback_profile": "experimental_compatibility_decision_v1",
+  "fallback_reasons": [
+    "objective_unavailable",
+    "no_point_relative_candidate"
+  ],
+  "duplicate_preferences": "exact_duplicate_mask_keep_original_denominator_v1",
+  "maximum_configuration_bytes": 65536,
+  "maximum_objectives": 5,
+  "default_applicability": {
+    "role": "unspecified",
+    "dress_code": null,
+    "formality": null
+  },
+  "explicit_style_precedence": true,
+  "outerwear_in_base_R": false,
+  "human_appropriateness_validation": "OPEN",
+  "authority": "owner_approved_unvalidated_prototype_convention"
+}

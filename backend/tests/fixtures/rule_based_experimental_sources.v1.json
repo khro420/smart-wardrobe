@@ -1,0 +1,9 @@
+{
+  "app/application/recommendation/rule_based_compatibility_scorer.py": "f2ff6e51fad2250cbb5c6a2dd6c90756590e77abc9d6307aea2702deb364dda7",
+  "app/application/recommendation/config/scoring_policy.rule_based.v1.json": "6bf62f19fb69e2571fec10f86399ba30d364ba91fa8e95b832a4ecbfe16f2dd5",
+  "app/application/recommendation/rule_based_compatibility_policy.py": "9559cd00981e326a7d14d4c29e2693906dd80f34c69da23b6ee45931b5c85d08",
+  "app/application/recommendation/rule_based_compatibility_evidence.py": "afb3d9b4cd47a45103f90779267aab0940d7d24383563326194b3b8664cd8f1e",
+  "app/application/recommendation/rule_based_recommendation_scorer.py": "f918347943adb9f05d890bf1e42e6197fdddbdd6e37d1caaeb1cb53acd4ce3f3",
+  "app/application/recommendation/config/rule_based_compatibility.v1.json": "10d0572354793ff720044df1291605f94e4ffa119153f6112a546b65c0257530",
+  "app/domain/value_objects/rule_based_compatibility.py": "e5ac457065d1b8e5e22881893b1f36bf48a9c135f09f8d1b61237cee02a0025c"
+}

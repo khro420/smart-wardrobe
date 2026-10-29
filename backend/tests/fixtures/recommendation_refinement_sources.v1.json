@@ -1,0 +1,110 @@
+{
+  "version": "recommendation-refinement-sources-1.0.0",
+  "default_activation": false,
+  "replacements": {
+    "backend/app/application/recommendation/outfit_assistant_service.py": {
+      "before": "12b1484ce9e6c38faf1f68ee89b87351dedfd8843f3b205b1c3d69db0d37719a",
+      "after": "618805dd25a14224e4cb158580f4b4e3ef30d27bee666de2bee323e5f7354671"
+    },
+    "backend/app/application/recommendation/assistant_scoring_selection.py": {
+      "before": "8e0dcf6fccd001c64a1efcc8a7a90db7a56ff602af14897fc8cc801a854f5852",
+      "after": "79941b52e3933ff0ed571036f9ccefce88baa6e7893231b108f3e10e41486da4"
+    },
+    "backend/app/application/recommendation/assistant_execution_selection.py": {
+      "before": "d1c3ef7557a2ebb46f35c14ad01a30750d338caf0b5658291c402c0255f6607b",
+      "after": "94f041e83e78e27bf09e16da5aebef665be78ac6773f543a4a7cbe7ba94b37ef"
+    },
+    "backend/app/application/recommendation/compact_assistant_scorer.py": {
+      "before": "0e16e42935cd3d92d2c859c8c889efc21eda13a6ee025783f38f62a38212bf15",
+      "after": "b26888609c91f0aeb768aaac347b7fa9fbbae02dec6cbaba7315e2880a9e6f6f"
+    },
+    "backend/app/application/recommendation/compact_exhaustive_scorer.py": {
+      "before": "d0a8ad65e31207a0b2067db01efa7f6c10fc4ec610615f0e29e4d72ad724d6bb",
+      "after": "ffb014629cb6c44453678c4c94dc8378ddc4dc9b39f5e1aa4492aa3bd8728479"
+    },
+    "backend/app/application/recommendation/aggregated_decision_scorer.py": {
+      "before": "265c7ccd8444c3da096dad7f781d0ccdf7e815c1da508eaf73cbfdebbebbc849",
+      "after": "cf93d90c13c613a016dfa223da72305ea56440b8cafddb9d9f0774f89b0eb901"
+    },
+    "backend/app/application/recommendation/context_relevance_scorer.py": {
+      "before": "1beab66778fe79f1e417aba6f73b73cd81ecbc3aa222948ad3257b6b1f1c02e6",
+      "after": "8e55c8ded8b2567af71578b055725dfd4ce622b203806f67cd7e715c1332ebe3"
+    },
+    "backend/app/application/recommendation/context_relevance_verifier.py": {
+      "before": "17d82c71f08df2f07235a0b530f953ff1194bf6d62fea4683891c2c35413045a",
+      "after": "db5dfebdcf2f9fb494e568a794af858f4be9b95cf0f693b6ee34a0abbb5c11ef"
+    },
+    "backend/app/application/recommendation/scoring_display.py": {
+      "before": "3bb63943e39541c52049f305b7c1bc4aab9ababcb208d55d9712cff5bfc8ac3d",
+      "after": "7a01341f1a836747419ba8ce3d210032afd6a9b106cd30cfffc3f7e53bf09c39"
+    },
+    "backend/app/api/assistant_models.py": {
+      "before": "65cce2dcc72784dcd2d731254383196a0fb7071d2ad0d2c136767f2189f565b4",
+      "after": "8c80c16446de5e9f7039e2761ac9df537e135ef4e9e93cffaffdef2dec43cff3"
+    },
+    "backend/app/api/recommendation_routes.py": {
+      "before": "8dd68cccc8874744ff78d079afa6e187a4bbee96b6b879e8e14232e0721a41bd",
+      "after": "6ea42d38256e69034c0a8c939a26a4bf445c1d9e369648a001a295e89141df93"
+    },
+    "backend/app/domain/value_objects/ranking_outcome.py": {
+      "before": "a61dab818ba709aa613267613cd7ae648ac56049d38ac55c629cc63561580e88",
+      "after": "85a77b8e5e909521b66784b1529aa63ea78637925e377345cc30068ef40ea22c"
+    },
+    "backend/app/domain/value_objects/recommendation_persistence.py": {
+      "before": "6c816b7023d5affea7668e794c7fd43dc6db5bf4b5f8ca92e98ed70726c3af32",
+      "after": "5c83cba7c1fc2c132243a0aa10b03cdc4497e84c1bd54656d4d0efaa3d12a488"
+    },
+    "backend/app/domain/value_objects/context_relevance.py": {
+      "before": "518989332a3b5ef720ae968cd22faa5400aeb0825685b354fc012b20cb9f2e68",
+      "after": "495d4dda809edaeedab9098bb701a7690f0b20921737ee48d29b9f9056192199"
+    },
+    "backend/app/infrastructure/persistence/recommendation_repository_adapter.py": {
+      "before": "e46d630d642afebe552f69003becd51f3431ce5786510c234e1b6458eb3c0895",
+      "after": "c7a0321fc6aac2461d3f64f1f2a0f75f44731aa4a0997767bd2ef35be7f0bbd2"
+    },
+    "backend/app/infrastructure/persistence/active_preference_query_adapter.py": {
+      "before": "27581688d285092e461e0b36d2f6ec75315942ad5c032ea4a8253aa698ece308",
+      "after": "16d5657ed5593009834b7335e7cde86d96fa543d9647c6ff8e8b796247dce494"
+    },
+    "backend/app/infrastructure/workflow_runtime.py": {
+      "before": "a43f8ff7c10dd069f3bec0b5c813953686e1e20a73de29cbf72f220ce8b65bf3",
+      "after": "c7f034a08ef0507876d498918de085ed685e5b69efcf757c9ca6c760e4a73023"
+    },
+    "frontend/lib/api.ts": {
+      "before": "52a6d78cd76a0e20976e273272729b7d9ebd07bc10ae569cb4c74ea09f116d86",
+      "after": "c4c28accbba03b9a85aff94890e8a361a6a67d2e5863107d55f7e055903086e6"
+    },
+    "frontend/lib/recommendation-messages.ts": {
+      "before": "1d695dc2af1106b7c82c17346d03bf7714218ab1af4ad20c4ed4232dd06ece20",
+      "after": "278e3dbe71563014893e791fc23d2498e2e868177db461d5f1db142fbcac7689"
+    },
+    "frontend/lib/recommendation-session.ts": {
+      "before": "42cc2247c5052cca1ab52d23b80eec804cd8257d2cdc1c52c4ede74d2491a665",
+      "after": "491faff72efe14f1b56630353c72443762c436a708acf4f075b60635472f7978"
+    },
+    "frontend/components/OutfitAssistant.tsx": {
+      "before": "53e06aa32481b5bcebf7f797a7d182f48e52b7f89b7f41a1251e8ce8d62586b5",
+      "after": "a2bfd9de76b05594efe18e5bfc238854b5b4cfc9e554372db1c9e7a329ae99a1"
+    },
+    "frontend/components/RecommendationResult.tsx": {
+      "before": "aeaa716559868b0498ff1b15ab38951aee0900f2705ccdc31adbca461722b3d3",
+      "after": "8cbd981493a8c4a5d0fc1d15459b96ab014f06030113efb9977637427a05a7e9"
+    }
+  },
+  "additions": {
+    "backend/app/domain/value_objects/recommendation_refinement.py": "28e239656f239580133901e4efad94bb4024c1af2fa23bc83509565853a5db04",
+    "backend/app/application/recommendation/refinement_policy.py": "b5e040198b1c7f04d32202b21e94d5dce787b44920f77116c34244e14ec33660",
+    "backend/app/application/recommendation/refinement_selector.py": "d3f02021d0395e12485cded59994555ef4232ba49deca0546686af44cfdb1448",
+    "backend/app/application/recommendation/refinement_verifier.py": "f83991a2f74046a8ae3379cca7fb69b0b320cb425c351f5aa45e88659ed978fc",
+    "backend/app/application/recommendation/refinement_lineage_service.py": "8efa2a9978907ee06911d2a4225100833e12fc7d0271d7ce1e01b84e12794719",
+    "backend/app/infrastructure/persistence/refinement_lineage_query.py": "0c48f8a60e1f4b7547e9b63427486ab726dcf276b1caa0d43032903f402e26c7",
+    "backend/app/application/recommendation/config/recommendation_refinement.v1.json": "f347c29e22fdd9cd8947e2b70322118d26a0d47c0380c64ab0faf65f1d26f0e4"
+  },
+  "source_guard": {
+    "before": "e50882ef30b37739ff7eda5896834dbd97dc1248c895fe51f42b269ddcb98610",
+    "after": "75fa9a0a5d519895920895a4cbc113909ab557e92858fbd63c68a86261df0848"
+  },
+  "frozen_labels_sha256": "3a15cea941b21ef0e9c2116c93b99699f6019a2f4a7ff2dd6e025b2ad90841de",
+  "retained_starting_hashes": "C:\\Users\\chong\\AppData\\Local\\SmartWardrobe\\reviews\\optional_refinement_implementation_20261028\\starting-hashes.json",
+  "starting_hashes_sha256": "f2f98db0ce1655c1c4c1abd2601b239beea95480f71a99111438d503051539f0"
+}

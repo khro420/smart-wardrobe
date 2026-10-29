@@ -9,6 +9,7 @@ from PIL import Image
 from app.infrastructure.persistence.confirmed_garment_query_adapter import SqliteConfirmedGarmentQuery
 from app.infrastructure.persistence.postgresql_repository import connection, utcnow
 from app.main import app
+from app.application.recommendation import recommendation_service
 
 
 def jpeg(colour: str) -> bytes:
@@ -50,7 +51,8 @@ class RecommendationBoundaryTests(unittest.TestCase):
     def test_tampered_or_archived_recommendation_items_are_not_exposed_or_saved(self):
         with TestClient(app, headers={"X-User-Id": "recommendation-owner"}) as owner:
             owned = confirmed_garment(owner, "Owned recommendation top", "navy")
-            recommendation = owner.post("/api/v1/recommendations", json={"request_text": "Use my confirmed wardrobe"}).json()
+            # Historical fixture only; public legacy generation is closed by J-14.
+            recommendation = recommendation_service.create_recommendation("recommendation-owner", "Use my confirmed wardrobe")
         with TestClient(app, headers={"X-User-Id": "recommendation-other"}) as other:
             foreign = confirmed_garment(other, "Other person's top", "red")
 

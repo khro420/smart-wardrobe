@@ -320,9 +320,11 @@ class GarmentWorkflowTests(unittest.TestCase):
             users = []
             for _ in range(2):
                 response = self.client.post("/api/v1/account/register", json={
-                    "email": f"{uuid.uuid4().hex}@example.test", "password": "Long-test-password", "display_name": "Test owner"})
+                    "email": f"{uuid.uuid4().hex}@example.test", "password": "Long-test-password", "password_confirmation": "Long-test-password", "display_name": "Test owner"})
                 self.assertEqual(response.status_code, 201)
-                users.append({"Authorization": "Bearer " + response.json()["access_token"]})
+                login = self.client.post("/api/v1/account/login", json={"email": response.json()["profile"]["email"], "password": "Long-test-password"})
+                self.assertEqual(login.status_code, 200)
+                users.append({"Authorization": "Bearer " + login.json()["access_token"]})
             uploaded = self.client.post("/api/v1/processing/jobs", headers=users[0], files={"file": ("photo.jpg", jpeg(), "image/jpeg")})
             self.assertEqual(uploaded.status_code, 202)
             job_path = "/api/v1/processing/jobs/" + uploaded.json()["id"]

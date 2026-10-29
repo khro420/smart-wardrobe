@@ -1,0 +1,12 @@
+{
+  "additions": {
+    "app/application/recommendation/compact_candidate_stream.py": "8dfd43f77afaf869be4d53d63818190f4814c54a8471c0b07f51a9582d719632",
+    "app/application/recommendation/compact_mandatory_verifier.py": "fb404531c946d0b9003fbf3cd32229af18bdff0c86c4c0119978580821937e2b",
+    "app/application/recommendation/compact_scoring_facts.py": "cb09e9ab2f86ffc2e65681f021bdf95322461ddefd4f920fad349e392f7933dc",
+    "app/domain/value_objects/compact_recommendation.py": "16fd65b1d972ba117e1f8aabb6e99c638df769fbc854f4c07994967bde5a5911",
+    "app/application/recommendation/compact_exhaustive_scorer.py": "608f93bcfd7d30daa732a3b70848848831d891fc8d83669a1cc8c4ecbedcd78c"
+  },
+  "default_activation": false,
+  "version": "compact-exhaustive-1.0.0",
+  "reference_sha256": "c6e6de4092635cb422206119147385b1d45a306e8119398b7e28a862f417eb6b"
+}

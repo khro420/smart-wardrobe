@@ -1,0 +1,55 @@
+{
+  "version": "date-dinner-context-1.0.0",
+  "default_activation": false,
+  "replacements": {
+    "backend/app/application/nlp/config/context_grammar.v1.json": {
+      "before": "65b8922d9fd794b2756c5833479670687b0ad0a571847774ea681be914a7b380",
+      "after": "407e620c25f9933ae252c11e2bd976df69f195211c5ce2b6da1aedbb671457af"
+    },
+    "backend/app/application/nlp/general_context_interpreter.py": {
+      "before": "d8f340fd4bfd0df61fea89287afcff2c3a46a9d9ef158bd098ff36dafea91ad8",
+      "after": "b0848339490ac3a986a896c07be7241db15826ad4ff64c65ad29f16351cf81ba"
+    },
+    "backend/app/application/recommendation/config/context_policy_registry.v1.json": {
+      "before": "deb8214aa3fba1c4da6da416bb21531d6b02664180f050956947571565fe7010",
+      "after": "7f7242bf8f964737af5d9a8efd8fa1343831b1cc12d00e443389dcd32863f732"
+    },
+    "backend/app/application/recommendation/config/situation_taxonomy.v1.json": {
+      "before": "0f3d0a5736931e56267be35c6b4955510fa4e14bca220ae448bc410b11276dde",
+      "after": "584333bc06f6480ea767f8f4c70f3f1631023636a048bff865670326ea780280"
+    },
+    "backend/app/application/recommendation/context_constraint_compiler.py": {
+      "before": "62a30d31203245c7957efc6a5509dafba8d1c7a65a5f5ba5cbf01947ad95e4e3",
+      "after": "175e7fb78158831f7f95ce24638fd24cf4521ed3f7f5369bdc85e24fce583d85"
+    },
+    "backend/app/application/recommendation/context_evidence_resolver.py": {
+      "before": "164095d6f9731a2007c5c2656b53371f9014224adf6190cad4802631d2d7fc5c",
+      "after": "833071336d70a80c5b56df1d52ff3398eb11ebc3a6185999e1ac5111a9f29e12"
+    },
+    "backend/app/application/recommendation/context_policy_registry.py": {
+      "before": "424207243f66f8f8224c4a395a95f1fd4a2be859ca28231a376fdb648e684430",
+      "after": "f425943a5793c773727eb56791bb2d692d76fc67f59b791aa3a222133294c64c"
+    },
+    "backend/app/application/recommendation/general_context_evaluator.py": {
+      "before": "eaa7f0984405c2d2471634ed13320877d2980adb0d6e26397877ef7f5d80f24d",
+      "after": "389b220fb1fcc4e7222ed1fbe5325b4677c2737584dd2c6b159b4e1f4403ec6d"
+    },
+    "frontend/lib/api.ts": {
+      "before": "cb6519454c491980f3d4b750ca265c2b1b184051b11f1a805a80e891021f3167",
+      "after": "773a84cbe187301539376ffbc6e275820a948f43731ba80c44012321d87fbe1c"
+    },
+    "frontend/lib/recommendation-messages.ts": {
+      "before": "4da47bc2d40afad7367ea91019ffaf88b8522ce4f7761538b35bf995c663e9b6",
+      "after": "e6083b4dcaa2dd4b3e4461b2032a16f46629060417634a8e0a0bf59dc39ba707"
+    },
+    "frontend/components/OutfitAssistant.tsx": {
+      "before": "84e86191c53cf4ebd2b3eb2e5bc11aaea46090fb1978c21c7fbad1808cc7c96f",
+      "after": "d1319ad8a7499081aae8118341a6d3ce96b2a1732d11de296e9c053a05c21748"
+    },
+    "frontend/components/RecommendationResult.tsx": {
+      "before": "eeefd92494a5f0853741a7dcdb1f5e4f92bc715176dc6148dd515c5333c4ebf8",
+      "after": "2daa8dcbce2a02682488f10b7f7ff247cb6fe71040e1125f5bc9b3f0f2a66e48"
+    }
+  },
+  "additions": {}
+}

@@ -163,6 +163,18 @@ def initialise_database() -> None:
                 json.dumps({"garment_role": attrs.get("garment_type"), "layering_index": attrs.get("layering_index")}),
                 json.dumps(attrs), json.dumps(attrs.get("embedding")), row["id"],
             ))
+    # Isolated additive recommendation migration; no live selection wiring.
+    from app.infrastructure.persistence.recommendation_migrations import migrate_recommendations
+    with connection() as conn:
+        migrate_recommendations(conn)
+    from app.infrastructure.persistence.session_revocation_migrations import migrate_session_revocations
+    from app.infrastructure.persistence.session_revocation_store import record_failure
+    try:
+        with connection() as conn:
+            migrate_session_revocations(conn)
+    except Exception:
+        record_failure('migration')
+        raise RuntimeError('Authentication storage initialization failed.') from None
 
 
 def ensure_user(user_id: str) -> None:

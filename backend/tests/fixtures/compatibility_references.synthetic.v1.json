@@ -1,0 +1,46 @@
+{
+  "schema_version":"1.0.0",
+  "version":"synthetic-test-fixture-1.0.0",
+  "kind":"synthetic_fixture",
+  "available":true,
+  "activation_approved":false,
+  "rubric":{"minimum":0,"maximum":4,"normalization":"mean_individual_ratings_divided_by_4"},
+  "patterns":["plain","stripe"],
+  "references":[
+    {
+      "reference_id":"synthetic-two-piece",
+      "signature":{"structure":"top_bottom","members":[{"role":"upper","styles":["vintage"],"colour":"blue","pattern":"plain"},{"role":"lower","styles":["vintage"],"colour":"blue","pattern":"plain"}]},
+      "ratings":[{"reviewer_id":"synthetic-reviewer-a","rating":3},{"reviewer_id":"synthetic-reviewer-b","rating":3}],
+      "adjudication":{"reviewer_id":"synthetic-adjudicator","decision":"accepted","note":"Synthetic arithmetic fixture only; no person reviewed this outfit."},
+      "source_ids":["synthetic-source-two-piece"],"approval_status":"approved","independently_reviewed":false,"normalized_value":{"numerator":3,"denominator":4}
+    },
+    {
+      "reference_id":"synthetic-layered-two-piece",
+      "signature":{"structure":"top_bottom_outerwear","members":[{"role":"upper","styles":["vintage"],"colour":"blue","pattern":"plain"},{"role":"lower","styles":["vintage"],"colour":"blue","pattern":"plain"},{"role":"outerwear","styles":["vintage"],"colour":"blue","pattern":"plain"}]},
+      "ratings":[{"reviewer_id":"synthetic-reviewer-a","rating":2},{"reviewer_id":"synthetic-reviewer-b","rating":3}],
+      "adjudication":{"reviewer_id":"synthetic-adjudicator","decision":"accepted","note":"Synthetic arithmetic fixture only; not fashion evidence."},
+      "source_ids":["synthetic-source-layered-two-piece"],"approval_status":"approved","independently_reviewed":false,"normalized_value":{"numerator":5,"denominator":8}
+    },
+    {
+      "reference_id":"synthetic-dress",
+      "signature":{"structure":"dress","members":[{"role":"one_piece","styles":["vintage"],"colour":"blue","pattern":"plain"}]},
+      "ratings":[{"reviewer_id":"synthetic-reviewer-a","rating":2},{"reviewer_id":"synthetic-reviewer-b","rating":2}],
+      "adjudication":{"reviewer_id":"synthetic-adjudicator","decision":"accepted","note":"Synthetic; intentionally differs from identical-descriptor two-piece."},
+      "source_ids":["synthetic-source-dress"],"approval_status":"approved","independently_reviewed":false,"normalized_value":{"numerator":1,"denominator":2}
+    },
+    {
+      "reference_id":"synthetic-layered-dress",
+      "signature":{"structure":"dress_outerwear","members":[{"role":"one_piece","styles":["vintage"],"colour":"blue","pattern":"plain"},{"role":"outerwear","styles":["vintage"],"colour":"blue","pattern":"plain"}]},
+      "ratings":[{"reviewer_id":"synthetic-reviewer-a","rating":3},{"reviewer_id":"synthetic-reviewer-b","rating":4}],
+      "adjudication":{"reviewer_id":"synthetic-adjudicator","decision":"accepted","note":"Synthetic fixture; no garment-count reward is inferred."},
+      "source_ids":["synthetic-source-layered-dress"],"approval_status":"approved","independently_reviewed":false,"normalized_value":{"numerator":7,"denominator":8}
+    },
+    {
+      "reference_id":"synthetic-reviewed-zero",
+      "signature":{"structure":"dress","members":[{"role":"one_piece","styles":["classic"],"colour":"black","pattern":"plain"}]},
+      "ratings":[{"reviewer_id":"synthetic-reviewer-a","rating":0},{"reviewer_id":"synthetic-reviewer-b","rating":0}],
+      "adjudication":{"reviewer_id":"synthetic-adjudicator","decision":"accepted","note":"Synthetic zero, not a rule against classic or black clothing."},
+      "source_ids":["synthetic-source-zero"],"approval_status":"approved","independently_reviewed":false,"normalized_value":{"numerator":0,"denominator":1}
+    }
+  ]
+}

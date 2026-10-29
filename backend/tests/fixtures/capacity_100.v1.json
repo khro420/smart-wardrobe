@@ -1,0 +1,3392 @@
+{
+  "seed": 20261023,
+  "preferences": [
+    {
+      "type": "colours",
+      "values": [
+        "blue"
+      ]
+    },
+    {
+      "type": "styles",
+      "values": [
+        "vintage"
+      ]
+    },
+    {
+      "type": "garment_categories",
+      "values": [
+        {
+          "kind": "group",
+          "value": "top"
+        }
+      ]
+    }
+  ],
+  "requests": {
+    "generic": "Suggest an outfit",
+    "suitability": "Suggest a casual outfit for campus."
+  },
+  "controls": {
+    "settle_ms": 10000,
+    "max_preflight_ms": 120000,
+    "cpu_max": 20,
+    "ram_min_kib": 4194304,
+    "consecutive": 3
+  },
+  "browser_boundary": "Monotonic click to visible complete recommendation component, matching J8. Protected synthetic thumbnails available but their completed image loading is not required by this boundary. Login/page preparation outside timing.",
+  "formal_nfr_acceptance": false,
+  "candidate_pruning": false,
+  "timeouts_seconds": 240,
+  "cache_capacities": {
+    "pair": 19900,
+    "aggregation_and_certificate_each": 256
+  },
+  "version": "capacity-100-1.0.0",
+  "provenance": "Synthetic stratified coverage selected/cycled by category from frozen J9 rows with the same named/anchor/non-anchor/missing/empty evidence and synthetic owner Allow policies. Not empirical frequencies or independently validated fashion labels.",
+  "mixes": {
+    "balanced-100": [
+      {
+        "id": "balanced-100-0000",
+        "category": "short_sleeve_top",
+        "primary_colour": "grey",
+        "style": null,
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0018",
+        "source_j9_id": "balanced-150-0002"
+      },
+      {
+        "id": "balanced-100-0001",
+        "category": "short_sleeve_top",
+        "primary_colour": "pink",
+        "style": [
+          "smart casual"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0010",
+        "source_j9_id": "balanced-150-0001"
+      },
+      {
+        "id": "balanced-100-0002",
+        "category": "short_sleeve_top",
+        "primary_colour": "white",
+        "style": [
+          "sporty",
+          "streetwear"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0005",
+        "source_j9_id": "balanced-150-0013"
+      },
+      {
+        "id": "balanced-100-0003",
+        "category": "short_sleeve_top",
+        "primary_colour": "#FF0000",
+        "style": [
+          "vintage"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0004",
+        "source_j9_id": "balanced-150-0007"
+      },
+      {
+        "id": "balanced-100-0004",
+        "category": "short_sleeve_top",
+        "primary_colour": "navy",
+        "style": [
+          "classic"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0002",
+        "source_j9_id": "balanced-150-0006"
+      },
+      {
+        "id": "balanced-100-0005",
+        "category": "short_sleeve_top",
+        "primary_colour": "#123456",
+        "style": [
+          "vintage",
+          "minimal",
+          "bohemian"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0001",
+        "source_j9_id": "balanced-150-0010"
+      },
+      {
+        "id": "balanced-100-0006",
+        "category": "short_sleeve_top",
+        "primary_colour": "grey",
+        "style": [
+          "sporty",
+          "streetwear"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": null,
+        "source_j7_id": "varied-200-0012",
+        "source_j9_id": "balanced-150-0000"
+      },
+      {
+        "id": "balanced-100-0007",
+        "category": "short_sleeve_top",
+        "primary_colour": "orange",
+        "style": [
+          "classic"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0016",
+        "source_j9_id": "balanced-150-0009"
+      },
+      {
+        "id": "balanced-100-0008",
+        "category": "short_sleeve_top",
+        "primary_colour": "black",
+        "style": [
+          "vintage",
+          "classic"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0017",
+        "source_j9_id": "balanced-150-0011"
+      },
+      {
+        "id": "balanced-100-0009",
+        "category": "short_sleeve_top",
+        "primary_colour": "green",
+        "style": [
+          "vintage",
+          "classic"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0014",
+        "source_j9_id": "balanced-150-0005"
+      },
+      {
+        "id": "balanced-100-0010",
+        "category": "long_sleeve_top",
+        "primary_colour": "#FF0000",
+        "style": [
+          "sporty",
+          "streetwear"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0031",
+        "source_j9_id": "balanced-150-0017"
+      },
+      {
+        "id": "balanced-100-0011",
+        "category": "long_sleeve_top",
+        "primary_colour": "beige",
+        "style": [
+          "casual"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0022",
+        "source_j9_id": "balanced-150-0025"
+      },
+      {
+        "id": "balanced-100-0012",
+        "category": "long_sleeve_top",
+        "primary_colour": "#FF0000",
+        "style": [
+          "streetwear"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0037",
+        "source_j9_id": "balanced-150-0022"
+      },
+      {
+        "id": "balanced-100-0013",
+        "category": "long_sleeve_top",
+        "primary_colour": "orange",
+        "style": [
+          "casual"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0026",
+        "source_j9_id": "balanced-150-0026"
+      },
+      {
+        "id": "balanced-100-0014",
+        "category": "long_sleeve_top",
+        "primary_colour": "red",
+        "style": [
+          "streetwear"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0030",
+        "source_j9_id": "balanced-150-0018"
+      },
+      {
+        "id": "balanced-100-0015",
+        "category": "long_sleeve_top",
+        "primary_colour": "purple",
+        "style": [
+          "smart casual"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0025",
+        "source_j9_id": "balanced-150-0016"
+      },
+      {
+        "id": "balanced-100-0016",
+        "category": "long_sleeve_top",
+        "primary_colour": "red",
+        "style": [
+          "casual"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0036",
+        "source_j9_id": "balanced-150-0023"
+      },
+      {
+        "id": "balanced-100-0017",
+        "category": "long_sleeve_top",
+        "primary_colour": "#FF0000",
+        "style": [
+          "vintage",
+          "minimal",
+          "bohemian"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0039",
+        "source_j9_id": "balanced-150-0021"
+      },
+      {
+        "id": "balanced-100-0018",
+        "category": "long_sleeve_top",
+        "primary_colour": "grey",
+        "style": [
+          "vintage",
+          "minimal",
+          "bohemian"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0028",
+        "source_j9_id": "balanced-150-0015"
+      },
+      {
+        "id": "balanced-100-0019",
+        "category": "long_sleeve_top",
+        "primary_colour": "white",
+        "style": [
+          "formal"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0027",
+        "source_j9_id": "balanced-150-0029"
+      },
+      {
+        "id": "balanced-100-0020",
+        "category": "vest",
+        "primary_colour": null,
+        "style": [
+          "minimal"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0053",
+        "source_j9_id": "balanced-150-0044"
+      },
+      {
+        "id": "balanced-100-0021",
+        "category": "vest",
+        "primary_colour": "brown",
+        "style": [
+          "smart casual"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0059",
+        "source_j9_id": "balanced-150-0031"
+      },
+      {
+        "id": "balanced-100-0022",
+        "category": "vest",
+        "primary_colour": "black",
+        "style": [
+          "vintage"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0042",
+        "source_j9_id": "balanced-150-0040"
+      },
+      {
+        "id": "balanced-100-0023",
+        "category": "vest",
+        "primary_colour": "#0000FF",
+        "style": [
+          "casual"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0049",
+        "source_j9_id": "balanced-150-0038"
+      },
+      {
+        "id": "balanced-100-0024",
+        "category": "vest",
+        "primary_colour": "yellow",
+        "style": [
+          "vintage",
+          "minimal",
+          "bohemian"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0054",
+        "source_j9_id": "balanced-150-0043"
+      },
+      {
+        "id": "balanced-100-0025",
+        "category": "vest",
+        "primary_colour": "black",
+        "style": [
+          "sporty",
+          "streetwear"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0047",
+        "source_j9_id": "balanced-150-0032"
+      },
+      {
+        "id": "balanced-100-0026",
+        "category": "vest",
+        "primary_colour": "#0000FF",
+        "style": null,
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0043",
+        "source_j9_id": "balanced-150-0037"
+      },
+      {
+        "id": "balanced-100-0027",
+        "category": "vest",
+        "primary_colour": "grey",
+        "style": [
+          "vintage",
+          "minimal",
+          "bohemian"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0044",
+        "source_j9_id": "balanced-150-0035"
+      },
+      {
+        "id": "balanced-100-0028",
+        "category": "vest",
+        "primary_colour": "#ABCDEF",
+        "style": [
+          "smart casual"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0052",
+        "source_j9_id": "balanced-150-0042"
+      },
+      {
+        "id": "balanced-100-0029",
+        "category": "vest",
+        "primary_colour": "black",
+        "style": [
+          "bohemian"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": null,
+        "source_j7_id": "varied-200-0051",
+        "source_j9_id": "balanced-150-0036"
+      },
+      {
+        "id": "balanced-100-0030",
+        "category": "sling",
+        "primary_colour": "yellow",
+        "style": [
+          "smart casual"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": null,
+        "source_j7_id": "varied-200-0066",
+        "source_j9_id": "balanced-150-0045"
+      },
+      {
+        "id": "balanced-100-0031",
+        "category": "sling",
+        "primary_colour": "cream",
+        "style": null,
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0076",
+        "source_j9_id": "balanced-150-0046"
+      },
+      {
+        "id": "balanced-100-0032",
+        "category": "sling",
+        "primary_colour": "black",
+        "style": [
+          "vintage"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0072",
+        "source_j9_id": "balanced-150-0052"
+      },
+      {
+        "id": "balanced-100-0033",
+        "category": "sling",
+        "primary_colour": "purple",
+        "style": [
+          "minimal"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0077",
+        "source_j9_id": "balanced-150-0050"
+      },
+      {
+        "id": "balanced-100-0034",
+        "category": "sling",
+        "primary_colour": "grey",
+        "style": [
+          "vintage",
+          "minimal",
+          "bohemian"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": null,
+        "source_j7_id": "varied-200-0071",
+        "source_j9_id": "balanced-150-0051"
+      },
+      {
+        "id": "balanced-100-0035",
+        "category": "sling",
+        "primary_colour": "green",
+        "style": [
+          "classic"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0063",
+        "source_j9_id": "balanced-150-0059"
+      },
+      {
+        "id": "balanced-100-0036",
+        "category": "sling",
+        "primary_colour": "#123456",
+        "style": [
+          "minimal"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0065",
+        "source_j9_id": "balanced-150-0056"
+      },
+      {
+        "id": "balanced-100-0037",
+        "category": "sling",
+        "primary_colour": "white",
+        "style": [],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0075",
+        "source_j9_id": "balanced-150-0048"
+      },
+      {
+        "id": "balanced-100-0038",
+        "category": "sling",
+        "primary_colour": "orange",
+        "style": [
+          "minimal"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0070",
+        "source_j9_id": "balanced-150-0054"
+      },
+      {
+        "id": "balanced-100-0039",
+        "category": "sling",
+        "primary_colour": "cream",
+        "style": [
+          "sporty"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": null,
+        "source_j7_id": "varied-200-0062",
+        "source_j9_id": "balanced-150-0053"
+      },
+      {
+        "id": "balanced-100-0040",
+        "category": "shorts",
+        "primary_colour": "yellow",
+        "style": [
+          "vintage",
+          "classic"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0093",
+        "source_j9_id": "balanced-150-0066"
+      },
+      {
+        "id": "balanced-100-0041",
+        "category": "shorts",
+        "primary_colour": "red",
+        "style": [
+          "bohemian"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0096",
+        "source_j9_id": "balanced-150-0076"
+      },
+      {
+        "id": "balanced-100-0042",
+        "category": "shorts",
+        "primary_colour": "purple",
+        "style": [
+          "sporty",
+          "streetwear"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": null,
+        "source_j7_id": "varied-200-0101",
+        "source_j9_id": "balanced-150-0074"
+      },
+      {
+        "id": "balanced-100-0043",
+        "category": "shorts",
+        "primary_colour": "red",
+        "style": [
+          "casual"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0097",
+        "source_j9_id": "balanced-150-0075"
+      },
+      {
+        "id": "balanced-100-0044",
+        "category": "shorts",
+        "primary_colour": "yellow",
+        "style": null,
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0089",
+        "source_j9_id": "balanced-150-0073"
+      },
+      {
+        "id": "balanced-100-0045",
+        "category": "shorts",
+        "primary_colour": "beige",
+        "style": [
+          "bohemian"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0099",
+        "source_j9_id": "balanced-150-0077"
+      },
+      {
+        "id": "balanced-100-0046",
+        "category": "shorts",
+        "primary_colour": "green",
+        "style": [
+          "casual"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0105",
+        "source_j9_id": "balanced-150-0071"
+      },
+      {
+        "id": "balanced-100-0047",
+        "category": "shorts",
+        "primary_colour": "black",
+        "style": [
+          "smart casual"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0082",
+        "source_j9_id": "balanced-150-0072"
+      },
+      {
+        "id": "balanced-100-0048",
+        "category": "shorts",
+        "primary_colour": "grey",
+        "style": [
+          "vintage",
+          "classic"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0080",
+        "source_j9_id": "balanced-150-0062"
+      },
+      {
+        "id": "balanced-100-0049",
+        "category": "shorts",
+        "primary_colour": "grey",
+        "style": [
+          "smart casual"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0085",
+        "source_j9_id": "balanced-150-0070"
+      },
+      {
+        "id": "balanced-100-0050",
+        "category": "shorts",
+        "primary_colour": "navy",
+        "style": null,
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0098",
+        "source_j9_id": "balanced-150-0069"
+      },
+      {
+        "id": "balanced-100-0051",
+        "category": "shorts",
+        "primary_colour": "#FF0000",
+        "style": [
+          "vintage"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": null,
+        "source_j7_id": "varied-200-0103",
+        "source_j9_id": "balanced-150-0065"
+      },
+      {
+        "id": "balanced-100-0052",
+        "category": "shorts",
+        "primary_colour": "blue",
+        "style": [
+          "sporty"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0092",
+        "source_j9_id": "balanced-150-0079"
+      },
+      {
+        "id": "balanced-100-0053",
+        "category": "shorts",
+        "primary_colour": "cream",
+        "style": [
+          "minimal"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": null,
+        "source_j7_id": "varied-200-0086",
+        "source_j9_id": "balanced-150-0061"
+      },
+      {
+        "id": "balanced-100-0054",
+        "category": "trousers",
+        "primary_colour": "purple",
+        "style": [
+          "sporty"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0119",
+        "source_j9_id": "balanced-150-0080"
+      },
+      {
+        "id": "balanced-100-0055",
+        "category": "trousers",
+        "primary_colour": "blue",
+        "style": [
+          "vintage",
+          "minimal",
+          "bohemian"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": null,
+        "source_j7_id": "varied-200-0109",
+        "source_j9_id": "balanced-150-0089"
+      },
+      {
+        "id": "balanced-100-0056",
+        "category": "trousers",
+        "primary_colour": "#FF0000",
+        "style": [
+          "vintage",
+          "classic"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0124",
+        "source_j9_id": "balanced-150-0083"
+      },
+      {
+        "id": "balanced-100-0057",
+        "category": "trousers",
+        "primary_colour": "yellow",
+        "style": [
+          "sporty",
+          "streetwear"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0108",
+        "source_j9_id": "balanced-150-0099"
+      },
+      {
+        "id": "balanced-100-0058",
+        "category": "trousers",
+        "primary_colour": "navy",
+        "style": [
+          "casual"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0129",
+        "source_j9_id": "balanced-150-0098"
+      },
+      {
+        "id": "balanced-100-0059",
+        "category": "trousers",
+        "primary_colour": "red",
+        "style": [
+          "minimal"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0110",
+        "source_j9_id": "balanced-150-0092"
+      },
+      {
+        "id": "balanced-100-0060",
+        "category": "trousers",
+        "primary_colour": "brown",
+        "style": [
+          "classic"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0128",
+        "source_j9_id": "balanced-150-0085"
+      },
+      {
+        "id": "balanced-100-0061",
+        "category": "trousers",
+        "primary_colour": "black",
+        "style": [
+          "vintage",
+          "classic"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0112",
+        "source_j9_id": "balanced-150-0082"
+      },
+      {
+        "id": "balanced-100-0062",
+        "category": "trousers",
+        "primary_colour": "grey",
+        "style": [
+          "vintage",
+          "minimal",
+          "bohemian"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0122",
+        "source_j9_id": "balanced-150-0095"
+      },
+      {
+        "id": "balanced-100-0063",
+        "category": "trousers",
+        "primary_colour": "navy",
+        "style": [
+          "streetwear"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0132",
+        "source_j9_id": "balanced-150-0091"
+      },
+      {
+        "id": "balanced-100-0064",
+        "category": "trousers",
+        "primary_colour": "yellow",
+        "style": [
+          "bohemian"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0118",
+        "source_j9_id": "balanced-150-0096"
+      },
+      {
+        "id": "balanced-100-0065",
+        "category": "trousers",
+        "primary_colour": null,
+        "style": [],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": null,
+        "source_j7_id": "varied-200-0121",
+        "source_j9_id": "balanced-150-0093"
+      },
+      {
+        "id": "balanced-100-0066",
+        "category": "trousers",
+        "primary_colour": null,
+        "style": [
+          "streetwear"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0131",
+        "source_j9_id": "balanced-150-0094"
+      },
+      {
+        "id": "balanced-100-0067",
+        "category": "skirt",
+        "primary_colour": "cream",
+        "style": [
+          "vintage",
+          "minimal",
+          "bohemian"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0157",
+        "source_j9_id": "balanced-150-0106"
+      },
+      {
+        "id": "balanced-100-0068",
+        "category": "skirt",
+        "primary_colour": null,
+        "style": [
+          "casual"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0134",
+        "source_j9_id": "balanced-150-0110"
+      },
+      {
+        "id": "balanced-100-0069",
+        "category": "skirt",
+        "primary_colour": "#FFFFFF",
+        "style": [
+          "sporty"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0141",
+        "source_j9_id": "balanced-150-0102"
+      },
+      {
+        "id": "balanced-100-0070",
+        "category": "skirt",
+        "primary_colour": "#0000FF",
+        "style": [
+          "vintage"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0136",
+        "source_j9_id": "balanced-150-0105"
+      },
+      {
+        "id": "balanced-100-0071",
+        "category": "skirt",
+        "primary_colour": "#0000FF",
+        "style": [],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": null,
+        "source_j7_id": "varied-200-0138",
+        "source_j9_id": "balanced-150-0109"
+      },
+      {
+        "id": "balanced-100-0072",
+        "category": "skirt",
+        "primary_colour": "green",
+        "style": null,
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0137",
+        "source_j9_id": "balanced-150-0118"
+      },
+      {
+        "id": "balanced-100-0073",
+        "category": "skirt",
+        "primary_colour": "green",
+        "style": [
+          "smart casual"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": null,
+        "source_j7_id": "varied-200-0142",
+        "source_j9_id": "balanced-150-0115"
+      },
+      {
+        "id": "balanced-100-0074",
+        "category": "skirt",
+        "primary_colour": null,
+        "style": [
+          "sporty",
+          "streetwear"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0144",
+        "source_j9_id": "balanced-150-0104"
+      },
+      {
+        "id": "balanced-100-0075",
+        "category": "skirt",
+        "primary_colour": "black",
+        "style": [
+          "casual"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0139",
+        "source_j9_id": "balanced-150-0112"
+      },
+      {
+        "id": "balanced-100-0076",
+        "category": "skirt",
+        "primary_colour": "grey",
+        "style": [
+          "formal"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0151",
+        "source_j9_id": "balanced-150-0107"
+      },
+      {
+        "id": "balanced-100-0077",
+        "category": "skirt",
+        "primary_colour": "white",
+        "style": [
+          "streetwear"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0152",
+        "source_j9_id": "balanced-150-0108"
+      },
+      {
+        "id": "balanced-100-0078",
+        "category": "skirt",
+        "primary_colour": "blue",
+        "style": [
+          "smart casual"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0145",
+        "source_j9_id": "balanced-150-0101"
+      },
+      {
+        "id": "balanced-100-0079",
+        "category": "skirt",
+        "primary_colour": "#ABCDEF",
+        "style": [
+          "vintage"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0146",
+        "source_j9_id": "balanced-150-0103"
+      },
+      {
+        "id": "balanced-100-0080",
+        "category": "short_sleeve_dress",
+        "primary_colour": "#123456",
+        "style": [
+          "smart casual"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": null,
+        "source_j7_id": "varied-200-0165",
+        "source_j9_id": "balanced-150-0122"
+      },
+      {
+        "id": "balanced-100-0081",
+        "category": "short_sleeve_dress",
+        "primary_colour": "blue",
+        "style": [
+          "sporty",
+          "streetwear"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0163",
+        "source_j9_id": "balanced-150-0121"
+      },
+      {
+        "id": "balanced-100-0082",
+        "category": "short_sleeve_dress",
+        "primary_colour": "purple",
+        "style": [
+          "vintage"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0164",
+        "source_j9_id": "balanced-150-0120"
+      },
+      {
+        "id": "balanced-100-0083",
+        "category": "long_sleeve_dress",
+        "primary_colour": "red",
+        "style": [],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0166",
+        "source_j9_id": "balanced-150-0125"
+      },
+      {
+        "id": "balanced-100-0084",
+        "category": "long_sleeve_dress",
+        "primary_colour": "beige",
+        "style": [
+          "sporty",
+          "streetwear"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0171",
+        "source_j9_id": "balanced-150-0126"
+      },
+      {
+        "id": "balanced-100-0085",
+        "category": "long_sleeve_dress",
+        "primary_colour": "#0000FF",
+        "style": [
+          "bohemian"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": null,
+        "source_j7_id": "varied-200-0169",
+        "source_j9_id": "balanced-150-0124"
+      },
+      {
+        "id": "balanced-100-0086",
+        "category": "vest_dress",
+        "primary_colour": null,
+        "style": [
+          "formal"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0173",
+        "source_j9_id": "balanced-150-0131"
+      },
+      {
+        "id": "balanced-100-0087",
+        "category": "vest_dress",
+        "primary_colour": "#123456",
+        "style": [
+          "formal"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": null,
+        "source_j7_id": "varied-200-0174",
+        "source_j9_id": "balanced-150-0129"
+      },
+      {
+        "id": "balanced-100-0088",
+        "category": "sling_dress",
+        "primary_colour": "pink",
+        "style": [
+          "vintage",
+          "classic"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0176",
+        "source_j9_id": "balanced-150-0134"
+      },
+      {
+        "id": "balanced-100-0089",
+        "category": "sling_dress",
+        "primary_colour": "purple",
+        "style": [
+          "streetwear"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0177",
+        "source_j9_id": "balanced-150-0132"
+      },
+      {
+        "id": "balanced-100-0090",
+        "category": "short_sleeve_outwear",
+        "primary_colour": "#FFFFFF",
+        "style": [
+          "vintage"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0184",
+        "source_j9_id": "balanced-150-0136"
+      },
+      {
+        "id": "balanced-100-0091",
+        "category": "short_sleeve_outwear",
+        "primary_colour": "#123456",
+        "style": [
+          "sporty"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0180",
+        "source_j9_id": "balanced-150-0140"
+      },
+      {
+        "id": "balanced-100-0092",
+        "category": "short_sleeve_outwear",
+        "primary_colour": "grey",
+        "style": [
+          "smart casual"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0182",
+        "source_j9_id": "balanced-150-0137"
+      },
+      {
+        "id": "balanced-100-0093",
+        "category": "short_sleeve_outwear",
+        "primary_colour": "#123456",
+        "style": [
+          "formal"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0187",
+        "source_j9_id": "balanced-150-0139"
+      },
+      {
+        "id": "balanced-100-0094",
+        "category": "short_sleeve_outwear",
+        "primary_colour": "white",
+        "style": [
+          "sporty",
+          "streetwear"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0185",
+        "source_j9_id": "balanced-150-0142"
+      },
+      {
+        "id": "balanced-100-0095",
+        "category": "long_sleeve_outwear",
+        "primary_colour": "green",
+        "style": [
+          "sporty"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0191",
+        "source_j9_id": "balanced-150-0147"
+      },
+      {
+        "id": "balanced-100-0096",
+        "category": "long_sleeve_outwear",
+        "primary_colour": "grey",
+        "style": [
+          "sporty",
+          "streetwear"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": null,
+        "source_j7_id": "varied-200-0194",
+        "source_j9_id": "balanced-150-0148"
+      },
+      {
+        "id": "balanced-100-0097",
+        "category": "long_sleeve_outwear",
+        "primary_colour": "blue",
+        "style": [],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0196",
+        "source_j9_id": "balanced-150-0144"
+      },
+      {
+        "id": "balanced-100-0098",
+        "category": "long_sleeve_outwear",
+        "primary_colour": "cream",
+        "style": [
+          "bohemian"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0199",
+        "source_j9_id": "balanced-150-0143"
+      },
+      {
+        "id": "balanced-100-0099",
+        "category": "long_sleeve_outwear",
+        "primary_colour": "orange",
+        "style": [
+          "streetwear"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0192",
+        "source_j9_id": "balanced-150-0149"
+      }
+    ],
+    "maximum-100": [
+      {
+        "id": "maximum-100-0000",
+        "category": "short_sleeve_top",
+        "primary_colour": "cream",
+        "style": [],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0015",
+        "source_j9_id": "outerwear-heavy-150-0008"
+      },
+      {
+        "id": "maximum-100-0001",
+        "category": "short_sleeve_top",
+        "primary_colour": "#FF0000",
+        "style": [
+          "vintage"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0006",
+        "source_j9_id": "outerwear-heavy-150-0010"
+      },
+      {
+        "id": "maximum-100-0002",
+        "category": "short_sleeve_top",
+        "primary_colour": "navy",
+        "style": [
+          "classic"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0002",
+        "source_j9_id": "outerwear-heavy-150-0003"
+      },
+      {
+        "id": "maximum-100-0003",
+        "category": "short_sleeve_top",
+        "primary_colour": "#ABCDEF",
+        "style": [
+          "vintage",
+          "classic"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0019",
+        "source_j9_id": "outerwear-heavy-150-0006"
+      },
+      {
+        "id": "maximum-100-0004",
+        "category": "short_sleeve_top",
+        "primary_colour": "navy",
+        "style": [
+          "sporty",
+          "streetwear"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": null,
+        "source_j7_id": "varied-200-0011",
+        "source_j9_id": "outerwear-heavy-150-0005"
+      },
+      {
+        "id": "maximum-100-0005",
+        "category": "short_sleeve_top",
+        "primary_colour": "pink",
+        "style": [
+          "bohemian"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0008",
+        "source_j9_id": "outerwear-heavy-150-0000"
+      },
+      {
+        "id": "maximum-100-0006",
+        "category": "short_sleeve_top",
+        "primary_colour": "grey",
+        "style": [
+          "sporty",
+          "streetwear"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": null,
+        "source_j7_id": "varied-200-0012",
+        "source_j9_id": "outerwear-heavy-150-0002"
+      },
+      {
+        "id": "maximum-100-0007",
+        "category": "short_sleeve_top",
+        "primary_colour": "#FF0000",
+        "style": [
+          "vintage"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0004",
+        "source_j9_id": "outerwear-heavy-150-0012"
+      },
+      {
+        "id": "maximum-100-0008",
+        "category": "short_sleeve_top",
+        "primary_colour": "green",
+        "style": [
+          "vintage",
+          "classic"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0014",
+        "source_j9_id": "outerwear-heavy-150-0011"
+      },
+      {
+        "id": "maximum-100-0009",
+        "category": "long_sleeve_top",
+        "primary_colour": "beige",
+        "style": [
+          "casual"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0022",
+        "source_j9_id": "outerwear-heavy-150-0024"
+      },
+      {
+        "id": "maximum-100-0010",
+        "category": "long_sleeve_top",
+        "primary_colour": "red",
+        "style": [
+          "streetwear"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0030",
+        "source_j9_id": "outerwear-heavy-150-0021"
+      },
+      {
+        "id": "maximum-100-0011",
+        "category": "long_sleeve_top",
+        "primary_colour": "#FFFFFF",
+        "style": [
+          "smart casual"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0034",
+        "source_j9_id": "outerwear-heavy-150-0025"
+      },
+      {
+        "id": "maximum-100-0012",
+        "category": "long_sleeve_top",
+        "primary_colour": "#0000FF",
+        "style": [
+          "smart casual"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": null,
+        "source_j7_id": "varied-200-0033",
+        "source_j9_id": "outerwear-heavy-150-0023"
+      },
+      {
+        "id": "maximum-100-0013",
+        "category": "long_sleeve_top",
+        "primary_colour": "#FF0000",
+        "style": [
+          "streetwear"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0037",
+        "source_j9_id": "outerwear-heavy-150-0013"
+      },
+      {
+        "id": "maximum-100-0014",
+        "category": "long_sleeve_top",
+        "primary_colour": "#123456",
+        "style": [
+          "streetwear"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": null,
+        "source_j7_id": "varied-200-0021",
+        "source_j9_id": "outerwear-heavy-150-0020"
+      },
+      {
+        "id": "maximum-100-0015",
+        "category": "long_sleeve_top",
+        "primary_colour": "pink",
+        "style": [
+          "minimal"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": null,
+        "source_j7_id": "varied-200-0023",
+        "source_j9_id": "outerwear-heavy-150-0019"
+      },
+      {
+        "id": "maximum-100-0016",
+        "category": "long_sleeve_top",
+        "primary_colour": "#123456",
+        "style": [
+          "sporty",
+          "streetwear"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": null,
+        "source_j7_id": "varied-200-0038",
+        "source_j9_id": "outerwear-heavy-150-0014"
+      },
+      {
+        "id": "maximum-100-0017",
+        "category": "long_sleeve_top",
+        "primary_colour": "#0000FF",
+        "style": [
+          "casual"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": null,
+        "source_j7_id": "varied-200-0020",
+        "source_j9_id": "outerwear-heavy-150-0016"
+      },
+      {
+        "id": "maximum-100-0018",
+        "category": "vest",
+        "primary_colour": "orange",
+        "style": [],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0045",
+        "source_j9_id": "outerwear-heavy-150-0029"
+      },
+      {
+        "id": "maximum-100-0019",
+        "category": "vest",
+        "primary_colour": "#0000FF",
+        "style": null,
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0043",
+        "source_j9_id": "outerwear-heavy-150-0030"
+      },
+      {
+        "id": "maximum-100-0020",
+        "category": "vest",
+        "primary_colour": "orange",
+        "style": [
+          "vintage"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0046",
+        "source_j9_id": "outerwear-heavy-150-0036"
+      },
+      {
+        "id": "maximum-100-0021",
+        "category": "vest",
+        "primary_colour": null,
+        "style": [
+          "minimal"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0053",
+        "source_j9_id": "outerwear-heavy-150-0035"
+      },
+      {
+        "id": "maximum-100-0022",
+        "category": "vest",
+        "primary_colour": "brown",
+        "style": [
+          "smart casual"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0059",
+        "source_j9_id": "outerwear-heavy-150-0033"
+      },
+      {
+        "id": "maximum-100-0023",
+        "category": "vest",
+        "primary_colour": "grey",
+        "style": [
+          "vintage",
+          "minimal",
+          "bohemian"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0044",
+        "source_j9_id": "outerwear-heavy-150-0026"
+      },
+      {
+        "id": "maximum-100-0024",
+        "category": "vest",
+        "primary_colour": "black",
+        "style": [
+          "bohemian"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": null,
+        "source_j7_id": "varied-200-0051",
+        "source_j9_id": "outerwear-heavy-150-0034"
+      },
+      {
+        "id": "maximum-100-0025",
+        "category": "vest",
+        "primary_colour": "#ABCDEF",
+        "style": [
+          "smart casual"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0052",
+        "source_j9_id": "outerwear-heavy-150-0031"
+      },
+      {
+        "id": "maximum-100-0026",
+        "category": "sling",
+        "primary_colour": "purple",
+        "style": [
+          "minimal"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0077",
+        "source_j9_id": "outerwear-heavy-150-0047"
+      },
+      {
+        "id": "maximum-100-0027",
+        "category": "sling",
+        "primary_colour": "cream",
+        "style": [
+          "streetwear"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": null,
+        "source_j7_id": "varied-200-0074",
+        "source_j9_id": "outerwear-heavy-150-0044"
+      },
+      {
+        "id": "maximum-100-0028",
+        "category": "sling",
+        "primary_colour": "yellow",
+        "style": [
+          "classic"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0064",
+        "source_j9_id": "outerwear-heavy-150-0043"
+      },
+      {
+        "id": "maximum-100-0029",
+        "category": "sling",
+        "primary_colour": "pink",
+        "style": [
+          "vintage",
+          "classic"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0067",
+        "source_j9_id": "outerwear-heavy-150-0045"
+      },
+      {
+        "id": "maximum-100-0030",
+        "category": "sling",
+        "primary_colour": "orange",
+        "style": [
+          "minimal"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0070",
+        "source_j9_id": "outerwear-heavy-150-0039"
+      },
+      {
+        "id": "maximum-100-0031",
+        "category": "sling",
+        "primary_colour": "white",
+        "style": [],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0075",
+        "source_j9_id": "outerwear-heavy-150-0042"
+      },
+      {
+        "id": "maximum-100-0032",
+        "category": "sling",
+        "primary_colour": "#ABCDEF",
+        "style": [
+          "vintage",
+          "minimal",
+          "bohemian"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0068",
+        "source_j9_id": "outerwear-heavy-150-0040"
+      },
+      {
+        "id": "maximum-100-0033",
+        "category": "sling",
+        "primary_colour": "cream",
+        "style": null,
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0076",
+        "source_j9_id": "outerwear-heavy-150-0038"
+      },
+      {
+        "id": "maximum-100-0034",
+        "category": "shorts",
+        "primary_colour": "green",
+        "style": [
+          "casual"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0105",
+        "source_j9_id": "outerwear-heavy-150-0056"
+      },
+      {
+        "id": "maximum-100-0035",
+        "category": "shorts",
+        "primary_colour": "red",
+        "style": [
+          "sporty"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": null,
+        "source_j7_id": "varied-200-0087",
+        "source_j9_id": "outerwear-heavy-150-0052"
+      },
+      {
+        "id": "maximum-100-0036",
+        "category": "shorts",
+        "primary_colour": "black",
+        "style": [
+          "vintage"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": null,
+        "source_j7_id": "varied-200-0104",
+        "source_j9_id": "outerwear-heavy-150-0057"
+      },
+      {
+        "id": "maximum-100-0037",
+        "category": "shorts",
+        "primary_colour": "black",
+        "style": [
+          "sporty"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0081",
+        "source_j9_id": "outerwear-heavy-150-0064"
+      },
+      {
+        "id": "maximum-100-0038",
+        "category": "shorts",
+        "primary_colour": "cream",
+        "style": [
+          "minimal"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": null,
+        "source_j7_id": "varied-200-0086",
+        "source_j9_id": "outerwear-heavy-150-0051"
+      },
+      {
+        "id": "maximum-100-0039",
+        "category": "shorts",
+        "primary_colour": "#FF0000",
+        "style": [
+          "vintage"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": null,
+        "source_j7_id": "varied-200-0103",
+        "source_j9_id": "outerwear-heavy-150-0053"
+      },
+      {
+        "id": "maximum-100-0040",
+        "category": "shorts",
+        "primary_colour": "green",
+        "style": [
+          "formal"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0095",
+        "source_j9_id": "outerwear-heavy-150-0055"
+      },
+      {
+        "id": "maximum-100-0041",
+        "category": "shorts",
+        "primary_colour": "#0000FF",
+        "style": [
+          "classic"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0090",
+        "source_j9_id": "outerwear-heavy-150-0061"
+      },
+      {
+        "id": "maximum-100-0042",
+        "category": "shorts",
+        "primary_colour": "orange",
+        "style": [
+          "minimal"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0100",
+        "source_j9_id": "outerwear-heavy-150-0062"
+      },
+      {
+        "id": "maximum-100-0043",
+        "category": "shorts",
+        "primary_colour": "black",
+        "style": [
+          "smart casual"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0082",
+        "source_j9_id": "outerwear-heavy-150-0050"
+      },
+      {
+        "id": "maximum-100-0044",
+        "category": "shorts",
+        "primary_colour": "yellow",
+        "style": null,
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0089",
+        "source_j9_id": "outerwear-heavy-150-0060"
+      },
+      {
+        "id": "maximum-100-0045",
+        "category": "shorts",
+        "primary_colour": "grey",
+        "style": [
+          "classic"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0084",
+        "source_j9_id": "outerwear-heavy-150-0054"
+      },
+      {
+        "id": "maximum-100-0046",
+        "category": "trousers",
+        "primary_colour": "blue",
+        "style": [],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": null,
+        "source_j7_id": "varied-200-0125",
+        "source_j9_id": "outerwear-heavy-150-0078"
+      },
+      {
+        "id": "maximum-100-0047",
+        "category": "trousers",
+        "primary_colour": "red",
+        "style": [
+          "smart casual"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0127",
+        "source_j9_id": "outerwear-heavy-150-0071"
+      },
+      {
+        "id": "maximum-100-0048",
+        "category": "trousers",
+        "primary_colour": "navy",
+        "style": [
+          "casual"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0129",
+        "source_j9_id": "outerwear-heavy-150-0075"
+      },
+      {
+        "id": "maximum-100-0049",
+        "category": "trousers",
+        "primary_colour": "black",
+        "style": [
+          "smart casual"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0114",
+        "source_j9_id": "outerwear-heavy-150-0068"
+      },
+      {
+        "id": "maximum-100-0050",
+        "category": "trousers",
+        "primary_colour": "yellow",
+        "style": null,
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0133",
+        "source_j9_id": "outerwear-heavy-150-0073"
+      },
+      {
+        "id": "maximum-100-0051",
+        "category": "trousers",
+        "primary_colour": "yellow",
+        "style": [
+          "bohemian"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0118",
+        "source_j9_id": "outerwear-heavy-150-0074"
+      },
+      {
+        "id": "maximum-100-0052",
+        "category": "trousers",
+        "primary_colour": null,
+        "style": [
+          "streetwear"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0131",
+        "source_j9_id": "outerwear-heavy-150-0069"
+      },
+      {
+        "id": "maximum-100-0053",
+        "category": "trousers",
+        "primary_colour": "#ABCDEF",
+        "style": null,
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0126",
+        "source_j9_id": "outerwear-heavy-150-0077"
+      },
+      {
+        "id": "maximum-100-0054",
+        "category": "trousers",
+        "primary_colour": "orange",
+        "style": [
+          "sporty"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0111",
+        "source_j9_id": "outerwear-heavy-150-0083"
+      },
+      {
+        "id": "maximum-100-0055",
+        "category": "trousers",
+        "primary_colour": "#FF0000",
+        "style": [
+          "casual"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0117",
+        "source_j9_id": "outerwear-heavy-150-0079"
+      },
+      {
+        "id": "maximum-100-0056",
+        "category": "trousers",
+        "primary_colour": "yellow",
+        "style": [
+          "sporty",
+          "streetwear"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0108",
+        "source_j9_id": "outerwear-heavy-150-0070"
+      },
+      {
+        "id": "maximum-100-0057",
+        "category": "skirt",
+        "primary_colour": "black",
+        "style": [
+          "sporty"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0150",
+        "source_j9_id": "outerwear-heavy-150-0095"
+      },
+      {
+        "id": "maximum-100-0058",
+        "category": "skirt",
+        "primary_colour": "#0000FF",
+        "style": [],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": null,
+        "source_j7_id": "varied-200-0138",
+        "source_j9_id": "outerwear-heavy-150-0092"
+      },
+      {
+        "id": "maximum-100-0059",
+        "category": "skirt",
+        "primary_colour": "green",
+        "style": null,
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0137",
+        "source_j9_id": "outerwear-heavy-150-0098"
+      },
+      {
+        "id": "maximum-100-0060",
+        "category": "skirt",
+        "primary_colour": "pink",
+        "style": [
+          "vintage"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0147",
+        "source_j9_id": "outerwear-heavy-150-0084"
+      },
+      {
+        "id": "maximum-100-0061",
+        "category": "skirt",
+        "primary_colour": null,
+        "style": [
+          "bohemian"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0156",
+        "source_j9_id": "outerwear-heavy-150-0097"
+      },
+      {
+        "id": "maximum-100-0062",
+        "category": "skirt",
+        "primary_colour": null,
+        "style": [
+          "sporty",
+          "streetwear"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0144",
+        "source_j9_id": "outerwear-heavy-150-0090"
+      },
+      {
+        "id": "maximum-100-0063",
+        "category": "skirt",
+        "primary_colour": "yellow",
+        "style": [
+          "sporty",
+          "streetwear"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0155",
+        "source_j9_id": "outerwear-heavy-150-0099"
+      },
+      {
+        "id": "maximum-100-0064",
+        "category": "skirt",
+        "primary_colour": "#123456",
+        "style": [
+          "casual"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": null,
+        "source_j7_id": "varied-200-0140",
+        "source_j9_id": "outerwear-heavy-150-0094"
+      },
+      {
+        "id": "maximum-100-0065",
+        "category": "skirt",
+        "primary_colour": "#FFFFFF",
+        "style": [
+          "formal"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0148",
+        "source_j9_id": "outerwear-heavy-150-0088"
+      },
+      {
+        "id": "maximum-100-0066",
+        "category": "skirt",
+        "primary_colour": "red",
+        "style": [
+          "vintage",
+          "classic"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0158",
+        "source_j9_id": "outerwear-heavy-150-0096"
+      },
+      {
+        "id": "maximum-100-0067",
+        "category": "skirt",
+        "primary_colour": "beige",
+        "style": [
+          "minimal"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0135",
+        "source_j9_id": "outerwear-heavy-150-0089"
+      },
+      {
+        "id": "maximum-100-0068",
+        "category": "short_sleeve_outwear",
+        "primary_colour": "cream",
+        "style": [
+          "streetwear"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0188",
+        "source_j9_id": "outerwear-heavy-150-0110"
+      },
+      {
+        "id": "maximum-100-0069",
+        "category": "short_sleeve_outwear",
+        "primary_colour": "#123456",
+        "style": [
+          "formal"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0187",
+        "source_j9_id": "outerwear-heavy-150-0103"
+      },
+      {
+        "id": "maximum-100-0070",
+        "category": "short_sleeve_outwear",
+        "primary_colour": "#ABCDEF",
+        "style": null,
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0183",
+        "source_j9_id": "outerwear-heavy-150-0118"
+      },
+      {
+        "id": "maximum-100-0071",
+        "category": "short_sleeve_outwear",
+        "primary_colour": "grey",
+        "style": [
+          "smart casual"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0182",
+        "source_j9_id": "outerwear-heavy-150-0102"
+      },
+      {
+        "id": "maximum-100-0072",
+        "category": "short_sleeve_outwear",
+        "primary_colour": "#123456",
+        "style": [
+          "sporty"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0180",
+        "source_j9_id": "outerwear-heavy-150-0105"
+      },
+      {
+        "id": "maximum-100-0073",
+        "category": "short_sleeve_outwear",
+        "primary_colour": "cream",
+        "style": [
+          "streetwear"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": null,
+        "source_j7_id": "varied-200-0186",
+        "source_j9_id": "outerwear-heavy-150-0124"
+      },
+      {
+        "id": "maximum-100-0074",
+        "category": "short_sleeve_outwear",
+        "primary_colour": "cream",
+        "style": [
+          "streetwear"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0188",
+        "source_j9_id": "outerwear-heavy-150-0100"
+      },
+      {
+        "id": "maximum-100-0075",
+        "category": "short_sleeve_outwear",
+        "primary_colour": "#ABCDEF",
+        "style": null,
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0183",
+        "source_j9_id": "outerwear-heavy-150-0108"
+      },
+      {
+        "id": "maximum-100-0076",
+        "category": "short_sleeve_outwear",
+        "primary_colour": "#123456",
+        "style": [
+          "formal"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0187",
+        "source_j9_id": "outerwear-heavy-150-0123"
+      },
+      {
+        "id": "maximum-100-0077",
+        "category": "short_sleeve_outwear",
+        "primary_colour": "white",
+        "style": [
+          "sporty",
+          "streetwear"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0185",
+        "source_j9_id": "outerwear-heavy-150-0106"
+      },
+      {
+        "id": "maximum-100-0078",
+        "category": "short_sleeve_outwear",
+        "primary_colour": "red",
+        "style": null,
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": null,
+        "source_j7_id": "varied-200-0181",
+        "source_j9_id": "outerwear-heavy-150-0101"
+      },
+      {
+        "id": "maximum-100-0079",
+        "category": "short_sleeve_outwear",
+        "primary_colour": "#ABCDEF",
+        "style": [
+          "bohemian"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0189",
+        "source_j9_id": "outerwear-heavy-150-0107"
+      },
+      {
+        "id": "maximum-100-0080",
+        "category": "short_sleeve_outwear",
+        "primary_colour": "red",
+        "style": null,
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": null,
+        "source_j7_id": "varied-200-0181",
+        "source_j9_id": "outerwear-heavy-150-0121"
+      },
+      {
+        "id": "maximum-100-0081",
+        "category": "short_sleeve_outwear",
+        "primary_colour": "#FFFFFF",
+        "style": [
+          "vintage"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0184",
+        "source_j9_id": "outerwear-heavy-150-0119"
+      },
+      {
+        "id": "maximum-100-0082",
+        "category": "short_sleeve_outwear",
+        "primary_colour": "cream",
+        "style": [
+          "streetwear"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": null,
+        "source_j7_id": "varied-200-0186",
+        "source_j9_id": "outerwear-heavy-150-0114"
+      },
+      {
+        "id": "maximum-100-0083",
+        "category": "short_sleeve_outwear",
+        "primary_colour": "grey",
+        "style": [
+          "smart casual"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0182",
+        "source_j9_id": "outerwear-heavy-150-0122"
+      },
+      {
+        "id": "maximum-100-0084",
+        "category": "long_sleeve_outwear",
+        "primary_colour": "cream",
+        "style": [
+          "formal"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": null,
+        "source_j7_id": "varied-200-0190",
+        "source_j9_id": "outerwear-heavy-150-0133"
+      },
+      {
+        "id": "maximum-100-0085",
+        "category": "long_sleeve_outwear",
+        "primary_colour": "purple",
+        "style": [
+          "minimal"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": null,
+        "source_j7_id": "varied-200-0197",
+        "source_j9_id": "outerwear-heavy-150-0145"
+      },
+      {
+        "id": "maximum-100-0086",
+        "category": "long_sleeve_outwear",
+        "primary_colour": "purple",
+        "style": [
+          "minimal"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": null,
+        "source_j7_id": "varied-200-0197",
+        "source_j9_id": "outerwear-heavy-150-0135"
+      },
+      {
+        "id": "maximum-100-0087",
+        "category": "long_sleeve_outwear",
+        "primary_colour": "orange",
+        "style": [
+          "streetwear"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0192",
+        "source_j9_id": "outerwear-heavy-150-0130"
+      },
+      {
+        "id": "maximum-100-0088",
+        "category": "long_sleeve_outwear",
+        "primary_colour": "cream",
+        "style": [],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0195",
+        "source_j9_id": "outerwear-heavy-150-0132"
+      },
+      {
+        "id": "maximum-100-0089",
+        "category": "long_sleeve_outwear",
+        "primary_colour": "cream",
+        "style": [
+          "formal"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": null,
+        "source_j7_id": "varied-200-0190",
+        "source_j9_id": "outerwear-heavy-150-0143"
+      },
+      {
+        "id": "maximum-100-0090",
+        "category": "long_sleeve_outwear",
+        "primary_colour": "#123456",
+        "style": null,
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0198",
+        "source_j9_id": "outerwear-heavy-150-0139"
+      },
+      {
+        "id": "maximum-100-0091",
+        "category": "long_sleeve_outwear",
+        "primary_colour": "#0000FF",
+        "style": [
+          "streetwear"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0193",
+        "source_j9_id": "outerwear-heavy-150-0127"
+      },
+      {
+        "id": "maximum-100-0092",
+        "category": "long_sleeve_outwear",
+        "primary_colour": "#0000FF",
+        "style": [
+          "streetwear"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0193",
+        "source_j9_id": "outerwear-heavy-150-0147"
+      },
+      {
+        "id": "maximum-100-0093",
+        "category": "long_sleeve_outwear",
+        "primary_colour": "green",
+        "style": [
+          "sporty"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0191",
+        "source_j9_id": "outerwear-heavy-150-0146"
+      },
+      {
+        "id": "maximum-100-0094",
+        "category": "long_sleeve_outwear",
+        "primary_colour": "purple",
+        "style": [
+          "minimal"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": null,
+        "source_j7_id": "varied-200-0197",
+        "source_j9_id": "outerwear-heavy-150-0125"
+      },
+      {
+        "id": "maximum-100-0095",
+        "category": "long_sleeve_outwear",
+        "primary_colour": "cream",
+        "style": [
+          "bohemian"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0199",
+        "source_j9_id": "outerwear-heavy-150-0138"
+      },
+      {
+        "id": "maximum-100-0096",
+        "category": "long_sleeve_outwear",
+        "primary_colour": "cream",
+        "style": [
+          "bohemian"
+        ],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "striped",
+        "source_j7_id": "varied-200-0199",
+        "source_j9_id": "outerwear-heavy-150-0148"
+      },
+      {
+        "id": "maximum-100-0097",
+        "category": "long_sleeve_outwear",
+        "primary_colour": "#123456",
+        "style": null,
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0198",
+        "source_j9_id": "outerwear-heavy-150-0129"
+      },
+      {
+        "id": "maximum-100-0098",
+        "category": "long_sleeve_outwear",
+        "primary_colour": "cream",
+        "style": [],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "floral",
+        "source_j7_id": "varied-200-0195",
+        "source_j9_id": "outerwear-heavy-150-0142"
+      },
+      {
+        "id": "maximum-100-0099",
+        "category": "long_sleeve_outwear",
+        "primary_colour": "blue",
+        "style": [],
+        "custom_tags": [
+          "synthetic fixture",
+          "rec:v1:occasion:campus:allow",
+          "rec:v1:formality:casual:allow"
+        ],
+        "pattern": "solid",
+        "source_j7_id": "varied-200-0196",
+        "source_j9_id": "outerwear-heavy-150-0134"
+      }
+    ]
+  },
+  "histograms": {
+    "balanced-100": {
+      "categories": {
+        "short_sleeve_top": 10,
+        "long_sleeve_top": 10,
+        "vest": 10,
+        "sling": 10,
+        "shorts": 14,
+        "trousers": 13,
+        "skirt": 13,
+        "short_sleeve_dress": 3,
+        "long_sleeve_dress": 3,
+        "vest_dress": 2,
+        "sling_dress": 2,
+        "short_sleeve_outwear": 5,
+        "long_sleeve_outwear": 5
+      },
+      "colours": {
+        "grey": 11,
+        "pink": 2,
+        "white": 5,
+        "#FF0000": 6,
+        "navy": 4,
+        "#123456": 6,
+        "orange": 4,
+        "black": 8,
+        "green": 6,
+        "beige": 3,
+        "red": 6,
+        "purple": 6,
+        "None": 6,
+        "brown": 2,
+        "#0000FF": 5,
+        "yellow": 6,
+        "#ABCDEF": 2,
+        "cream": 5,
+        "blue": 5,
+        "#FFFFFF": 2
+      },
+      "styles": {
+        "missing": 6,
+        "single": 62,
+        "multiple": 27,
+        "empty": 5
+      }
+    },
+    "maximum-100": {
+      "categories": {
+        "short_sleeve_top": 9,
+        "long_sleeve_top": 9,
+        "vest": 8,
+        "sling": 8,
+        "shorts": 12,
+        "trousers": 11,
+        "skirt": 11,
+        "short_sleeve_outwear": 16,
+        "long_sleeve_outwear": 16
+      },
+      "colours": {
+        "cream": 14,
+        "#FF0000": 5,
+        "navy": 3,
+        "#ABCDEF": 7,
+        "pink": 4,
+        "grey": 5,
+        "green": 5,
+        "beige": 2,
+        "red": 6,
+        "#FFFFFF": 3,
+        "#0000FF": 7,
+        "#123456": 8,
+        "orange": 6,
+        "None": 4,
+        "brown": 1,
+        "black": 6,
+        "purple": 4,
+        "yellow": 6,
+        "white": 2,
+        "blue": 2
+      },
+      "styles": {
+        "empty": 8,
+        "single": 67,
+        "multiple": 13,
+        "missing": 12
+      }
+    }
+  },
+  "expected_structural": {
+    "balanced-100": 17710,
+    "maximum-100": 38148
+  },
+  "schedule": [
+    {
+      "workload": "balanced-100",
+      "profile": "experimental_compatibility_decision_v1",
+      "suitability": true,
+      "request": "suitability",
+      "http_repetitions": 1,
+      "browser_repetitions": 5,
+      "priority": true
+    },
+    {
+      "workload": "balanced-100",
+      "profile": "experimental_compatibility_decision_v1",
+      "suitability": false,
+      "request": "generic",
+      "http_repetitions": 1,
+      "browser_repetitions": 1,
+      "priority": false
+    },
+    {
+      "workload": "balanced-100",
+      "profile": "compatibility_deferred",
+      "suitability": true,
+      "request": "suitability",
+      "http_repetitions": 1,
+      "browser_repetitions": 1,
+      "priority": false
+    },
+    {
+      "workload": "maximum-100",
+      "profile": "experimental_compatibility_decision_v1",
+      "suitability": true,
+      "request": "suitability",
+      "http_repetitions": 1,
+      "browser_repetitions": 5,
+      "priority": true
+    },
+    {
+      "workload": "maximum-100",
+      "profile": "experimental_compatibility_decision_v1",
+      "suitability": false,
+      "request": "generic",
+      "http_repetitions": 1,
+      "browser_repetitions": 1,
+      "priority": false
+    },
+    {
+      "workload": "maximum-100",
+      "profile": "compatibility_deferred",
+      "suitability": true,
+      "request": "suitability",
+      "http_repetitions": 1,
+      "browser_repetitions": 1,
+      "priority": false
+    }
+  ],
+  "total_timed_submissions": 20,
+  "maximum_derivation": "Independently enumerate every nonnegative integer T,B,D,O with T+B+D+O=100 and evaluate T*B+T*B*O+D+D*O; actual engine enumeration checked separately."
+}

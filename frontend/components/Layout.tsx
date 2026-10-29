@@ -1,14 +1,16 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, Home, Shirt, PlusCircle, User, ShieldCheck, LogOut, History } from "lucide-react";
 import Image from "next/image";
-import { clearAccessToken } from "@/lib/api";
+import { ApiError, clearAccessToken, getAccessToken, logout } from "@/lib/api";
+import { leaveHomepageFlow } from "@/lib/recommendation-session";
 
 const navItems = [
   { href: "/", label: "Home", icon: Home },
+  { href: "/assistant", label: "Outfit Assistant", icon: Shirt },
   { href: "/wardrobe", label: "My wardrobe", icon: Shirt },
   { href: "/extract", label: "Add an outfit", icon: PlusCircle },
   { href: "/history", label: "Recommendation history", icon: History },
@@ -45,7 +47,35 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const closeSidebar = () => setIsSidebarOpen(false);
-  const signOut = () => { clearAccessToken(); window.location.assign("/auth"); };
+  const [signingOut, setSigningOut] = useState(false);
+  const [logoutError, setLogoutError] = useState(false);
+  const logoutPending = useRef(false);
+  const signOut = async () => {
+    if (logoutPending.current) return;
+    logoutPending.current = true;
+    setSigningOut(true);
+    setLogoutError(false);
+    const identity = getAccessToken();
+    const finish = () => {
+      if (getAccessToken() !== identity) return;
+      clearAccessToken();
+      window.location.assign("/auth");
+    };
+    try {
+      if (identity) await logout(identity);
+      finish();
+    } catch (error) {
+      if (getAccessToken() === identity) {
+        if (error instanceof ApiError && error.status === 401) finish();
+        else setLogoutError(true);
+      }
+    } finally {
+      logoutPending.current = false;
+      setSigningOut(false);
+    }
+  };
+
+  useEffect(() => { if (pathname !== "/") leaveHomepageFlow(); }, [pathname]);
 
   useEffect(() => {
     if (!isSidebarOpen) return;
@@ -72,7 +102,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <Image src="/logo.png" alt="AURA" width={3420} height={1265} sizes="90px" style={{ height: 28, width: "auto" }} className="object-contain" priority />
         </Link>
         <div className="ml-auto flex items-center gap-2 sm:gap-3">
-          {pathname !== "/auth" && <button type="button" onClick={signOut} className="inline-flex min-h-11 items-center gap-2 rounded-xl px-2 text-xs font-semibold text-slate-600 transition-colors hover:bg-white hover:text-[#6d335b] sm:px-3"><LogOut className="h-4 w-4" aria-hidden="true" /><span className="hidden sm:inline">Sign out</span><span className="sr-only sm:hidden">Sign out</span></button>}
+          {pathname !== "/auth" && <button type="button" onClick={signOut} disabled={signingOut} aria-busy={signingOut} className="inline-flex min-h-11 items-center gap-2 rounded-xl px-2 text-xs font-semibold text-slate-600 transition-colors hover:bg-white hover:text-[#6d335b] disabled:opacity-50 sm:px-3"><LogOut className="h-4 w-4" aria-hidden="true" /><span className="hidden sm:inline">{signingOut ? "Signing out…" : logoutError ? "Retry sign out" : "Sign out"}</span><span className="sr-only sm:hidden">{signingOut ? "Signing out…" : logoutError ? "Retry sign out" : "Sign out"}</span></button>}
           <div className="hidden items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-600 shadow-sm sm:flex" aria-label="Private workspace">
             <ShieldCheck className="h-4 w-4 text-[#6d335b]" aria-hidden="true" />
             <span>Private workspace</span>
@@ -84,7 +114,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       {isSidebarOpen && <aside id="primary-navigation" className="fixed inset-y-0 left-0 z-50 flex w-[272px] flex-col border-r border-slate-200 bg-white shadow-xl lg:hidden"><SidebarContent pathname={pathname} onNavigate={closeSidebar} mobile /></aside>}
 
       {isSidebarOpen && <button type="button" onClick={closeSidebar} className="fixed inset-0 z-40 bg-slate-900/30 lg:hidden" aria-label="Close navigation menu" />}
-      <main id="main-content" tabIndex={-1} className="min-h-screen scroll-mt-24 px-4 pb-12 pt-[96px] sm:px-6 lg:ml-[272px] lg:px-10 lg:pt-[112px]"><div className="mx-auto w-full max-w-[1440px]">{children}</div></main>
+      <main id="main-content" tabIndex={-1} className="min-h-screen scroll-mt-24 px-4 pb-12 pt-[96px] sm:px-6 lg:ml-[272px] lg:px-10 lg:pt-[112px]"><div className="mx-auto w-full max-w-[1440px]">{logoutError && <p role="alert" className="mb-4 rounded-xl bg-red-50 p-3 text-sm text-red-800">Could not sign out. Your session was kept. Use Retry sign out to try again.</p>}{children}</div></main>
     </div>
   );
 }
