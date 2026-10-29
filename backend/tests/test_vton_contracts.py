@@ -63,11 +63,11 @@ def create_single_garment_outfit(client: TestClient) -> tuple[str, str, str]:
 
 def test_supported_category_contract_and_multi_garment_outfits():
     assert set(CATEGORY_MODES.values()) == {"upper", "lower", "overall"}
-    assert len(CATEGORY_MODES) == 11
+    assert len(CATEGORY_MODES) == 13
     for category, expected in CATEGORY_MODES.items():
         assert plan(category).mode == expected
-    with pytest.raises(ValueError, match="outerwear"):
-        plan("long_sleeve_outwear").mode
+    assert plan("short_sleeve_outwear").mode == "upper"
+    assert plan("long_sleeve_outwear").mode == "upper"
     assert plan(count=2).modes == ("upper", "upper")
 
 

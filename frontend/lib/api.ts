@@ -9,6 +9,8 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   if (typeof window !== "undefined") {
     const token = window.sessionStorage.getItem("smart_wardrobe_access_token");
     if (token && !headers.has("Authorization")) headers.set("Authorization", `Bearer ${token}`);
+    const wardrobeProfileId = window.sessionStorage.getItem("smart_wardrobe_profile_id");
+    if (wardrobeProfileId && !headers.has("X-Wardrobe-Profile-Id")) headers.set("X-Wardrobe-Profile-Id", wardrobeProfileId);
   }
   let response: Response;
   try {
@@ -31,7 +33,7 @@ export type StyleConfirmationView = { revision: string; current: boolean; source
 export type AdmissionMode = "manual_review_v1" | "automatic_structural_v1";
 export type ProcessingAdmission = { mode: AdmissionMode; state: string; reason: string | null; garment_ids: string[] };
 export type SavedAttributeEvidence = { state: "Absent" | "Known" | "Malformed" | "Stale"; origin: string; contributor: string | null; recorded_at: string | null };
-export type ProcessingItem = { style_confirmation?: StyleConfirmationView; id: string; detected_category: string; confidence: number; review_status: "pending" | "accepted" | "rejected" | "confirmed"; crop_media_id: string; preferred_media_id: string; mask_media_id: string | null; vtoff_media_id: string | null; bounding_box: number[] | null; attributes: Record<string, unknown> };
+export type ProcessingItem = { style_confirmation?: StyleConfirmationView; id: string; detected_category: string; confidence: number; review_status: "pending" | "accepted" | "rejected" | "confirmed"; crop_media_id: string; preferred_media_id: string; mask_media_id: string | null; vtoff_media_id: string | null; mirror_media_id: string | null; bounding_box: number[] | null; attributes: Record<string, unknown> };
 export type ProcessingJob = { admission?: ProcessingAdmission; id: string; status: string; error_message?: string | null; progress_percent: number; progress_message?: string | null; items: ProcessingItem[] };
 
 export async function submitWardrobeImage(file: File, admissionMode: AdmissionMode = "manual_review_v1") {
@@ -40,6 +42,7 @@ export async function submitWardrobeImage(file: File, admissionMode: AdmissionMo
 }
 export const getProcessingJob = (jobId: string) => request<ProcessingJob>(`/processing/jobs/${jobId}`);
 export const reviewProcessingJob = (jobId: string, items: unknown[]) => request<ProcessingJob>(`/processing/jobs/${jobId}/review`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ items }) });
+export const createMirroredReconstruction = (jobId: string, itemId: string, replace = false, mirroredSide: "left" | "right" = "right") => request<ProcessingJob>(`/processing/jobs/${jobId}/items/${itemId}/mirror-reconstruction?replace=${replace}&mirrored_side=${mirroredSide}`, { method: "POST" });
 export const confirmProcessingJob = (jobId: string, itemIds: string[], saveMode: "garments" | "outfit", outfitName?: string, admissionMode: AdmissionMode = "manual_review_v1") => request<{ garment_ids: string[]; outfit_id: string | null }>(`/processing/jobs/${jobId}/confirm`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ save_mode: saveMode, item_ids: itemIds, outfit_name: saveMode === "outfit" ? outfitName : null, admission_mode: admissionMode }) });
 export const cancelProcessingJob = (jobId: string) => request<void>(`/processing/jobs/${jobId}/cancel`, { method: "POST" });
 
@@ -53,7 +56,7 @@ export type ContextualGarmentEdit = { revision: string; styles: string[]; style_
 export type AppearanceReviewAction = { withdraw: true } | { construction_features: { collared_neckline: boolean | null; tailored_cut: boolean | null; structured_shape: boolean | null }; condition_observation: "clean_intact" | "needs_attention" | "unknown" };
 export type AppearanceEdit = { revision: string; current: boolean; state: string; features: [string, boolean | null][]; condition: string | null; reviewed_at: string | null };
 export type Garment = { style_confirmation?: StyleConfirmationView; id: string; status?: string | null; name: string; category: string; primary_colour?: string | null; pattern?: string | null; preferred_media_id: string; is_favourite: boolean; attributes: Record<string, unknown>; tag_edit?: GarmentTagEdit; contextual_edit?: ContextualGarmentEdit; appearance_edit?: AppearanceEdit; style_tags?: unknown; additional_attributes?: Record<string, unknown> | null; created_at?: string; updated_at?: string };
-export type OutfitItem = { outfit_id: string; garment_id: string; role: string; item_order: number; name: string; category: string };
+export type OutfitItem = { outfit_id: string; garment_id: string; role: string; item_order: number; name: string; category: string; preferred_media_id?: string | null };
 export type Outfit = { id: string; name: string; description?: string | null; creation_type: "image_upload" | "manual" | "recommendation"; is_favourite: boolean; items: OutfitItem[]; created_at?: string; updated_at?: string };
 export type WardrobeSort = "updated_desc" | "updated_asc" | "name_asc" | "name_desc" | "favourites";
 export type GarmentFilters = { query?: string; category?: string; favourite?: boolean; sort?: WardrobeSort; colour?: string; style?: string; availability?: "available" | "unavailable" | "archived" | "all" };
@@ -105,6 +108,12 @@ export const getVisualisation = (id: string) => request<Visualisation>(`/visuali
 export const cancelVisualisation = (id: string) => request<void>(`/visualisations/${id}/cancel`, { method: "POST" });
 export const mediaUrl = (mediaId: string) => `${API_URL}/media/${mediaId}`;
 export type Profile = { id: string; email: string; display_name: string; account_status: string; created_at: string };
+export type WardrobeProfile = { id: string; name: string; is_default: boolean; created_at: string; updated_at: string };
+export const getWardrobeProfiles = () => request<WardrobeProfile[]>("/account/wardrobe-profiles");
+export const createWardrobeProfile = (name: string) => request<WardrobeProfile>("/account/wardrobe-profiles", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name }) });
+export const deleteWardrobeProfile = (profileId: string) => request<{ deleted_profile_id: string; next_profile_id: string; deleted_media_count: number }>(`/account/wardrobe-profiles/${encodeURIComponent(profileId)}`, { method: "DELETE" });
+export const getSelectedWardrobeProfileId = () => typeof window === "undefined" ? null : window.sessionStorage.getItem("smart_wardrobe_profile_id");
+export const setSelectedWardrobeProfileId = (profileId: string) => window.sessionStorage.setItem("smart_wardrobe_profile_id", profileId);
 export type UserPreference = { id: string; preference_type: string; preference_value: Record<string, unknown>; weight?: number | null; source: string; is_active: boolean };
 export const getProfile = () => request<Profile>("/account/profile");
 export const updateProfile = (displayName: string) => request<Profile>("/account/profile", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ display_name: displayName }) });
@@ -117,9 +126,10 @@ export const register = (email: string, password: string, displayName: string, p
 export type PreferenceOptions = { colours: string[]; styles: string[]; garment_categories: { kind: "category" | "group"; value: string }[]; formality: string[] };
 export const getPreferenceOptions = () => request<PreferenceOptions>("/account/preference-options");
 export const login = (email: string, password: string) => request<Authentication>("/account/login", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email, password }) });
-export const saveAccessToken = (token: string) => window.sessionStorage.setItem("smart_wardrobe_access_token", token);
+export const saveAccessToken = (token: string) => { window.sessionStorage.setItem("smart_wardrobe_access_token", token); window.sessionStorage.removeItem("smart_wardrobe_profile_id"); };
 export const clearAccessToken = () => {
   window.sessionStorage.removeItem("smart_wardrobe_access_token");
+  window.sessionStorage.removeItem("smart_wardrobe_profile_id");
   for (const key of Object.keys(window.sessionStorage)) if (key.startsWith("smart_wardrobe_interaction:")) window.sessionStorage.removeItem(key);
   const state = { ...window.history.state };
   delete state.wardrobeHomepage;

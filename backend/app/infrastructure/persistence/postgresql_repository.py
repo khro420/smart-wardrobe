@@ -19,13 +19,18 @@ CREATE TABLE IF NOT EXISTS users (
   id TEXT PRIMARY KEY, email TEXT NOT NULL UNIQUE, password_hash TEXT NOT NULL, display_name TEXT NOT NULL,
   account_status TEXT NOT NULL DEFAULT 'active', created_at TEXT NOT NULL, updated_at TEXT NOT NULL
 );
+CREATE TABLE IF NOT EXISTS wardrobe_profiles (
+  id TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id), name TEXT NOT NULL,
+  is_default INTEGER NOT NULL DEFAULT 0, status TEXT NOT NULL DEFAULT 'active',
+  created_at TEXT NOT NULL, updated_at TEXT NOT NULL
+);
 CREATE TABLE IF NOT EXISTS media_assets (
   id TEXT PRIMARY KEY, user_id TEXT NOT NULL, media_type TEXT NOT NULL,
   storage_key TEXT NOT NULL UNIQUE, content_type TEXT NOT NULL, size_bytes INTEGER NOT NULL,
   status TEXT NOT NULL DEFAULT 'available', created_at TEXT NOT NULL
 );
 CREATE TABLE IF NOT EXISTS processing_jobs (
-  id TEXT PRIMARY KEY, user_id TEXT NOT NULL, source_media_id TEXT NOT NULL,
+  id TEXT PRIMARY KEY, user_id TEXT NOT NULL, profile_id TEXT, source_media_id TEXT NOT NULL,
   status TEXT NOT NULL, error_message TEXT, created_at TEXT NOT NULL,
   started_at TEXT, updated_at TEXT NOT NULL, completed_at TEXT,
   progress_percent INTEGER NOT NULL DEFAULT 0, progress_message TEXT
@@ -34,17 +39,17 @@ CREATE TABLE IF NOT EXISTS processing_items (
   id TEXT PRIMARY KEY, job_id TEXT NOT NULL, detected_category TEXT NOT NULL,
   confidence REAL NOT NULL, crop_media_id TEXT NOT NULL, preferred_media_id TEXT NOT NULL,
   attributes_json TEXT NOT NULL, review_status TEXT NOT NULL DEFAULT 'pending',
-  created_at TEXT NOT NULL, FOREIGN KEY(job_id) REFERENCES processing_jobs(id)
+  created_at TEXT NOT NULL, mirror_media_id TEXT, FOREIGN KEY(job_id) REFERENCES processing_jobs(id)
 );
 CREATE TABLE IF NOT EXISTS garments (
-  id TEXT PRIMARY KEY, user_id TEXT NOT NULL, processing_item_id TEXT UNIQUE,
+  id TEXT PRIMARY KEY, user_id TEXT NOT NULL, profile_id TEXT, processing_item_id TEXT UNIQUE,
   preferred_media_id TEXT NOT NULL, name TEXT NOT NULL, category TEXT NOT NULL,
   primary_colour TEXT, pattern TEXT, attributes_json TEXT NOT NULL,
   status TEXT NOT NULL DEFAULT 'available', is_favourite INTEGER NOT NULL DEFAULT 0,
   created_at TEXT NOT NULL, updated_at TEXT NOT NULL, deleted_at TEXT
 );
 CREATE TABLE IF NOT EXISTS outfits (
-  id TEXT PRIMARY KEY, user_id TEXT NOT NULL, name TEXT NOT NULL, description TEXT,
+  id TEXT PRIMARY KEY, user_id TEXT NOT NULL, profile_id TEXT, name TEXT NOT NULL, description TEXT,
   creation_type TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'available',
   is_favourite INTEGER NOT NULL DEFAULT 0, created_at TEXT NOT NULL, updated_at TEXT NOT NULL
 );
@@ -54,17 +59,17 @@ CREATE TABLE IF NOT EXISTS outfit_items (
   FOREIGN KEY(garment_id) REFERENCES garments(id)
 );
 CREATE TABLE IF NOT EXISTS user_preferences (
-  id TEXT PRIMARY KEY, user_id TEXT NOT NULL, preference_type TEXT NOT NULL,
+  id TEXT PRIMARY KEY, user_id TEXT NOT NULL, profile_id TEXT, preference_type TEXT NOT NULL,
   preference_value_json TEXT NOT NULL, weight REAL, source TEXT, is_active INTEGER NOT NULL DEFAULT 1,
   created_at TEXT NOT NULL, updated_at TEXT NOT NULL
 );
 CREATE TABLE IF NOT EXISTS nlp_chats (
-  id TEXT PRIMARY KEY, user_id TEXT NOT NULL, request_text TEXT NOT NULL,
+  id TEXT PRIMARY KEY, user_id TEXT NOT NULL, profile_id TEXT, request_text TEXT NOT NULL,
   interpreted_intent TEXT, extracted_entities_json TEXT, status TEXT NOT NULL,
   created_at TEXT NOT NULL, completed_at TEXT
 );
 CREATE TABLE IF NOT EXISTS recommendations (
-  id TEXT PRIMARY KEY, user_id TEXT NOT NULL, chat_id TEXT, recommendation_type TEXT NOT NULL,
+  id TEXT PRIMARY KEY, user_id TEXT NOT NULL, profile_id TEXT, chat_id TEXT, recommendation_type TEXT NOT NULL,
   status TEXT NOT NULL, created_at TEXT NOT NULL, expires_at TEXT,
   request_match_score REAL, compatibility_score REAL, preference_score REAL, total_score REAL
 );
@@ -106,6 +111,29 @@ def initialise_database() -> None:
         columns = {row[1] for row in conn.execute("PRAGMA table_info(users)").fetchall()}
         if "password_hash" not in columns:
             conn.execute("ALTER TABLE users ADD COLUMN password_hash TEXT NOT NULL DEFAULT ''")
+        # Profiles are additive so an existing local database keeps all of its
+        # records in the automatically-created default wardrobe.
+        profile_columns = {row[1] for row in conn.execute("PRAGMA table_info(wardrobe_profiles)").fetchall()}
+        if not profile_columns:
+            conn.execute("CREATE TABLE wardrobe_profiles (id TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id), name TEXT NOT NULL, is_default INTEGER NOT NULL DEFAULT 0, status TEXT NOT NULL DEFAULT 'active', created_at TEXT NOT NULL, updated_at TEXT NOT NULL)")
+        for table in ("processing_jobs", "garments", "outfits", "user_preferences", "nlp_chats", "recommendations"):
+            table_columns = {row[1] for row in conn.execute(f"PRAGMA table_info({table})").fetchall()}
+            if "profile_id" not in table_columns:
+                conn.execute(f"ALTER TABLE {table} ADD COLUMN profile_id TEXT")
+        import uuid
+        for user in conn.execute("SELECT id FROM users").fetchall():
+            user_id = user["id"]
+            default = conn.execute("SELECT id FROM wardrobe_profiles WHERE user_id=? AND is_default=1 AND status='active'", (user_id,)).fetchone()
+            if default is None:
+                now, profile_id = utcnow(), str(uuid.uuid4())
+                conn.execute("INSERT INTO wardrobe_profiles (id,user_id,name,is_default,status,created_at,updated_at) VALUES (?,?,?,1,'active',?,?)", (profile_id, user_id, "My wardrobe", now, now))
+            else:
+                profile_id = default["id"]
+            for table in ("processing_jobs", "garments", "outfits", "user_preferences", "nlp_chats", "recommendations"):
+                conn.execute(f"UPDATE {table} SET profile_id=? WHERE user_id=? AND profile_id IS NULL", (profile_id, user_id))
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_profiles_by_user ON wardrobe_profiles(user_id,status)")
+        for table in ("processing_jobs", "garments", "outfits", "user_preferences", "nlp_chats", "recommendations"):
+            conn.execute(f"CREATE INDEX IF NOT EXISTS idx_{table}_profile ON {table}(user_id,profile_id)")
         media_columns = {row[1] for row in conn.execute("PRAGMA table_info(media_assets)")}
         for name, sql_type in (("width", "INTEGER"), ("height", "INTEGER"), ("original_filename", "TEXT")):
             if name not in media_columns:
@@ -147,7 +175,7 @@ def initialise_database() -> None:
             "ON visualisations(status,created_at)"
         )
         candidate_columns = {row[1] for row in conn.execute("PRAGMA table_info(processing_items)")}
-        for name, sql_type in (("bounding_box", "TEXT"), ("mask_media_id", "TEXT"), ("vtoff_media_id", "TEXT"), ("embedding", "TEXT")):
+        for name, sql_type in (("bounding_box", "TEXT"), ("mask_media_id", "TEXT"), ("vtoff_media_id", "TEXT"), ("mirror_media_id", "TEXT"), ("embedding", "TEXT")):
             if name not in candidate_columns:
                 conn.execute(f"ALTER TABLE processing_items ADD COLUMN {name} {sql_type}")
         garment_columns = {row[1] for row in conn.execute("PRAGMA table_info(garments)")}

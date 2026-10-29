@@ -38,7 +38,7 @@ def readiness(item, attrs, owner):
     confidence = item['confidence']
     if isinstance(confidence, bool) or not isinstance(confidence, (float, int)) or not math.isfinite(confidence) or not 0 <= confidence <= 1:
         return 'invalid_processing_metadata'
-    if item['preferred_media_id'] not in (item['crop_media_id'], item['vtoff_media_id']) or not item['preferred_media_id']:
+    if item['preferred_media_id'] not in (item['crop_media_id'], item['vtoff_media_id'], item['mirror_media_id']) or not item['preferred_media_id']:
         return 'representation_unavailable'
     source = project_saved_attribute_evidence(attrs.get(SOURCE_KEY), SOURCE_KEY in attrs, attrs.get('style'),
                                               category, item['preferred_media_id'], owner)

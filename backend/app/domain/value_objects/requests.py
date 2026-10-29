@@ -57,7 +57,7 @@ class ReviewItem(BaseModel):
     primary_colour: str | None = Field(default=None, max_length=50)
     pattern: str | None = Field(default=None, max_length=50)
     attributes: dict[str, object] = Field(default_factory=dict)
-    preferred_media: Literal["crop", "vtoff"] | None = None
+    preferred_media: Literal["crop", "vtoff", "mirror"] | None = None
 
     @field_validator("name", "category", "primary_colour", "pattern")
     @classmethod

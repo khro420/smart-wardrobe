@@ -61,13 +61,13 @@ def resolve_source(conn, user_id, outfit_id=None, recommendation_id=None):
         # Existing wardrobe roles and recommendation-saved roles are both supported.
         # Categories still determine VTON modes; no recommendation composition rule.
         if any(member["role"] not in (
-            "top", "bottom", "dress", "upper", "lower", "one_piece", "garment", "accessory"
+            "top", "bottom", "dress", "outerwear", "upper", "lower", "one_piece", "garment", "accessory"
         ) for member in members):
-            raise HTTPException(422, "Outfit contains an unsupported visualisation role; outerwear is not supported.")
+            raise HTTPException(422, "Outfit contains an unsupported visualisation role.")
     garments, previews = [], []
     for member in members:
-        if recommendation_id and member["role"] not in ("upper", "lower", "one_piece", "garment", "accessory"):
-            raise HTTPException(422, "Recommendation contains an unsupported visualisation role; outerwear is not supported.")
+        if recommendation_id and member["role"] not in ("upper", "lower", "one_piece", "outerwear", "garment", "accessory"):
+            raise HTTPException(422, "Recommendation contains an unsupported visualisation role.")
         row = conn.execute(
             "SELECT g.*, p.review_status FROM garments g "
             "LEFT JOIN processing_items p ON p.id=g.processing_item_id "

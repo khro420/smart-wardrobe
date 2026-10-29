@@ -127,12 +127,13 @@ def test_corrupt_legacy_duplicate_references_are_rejected_not_dropped(ready):
         assert error.value.status_code == 422
 
 
-def test_outerwear_category_cannot_be_disguised_as_supported_role(ready):
+def test_outerwear_category_is_supported_for_visualisation(ready):
     path, record = ready
     with connect(path) as conn: conn.execute("UPDATE garments SET category='long_sleeve_outwear'")
     with connect(path) as conn:
-        with pytest.raises(HTTPException) as error: visual.resolve_source(conn,"owner",recommendation_id=record["id"])
-        assert error.value.status_code == 422
+        plan, source = visual.resolve_source(conn,"owner",recommendation_id=record["id"])
+        assert plan.modes == ("upper",)
+        assert source["categories"] == ["upper"]
 
 
 def test_write_lock_prevents_change_between_revalidation_and_insert(ready, monkeypatch):
@@ -166,8 +167,8 @@ def test_visualisation_role_ownership_and_order_checks(ready):
         assert error.value.status_code == 404
         conn.execute("UPDATE recommendation_items SET garment_role='outerwear'")
     with connect(path) as conn:
-        with pytest.raises(HTTPException) as error: visual.resolve_source(conn,"owner",recommendation_id=record["id"])
-        assert error.value.status_code == 422
+        plan, _ = visual.resolve_source(conn,"owner",recommendation_id=record["id"])
+        assert plan.garments[0].role == "outerwear"
 
 
 def test_execution_revalidates_queued_recommendation_and_never_calls_inference(ready, monkeypatch):

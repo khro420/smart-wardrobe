@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import Layout from "@/components/Layout";
 import ProtectedImage from "@/components/ProtectedImage";
-import { getWardrobeQuota, wardrobeCapacityText, type WardrobeQuota, cancelProcessingJob, confirmProcessingJob, getProcessingJob, reviewProcessingJob, type ProcessingItem, type ProcessingJob } from "@/lib/api";
+import { getWardrobeQuota, wardrobeCapacityText, type WardrobeQuota, cancelProcessingJob, confirmProcessingJob, createMirroredReconstruction, getProcessingJob, reviewProcessingJob, type ProcessingItem, type ProcessingJob } from "@/lib/api";
 
 const textValue = (value: unknown) => Array.isArray(value) ? value.join(", ") : typeof value === "string" ? value : "";
 const inputClass = "mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:outline-2 focus:outline-offset-2 focus:outline-purple-800";
@@ -17,11 +17,12 @@ const sleeveLengths = ["sleeveless", "short", "elbow-length", "wrist-length"];
 const styles = ["casual", "classic", "formal", "minimal", "smart casual", "sporty", "streetwear", "vintage", "bohemian"];
 const materials = ["cotton", "denim", "leather", "linen", "silk", "synthetic", "wool", "not sure"];
 
-function CandidateReview({ item, disabled, onReview, onDirty, automatic = false }: {
+function CandidateReview({ item, disabled, onReview, onCreateMirror, onDirty, automatic = false }: {
   automatic?: boolean;
   item: ProcessingItem;
   disabled: boolean;
   onReview: (update: Record<string, unknown>) => Promise<boolean>;
+  onCreateMirror: (side?: "left" | "right") => Promise<boolean>;
   onDirty: (id: string, dirty: boolean) => void;
 }) {
   const visible = item.attributes.fashionpedia_visible_attributes as Record<string, { value?: string }> | undefined;
@@ -37,7 +38,7 @@ function CandidateReview({ item, disabled, onReview, onDirty, automatic = false 
     material: textValue(item.attributes.material), neckline: supportsUpperDetails ? clean(suggestion("neckline")) : "", sleeve_length: supportsUpperDetails ? clean(suggestion("sleeve_length")) : "",
     color_temperature: textValue(item.attributes.color_temperature) || "neutral",
     is_dominant: item.attributes.is_dominant === true,
-    preferred_media: item.vtoff_media_id && item.preferred_media_id === item.vtoff_media_id ? "vtoff" : "crop",
+    preferred_media: item.mirror_media_id && item.preferred_media_id === item.mirror_media_id ? "mirror" : item.vtoff_media_id && item.preferred_media_id === item.vtoff_media_id ? "vtoff" : "crop",
   });
   const [styleChoice, setStyleChoice] = useState("__keep");
   const [dirty, setDirty] = useState(false);
@@ -68,12 +69,18 @@ function CandidateReview({ item, disabled, onReview, onDirty, automatic = false 
   };
   const submit = (event: FormEvent) => { event.preventDefault(); void decide("accepted"); };
   const fallback = item.attributes.source === "development fallback";
+  const mirroredSide = typeof item.attributes.mirrored_reconstruction === "object" && item.attributes.mirrored_reconstruction !== null && (item.attributes.mirrored_reconstruction as Record<string, unknown>).mirrored_side === "left" ? "left" : "right";
+  const imageChoices: { value: "crop" | "vtoff" | "mirror"; label: string; mediaId: string }[] = [
+    { value: "crop", label: "Original segmentation crop", mediaId: item.crop_media_id },
+    ...(item.mirror_media_id ? [{ value: "mirror" as const, label: "Mirrored reconstruction (review before saving)", mediaId: item.mirror_media_id }] : []),
+    ...(item.vtoff_media_id ? [{ value: "vtoff" as const, label: "AI-generated VTOFF reconstruction", mediaId: item.vtoff_media_id }] : []),
+  ];
 
   return <article className="rounded-xl border border-slate-200 bg-white p-4" aria-label={`Candidate ${item.detected_category}`}>
     <form onSubmit={submit}>
       <fieldset disabled={disabled} className="min-w-0 space-y-4">
         <div className="flex items-start gap-4">
-          <ProtectedImage mediaId={draft.preferred_media === "vtoff" && item.vtoff_media_id ? item.vtoff_media_id : item.crop_media_id} alt={`Candidate ${draft.name}`} className="h-28 w-28 shrink-0 rounded-lg bg-slate-100 object-contain" />
+          <ProtectedImage mediaId={draft.preferred_media === "mirror" && item.mirror_media_id ? item.mirror_media_id : draft.preferred_media === "vtoff" && item.vtoff_media_id ? item.vtoff_media_id : item.crop_media_id} alt={`Candidate ${draft.name}`} className="h-28 w-28 shrink-0 rounded-lg bg-slate-100 object-contain" />
           <div className="min-w-0 flex-1">
             <h2 className="break-words font-semibold">{draft.name}</h2>
             <p className="mt-1 text-sm text-slate-600">{fallback ? "Development preview — no AI segmentation" : `Detection confidence: ${Math.round(item.confidence * 100)}%`}</p>
@@ -96,19 +103,20 @@ function CandidateReview({ item, disabled, onReview, onDirty, automatic = false 
             <label className="flex items-center gap-2 self-end rounded-lg border border-slate-300 px-3 py-2 text-sm"><input type="checkbox" checked={draft.is_dominant} onChange={(event) => change("is_dominant", event.target.checked)} />One colour covers most of garment</label>
           </div>
           <p className="mt-3 text-xs text-slate-600">Colour and dominance are automated suggestions; all displayed details remain reviewable. Detection confidence does not establish attribute accuracy.</p>
-          {item.vtoff_media_id ? <fieldset className="mt-4">
+          {imageChoices.length > 1 ? <fieldset className="mt-4">
             <legend className="text-sm font-semibold">Compare and choose the image to save</legend>
             <div className="mt-2 grid gap-3 sm:grid-cols-2">
-              {([{"value": "crop", "label": "Original segmentation crop", "mediaId": item.crop_media_id},
-                {"value": "vtoff", "label": "AI-generated VTOFF reconstruction", "mediaId": item.vtoff_media_id}] as const).map((choice) =>
+              {imageChoices.map((choice) =>
                 <label key={choice.value} className={`cursor-pointer rounded-lg border p-3 ${draft.preferred_media === choice.value ? "border-[#6d335b] bg-purple-50" : "border-slate-200"}`}>
                   <input type="radio" name={`preferred-media-${item.id}`} value={choice.value} checked={draft.preferred_media === choice.value} onChange={(e) => change("preferred_media", e.target.value)} className="mr-2" />
                   <span className="text-sm font-medium">{choice.label}</span>
                   <ProtectedImage mediaId={choice.mediaId} alt={`${choice.label} for ${draft.name}`} className="mt-2 aspect-square w-full rounded bg-[linear-gradient(45deg,#e2e8f0_25%,transparent_25%),linear-gradient(-45deg,#e2e8f0_25%,transparent_25%),linear-gradient(45deg,transparent_75%,#e2e8f0_75%),linear-gradient(-45deg,transparent_75%,#e2e8f0_75%)] bg-[length:20px_20px] object-contain" />
                 </label>)}
             </div>
-            <p className="mt-2 text-xs text-amber-800">The VTOFF image is synthetic and may invent hidden logos, texture, shape, or colour. Compare it with the observed segmentation crop before selecting it.</p>
-          </fieldset> : <p className="mt-4 text-xs text-slate-600">AI VTOFF is unavailable or failed for this item. You can review and save the retained segmentation crop.</p>}
+            {item.mirror_media_id && <p className="mt-2 text-xs text-amber-800">The mirrored reconstruction duplicates the detected half and flips it to make a symmetrical garment. It does not prove the hidden side is identical; compare it with the observed crop before selecting it.</p>}
+            {item.vtoff_media_id && <p className="mt-2 text-xs text-amber-800">The VTOFF image is synthetic and may invent hidden logos, texture, shape, or colour. Compare it with the observed segmentation crop before selecting it.</p>}
+            {item.mirror_media_id && <div className="mt-3 flex flex-wrap items-center gap-2"><span className="text-sm font-medium">Place mirrored copy:</span><button type="button" disabled={disabled} onClick={() => void onCreateMirror("left")} className={`rounded-lg border px-3 py-2 text-sm font-semibold disabled:opacity-50 ${mirroredSide === "left" ? "border-[#6d335b] bg-purple-50 text-[#6d335b]" : "border-slate-300"}`}>Left</button><button type="button" disabled={disabled} onClick={() => void onCreateMirror("right")} className={`rounded-lg border px-3 py-2 text-sm font-semibold disabled:opacity-50 ${mirroredSide === "right" ? "border-[#6d335b] bg-purple-50 text-[#6d335b]" : "border-slate-300"}`}>Right</button></div>}
+          </fieldset> : <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm"><p>No alternate reconstruction has been created for this item yet.</p><button type="button" disabled={disabled} onClick={() => void onCreateMirror("right")} className="mt-3 rounded-lg border border-[#6d335b] px-3 py-2 text-sm font-semibold text-[#6d335b] disabled:opacity-50">Create mirrored garment preview</button><p className="mt-2 text-xs text-slate-600">This duplicates and flips the exact crop. You can then place the mirrored copy on either side and select the saved image here.</p></div>}
           {item.mask_media_id && <details className="mt-3 text-sm"><summary className="cursor-pointer">View segmentation evidence</summary>
             <ProtectedImage mediaId={item.mask_media_id} alt="Garment mask in the uploaded image coordinates" className="mt-2 max-h-64 w-full bg-slate-900 object-contain" />
             <p className="mt-2 text-xs">Bounding box (left, top, right, bottom): {item.bounding_box?.map((n) => Math.round(n)).join(", ")}</p>
@@ -176,6 +184,13 @@ function ExtractionResultsContent() {
     catch (e) { setError(e instanceof Error ? e.message : "Could not update review."); return false; }
     finally { actionLock.current = false; setBusy(false); setBusyMessage(""); }
   };
+  const createMirror = async (itemId: string, replace = false, side: "left" | "right" = "right") => {
+    if (!jobId || actionLock.current) return false;
+    actionLock.current = true; setBusy(true); setBusyMessage(`${replace ? "Regenerating" : "Creating"} a mirrored garment previewâ€¦`); setError("");
+    try { setJob(await createMirroredReconstruction(jobId, itemId, replace, side)); return true; }
+    catch (e) { setError(e instanceof Error ? e.message : "Could not create the mirrored garment preview."); return false; }
+    finally { actionLock.current = false; setBusy(false); setBusyMessage(""); }
+  };
   const automaticMode = job?.admission?.mode === "automatic_structural_v1" || ((!job || !job.items.length) && params.get("admission_mode") === "automatic_structural_v1");
   const accepted = job?.items.filter((item) => item.review_status === "accepted").map((item) => item.id) ?? [];
   const selected = accepted.filter((id) => !excludedIds.has(id));
@@ -226,7 +241,7 @@ function ExtractionResultsContent() {
         <p className="mt-2 text-sm">{job.admission?.reason === "category_missing_or_unsupported" ? "A supported category is missing. Correct the category and save corrections once. A missing style is not required for storage, but can prevent a style-dependent recommendation." : job.admission?.reason === "WardrobeQuotaExceeded" ? "This complete batch does not fit the 100 non-archived garment limit. You may archive garments or cancel this operation. No partial batch was saved." : "The complete batch is not ready to save. Check the processing details and any rejected item; all items must be valid. No partial batch was saved."}</p>
         <button disabled={busy || dirtyIds.size > 0} onClick={() => void retryAutomatic()} className="mt-3 min-h-11 rounded-lg border border-slate-500 px-4 text-sm font-semibold disabled:opacity-40">Retry automatic saving</button>
       </section>}
-      <div className="space-y-4">{job.items.map((item) => <CandidateReview key={item.id} item={item} automatic={automaticMode} disabled={busy} onReview={review} onDirty={(id, dirty) => setDirtyIds((current) => { const next = new Set(current); if (dirty) next.add(id); else next.delete(id); return next; })} />)}</div>
+      <div className="space-y-4">{job.items.map((item) => <CandidateReview key={item.id} item={item} automatic={automaticMode} disabled={busy} onReview={review} onCreateMirror={(side = "right") => createMirror(item.id, Boolean(item.mirror_media_id), side)} onDirty={(id, dirty) => setDirtyIds((current) => { const next = new Set(current); if (dirty) next.add(id); else next.delete(id); return next; })} />)}</div>
       {!automaticMode && (<div className="space-y-4 rounded-xl border border-slate-200 bg-white p-5">
         <p className="font-semibold">{accepted.length} of {job.items.length} candidates accepted</p>
         <fieldset disabled={busy} className="space-y-2"><legend className="font-semibold">Choose accepted garments to save</legend>

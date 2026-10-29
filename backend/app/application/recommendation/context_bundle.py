@@ -17,8 +17,12 @@ def _pairs(pairs):
 
 def bounded_resource(path,digest):
     with path.open('rb') as stream:raw=stream.read(65537)
-    if len(raw)>65536 or hashlib.sha256(raw).hexdigest()!=digest:raise ValueError('Unapproved/oversized context resource.')
-    data=json.loads(raw,object_pairs_hook=_pairs,parse_constant=lambda _: (_ for _ in ()).throw(ValueError('Non-finite resource.')))
+    # The approved resources are stored with LF line endings.  Git may check
+    # them out as CRLF on Windows, so validate the canonical JSON bytes rather
+    # than rejecting an otherwise identical checkout.
+    canonical_raw = raw.replace(b'\r\n', b'\n')
+    if len(canonical_raw)>65536 or hashlib.sha256(canonical_raw).hexdigest()!=digest:raise ValueError('Unapproved/oversized context resource.')
+    data=json.loads(canonical_raw,object_pairs_hook=_pairs,parse_constant=lambda _: (_ for _ in ()).throw(ValueError('Non-finite resource.')))
     pending=[(data,0)];count=0
     while pending:
         node,depth=pending.pop();count+=1

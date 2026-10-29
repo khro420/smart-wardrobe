@@ -2,6 +2,11 @@
 
 from contextlib import asynccontextmanager
 
+from app.infrastructure.environment import load_local_environment
+
+# Load backend/.env before modules read their configuration at import time.
+load_local_environment()
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -33,7 +38,7 @@ app.add_middleware(
     allow_origins=["http://localhost:3000"],
     allow_credentials=True,
     allow_methods=["GET", "POST", "PATCH", "DELETE"],
-    allow_headers=["Authorization", "Content-Type", "X-User-Id"],
+    allow_headers=["Authorization", "Content-Type", "X-User-Id", "X-Wardrobe-Profile-Id"],
 )
 app.include_router(health_routes.router)
 app.include_router(account_routes.router, prefix="/api/v1")

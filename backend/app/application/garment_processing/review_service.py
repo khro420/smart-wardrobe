@@ -1,6 +1,7 @@
 """ReviewService owns candidate corrections and preferred-media decisions."""
 
 import json
+from typing import Literal
 from fastapi import HTTPException
 from app.application.ports.workflow_runtime import connection, media_path_for_owner, runtime, utcnow
 from app.application.wardrobe import owner_style_confirmation as style_confirmation
@@ -9,25 +10,67 @@ from app.domain.value_objects.garment_attributes import GARMENT_STRUCTURE
 from app.application.garment_processing.processing_job_service import get_job
 from app.application.garment_processing import automatic_garment_finalization as automatic
 from app.domain.value_objects.saved_attribute_evidence import KEY as SOURCE_KEY, source_record
+from app.infrastructure.ai.mirrored_garment_reconstruction import reconstruct_mirrored_garment_png
 
 
-def confirm_reviewed_candidates(job_id: str, user_id: str, item_ids: list[str], save_mode: str, outfit_name: str | None, admission_mode: str = automatic.MANUAL) -> dict:
+def confirm_reviewed_candidates(job_id: str, user_id: str, profile_id: str, item_ids: list[str], save_mode: str, outfit_name: str | None, admission_mode: str = automatic.MANUAL) -> dict:
     if admission_mode == automatic.MODE:
         if save_mode != 'garments':
             raise HTTPException(422, 'Automatic saving creates garments only.')
-        result = runtime().confirmed_writer.save_automatically_processed_candidates(job_id, user_id, item_ids)
+        result = runtime().confirmed_writer.save_automatically_processed_candidates(job_id, user_id, item_ids, profile_id=profile_id)
         if result['admission']['state'] != 'saved':
             raise HTTPException(409, {'code': result['admission']['reason'], 'message': 'Automatic saving could not finish. Check the processing details.', 'admission': result['admission']})
         return result
     if admission_mode != automatic.MANUAL:
         raise HTTPException(422, 'Unapproved admission mode.')
-    return runtime().confirmed_writer.save_confirmed_candidates(job_id, user_id, item_ids, save_mode, outfit_name)
+    return runtime().confirmed_writer.save_confirmed_candidates(job_id, user_id, item_ids, save_mode, outfit_name, profile_id=profile_id)
 
 
-def review_job(job_id: str, user_id: str, updates: list[dict]) -> dict:
+def create_mirrored_reconstruction(job_id: str, item_id: str, user_id: str, profile_id: str, replace: bool = False, mirrored_side: Literal["left", "right"] = "right") -> dict:
+    """Create an owner-requested, review-only mirror alternative from the crop."""
+    with connection() as conn:
+        job = conn.execute("SELECT status FROM processing_jobs WHERE id=? AND user_id=? AND profile_id=?", (job_id, user_id, profile_id)).fetchone()
+        if not job:
+            raise HTTPException(404, "Processing job was not found.")
+        if job["status"] != "review_required":
+            raise HTTPException(409, "Only review-required jobs can create a mirrored preview.")
+        item = conn.execute("SELECT * FROM processing_items WHERE id=? AND job_id=?", (item_id, job_id)).fetchone()
+        if not item:
+            raise HTTPException(404, "Processing candidate was not found.")
+        if item["mirror_media_id"] and not replace:
+            return get_job(job_id, user_id, profile_id)
+        crop_media_id = item["crop_media_id"]
+
+    crop_path, _ = media_path_for_owner(crop_media_id, user_id)
+    mirrored = reconstruct_mirrored_garment_png(crop_path.read_bytes(), mirrored_side)
+    if not mirrored:
+        raise HTTPException(422, "This segmentation crop does not clearly contain one mirrored half of a garment.")
+    mirror_media_id = runtime().media.store_bytes(mirrored.png_bytes, user_id, "mirrored_garment_reconstruction")
+    metadata = {
+        "generated": True,
+        "method": "horizontal_mirror_from_observed_half_v1",
+        "mirrored_side": mirrored_side,
+        "seam_side": mirrored.seam_side,
+        "edge_coverage": mirrored.edge_coverage,
+        "source_size": list(mirrored.source_size),
+        "requires_review": True,
+    }
     with connection() as conn:
         conn.execute("BEGIN IMMEDIATE")
-        job = conn.execute("SELECT status FROM processing_jobs WHERE id=? AND user_id=?", (job_id, user_id)).fetchone()
+        item = conn.execute("SELECT attributes_json,mirror_media_id FROM processing_items WHERE id=? AND job_id=?", (item_id, job_id)).fetchone()
+        if not item:
+            raise HTTPException(404, "Processing candidate was not found.")
+        if not item["mirror_media_id"] or replace:
+            attrs = json.loads(item["attributes_json"])
+            attrs["mirrored_reconstruction"] = metadata
+            conn.execute("UPDATE processing_items SET mirror_media_id=?, attributes_json=? WHERE id=?", (mirror_media_id, json.dumps(attrs, allow_nan=False), item_id))
+    return get_job(job_id, user_id, profile_id)
+
+
+def review_job(job_id: str, user_id: str, profile_id: str, updates: list[dict]) -> dict:
+    with connection() as conn:
+        conn.execute("BEGIN IMMEDIATE")
+        job = conn.execute("SELECT status FROM processing_jobs WHERE id=? AND user_id=? AND profile_id=?", (job_id, user_id, profile_id)).fetchone()
         if not job:
             raise HTTPException(404, "Processing job was not found.")
         if job["status"] != "review_required":
@@ -55,7 +98,11 @@ def review_job(job_id: str, user_id: str, updates: list[dict]) -> dict:
                 attrs["pattern"] = update["pattern"]
             preferred_id = item["preferred_media_id"]
             if update.get("preferred_media"):
-                preferred_id = item["crop_media_id"] if update["preferred_media"] == "crop" else item["vtoff_media_id"]
+                preferred_id = {
+                    "crop": item["crop_media_id"],
+                    "vtoff": item["vtoff_media_id"],
+                    "mirror": item["mirror_media_id"],
+                }.get(update["preferred_media"])
                 if not preferred_id:
                     raise HTTPException(422, "That garment representation is unavailable.")
             media_path_for_owner(preferred_id, user_id)
@@ -81,8 +128,8 @@ def review_job(job_id: str, user_id: str, updates: list[dict]) -> dict:
             conn.execute("UPDATE processing_items SET review_status=?, attributes_json=?, preferred_media_id=? WHERE id=?", (
                 update["decision"], json.dumps(attrs, allow_nan=False), preferred_id, item["id"]
             ))
-    result = get_job(job_id, user_id)
+    result = get_job(job_id, user_id, profile_id)
     if result['admission']['mode'] == automatic.MODE:
-        runtime().confirmed_writer.save_automatically_processed_candidates(job_id, user_id)
-        result = get_job(job_id, user_id)
+        runtime().confirmed_writer.save_automatically_processed_candidates(job_id, user_id, profile_id=profile_id)
+        result = get_job(job_id, user_id, profile_id)
     return result

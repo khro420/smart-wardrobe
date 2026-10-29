@@ -116,6 +116,7 @@ def find_orphaned_media(retention_hours: int = ORPHAN_MEDIA_RETENTION_HOURS) -> 
               AND NOT EXISTS (SELECT 1 FROM processing_items p WHERE p.crop_media_id = m.id)
               AND NOT EXISTS (SELECT 1 FROM processing_items p WHERE p.mask_media_id = m.id)
               AND NOT EXISTS (SELECT 1 FROM processing_items p WHERE p.vtoff_media_id = m.id)
+              AND NOT EXISTS (SELECT 1 FROM processing_items p WHERE p.mirror_media_id = m.id)
               AND NOT EXISTS (SELECT 1 FROM processing_items p WHERE p.preferred_media_id = m.id)
               AND NOT EXISTS (SELECT 1 FROM garments g WHERE g.preferred_media_id = m.id)
               AND NOT EXISTS (SELECT 1 FROM person_images p WHERE p.media_id = m.id)

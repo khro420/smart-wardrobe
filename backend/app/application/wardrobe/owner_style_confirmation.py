@@ -29,7 +29,7 @@ def canonical_style(value):
 
 def candidate_revision(item, owner):
     return digest([owner, *[item[k] for k in ('id', 'job_id', 'detected_category', 'attributes_json',
-                   'review_status', 'preferred_media_id', 'crop_media_id', 'vtoff_media_id')]])
+                   'review_status', 'preferred_media_id', 'crop_media_id', 'vtoff_media_id', 'mirror_media_id')]])
 
 
 def garment_revision(row):

@@ -10,12 +10,13 @@ from app.api.assistant_models import AssistantRecommendationCreate
 from app.application.recommendation import recommendation_service as recommendations
 from app.domain.value_objects.requests import RecommendationCreate, RecommendationSaveAsOutfit
 from app.infrastructure.security import current_user_id
+from app.application.wardrobe.profile_service import active_profile_id
 
 router = APIRouter(prefix="/recommendations", tags=["NLP outfit recommendations"])
 
 
 @router.get("/capabilities")
-def capabilities(user_id: str = Depends(current_user_id), homepage=Depends(homepage_service), assistant=Depends(assistant_service)):
+def capabilities(user_id: str = Depends(current_user_id), profile_id: str = Depends(active_profile_id), homepage=Depends(homepage_service), assistant=Depends(assistant_service)):
     """Allow the new UI to avoid posting to the disabled legacy Assistant."""
     result = {"homepage_enabled":homepage is not None,"assistant_enabled":assistant is not None}
     if assistant is not None:
@@ -43,7 +44,7 @@ def capabilities(user_id: str = Depends(current_user_id), homepage=Depends(homep
 
 
 @router.post("/homepage")
-def homepage(body: HomepageRecommendationCreate, user_id: str = Depends(current_user_id), service=Depends(homepage_service)):
+def homepage(body: HomepageRecommendationCreate, user_id: str = Depends(current_user_id), profile_id: str = Depends(active_profile_id), service=Depends(homepage_service)):
     if service is None:
         return JSONResponse(status_code=404, content={"status": "IntegrationDisabled", "complete": False})
     result = service.recommend(user_id, body.submission_key)
@@ -61,12 +62,12 @@ def homepage(body: HomepageRecommendationCreate, user_id: str = Depends(current_
 
 
 @router.get("")
-def list_all(user_id: str = Depends(current_user_id)) -> list[dict]:
-    return recommendations.list_recommendations(user_id)
+def list_all(user_id: str = Depends(current_user_id), profile_id: str = Depends(active_profile_id)) -> list[dict]:
+    return recommendations.list_recommendations(user_id, profile_id)
 
 
 @router.post("", status_code=201)
-def create(body: AssistantRecommendationCreate, user_id: str = Depends(current_user_id), service=Depends(assistant_service), pipeline: str | None = Query(default=None)):
+def create(body: AssistantRecommendationCreate, user_id: str = Depends(current_user_id), profile_id: str = Depends(active_profile_id), service=Depends(assistant_service), pipeline: str | None = Query(default=None)):
     if pipeline not in (None,"integrated"):
         return JSONResponse(status_code=422,content={"status":"InvalidInput","outcome":"InvalidInput","complete":False})
     if service is None:
@@ -93,10 +94,10 @@ def create(body: AssistantRecommendationCreate, user_id: str = Depends(current_u
 
 
 @router.post("/{recommendation_id}/save-as-outfit", status_code=201)
-def save_as_outfit(recommendation_id: str, body: RecommendationSaveAsOutfit, user_id: str = Depends(current_user_id)) -> dict:
-    return recommendations.save_as_outfit(recommendation_id, user_id, body.name)
+def save_as_outfit(recommendation_id: str, body: RecommendationSaveAsOutfit, user_id: str = Depends(current_user_id), profile_id: str = Depends(active_profile_id)) -> dict:
+    return recommendations.save_as_outfit(recommendation_id, user_id, body.name, profile_id)
 
 
 @router.get("/{recommendation_id}/saved-outfit")
-def saved_outfit(recommendation_id: str, user_id: str = Depends(current_user_id)) -> dict:
-    return recommendations.saved_outfit_state(recommendation_id, user_id)
+def saved_outfit(recommendation_id: str, user_id: str = Depends(current_user_id), profile_id: str = Depends(active_profile_id)) -> dict:
+    return recommendations.saved_outfit_state(recommendation_id, user_id, profile_id)

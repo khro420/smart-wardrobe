@@ -49,34 +49,34 @@ def _recommended_garments(user_id: str) -> list[dict]:
     return picked
 
 
-def _preference_score(user_id: str) -> float:
+def _preference_score(user_id: str, profile_id: str) -> float:
     with connection() as conn:
         count = conn.execute(
-            "SELECT COUNT(*) FROM user_preferences WHERE user_id=? AND is_active=1",
-            (user_id,),
+            "SELECT COUNT(*) FROM user_preferences WHERE user_id=? AND profile_id=? AND is_active=1",
+            (user_id, profile_id),
         ).fetchone()[0]
     # The deterministic local strategy has no external ranking model, but it
     # records whether an explicit user preference was available to the request.
     return 1.0 if count else 0.5
 
 
-def create_recommendation(user_id: str, request_text: str) -> dict:
+def create_recommendation(user_id: str, request_text: str, profile_id: str) -> dict:
     garments = _recommended_garments(user_id)
     if not garments:
         raise HTTPException(422, "Add and confirm at least one available garment before requesting a recommendation.")
     chat_id, recommendation_id, now = str(uuid.uuid4()), str(uuid.uuid4()), utcnow()
-    preference_score = _preference_score(user_id)
+    preference_score = _preference_score(user_id, profile_id)
     entities = {"keywords": [word.lower() for word in request_text.split() if word.strip()][:12]}
     with connection() as conn:
         conn.execute(
-            "INSERT INTO nlp_chats (id, user_id, request_text, interpreted_intent, extracted_entities_json, status, created_at, completed_at) "
-            "VALUES (?, ?, ?, 'outfit_recommendation', ?, 'completed', ?, ?)",
-            (chat_id, user_id, request_text, json.dumps(entities), now, now),
+            "INSERT INTO nlp_chats (id, user_id, profile_id, request_text, interpreted_intent, extracted_entities_json, status, created_at, completed_at) "
+            "VALUES (?, ?, ?, ?, 'outfit_recommendation', ?, 'completed', ?, ?)",
+            (chat_id, user_id, profile_id, request_text, json.dumps(entities), now, now),
         )
         conn.execute(
-            "INSERT INTO recommendations (id, user_id, chat_id, recommendation_type, status, created_at, expires_at, request_match_score, compatibility_score, preference_score, total_score) "
-            "VALUES (?, ?, ?, 'wardrobe_outfit', 'available', ?, NULL, ?, ?, ?, ?)",
-            (recommendation_id, user_id, chat_id, now, 1.0, 1.0, preference_score, (2.0 + preference_score) / 3.0),
+            "INSERT INTO recommendations (id, user_id, profile_id, chat_id, recommendation_type, status, created_at, expires_at, request_match_score, compatibility_score, preference_score, total_score) "
+            "VALUES (?, ?, ?, ?, 'wardrobe_outfit', 'available', ?, NULL, ?, ?, ?, ?)",
+            (recommendation_id, user_id, profile_id, chat_id, now, 1.0, 1.0, preference_score, (2.0 + preference_score) / 3.0),
         )
         for order, garment in enumerate(garments, 1):
             conn.execute(
@@ -101,13 +101,13 @@ def _items(recommendation_id: str, user_id: str) -> list[dict]:
         ).fetchall()]
 
 
-def get_recommendation(recommendation_id: str, user_id: str) -> dict:
+def get_recommendation(recommendation_id: str, user_id: str, profile_id: str | None = None) -> dict:
     with connection() as conn:
         row = conn.execute(
             "SELECT r.*, c.request_text FROM recommendations r "
             "JOIN nlp_chats c ON c.id=r.chat_id AND c.user_id=r.user_id "
-            "WHERE r.id=? AND r.user_id=?",
-            (recommendation_id, user_id),
+            "WHERE r.id=? AND r.user_id=?" + (" AND r.profile_id=?" if profile_id else ""),
+            (recommendation_id, user_id, profile_id) if profile_id else (recommendation_id, user_id),
         ).fetchone()
     if not row:
         raise HTTPException(404, "Recommendation was not found.")
@@ -116,13 +116,13 @@ def get_recommendation(recommendation_id: str, user_id: str) -> dict:
     return result
 
 
-def list_recommendations(user_id: str) -> list[dict]:
+def list_recommendations(user_id: str, profile_id: str) -> list[dict]:
     with connection() as conn:
         identifiers = conn.execute(
-            "SELECT id FROM recommendations WHERE user_id=? AND chat_id IS NOT NULL AND status IN ('available', 'saved') ORDER BY created_at DESC",
-            (user_id,),
+            "SELECT id FROM recommendations WHERE user_id=? AND profile_id=? AND chat_id IS NOT NULL AND status IN ('available', 'saved') ORDER BY created_at DESC",
+            (user_id, profile_id),
         ).fetchall()
-    return [get_recommendation(row["id"], user_id) for row in identifiers]
+    return [get_recommendation(row["id"], user_id, profile_id) for row in identifiers]
 
 
 def validated_recommendation_items(user_id: str, recommendation_id: str) -> list[dict]:
@@ -132,35 +132,37 @@ def validated_recommendation_items(user_id: str, recommendation_id: str) -> list
         return strict_items(conn, user_id, recommendation_id)
 
 
-def saved_outfit_state(recommendation_id: str, user_id: str) -> dict:
+def saved_outfit_state(recommendation_id: str, user_id: str, profile_id: str) -> dict:
     from app.application.recommendation.recommendation_actions import saved_outfit_id
     with connection() as conn:
-        if not conn.execute("SELECT 1 FROM recommendations WHERE id=? AND user_id=?", (recommendation_id,user_id)).fetchone():
+        if not conn.execute("SELECT 1 FROM recommendations WHERE id=? AND user_id=? AND profile_id=?", (recommendation_id,user_id,profile_id)).fetchone():
             raise HTTPException(404, "Recommendation was not found.")
-        row = conn.execute("SELECT id FROM outfits WHERE id=? AND user_id=? AND creation_type='recommendation' AND status='available'",
-                           (saved_outfit_id(user_id,recommendation_id),user_id)).fetchone()
+        row = conn.execute("SELECT id FROM outfits WHERE id=? AND user_id=? AND profile_id=? AND creation_type='recommendation' AND status='available'",
+                           (saved_outfit_id(user_id,recommendation_id),user_id,profile_id)).fetchone()
     return {"saved": row is not None, "outfit_id": row["id"] if row else None}
 
 
-def save_as_outfit(recommendation_id: str, user_id: str, name: str | None) -> dict:
+def save_as_outfit(recommendation_id: str, user_id: str, name: str | None, profile_id: str) -> dict:
     from app.application.recommendation.recommendation_actions import strict_items, saved_outfit_id
     outfit_id, now = saved_outfit_id(user_id,recommendation_id), utcnow()
     with connection() as conn:
         conn.execute("BEGIN IMMEDIATE")
         try:
+            source = conn.execute("SELECT 1 FROM recommendations WHERE id=? AND user_id=? AND profile_id=?", (recommendation_id, user_id, profile_id)).fetchone()
+            if not source: raise HTTPException(404, "Recommendation was not found.")
             items = strict_items(conn, user_id, recommendation_id)
             existing = conn.execute("SELECT * FROM outfits WHERE id=?", (outfit_id,)).fetchone()
             if existing:
-                if existing["user_id"] != user_id or existing["creation_type"] != "recommendation" or existing["status"] != "available":
+                if existing["user_id"] != user_id or existing["profile_id"] != profile_id or existing["creation_type"] != "recommendation" or existing["status"] != "available":
                     raise HTTPException(409, "The previously saved outfit is no longer available.")
                 saved_items = conn.execute("SELECT garment_id FROM outfit_items WHERE outfit_id=? ORDER BY item_order", (outfit_id,)).fetchall()
                 return {"id":outfit_id,"name":existing["name"],"garment_ids":[x["garment_id"] for x in saved_items]}
             if conn.execute("SELECT status FROM recommendations WHERE id=?", (recommendation_id,)).fetchone()[0] == "saved":
                 raise HTTPException(409, "This legacy recommendation was already saved. Open the existing Outfits collection.")
             conn.execute(
-                "INSERT INTO outfits (id,user_id,name,description,creation_type,status,is_favourite,created_at,updated_at) "
-                "VALUES (?,?,?,?,'recommendation','available',0,?,?)",
-                (outfit_id,user_id,name or "Recommended outfit","Saved from a wardrobe recommendation.",now,now),
+                "INSERT INTO outfits (id,user_id,profile_id,name,description,creation_type,status,is_favourite,created_at,updated_at) "
+                "VALUES (?,?,?,?,?,'recommendation','available',0,?,?)",
+                (outfit_id,user_id,profile_id,name or "Recommended outfit","Saved from a wardrobe recommendation.",now,now),
             )
             for item in items:
                 conn.execute("INSERT INTO outfit_items (outfit_id,garment_id,role,item_order) VALUES (?,?,?,?)",

@@ -9,6 +9,7 @@ from app.infrastructure.config import DATABASE_PATH
 from app.infrastructure.persistence.postgresql_repository import utcnow
 from app.infrastructure.persistence.confirmed_garment_query_adapter import SqliteConfirmedGarmentQuery
 from app.domain.value_objects.recommendation_persistence import RecommendationWrite, PersistenceConflict, WardrobeChanged
+from app.application.wardrobe.profile_service import current_profile_id
 
 
 def encode(value):
@@ -69,13 +70,17 @@ class SqliteRecommendationRepository:
                     raise ValueError('Stored objective does not match the request.')
         # Fingerprint request identity, not nondeterministic selected result.
         fingerprint = request_fingerprint(command.operation, command.request_json, command.request_text,draft.action if draft else None)
+        profile_id = current_profile_id()
         conn = self._connect()
         try:
             conn.execute("BEGIN IMMEDIATE")
             if not conn.execute("SELECT 1 FROM users WHERE id=? AND account_status='active'", (command.user_id,)).fetchone():
                 raise ValueError("Active authenticated owner required.")
-            prior = conn.execute("SELECT fingerprint,recommendation_id FROM recommendation_submissions WHERE user_id=? AND operation=? AND submission_key=?",
-                                 (command.user_id, command.operation, command.submission_key)).fetchone()
+            prior_sql = "SELECT s.fingerprint,s.recommendation_id FROM recommendation_submissions s JOIN recommendations r ON r.id=s.recommendation_id WHERE s.user_id=? AND s.operation=? AND s.submission_key=?"
+            prior_params = [command.user_id, command.operation, command.submission_key]
+            if profile_id:
+                prior_sql += " AND r.profile_id=?"; prior_params.append(profile_id)
+            prior = conn.execute(prior_sql, prior_params).fetchone()
             if prior:
                 if prior["fingerprint"] != fingerprint:
                     raise PersistenceConflict("Submission key payload conflict.")
@@ -118,11 +123,11 @@ class SqliteRecommendationRepository:
             else:provenance_text=command.provenance_json
             chat = str(uuid.uuid4()) if command.operation == "assistant" else None
             if chat:
-                conn.execute("INSERT INTO nlp_chats VALUES (?,?,?,?,?,'completed',?,?)", (chat, command.user_id, command.request_text, "outfit_recommendation", command.request_json, now, now))
+                conn.execute("INSERT INTO nlp_chats (id,user_id,profile_id,request_text,interpreted_intent,extracted_entities_json,status,created_at,completed_at) VALUES (?,?,?,?,?,?,'completed',?,?)", (chat, command.user_id, profile_id, command.request_text, "outfit_recommendation", command.request_json, now, now))
                 self.checkpoint("chat", conn)
             score = command.score
             values = [float(c.summary.value) if c.summary.value is not None else None for c in (score.request_match, score.compatibility, score.preference)] + [float(score.total)] if score else [None]*4
-            conn.execute("INSERT INTO recommendations VALUES (?,?,?,?,? ,?,NULL,?,?,?,?)", (identifier, command.user_id, chat, command.operation, "available", now, *values))
+            conn.execute("INSERT INTO recommendations (id,user_id,profile_id,chat_id,recommendation_type,status,created_at,expires_at,request_match_score,compatibility_score,preference_score,total_score) VALUES (?,?,?,?,?, ?,?,NULL,?,?,?,?)", (identifier, command.user_id, profile_id, chat, command.operation, "available", now, *values))
             self.checkpoint("recommendation", conn)
             for member in command.candidate.members:
                 g = member.garment
@@ -154,12 +159,16 @@ class SqliteRecommendationRepository:
         return self._persist(command)
 
     def find_assistant_submission(self,user_id,submission_key,request_text,refinement_action=None):
+        profile_id = current_profile_id()
         conn = self._connect()
         try:
             conn.execute("BEGIN")
             if not conn.execute("SELECT 1 FROM users WHERE id=? AND account_status='active'",(user_id,)).fetchone():
                 raise ValueError("Active authenticated owner required.")
-            row = conn.execute("SELECT s.fingerprint,s.recommendation_id,c.extracted_entities_json FROM recommendation_submissions s JOIN recommendations r ON r.id=s.recommendation_id AND r.user_id=s.user_id JOIN nlp_chats c ON c.id=r.chat_id AND c.user_id=s.user_id WHERE s.user_id=? AND s.operation='assistant' AND s.submission_key=?",(user_id,submission_key)).fetchone()
+            sql="SELECT s.fingerprint,s.recommendation_id,c.extracted_entities_json FROM recommendation_submissions s JOIN recommendations r ON r.id=s.recommendation_id AND r.user_id=s.user_id JOIN nlp_chats c ON c.id=r.chat_id AND c.user_id=s.user_id WHERE s.user_id=? AND s.operation='assistant' AND s.submission_key=?"
+            params=[user_id,submission_key]
+            if profile_id: sql+=" AND r.profile_id=?";params.append(profile_id)
+            row = conn.execute(sql,params).fetchone()
             if row is None:
                 return None
             if row["fingerprint"] != request_fingerprint("assistant",row["extracted_entities_json"],request_text,refinement_action):
@@ -185,7 +194,11 @@ class SqliteRecommendationRepository:
             conn.execute("BEGIN")
             if not conn.execute("SELECT 1 FROM users WHERE id=? AND account_status='active'", (user_id,)).fetchone():
                 raise ValueError("Active authenticated owner required.")
-            prior = conn.execute("SELECT fingerprint,recommendation_id FROM recommendation_submissions WHERE user_id=? AND operation='homepage' AND submission_key=?", (user_id, submission_key)).fetchone()
+            profile_id=current_profile_id()
+            sql="SELECT s.fingerprint,s.recommendation_id FROM recommendation_submissions s JOIN recommendations r ON r.id=s.recommendation_id WHERE s.user_id=? AND s.operation='homepage' AND s.submission_key=?"
+            params=[user_id,submission_key]
+            if profile_id: sql+=" AND r.profile_id=?";params.append(profile_id)
+            prior = conn.execute(sql,params).fetchone()
             if prior is None:
                 return None
             if prior["fingerprint"] != request_fingerprint("homepage", "{}", None):
@@ -209,7 +222,11 @@ class SqliteRecommendationRepository:
             conn.rollback();conn.close()
 
     def _read(self, conn, user_id, identifier,eligible=None):
-        row = conn.execute("SELECT r.*,c.request_text FROM recommendations r LEFT JOIN nlp_chats c ON c.id=r.chat_id AND c.user_id=r.user_id WHERE r.id=? AND r.user_id=?", (identifier, user_id)).fetchone()
+        profile_id=current_profile_id()
+        sql="SELECT r.*,c.request_text FROM recommendations r LEFT JOIN nlp_chats c ON c.id=r.chat_id AND c.user_id=r.user_id WHERE r.id=? AND r.user_id=?"
+        params=[identifier,user_id]
+        if profile_id: sql+=" AND r.profile_id=?";params.append(profile_id)
+        row = conn.execute(sql,params).fetchone()
         if not row:
             raise LookupError("Recommendation not found.")
         result = dict(row)

@@ -14,6 +14,7 @@ from app.infrastructure.persistence.recommendation_repository_adapter import Sql
 ELIGIBLE = """
 FROM nlp_chats c JOIN recommendations r ON r.chat_id=c.id AND r.user_id=c.user_id
 WHERE c.user_id=? AND c.status='completed' AND c.completed_at IS NOT NULL
+AND c.profile_id=? AND r.profile_id=c.profile_id
 AND length(trim(c.request_text, char(9)||char(10)||char(13)||' '))>0
 AND r.status IN ('available','saved') AND r.recommendation_type IN ('assistant','wardrobe_outfit')
 AND EXISTS(SELECT 1 FROM recommendation_items i WHERE i.recommendation_id=r.id)
@@ -42,8 +43,8 @@ class SqliteChatHistoryQuery:
             conn.rollback()
             conn.close()
 
-    def _binding(self,user_id,search):
-        return hashlib.sha256(json.dumps([user_id,search],ensure_ascii=True).encode()).hexdigest()
+    def _binding(self,user_id,profile_id,search):
+        return hashlib.sha256(json.dumps([user_id,profile_id,search],ensure_ascii=True).encode()).hexdigest()
 
     def _encode_cursor(self,value):
         payload = base64.urlsafe_b64encode(json.dumps(value,separators=(',',':')).encode()).decode()
@@ -63,11 +64,12 @@ class SqliteChatHistoryQuery:
         except Exception:
             raise ValueError('Invalid history cursor.') from None
 
-    def search(self,user_id,search='',limit=50,cursor=None):
-        binding = self._binding(user_id,search)
+    def search(self,user_id,search='',limit=50,cursor=None,profile_id=None):
+        if not profile_id: raise LookupError('Completed chat not found.')
+        binding = self._binding(user_id,profile_id,search)
         position = self._decode_cursor(cursor,binding) if cursor else None
         escaped = search.casefold().replace('!','!!').replace('%','!%').replace('_','!_')
-        sql,params = ELIGIBLE+" AND history_casefold(c.request_text) LIKE ? ESCAPE '!'",[user_id,'%'+escaped+'%']
+        sql,params = ELIGIBLE+" AND history_casefold(c.request_text) LIKE ? ESCAPE '!'",[user_id,profile_id,'%'+escaped+'%']
         with self._connection(user_id) as conn:
             if position:
                 date,identifier = position['anchor']
@@ -87,9 +89,10 @@ class SqliteChatHistoryQuery:
                     'after':[page[-1]['created_at'],page[-1]['chat_id']]})
             return {'status':'CompletedChats' if items else 'NoResults','items':items,'total':total,'limit':limit,'next_cursor':next_cursor,'read_only':True}
 
-    def get(self,user_id,chat_id):
+    def get(self,user_id,chat_id,profile_id=None):
+        if not profile_id: raise LookupError('Completed chat not found.')
         with self._connection(user_id) as conn:
-            row = conn.execute('SELECT c.*,r.id AS recommendation_id '+ELIGIBLE+' AND c.id=?',(user_id,chat_id)).fetchone()
+            row = conn.execute('SELECT c.*,r.id AS recommendation_id '+ELIGIBLE+' AND c.id=?',(user_id,profile_id,chat_id)).fetchone()
             if row is None: raise LookupError('Completed chat not found.')
             # Protected helper reuse is internal to persistence, never a writer
             # call: the supplied connection is query_only and mode=ro.

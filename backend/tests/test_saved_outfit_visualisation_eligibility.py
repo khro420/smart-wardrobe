@@ -122,7 +122,13 @@ def test_normal_manual_and_old_confirmed_sources(saved):
     assert history(saved)==before
 
 
-INVALID=('pending','accepted','rejected','null','dangling','missing_item','missing_job','foreign_job','foreign_garment','archived','deleted','missing_garment','outerwear','unsupported_role','duplicate','duplicate_order','missing_media','foreign_media','foreign_outfit','archived_outfit')
+INVALID=('pending','accepted','rejected','null','dangling','missing_item','missing_job','foreign_job','foreign_garment','archived','deleted','missing_garment','unsupported_role','duplicate','duplicate_order','missing_media','foreign_media','foreign_outfit','archived_outfit')
+
+
+def test_outerwear_member_is_prepared_as_an_upper_layer(saved):
+    mutate(saved, 'outerwear')
+    result = source.prepare_visualisation(saved['owner'], outfit_id=saved['outfit'])
+    assert result['categories'] == ['upper', 'upper']
 
 
 @pytest.mark.parametrize('condition',INVALID)

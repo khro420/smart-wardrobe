@@ -31,11 +31,11 @@ export default function ExtractLandingPage() {
     if (!["image/jpeg", "image/png"].includes(file.type)) { setMessage("Choose a JPEG or PNG image."); return; }
     if (file.size > 10 * 1024 * 1024) { setMessage("Choose an image smaller than 10 MB."); return; }
     setSubmitting(true); setMessage("Validating and preparing your image…");
-    try { const job = await submitWardrobeImage(file, "automatic_structural_v1"); router.push(`/extract/results?job=${job.id}${job.admission_mode === "automatic_structural_v1" ? "&admission_mode=automatic_structural_v1" : "&automatic_unavailable=1"}`); }
+    try { const job = await submitWardrobeImage(file); router.push(`/extract/results?job=${job.id}`); }
     catch (error) { setMessage(error instanceof Error ? error.message : "Upload failed. Please try another image."); setSubmitting(false); void refreshQuota(); }
   };
   return <Layout><div className="w-full space-y-8 border-4 border-black bg-white p-6 shadow-[6px_6px_0_#000] md:p-8">
-    <div className="border-b-4 border-black pb-4 text-center"><h1 className="text-2xl font-mono font-black">Add garments from an image</h1><p className="mt-2 text-xs font-mono text-zinc-500">Structurally complete garments are added automatically. Missing information may need correction; saved labels may be unreviewed.</p></div>
+    <div className="border-b-4 border-black pb-4 text-center"><h1 className="text-2xl font-mono font-black">Add garments from an image</h1><p className="mt-2 text-xs font-mono text-zinc-500">Review the detected garment details and image before saving. You can correct names, categories, colours and attributes.</p></div>
     <section aria-label="Wardrobe capacity" className="rounded-lg border border-slate-200 p-3 text-sm">
       <p role="status" aria-live="polite">{quota ? wardrobeCapacityText(quota) : "Capacity unavailable"}</p>
       <p className="text-xs text-slate-600">Non-archived entries include unavailable items. Pending uploads do not reserve spaces. Archiving a garment releases its space.</p>

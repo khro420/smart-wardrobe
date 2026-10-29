@@ -8,6 +8,7 @@ from app.domain.value_objects.garment_attributes import GarmentAttributes
 from app.application.ports.garment_standardisation_port import GarmentStandardisationInput
 from app.application.garment_processing import automatic_garment_finalization as automatic
 from app.domain.value_objects.saved_attribute_evidence import KEY as SOURCE_KEY, source_record
+from app.infrastructure.ai.mirrored_garment_reconstruction import reconstruct_mirrored_garment_png
 
 from app.application.ports.workflow_runtime import (
     connection, utcnow, media_path_for_owner, store_media_bytes,
@@ -16,15 +17,16 @@ from app.application.ports.workflow_runtime import (
 
 
 # Compatibility exports; each responsibility lives in its own service module.
-from app.application.garment_processing.processing_job_service import create_job, get_job, cancel_job
+from app.application.garment_processing.processing_job_service import create_job, get_job, cancel_job, resolve_profile_id
 from app.application.garment_processing.review_service import review_job
 
 
-def run_job(job_id: str, user_id: str, admission_mode: str = automatic.MANUAL) -> None:
+def run_job(job_id: str, user_id: str, profile_id: str | None = None, admission_mode: str = automatic.MANUAL) -> None:
+    profile_id = resolve_profile_id(user_id, profile_id)
     if admission_mode not in (automatic.MANUAL, automatic.MODE):
         raise ValueError('Unapproved admission mode.')
     with connection() as conn:
-        job = conn.execute("SELECT * FROM processing_jobs WHERE id = ? AND user_id = ?", (job_id, user_id)).fetchone()
+        job = conn.execute("SELECT * FROM processing_jobs WHERE id = ? AND user_id = ? AND profile_id = ?", (job_id, user_id, profile_id)).fetchone()
         if not job:
             return
         now = utcnow()
@@ -44,6 +46,23 @@ def run_job(job_id: str, user_id: str, admission_mode: str = automatic.MANUAL) -
                 conn.execute("UPDATE processing_jobs SET progress_percent=?, progress_message=?, updated_at=? WHERE id=? AND status='processing'", (25 + int(((index - 1) / len(detections)) * 65), f"Preparing garment {index} of {len(detections)}.", utcnow(), job_id))
             crop_media_id = store_media_bytes(detection.crop_png, user_id, "garment_crop") if detection.crop_png else job["source_media_id"]
             mask_media_id = store_media_bytes(detection.mask_png, user_id, "segmentation_mask") if detection.mask_png else None
+            mirror_media_id = None
+            mirror_metadata = None
+            # A low-confidence, one-sided crop may be a half garment caused by
+            # segmentation.  Keep the evidence intact and offer a deterministic
+            # mirrored alternative for the owner to review explicitly.
+            if detection.crop_png and detection.confidence <= 0.50:
+                mirrored = reconstruct_mirrored_garment_png(detection.crop_png)
+                if mirrored:
+                    mirror_media_id = store_media_bytes(mirrored.png_bytes, user_id, "mirrored_garment_reconstruction")
+                    mirror_metadata = {
+                        "generated": True,
+                        "method": "horizontal_mirror_from_observed_half_v1",
+                        "seam_side": mirrored.seam_side,
+                        "edge_coverage": mirrored.edge_coverage,
+                        "source_size": list(mirrored.source_size),
+                        "requires_review": True,
+                    }
             standardisation = get_standardisation_adapter().standardise(
                 GarmentStandardisationInput(
                     source_media_id=job["source_media_id"],
@@ -61,6 +80,8 @@ def run_job(job_id: str, user_id: str, admission_mode: str = automatic.MANUAL) -
                                     "used_fallback": standardisation.used_fallback,
                                     "vtoff": standardisation.metadata,
                                     "embedding_status": "unavailable" if attributes.get("embedding") is None else "available"}
+            if mirror_metadata:
+                candidate_attributes["mirrored_reconstruction"] = mirror_metadata
             # Automatic adapters cannot attest an authenticated owner's style choice.
             from app.application.wardrobe.owner_style_confirmation import KEY as STYLE_CONFIRMATION_KEY
             for reserved in (STYLE_CONFIRMATION_KEY, SOURCE_KEY, automatic.KEY, 'contextual_suitability_v1', 'appearance_evidence_v1'):
@@ -101,7 +122,7 @@ def run_job(job_id: str, user_id: str, admission_mode: str = automatic.MANUAL) -
                 detection.confidence,
                 candidate_attributes,
                 crop_media_id, standardisation.preferred_media_id,
-                json.dumps(detection.bounding_box), mask_media_id, standardisation.vtoff_media_id,
+                json.dumps(detection.bounding_box), mask_media_id, standardisation.vtoff_media_id, mirror_media_id,
             ))
             with connection() as conn:
                 conn.execute("UPDATE processing_jobs SET progress_percent=?, progress_message=?, updated_at=? WHERE id=? AND status='processing'", (25 + int((index / len(detections)) * 65), f"Garment {index} of {len(detections)} prepared.", utcnow(), job_id))
@@ -111,14 +132,14 @@ def run_job(job_id: str, user_id: str, admission_mode: str = automatic.MANUAL) -
             changed = conn.execute("UPDATE processing_jobs SET status='review_required', progress_percent=100, progress_message=?, updated_at=? WHERE id=? AND status='processing'", (f"{len(prepared_items)} garment candidate(s) are ready to review.", utcnow(), job_id)).rowcount
             if not changed:
                 return
-            for item_id, category, confidence, attributes, crop_id, preferred_id, box, mask_id, vtoff_id in prepared_items:
+            for item_id, category, confidence, attributes, crop_id, preferred_id, box, mask_id, vtoff_id, mirror_id in prepared_items:
                 conn.execute(
-                    "INSERT INTO processing_items (id, job_id, detected_category, confidence, crop_media_id, preferred_media_id, attributes_json, review_status, created_at, bounding_box, mask_media_id, vtoff_media_id, embedding) VALUES (?, ?, ?, ?, ?, ?, ?, 'pending', ?, ?, ?, ?, ?)",
+                    "INSERT INTO processing_items (id, job_id, detected_category, confidence, crop_media_id, preferred_media_id, attributes_json, review_status, created_at, bounding_box, mask_media_id, vtoff_media_id, mirror_media_id, embedding) VALUES (?, ?, ?, ?, ?, ?, ?, 'pending', ?, ?, ?, ?, ?, ?)",
                     (item_id, job_id, category, confidence, crop_id, preferred_id,
-                     json.dumps(attributes, allow_nan=False), utcnow(), box, mask_id, vtoff_id, json.dumps(attributes.get("embedding"), allow_nan=False)),
+                     json.dumps(attributes, allow_nan=False), utcnow(), box, mask_id, vtoff_id, mirror_id, json.dumps(attributes.get("embedding"), allow_nan=False)),
                 )
         if admission_mode == automatic.MODE:
-            runtime().confirmed_writer.save_automatically_processed_candidates(job_id, user_id)
+            runtime().confirmed_writer.save_automatically_processed_candidates(job_id, user_id, profile_id=profile_id)
     except Exception:
         logging.getLogger(__name__).exception("Garment processing failed for job %s", job_id)
         with connection() as conn:

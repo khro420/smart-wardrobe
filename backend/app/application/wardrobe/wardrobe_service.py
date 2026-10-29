@@ -36,10 +36,10 @@ OUTFIT_SORT_SQL = {
 WARDROBE_GARMENT_LIMIT = 100
 
 
-def _quota_on_connection(conn, user_id: str) -> dict:
+def _quota_on_connection(conn, user_id: str, profile_id: str) -> dict:
     used = conn.execute(
-        "SELECT COUNT(*) FROM garments WHERE user_id=? AND (status IS NULL OR status<>'archived')",
-        (user_id,),
+        "SELECT COUNT(*) FROM garments WHERE user_id=? AND (profile_id=? OR profile_id IS NULL) AND (status IS NULL OR status<>'archived')",
+        (user_id, profile_id),
     ).fetchone()[0]
     return {"policy_version": "wardrobe-active-entries-1.0.0",
             "scope": "non_archived_garment_entries", "limit": WARDROBE_GARMENT_LIMIT,
@@ -47,9 +47,9 @@ def _quota_on_connection(conn, user_id: str) -> dict:
             "over_limit": used > WARDROBE_GARMENT_LIMIT, "pending_reserved": 0}
 
 
-def get_wardrobe_quota(user_id: str) -> dict:
+def get_wardrobe_quota(user_id: str, profile_id: str) -> dict:
     with connection() as conn:
-        return _quota_on_connection(conn, user_id)
+        return _quota_on_connection(conn, user_id, profile_id)
 
 
 def _require_capacity(quota: dict, requested: int | None, stage: str) -> None:
@@ -65,18 +65,18 @@ def _require_capacity(quota: dict, requested: int | None, stage: str) -> None:
                               "message": message, **quota, "requested": requested})
 
 
-def check_upload_capacity(user_id: str) -> None:
+def check_upload_capacity(user_id: str, profile_id: str) -> None:
     # Advisory only: uploads/candidates do not reserve slots. Confirmation recounts.
-    _require_capacity(get_wardrobe_quota(user_id), None, "upload")
+    _require_capacity(get_wardrobe_quota(user_id, profile_id), None, "upload")
 
 
 class WardrobeWriter:
     """ConfirmedGarmentWriter implementation supplied to candidate review."""
-    def save_confirmed_candidates(self, job_id: str, user_id: str, item_ids: list[str], save_mode: str, outfit_name: str | None) -> dict:
-        return confirm_candidates(job_id, user_id, item_ids, save_mode, outfit_name)
+    def save_confirmed_candidates(self, job_id: str, user_id: str, item_ids: list[str], save_mode: str, outfit_name: str | None, profile_id: str | None = None) -> dict:
+        return confirm_candidates(job_id, user_id, item_ids, save_mode, outfit_name, profile_id)
 
-    def save_automatically_processed_candidates(self, job_id: str, user_id: str, item_ids: list[str] | None = None) -> dict:
-        return finalize_automatic_candidates(job_id, user_id, item_ids)
+    def save_automatically_processed_candidates(self, job_id: str, user_id: str, item_ids: list[str] | None = None, profile_id: str | None = None) -> dict:
+        return finalize_automatic_candidates(job_id, user_id, item_ids, profile_id)
 
 
 def _serialise_garment(row) -> dict:
@@ -133,14 +133,14 @@ def _write_representation(conn, garment_id: str, attrs: dict, *, write_style: bo
 
 
 def list_garments(
-    user_id: str, query: str = "", category: str | None = None,
+    user_id: str, profile_id: str, query: str = "", category: str | None = None,
     favourite: bool | None = None, sort: str = "updated_desc",
     colour: str | None = None, style: str | None = None, availability: str = "available",
 ) -> list[dict]:
     if availability not in {"available", "unavailable", "archived", "all"}:
         raise HTTPException(422, "Choose a supported availability filter.")
-    sql = "SELECT * FROM garments WHERE user_id=?"
-    parameters: list[object] = [user_id]
+    sql = "SELECT * FROM garments WHERE user_id=? AND (profile_id=? OR profile_id IS NULL)"
+    parameters: list[object] = [user_id, profile_id]
     if availability == "unavailable":
         sql += " AND (status IS NULL OR status NOT IN ('available','archived'))"
     elif availability != "all":
@@ -175,7 +175,7 @@ def list_garments(
     return garments
 
 
-def _materialise_candidates(conn, job_id, user_id, items, save_mode, outfit_name, automatic_mode=False):
+def _materialise_candidates(conn, job_id, user_id, profile_id, items, save_mode, outfit_name, automatic_mode=False):
     now, garment_ids = utcnow(), []
     for item in items:
         garment_id = str(uuid.uuid4())
@@ -189,8 +189,8 @@ def _materialise_candidates(conn, job_id, user_id, items, save_mode, outfit_name
             attrs[automatic.KEY] = automatic.record(user_id, job_id, item['id'], 'saved', garment_id=garment_id)
             role, layer = GARMENT_STRUCTURE[attrs.get('reviewed_category') or item['detected_category']]
             attrs.update(garment_type=role, layering_index=layer)
-        conn.execute("INSERT INTO garments (id, user_id, processing_item_id, preferred_media_id, name, category, primary_colour, pattern, attributes_json, status, is_favourite, created_at, updated_at, deleted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'available', 0, ?, ?, NULL)", (
-            garment_id, user_id, item["id"], item["preferred_media_id"], attrs.get("name") or attrs.get("reviewed_category") or item["detected_category"],
+        conn.execute("INSERT INTO garments (id, user_id, profile_id, processing_item_id, preferred_media_id, name, category, primary_colour, pattern, attributes_json, status, is_favourite, created_at, updated_at, deleted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'available', 0, ?, ?, NULL)", (
+            garment_id, user_id, profile_id, item["id"], item["preferred_media_id"], attrs.get("name") or attrs.get("reviewed_category") or item["detected_category"],
             attrs.get("reviewed_category") or item["detected_category"], attrs.get("primary_colour"), attrs.get("pattern"), json.dumps(attrs), now, now,
         ))
         _write_representation(conn, garment_id, attrs)
@@ -202,7 +202,7 @@ def _materialise_candidates(conn, job_id, user_id, items, save_mode, outfit_name
     outfit_id = None
     if save_mode == "outfit":
         outfit_id = str(uuid.uuid4())
-        conn.execute("INSERT INTO outfits VALUES (?, ?, ?, NULL, 'image_upload', 'available', 0, ?, ?)", (outfit_id, user_id, outfit_name, now, now))
+        conn.execute("INSERT INTO outfits (id,user_id,profile_id,name,description,creation_type,status,is_favourite,created_at,updated_at) VALUES (?, ?, ?, ?, NULL, 'image_upload', 'available', 0, ?, ?)", (outfit_id, user_id, profile_id, outfit_name, now, now))
         for order, (garment_id, item) in enumerate(zip(garment_ids, items), start=1):
             role = json.loads(item["attributes_json"]).get("garment_type", "garment")
             conn.execute("INSERT INTO outfit_items VALUES (?, ?, ?, ?)", (outfit_id, garment_id, role, order))
@@ -210,7 +210,7 @@ def _materialise_candidates(conn, job_id, user_id, items, save_mode, outfit_name
     return {"garment_ids": garment_ids, "outfit_id": outfit_id}
 
 
-def confirm_candidates(job_id: str, user_id: str, item_ids: list[str], save_mode: str, outfit_name: str | None) -> dict:
+def confirm_candidates(job_id: str, user_id: str, item_ids: list[str], save_mode: str, outfit_name: str | None, profile_id: str | None = None) -> dict:
     if not item_ids or len(set(item_ids)) != len(item_ids):
         raise HTTPException(422, "Select one or more distinct candidates.")
     if save_mode not in {"garments", "outfit"}:
@@ -220,7 +220,7 @@ def confirm_candidates(job_id: str, user_id: str, item_ids: list[str], save_mode
     with connection() as conn:
         # Serialise competing review/confirm/cancel writes before checking state.
         conn.execute("BEGIN IMMEDIATE")
-        job = conn.execute("SELECT status FROM processing_jobs WHERE id=? AND user_id=?", (job_id, user_id)).fetchone()
+        job = conn.execute("SELECT status,profile_id FROM processing_jobs WHERE id=? AND user_id=?", (job_id, user_id)).fetchone()
         if not job:
             raise HTTPException(404, "Processing job was not found.")
         if job["status"] != "review_required":
@@ -239,23 +239,29 @@ def confirm_candidates(job_id: str, user_id: str, item_ids: list[str], save_mode
                 GarmentAttributes(json.loads(item["attributes_json"])).validate_embedding(runtime().embedding_dimension)
             except ValueError as exc:
                 raise HTTPException(422, str(exc)) from exc
-            if item["preferred_media_id"] not in {item["crop_media_id"], item["vtoff_media_id"]}:
+            if item["preferred_media_id"] not in {item["crop_media_id"], item["vtoff_media_id"], item["mirror_media_id"]}:
                 raise HTTPException(409, "Review a valid garment representation before saving.")
             media_path_for_owner(item["preferred_media_id"], user_id)
         # The same write transaction owns the count and every subsequent insert.
         # Completed-job retries were already rejected above; they are never charged.
-        _require_capacity(_quota_on_connection(conn, user_id), len(items), "confirmation")
-        result = _materialise_candidates(conn, job_id, user_id, items, save_mode, outfit_name)
+        profile_id = profile_id or job["profile_id"]
+        if not profile_id:
+            raise HTTPException(409, "This upload is missing its wardrobe profile.")
+        _require_capacity(_quota_on_connection(conn, user_id, profile_id), len(items), "confirmation")
+        result = _materialise_candidates(conn, job_id, user_id, profile_id, items, save_mode, outfit_name)
     return result
 
 
-def finalize_automatic_candidates(job_id: str, user_id: str, item_ids: list[str] | None = None) -> dict:
+def finalize_automatic_candidates(job_id: str, user_id: str, item_ids: list[str] | None = None, profile_id: str | None = None) -> dict:
     """The same locked writer materialises complete automatic batches only."""
     with connection() as conn:
         conn.execute('BEGIN IMMEDIATE')
         job = conn.execute('SELECT * FROM processing_jobs WHERE id=? AND user_id=?', (job_id, user_id)).fetchone()
         if job is None:
             raise HTTPException(404, 'Processing job was not found.')
+        profile_id = profile_id or job['profile_id']
+        if not profile_id:
+            raise HTTPException(409, "This upload is missing its wardrobe profile.")
         items = conn.execute('SELECT * FROM processing_items WHERE job_id=? ORDER BY created_at,id', (job_id,)).fetchall()
         if item_ids is not None and (len(item_ids) != len(items) or len(set(item_ids)) != len(item_ids) or set(item_ids) != {item['id'] for item in items}):
             raise HTTPException(409, 'Automatic saving requires the original complete batch.')
@@ -285,7 +291,7 @@ def finalize_automatic_candidates(job_id: str, user_id: str, item_ids: list[str]
                 reason = 'representation_or_processing_data_invalid'
         if reason is None:
             try:
-                _require_capacity(_quota_on_connection(conn, user_id), len(items), 'automatic_finalisation')
+                _require_capacity(_quota_on_connection(conn, user_id, profile_id), len(items), 'automatic_finalisation')
             except HTTPException:
                 reason = 'WardrobeQuotaExceeded'
         if reason is not None:
@@ -296,19 +302,19 @@ def finalize_automatic_candidates(job_id: str, user_id: str, item_ids: list[str]
             conn.execute('UPDATE processing_jobs SET progress_message=?,updated_at=? WHERE id=?',
                          ('Automatic saving needs attention: '+reason, utcnow(), job_id))
             return {'garment_ids': [], 'outfit_id': None, 'admission': {'mode': automatic.MODE, 'state': state, 'reason': reason, 'garment_ids': []}}
-        result = _materialise_candidates(conn, job_id, user_id, items, 'garments', None, automatic_mode=True)
+        result = _materialise_candidates(conn, job_id, user_id, profile_id, items, 'garments', None, automatic_mode=True)
         conn.execute('UPDATE processing_jobs SET error_message=NULL,progress_message=? WHERE id=?', ('Garments automatically added to your wardrobe.', job_id))
         result['admission'] = {'mode': automatic.MODE, 'state': 'saved', 'reason': None, 'garment_ids': result['garment_ids']}
         return result
 
 
-def update_garment(garment_id: str, user_id: str, payload: dict, expected_tag_revision: str | None = None) -> dict:
+def update_garment(garment_id: str, user_id: str, profile_id: str, payload: dict, expected_tag_revision: str | None = None) -> dict:
     if {CONTEXT_KEY, APPEARANCE_KEY, owner_style_confirmation.KEY, SOURCE_KEY, automatic.KEY}.intersection(payload.get('attributes') or {}):
         raise HTTPException(422, 'Use the contextual suitability review action.')
     with connection() as conn:
         # Keep the read/merge/write atomic so an unrelated PATCH cannot restore stale style evidence.
         conn.execute("BEGIN IMMEDIATE")
-        row = conn.execute("SELECT * FROM garments WHERE id=? AND user_id=? AND status='available'", (garment_id, user_id)).fetchone()
+        row = conn.execute("SELECT * FROM garments WHERE id=? AND user_id=? AND (profile_id=? OR profile_id IS NULL) AND status='available'", (garment_id, user_id, profile_id)).fetchone()
         if not row:
             raise HTTPException(404, "Garment was not found.")
         if "custom_tags" in (payload.get("attributes") or {}):
@@ -373,10 +379,10 @@ def update_garment(garment_id: str, user_id: str, payload: dict, expected_tag_re
     return result
 
 
-def review_contextual_suitability(garment_id: str, user_id: str, payload: dict) -> dict:
+def review_contextual_suitability(garment_id: str, user_id: str, profile_id: str, payload: dict) -> dict:
     with connection() as conn:
         conn.execute('BEGIN IMMEDIATE')
-        row = conn.execute("SELECT * FROM garments WHERE id=? AND user_id=? AND status='available'", (garment_id, user_id)).fetchone()
+        row = conn.execute("SELECT * FROM garments WHERE id=? AND user_id=? AND (profile_id=? OR profile_id IS NULL) AND status='available'", (garment_id, user_id, profile_id)).fetchone()
         if row is None:
             raise HTTPException(404, 'Garment was not found.')
         if payload.get('appearance_review') is not None:
@@ -424,17 +430,17 @@ def review_contextual_suitability(garment_id: str, user_id: str, payload: dict) 
     return result
 
 
-def _garment_dependencies(conn, garment_id: str, user_id: str) -> dict:
+def _garment_dependencies(conn, garment_id: str, user_id: str, profile_id: str) -> dict:
     garment = conn.execute(
-        "SELECT id, name FROM garments WHERE id=? AND user_id=? AND status='available'",
-        (garment_id, user_id),
+        "SELECT id, name FROM garments WHERE id=? AND user_id=? AND (profile_id=? OR profile_id IS NULL) AND status='available'",
+        (garment_id, user_id, profile_id),
     ).fetchone()
     if not garment:
         raise HTTPException(404, "Garment was not found.")
     outfits = [dict(row) for row in conn.execute(
         "SELECT o.id, o.name FROM outfit_items oi JOIN outfits o ON o.id=oi.outfit_id "
-        "WHERE oi.garment_id=? AND o.user_id=? AND o.status='available' ORDER BY LOWER(o.name)",
-        (garment_id, user_id),
+        "WHERE oi.garment_id=? AND o.user_id=? AND o.profile_id=? AND o.status='available' ORDER BY LOWER(o.name)",
+        (garment_id, user_id, profile_id),
     ).fetchall()]
     visualisations = [dict(row) for row in conn.execute(
         "SELECT DISTINCT v.id, v.status FROM visualisation_items vi "
@@ -451,31 +457,31 @@ def _garment_dependencies(conn, garment_id: str, user_id: str) -> dict:
     }
 
 
-def get_garment_dependencies(garment_id: str, user_id: str) -> dict:
+def get_garment_dependencies(garment_id: str, user_id: str, profile_id: str) -> dict:
     with connection() as conn:
-        return _garment_dependencies(conn, garment_id, user_id)
+        return _garment_dependencies(conn, garment_id, user_id, profile_id)
 
 
-def archive_garment(garment_id: str, user_id: str) -> None:
+def archive_garment(garment_id: str, user_id: str, profile_id: str) -> None:
     with connection() as conn:
         conn.execute("BEGIN IMMEDIATE")
-        dependencies = _garment_dependencies(conn, garment_id, user_id)
+        dependencies = _garment_dependencies(conn, garment_id, user_id, profile_id)
         if not dependencies["can_archive"]:
             raise HTTPException(409, dependencies["policy"])
         conn.execute(
-            "UPDATE garments SET status='archived', deleted_at=?, updated_at=? WHERE id=? AND user_id=? AND status='available'",
-            (utcnow(), utcnow(), garment_id, user_id),
+            "UPDATE garments SET status='archived', deleted_at=?, updated_at=? WHERE id=? AND user_id=? AND (profile_id=? OR profile_id IS NULL) AND status='available'",
+            (utcnow(), utcnow(), garment_id, user_id, profile_id),
         )
 
 
 def list_outfits(
-    user_id: str, query: str = "", category: str | None = None,
+    user_id: str, profile_id: str, query: str = "", category: str | None = None,
     creation_type: str | None = None, favourite: bool | None = None,
     sort: str = "updated_desc",
 ) -> list[dict]:
     with connection() as conn:
-        sql = "SELECT * FROM outfits o WHERE o.user_id=? AND o.status='available'"
-        parameters: list[object] = [user_id]
+        sql = "SELECT * FROM outfits o WHERE o.user_id=? AND o.profile_id=? AND o.status='available'"
+        parameters: list[object] = [user_id, profile_id]
         if query:
             sql += (
                 " AND (LOWER(o.name) LIKE ? OR LOWER(COALESCE(o.description,'')) LIKE ? OR EXISTS ("
@@ -499,16 +505,16 @@ def list_outfits(
         for outfit in outfits:
             data = dict(outfit)
             data["is_favourite"] = bool(data["is_favourite"])
-            data["items"] = [dict(item) for item in conn.execute("SELECT oi.*, g.name, g.category FROM outfit_items oi JOIN garments g ON g.id=oi.garment_id WHERE oi.outfit_id=? ORDER BY oi.item_order", (outfit["id"],)).fetchall()]
+            data["items"] = [dict(item) for item in conn.execute("SELECT oi.*, g.name, g.category, g.preferred_media_id FROM outfit_items oi JOIN garments g ON g.id=oi.garment_id WHERE oi.outfit_id=? ORDER BY oi.item_order", (outfit["id"],)).fetchall()]
             result.append(data)
     return result
 
 
-def _validated_garments(conn, user_id: str, garment_ids: list[str]):
+def _validated_garments(conn, user_id: str, profile_id: str, garment_ids: list[str]):
     placeholders = ",".join("?" for _ in garment_ids)
     garments = conn.execute(
-        f"SELECT id, category, additional_attributes FROM garments WHERE user_id=? AND status='available' AND id IN ({placeholders})",
-        [user_id, *garment_ids],
+        f"SELECT id, category, additional_attributes FROM garments WHERE user_id=? AND profile_id=? AND status='available' AND id IN ({placeholders})",
+        [user_id, profile_id, *garment_ids],
     ).fetchall()
     if len(garments) != len(garment_ids):
         raise HTTPException(404, "One or more garments are unavailable or do not belong to you.")
@@ -524,22 +530,22 @@ def _role_for_garment(row) -> str:
     return GARMENT_STRUCTURE.get(row["category"], ("garment", None))[0]
 
 
-def create_outfit(user_id: str, name: str, garment_ids: list[str], description: str | None) -> dict:
+def create_outfit(user_id: str, profile_id: str, name: str, garment_ids: list[str], description: str | None) -> dict:
     if len(set(garment_ids)) != len(garment_ids):
         raise HTTPException(422, "The same garment cannot appear twice in an outfit.")
     with connection() as conn:
-        by_id = _validated_garments(conn, user_id, garment_ids)
+        by_id = _validated_garments(conn, user_id, profile_id, garment_ids)
         outfit_id, now = str(uuid.uuid4()), utcnow()
-        conn.execute("INSERT INTO outfits VALUES (?, ?, ?, ?, 'manual', 'available', 0, ?, ?)", (outfit_id, user_id, name, description, now, now))
+        conn.execute("INSERT INTO outfits (id,user_id,profile_id,name,description,creation_type,status,is_favourite,created_at,updated_at) VALUES (?, ?, ?, ?, ?, 'manual', 'available', 0, ?, ?)", (outfit_id, user_id, profile_id, name, description, now, now))
         for order, garment_id in enumerate(garment_ids, 1):
             conn.execute("INSERT INTO outfit_items VALUES (?, ?, ?, ?)", (outfit_id, garment_id, _role_for_garment(by_id[garment_id]), order))
     return {"id": outfit_id, "name": name, "garment_ids": garment_ids}
 
 
-def update_outfit(outfit_id: str, user_id: str, payload: dict) -> dict:
+def update_outfit(outfit_id: str, user_id: str, profile_id: str, payload: dict) -> dict:
     with connection() as conn:
         conn.execute("BEGIN IMMEDIATE")
-        outfit = conn.execute("SELECT * FROM outfits WHERE id=? AND user_id=? AND status='available'", (outfit_id, user_id)).fetchone()
+        outfit = conn.execute("SELECT * FROM outfits WHERE id=? AND user_id=? AND profile_id=? AND status='available'", (outfit_id, user_id, profile_id)).fetchone()
         if not outfit:
             raise HTTPException(404, "Outfit was not found.")
         data = dict(outfit)
@@ -551,7 +557,7 @@ def update_outfit(outfit_id: str, user_id: str, payload: dict) -> dict:
         ))
         if payload.get("garment_ids") is not None:
             garment_ids = payload["garment_ids"]
-            by_id = _validated_garments(conn, user_id, garment_ids)
+            by_id = _validated_garments(conn, user_id, profile_id, garment_ids)
             conn.execute("DELETE FROM outfit_items WHERE outfit_id=?", (outfit_id,))
             for order, garment_id in enumerate(garment_ids, 1):
                 conn.execute(
@@ -562,16 +568,16 @@ def update_outfit(outfit_id: str, user_id: str, payload: dict) -> dict:
         result = dict(row)
         result["is_favourite"] = bool(result["is_favourite"])
         result["items"] = [dict(item) for item in conn.execute(
-            "SELECT oi.*, g.name, g.category FROM outfit_items oi JOIN garments g ON g.id=oi.garment_id WHERE oi.outfit_id=? ORDER BY oi.item_order",
+            "SELECT oi.*, g.name, g.category, g.preferred_media_id FROM outfit_items oi JOIN garments g ON g.id=oi.garment_id WHERE oi.outfit_id=? ORDER BY oi.item_order",
             (outfit_id,),
         ).fetchall()]
     return result
 
 
-def _outfit_dependencies(conn, outfit_id: str, user_id: str) -> dict:
+def _outfit_dependencies(conn, outfit_id: str, user_id: str, profile_id: str) -> dict:
     outfit = conn.execute(
-        "SELECT id, name FROM outfits WHERE id=? AND user_id=? AND status='available'",
-        (outfit_id, user_id),
+        "SELECT id, name FROM outfits WHERE id=? AND user_id=? AND profile_id=? AND status='available'",
+        (outfit_id, user_id, profile_id),
     ).fetchone()
     if not outfit:
         raise HTTPException(404, "Outfit was not found.")
@@ -588,18 +594,18 @@ def _outfit_dependencies(conn, outfit_id: str, user_id: str) -> dict:
     }
 
 
-def get_outfit_dependencies(outfit_id: str, user_id: str) -> dict:
+def get_outfit_dependencies(outfit_id: str, user_id: str, profile_id: str) -> dict:
     with connection() as conn:
-        return _outfit_dependencies(conn, outfit_id, user_id)
+        return _outfit_dependencies(conn, outfit_id, user_id, profile_id)
 
 
-def archive_outfit(outfit_id: str, user_id: str) -> None:
+def archive_outfit(outfit_id: str, user_id: str, profile_id: str) -> None:
     with connection() as conn:
         conn.execute("BEGIN IMMEDIATE")
-        dependencies = _outfit_dependencies(conn, outfit_id, user_id)
+        dependencies = _outfit_dependencies(conn, outfit_id, user_id, profile_id)
         if not dependencies["can_archive"]:
             raise HTTPException(409, dependencies["policy"])
         conn.execute(
-            "UPDATE outfits SET status='archived', updated_at=? WHERE id=? AND user_id=? AND status='available'",
-            (utcnow(), outfit_id, user_id),
+            "UPDATE outfits SET status='archived', updated_at=? WHERE id=? AND user_id=? AND profile_id=? AND status='available'",
+            (utcnow(), outfit_id, user_id, profile_id),
         )

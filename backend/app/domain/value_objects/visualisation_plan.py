@@ -4,6 +4,7 @@ from typing import Literal
 
 CATEGORY_MODES = {
     "short_sleeve_top": "upper", "long_sleeve_top": "upper", "vest": "upper", "sling": "upper",
+    "short_sleeve_outwear": "upper", "long_sleeve_outwear": "upper",
     "shorts": "lower", "trousers": "lower", "skirt": "lower",
     "short_sleeve_dress": "overall", "long_sleeve_dress": "overall",
     "vest_dress": "overall", "sling_dress": "overall",
@@ -59,7 +60,7 @@ class VisualisationPlan:
         except KeyError:
             raise ValueError(
                 "This garment category is not supported for try-on. "
-                "Choose a top, bottom or dress; outerwear is not supported."
+                "Choose a confirmed garment from a supported wardrobe category."
             ) from None
 
     @property
@@ -74,6 +75,6 @@ class VisualisationPlan:
             except KeyError:
                 raise ValueError(
                     "This garment category is not supported for try-on. "
-                    "Choose a top, bottom or dress; outerwear is not supported."
+                    "Choose a confirmed garment from a supported wardrobe category."
                 ) from None
         return tuple(modes)
