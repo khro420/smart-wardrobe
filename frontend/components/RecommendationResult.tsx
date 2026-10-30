@@ -146,7 +146,6 @@ function RecommendationResultContent({ recommendation, historical = false, histo
     return () => { active = false; };
   }, [actionsEnabled, historicalActions, recommendation.id, recommendation.status, checkAttempt]);
   const eligible = recommendation.items.length > 0 && recommendation.items.every(item => item.currently_eligible === true);
-  const outerwear = recommendation.items.some(item => item.garment_role === "outerwear" || item.category === "short_sleeve_outwear" || item.category === "long_sleeve_outwear");
   const save = async () => {
     if (saveLock.current || saved || !actionsEnabled || !eligible || savedStatus !== "ready") return;
     saveLock.current = true;
@@ -176,11 +175,10 @@ function RecommendationResultContent({ recommendation, historical = false, histo
     <WeddingExplanation recommendation={recommendation} />
     <GeneralContextExplanation recommendation={recommendation} />
     {recommendation.scoring_display?.version !== "assistant-scoring-display-2.0.0" && recommendation.scoring_display?.version !== "assistant-scoring-display-2.1.0" && recommendation.scoring_display?.version !== "assistant-scoring-display-2.2.0" && <CompatibilityExplanation recommendation={recommendation} />}
-    {outerwear && <p className="text-sm text-slate-600">All outfit garments are shown. Visualisation is unavailable for outfits containing outerwear.</p>}
     {actionsEnabled && savedStatus === "loading" && <p role="status" className="text-sm text-slate-600">Checking saved outfit status…</p>}
     {actionsEnabled && feedback && <p role="status" className="text-sm text-emerald-800">{feedback}</p>}
     {historicalActions && recommendation.status === "saved" && !saved && savedStatus === "ready" && <p className="text-sm text-slate-600">This older recommendation was marked saved. Its original outfit may only be available through your wardrobe.</p>}
-    {actionsEnabled && eligible && <div className="flex flex-wrap gap-3"><button disabled={saving || saved || savedStatus !== "ready"} onClick={() => void save()} className="min-h-11 rounded-xl border border-slate-300 px-4 text-sm font-semibold disabled:opacity-50">{saving ? "Saving…" : saved ? "Saved as outfit" : "Save as outfit"}</button>{!outerwear && <Link href={`/try-on?recommendation=${encodeURIComponent(recommendation.id)}`} className="inline-flex min-h-11 items-center rounded-xl bg-[#6d335b] px-4 text-sm font-semibold text-white">Visualise outfit</Link>}</div>}
+    {actionsEnabled && eligible && <div className="flex flex-wrap gap-3"><button disabled={saving || saved || savedStatus !== "ready"} onClick={() => void save()} className="min-h-11 rounded-xl border border-slate-300 px-4 text-sm font-semibold disabled:opacity-50">{saving ? "Saving…" : saved ? "Saved as outfit" : "Save as outfit"}</button><Link href={`/try-on?recommendation=${encodeURIComponent(recommendation.id)}`} className="inline-flex min-h-11 items-center rounded-xl bg-[#6d335b] px-4 text-sm font-semibold text-white">Visualise outfit</Link></div>}
     {actionsEnabled && savedStatus === "error" && <button type="button" onClick={() => { setError(""); setSavedStatus("loading"); setCheckAttempt(value => value + 1); }} className="min-h-11 text-sm underline">Retry saved status</button>}
     {historical && <Link href="/wardrobe" className="inline-flex min-h-11 items-center text-sm font-semibold underline">Open current wardrobe</Link>}
     {error && <p role="alert" className="text-sm text-rose-700">{error}</p>}

@@ -38,8 +38,8 @@ WARDROBE_GARMENT_LIMIT = 100
 
 def _quota_on_connection(conn, user_id: str, profile_id: str) -> dict:
     used = conn.execute(
-        "SELECT COUNT(*) FROM garments WHERE user_id=? AND (profile_id=? OR profile_id IS NULL) AND (status IS NULL OR status<>'archived')",
-        (user_id, profile_id),
+        "SELECT COUNT(*) FROM garments WHERE user_id=? AND (status IS NULL OR status<>'archived')",
+        (user_id,),
     ).fetchone()[0]
     return {"policy_version": "wardrobe-active-entries-1.0.0",
             "scope": "non_archived_garment_entries", "limit": WARDROBE_GARMENT_LIMIT,
@@ -139,8 +139,8 @@ def list_garments(
 ) -> list[dict]:
     if availability not in {"available", "unavailable", "archived", "all"}:
         raise HTTPException(422, "Choose a supported availability filter.")
-    sql = "SELECT * FROM garments WHERE user_id=? AND (profile_id=? OR profile_id IS NULL)"
-    parameters: list[object] = [user_id, profile_id]
+    sql = "SELECT * FROM garments WHERE user_id=?"
+    parameters: list[object] = [user_id]
     if availability == "unavailable":
         sql += " AND (status IS NULL OR status NOT IN ('available','archived'))"
     elif availability != "all":
@@ -190,7 +190,7 @@ def _materialise_candidates(conn, job_id, user_id, profile_id, items, save_mode,
             role, layer = GARMENT_STRUCTURE[attrs.get('reviewed_category') or item['detected_category']]
             attrs.update(garment_type=role, layering_index=layer)
         conn.execute("INSERT INTO garments (id, user_id, profile_id, processing_item_id, preferred_media_id, name, category, primary_colour, pattern, attributes_json, status, is_favourite, created_at, updated_at, deleted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'available', 0, ?, ?, NULL)", (
-            garment_id, user_id, profile_id, item["id"], item["preferred_media_id"], attrs.get("name") or attrs.get("reviewed_category") or item["detected_category"],
+            garment_id, user_id, None, item["id"], item["preferred_media_id"], attrs.get("name") or attrs.get("reviewed_category") or item["detected_category"],
             attrs.get("reviewed_category") or item["detected_category"], attrs.get("primary_colour"), attrs.get("pattern"), json.dumps(attrs), now, now,
         ))
         _write_representation(conn, garment_id, attrs)
@@ -202,7 +202,7 @@ def _materialise_candidates(conn, job_id, user_id, profile_id, items, save_mode,
     outfit_id = None
     if save_mode == "outfit":
         outfit_id = str(uuid.uuid4())
-        conn.execute("INSERT INTO outfits (id,user_id,profile_id,name,description,creation_type,status,is_favourite,created_at,updated_at) VALUES (?, ?, ?, ?, NULL, 'image_upload', 'available', 0, ?, ?)", (outfit_id, user_id, profile_id, outfit_name, now, now))
+        conn.execute("INSERT INTO outfits (id,user_id,profile_id,name,description,creation_type,status,is_favourite,created_at,updated_at) VALUES (?, ?, NULL, ?, NULL, 'image_upload', 'available', 0, ?, ?)", (outfit_id, user_id, outfit_name, now, now))
         for order, (garment_id, item) in enumerate(zip(garment_ids, items), start=1):
             role = json.loads(item["attributes_json"]).get("garment_type", "garment")
             conn.execute("INSERT INTO outfit_items VALUES (?, ?, ?, ?)", (outfit_id, garment_id, role, order))
@@ -314,7 +314,7 @@ def update_garment(garment_id: str, user_id: str, profile_id: str, payload: dict
     with connection() as conn:
         # Keep the read/merge/write atomic so an unrelated PATCH cannot restore stale style evidence.
         conn.execute("BEGIN IMMEDIATE")
-        row = conn.execute("SELECT * FROM garments WHERE id=? AND user_id=? AND (profile_id=? OR profile_id IS NULL) AND status='available'", (garment_id, user_id, profile_id)).fetchone()
+        row = conn.execute("SELECT * FROM garments WHERE id=? AND user_id=? AND status='available'", (garment_id, user_id)).fetchone()
         if not row:
             raise HTTPException(404, "Garment was not found.")
         if "custom_tags" in (payload.get("attributes") or {}):
@@ -382,7 +382,7 @@ def update_garment(garment_id: str, user_id: str, profile_id: str, payload: dict
 def review_contextual_suitability(garment_id: str, user_id: str, profile_id: str, payload: dict) -> dict:
     with connection() as conn:
         conn.execute('BEGIN IMMEDIATE')
-        row = conn.execute("SELECT * FROM garments WHERE id=? AND user_id=? AND (profile_id=? OR profile_id IS NULL) AND status='available'", (garment_id, user_id, profile_id)).fetchone()
+        row = conn.execute("SELECT * FROM garments WHERE id=? AND user_id=? AND status='available'", (garment_id, user_id)).fetchone()
         if row is None:
             raise HTTPException(404, 'Garment was not found.')
         if payload.get('appearance_review') is not None:
@@ -480,8 +480,8 @@ def list_outfits(
     sort: str = "updated_desc",
 ) -> list[dict]:
     with connection() as conn:
-        sql = "SELECT * FROM outfits o WHERE o.user_id=? AND o.profile_id=? AND o.status='available'"
-        parameters: list[object] = [user_id, profile_id]
+        sql = "SELECT * FROM outfits o WHERE o.user_id=? AND o.status='available'"
+        parameters: list[object] = [user_id]
         if query:
             sql += (
                 " AND (LOWER(o.name) LIKE ? OR LOWER(COALESCE(o.description,'')) LIKE ? OR EXISTS ("
@@ -513,8 +513,8 @@ def list_outfits(
 def _validated_garments(conn, user_id: str, profile_id: str, garment_ids: list[str]):
     placeholders = ",".join("?" for _ in garment_ids)
     garments = conn.execute(
-        f"SELECT id, category, additional_attributes FROM garments WHERE user_id=? AND profile_id=? AND status='available' AND id IN ({placeholders})",
-        [user_id, profile_id, *garment_ids],
+        f"SELECT id, category, additional_attributes FROM garments WHERE user_id=? AND status='available' AND id IN ({placeholders})",
+        [user_id, *garment_ids],
     ).fetchall()
     if len(garments) != len(garment_ids):
         raise HTTPException(404, "One or more garments are unavailable or do not belong to you.")
@@ -536,7 +536,7 @@ def create_outfit(user_id: str, profile_id: str, name: str, garment_ids: list[st
     with connection() as conn:
         by_id = _validated_garments(conn, user_id, profile_id, garment_ids)
         outfit_id, now = str(uuid.uuid4()), utcnow()
-        conn.execute("INSERT INTO outfits (id,user_id,profile_id,name,description,creation_type,status,is_favourite,created_at,updated_at) VALUES (?, ?, ?, ?, ?, 'manual', 'available', 0, ?, ?)", (outfit_id, user_id, profile_id, name, description, now, now))
+        conn.execute("INSERT INTO outfits (id,user_id,profile_id,name,description,creation_type,status,is_favourite,created_at,updated_at) VALUES (?, ?, NULL, ?, ?, 'manual', 'available', 0, ?, ?)", (outfit_id, user_id, name, description, now, now))
         for order, garment_id in enumerate(garment_ids, 1):
             conn.execute("INSERT INTO outfit_items VALUES (?, ?, ?, ?)", (outfit_id, garment_id, _role_for_garment(by_id[garment_id]), order))
     return {"id": outfit_id, "name": name, "garment_ids": garment_ids}
@@ -545,7 +545,7 @@ def create_outfit(user_id: str, profile_id: str, name: str, garment_ids: list[st
 def update_outfit(outfit_id: str, user_id: str, profile_id: str, payload: dict) -> dict:
     with connection() as conn:
         conn.execute("BEGIN IMMEDIATE")
-        outfit = conn.execute("SELECT * FROM outfits WHERE id=? AND user_id=? AND profile_id=? AND status='available'", (outfit_id, user_id, profile_id)).fetchone()
+        outfit = conn.execute("SELECT * FROM outfits WHERE id=? AND user_id=? AND status='available'", (outfit_id, user_id)).fetchone()
         if not outfit:
             raise HTTPException(404, "Outfit was not found.")
         data = dict(outfit)

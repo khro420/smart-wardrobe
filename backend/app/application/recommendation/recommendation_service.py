@@ -137,8 +137,8 @@ def saved_outfit_state(recommendation_id: str, user_id: str, profile_id: str) ->
     with connection() as conn:
         if not conn.execute("SELECT 1 FROM recommendations WHERE id=? AND user_id=? AND profile_id=?", (recommendation_id,user_id,profile_id)).fetchone():
             raise HTTPException(404, "Recommendation was not found.")
-        row = conn.execute("SELECT id FROM outfits WHERE id=? AND user_id=? AND profile_id=? AND creation_type='recommendation' AND status='available'",
-                           (saved_outfit_id(user_id,recommendation_id),user_id,profile_id)).fetchone()
+        row = conn.execute("SELECT id FROM outfits WHERE id=? AND user_id=? AND creation_type='recommendation' AND status='available'",
+                           (saved_outfit_id(user_id,recommendation_id),user_id)).fetchone()
     return {"saved": row is not None, "outfit_id": row["id"] if row else None}
 
 
@@ -153,7 +153,7 @@ def save_as_outfit(recommendation_id: str, user_id: str, name: str | None, profi
             items = strict_items(conn, user_id, recommendation_id)
             existing = conn.execute("SELECT * FROM outfits WHERE id=?", (outfit_id,)).fetchone()
             if existing:
-                if existing["user_id"] != user_id or existing["profile_id"] != profile_id or existing["creation_type"] != "recommendation" or existing["status"] != "available":
+                if existing["user_id"] != user_id or existing["creation_type"] != "recommendation" or existing["status"] != "available":
                     raise HTTPException(409, "The previously saved outfit is no longer available.")
                 saved_items = conn.execute("SELECT garment_id FROM outfit_items WHERE outfit_id=? ORDER BY item_order", (outfit_id,)).fetchall()
                 return {"id":outfit_id,"name":existing["name"],"garment_ids":[x["garment_id"] for x in saved_items]}
@@ -162,7 +162,7 @@ def save_as_outfit(recommendation_id: str, user_id: str, name: str | None, profi
             conn.execute(
                 "INSERT INTO outfits (id,user_id,profile_id,name,description,creation_type,status,is_favourite,created_at,updated_at) "
                 "VALUES (?,?,?,?,?,'recommendation','available',0,?,?)",
-                (outfit_id,user_id,profile_id,name or "Recommended outfit","Saved from a wardrobe recommendation.",now,now),
+                (outfit_id,user_id,None,name or "Recommended outfit","Saved from a wardrobe recommendation.",now,now),
             )
             for item in items:
                 conn.execute("INSERT INTO outfit_items (outfit_id,garment_id,role,item_order) VALUES (?,?,?,?)",

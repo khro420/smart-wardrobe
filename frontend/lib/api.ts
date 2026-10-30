@@ -100,6 +100,7 @@ export const saveRecommendationAsOutfit = (id: string, name?: string) => request
 export const getRecommendationSavedOutfit = (id: string) => request<{ saved: boolean; outfit_id: string | null }>(`/recommendations/${id}/saved-outfit`);
 export const getPersonImages = () => request<PersonImage[]>("/visualisations/person-images");
 export async function uploadPersonImage(file: File) { const form = new FormData(); form.append("file", file); return request<PersonImage>("/media/person-images", { method: "POST", body: form }); }
+export const deletePersonImage = (id: string) => request<void>(`/media/person-images/${encodeURIComponent(id)}`, { method: "DELETE" });
 export type VisualisationSource = { outfitId: string; recommendationId?: never } | { recommendationId: string; outfitId?: never };
 const visualisationSourceBody = (source: VisualisationSource) => ({ outfit_id: source.outfitId, recommendation_id: source.recommendationId });
 export const prepareVisualisation = (source: VisualisationSource) => request<VisualisationPreparation>("/visualisations/prepare", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(visualisationSourceBody(source)) });

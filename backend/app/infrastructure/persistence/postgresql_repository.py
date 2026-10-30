@@ -79,11 +79,11 @@ CREATE TABLE IF NOT EXISTS recommendation_items (
   PRIMARY KEY(recommendation_id, garment_id)
 );
 CREATE TABLE IF NOT EXISTS person_images (
-  id TEXT PRIMARY KEY, user_id TEXT NOT NULL, media_id TEXT NOT NULL, display_name TEXT NOT NULL,
+  id TEXT PRIMARY KEY, user_id TEXT NOT NULL, profile_id TEXT, media_id TEXT NOT NULL, display_name TEXT NOT NULL,
   status TEXT NOT NULL DEFAULT 'available', created_at TEXT NOT NULL
 );
 CREATE TABLE IF NOT EXISTS visualisations (
-  id TEXT PRIMARY KEY, user_id TEXT NOT NULL, outfit_id TEXT, recommendation_id TEXT,
+  id TEXT PRIMARY KEY, user_id TEXT NOT NULL, profile_id TEXT, outfit_id TEXT, recommendation_id TEXT,
   source_type TEXT NOT NULL DEFAULT 'outfit', person_image_id TEXT NOT NULL,
   output_media_id TEXT, status TEXT NOT NULL, error_message TEXT, created_at TEXT NOT NULL,
   updated_at TEXT NOT NULL, completed_at TEXT, progress_percent INTEGER NOT NULL DEFAULT 0,
@@ -116,7 +116,7 @@ def initialise_database() -> None:
         profile_columns = {row[1] for row in conn.execute("PRAGMA table_info(wardrobe_profiles)").fetchall()}
         if not profile_columns:
             conn.execute("CREATE TABLE wardrobe_profiles (id TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id), name TEXT NOT NULL, is_default INTEGER NOT NULL DEFAULT 0, status TEXT NOT NULL DEFAULT 'active', created_at TEXT NOT NULL, updated_at TEXT NOT NULL)")
-        for table in ("processing_jobs", "garments", "outfits", "user_preferences", "nlp_chats", "recommendations"):
+        for table in ("processing_jobs", "garments", "outfits", "user_preferences", "nlp_chats", "recommendations", "person_images", "visualisations"):
             table_columns = {row[1] for row in conn.execute(f"PRAGMA table_info({table})").fetchall()}
             if "profile_id" not in table_columns:
                 conn.execute(f"ALTER TABLE {table} ADD COLUMN profile_id TEXT")
@@ -129,8 +129,14 @@ def initialise_database() -> None:
                 conn.execute("INSERT INTO wardrobe_profiles (id,user_id,name,is_default,status,created_at,updated_at) VALUES (?,?,?,1,'active',?,?)", (profile_id, user_id, "My wardrobe", now, now))
             else:
                 profile_id = default["id"]
-            for table in ("processing_jobs", "garments", "outfits", "user_preferences", "nlp_chats", "recommendations"):
+            for table in ("processing_jobs", "user_preferences", "nlp_chats", "recommendations"):
                 conn.execute(f"UPDATE {table} SET profile_id=? WHERE user_id=? AND profile_id IS NULL", (profile_id, user_id))
+            # One account owns one shared wardrobe. Profiles remain wearer
+            # contexts, so legacy profile-scoped items become shared safely.
+            conn.execute("UPDATE garments SET profile_id=NULL WHERE user_id=?", (user_id,))
+            conn.execute("UPDATE outfits SET profile_id=NULL WHERE user_id=?", (user_id,))
+            conn.execute("UPDATE person_images SET profile_id=? WHERE user_id=? AND profile_id IS NULL", (profile_id, user_id))
+            conn.execute("UPDATE visualisations SET profile_id=? WHERE user_id=? AND profile_id IS NULL", (profile_id, user_id))
         conn.execute("CREATE INDEX IF NOT EXISTS idx_profiles_by_user ON wardrobe_profiles(user_id,status)")
         for table in ("processing_jobs", "garments", "outfits", "user_preferences", "nlp_chats", "recommendations"):
             conn.execute(f"CREATE INDEX IF NOT EXISTS idx_{table}_profile ON {table}(user_id,profile_id)")

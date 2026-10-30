@@ -16,7 +16,7 @@ from app.domain.value_objects.visualisation_plan import (
     CATEGORY_MODES, VTONConfiguration, VisualisationGarment, VisualisationPlan,
 )
 from app.infrastructure.ai.vton_preprocessing import (
-    encode_png, prepare_garment, prepare_person, validate_generated_output,
+    compose_layered_upper_garments, encode_png, prepare_garment, prepare_person, validate_generated_output,
 )
 from app.infrastructure.persistence.postgresql_repository import connection, utcnow
 from app.main import app
@@ -69,6 +69,43 @@ def test_supported_category_contract_and_multi_garment_outfits():
     assert plan("short_sleeve_outwear").mode == "upper"
     assert plan("long_sleeve_outwear").mode == "upper"
     assert plan(count=2).modes == ("upper", "upper")
+
+
+def test_render_order_applies_outerwear_after_base_and_bottom_layers():
+    current_plan = VisualisationPlan(
+        "outfit", "source", "person", "person-media",
+        (
+            VisualisationGarment("coat", "coat-media", "long_sleeve_outwear", "outerwear", 1),
+            VisualisationGarment("shirt", "shirt-media", "long_sleeve_top", "top", 2),
+            VisualisationGarment("jeans", "jeans-media", "trousers", "bottom", 3),
+        ),
+        VTONConfiguration(),
+    )
+
+    assert [garment.garment_id for garment in current_plan.garments] == ["coat", "shirt", "jeans"]
+    assert [garment.garment_id for garment in current_plan.render_garments] == ["shirt", "jeans", "coat"]
+    assert [step.composition for step in current_plan.render_steps] == ["layered_upper", "single"]
+    assert [[item.garment_id for item in step.garments] for step in current_plan.render_steps] == [["shirt", "coat"], ["jeans"]]
+    assert current_plan.render_modes == ("upper", "lower")
+
+
+def test_layered_upper_composite_keeps_inner_garment_visible_through_outerwear():
+    inner = Image.new("RGB", (200, 300), "white")
+    for x in range(55, 145):
+        for y in range(15, 285):
+            inner.putpixel((x, y), (20, 30, 40))
+    outer = Image.new("RGBA", (200, 300), (0, 0, 0, 0))
+    outer.paste((60, 80, 40, 255), (0, 0, 70, 300))
+    outer.paste((60, 80, 40, 255), (130, 0, 200, 300))
+    inner_bytes, outer_bytes = BytesIO(), BytesIO()
+    inner.save(inner_bytes, "PNG")
+    outer.save(outer_bytes, "PNG")
+
+    composite = compose_layered_upper_garments((inner_bytes.getvalue(), outer_bytes.getvalue()))
+    with Image.open(BytesIO(composite)) as image:
+        assert image.mode == "RGBA"
+        assert image.getpixel((384, 512))[:3] == (20, 30, 40)
+        assert image.getpixel((15, 15))[3] == 0
 
 
 def test_preprocessing_and_generated_output_fail_closed():
@@ -144,6 +181,22 @@ def test_invalid_generated_output_finishes_failed_without_media():
         assert result["error_code"] == "invalid_output"
         assert result["output_media_id"] is None
         assert "could not be validated" in result["error_message"]
+
+
+def test_person_image_can_be_removed_from_the_active_wearer():
+    user = f"remove-person-{uuid.uuid4()}"
+    with TestClient(app, headers={"X-User-Id": user}) as client:
+        uploaded = client.post(
+            "/api/v1/media/person-images",
+            files={"file": ("person.png", image_bytes("teal"), "image/png")},
+        )
+        assert uploaded.status_code == 201
+        image_id = uploaded.json()["id"]
+
+        removed = client.delete(f"/api/v1/media/person-images/{image_id}")
+        assert removed.status_code == 204
+        assert client.get("/api/v1/visualisations/person-images").json() == []
+        assert client.delete(f"/api/v1/media/person-images/{image_id}").status_code == 404
 
 
 def test_cancel_is_owner_scoped_and_terminal():

@@ -14,7 +14,6 @@ from app.domain.value_objects.garment_attributes import GARMENT_STRUCTURE
 from app.domain.value_objects.contextual_garment_evidence import KEY, project_contextual_evidence
 from app.domain.value_objects.general_context_evidence import KEY as APPEARANCE_KEY, AppearanceEvidence, project_appearance_evidence
 from app.domain.value_objects.saved_attribute_evidence import KEY as SOURCE_KEY, SavedAttributeEvidence, project_saved_attribute_evidence
-from app.application.wardrobe.profile_service import current_profile_id
 
 
 def _json(value):
@@ -134,19 +133,16 @@ class SqliteConfirmedGarmentQuery(ConfirmedGarmentQuery):
         return nullcontext(self.transaction_connection) if self.transaction_connection is not None else connection()
 
     def list_available_garment_ids(self, user_id: str) -> list[str]:
-        profile_id = current_profile_id()
         with self._connection() as conn:
-            sql = "SELECT id FROM garments WHERE user_id=? AND status='available'"
-            params = [user_id]
-            if profile_id:
-                sql += " AND profile_id=?"
-                params.append(profile_id)
-            rows = conn.execute(sql + " ORDER BY is_favourite DESC, updated_at DESC, id ASC", params).fetchall()
+            rows = conn.execute(
+                "SELECT id FROM garments WHERE user_id=? AND status='available' "
+                "ORDER BY is_favourite DESC, updated_at DESC, id ASC",
+                (user_id,),
+            ).fetchall()
         return [str(row["id"]) for row in rows]
 
     def get_confirmed_available_garments(self, user_id: str) -> tuple[ConfirmedGarmentSnapshot, ...]:
         """Strict confirmation, with processing ownership verified internally."""
-        profile_id = current_profile_id()
         with self._connection() as conn:
             sql = (
                 "SELECT g.* FROM garments g "
@@ -155,11 +151,10 @@ class SqliteConfirmedGarmentQuery(ConfirmedGarmentQuery):
                 "WHERE g.user_id=? AND g.status='available' "
                 "AND p.review_status='confirmed' AND j.user_id=g.user_id AND j.status='completed' "
             )
-            params = [user_id]
-            if profile_id:
-                sql += " AND g.profile_id=? AND j.profile_id=g.profile_id"
-                params.append(profile_id)
-            rows = conn.execute(sql + " ORDER BY g.is_favourite DESC, g.updated_at DESC, g.id ASC", params).fetchall()
+            rows = conn.execute(
+                sql + " ORDER BY g.is_favourite DESC, g.updated_at DESC, g.id ASC",
+                (user_id,),
+            ).fetchall()
         return tuple(_snapshot(row) for row in rows)
 
 

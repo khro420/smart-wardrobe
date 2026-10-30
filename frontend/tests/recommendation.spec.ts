@@ -112,7 +112,7 @@ test("Homepage structured failure shows no saved substitute",async({page}) => {
   await expect(page.getByTestId("recommendation-result")).toHaveCount(0);
 });
 
-test("Outerwear stays visible in recorded order without an unsupported visualisation action",async({page}) => {
+test("Outerwear stays visible in recorded order and can be visualised",async({page}) => {
   await mockApi(page);
   await page.route("**/api/v1/recommendations/homepage",route => route.fulfill({status:201,json:{status:"Selected",complete:true,recommendation:{...recommendation,items:[{...item,garment_id:"coat",garment_role:"outerwear",name:"Recorded coat",item_order:2},{...item,item_order:1}]}}}));
   await page.goto("/");
@@ -120,7 +120,7 @@ test("Outerwear stays visible in recorded order without an unsupported visualisa
   await expect(result.getByText("Blue dress",{exact:true})).toBeVisible();
   await expect(result.getByText("Recorded coat",{exact:true})).toBeVisible();
   expect(await result.locator("p.font-semibold").allTextContents()).toEqual(["Blue dress","Recorded coat"]);
-  await expect(result.getByRole("link",{name:"Visualise outfit"})).toHaveCount(0);
+  await expect(result.getByRole("link",{name:"Visualise outfit"})).toHaveAttribute("href", "/try-on?recommendation=rec");
 });
 
 test("Fresh Homepage save reuses the existing API and refreshes only saved outfits",async({page}) => {

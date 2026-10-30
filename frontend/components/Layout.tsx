@@ -34,12 +34,12 @@ function SidebarContent({ pathname, onNavigate, profiles, selectedProfileId, onP
       })}
     </nav>
     <div className="mx-4 rounded-2xl border border-[#ead7e2] bg-[#fdf8fb] p-3">
-      <label className="block text-[11px] font-semibold uppercase tracking-[0.12em] text-[#6d335b]">Active wardrobe
+      <label className="block text-[11px] font-semibold uppercase tracking-[0.12em] text-[#6d335b]">Active wearer
         <select value={selectedProfileId ?? ""} onChange={(event) => onProfileChange(event.target.value)} className="mt-2 min-h-11 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm font-semibold text-slate-800" aria-label="Select active wardrobe profile">
           {profiles.map((profile) => <option key={profile.id} value={profile.id}>{profile.name}{profile.is_default ? " (default)" : ""}</option>)}
         </select>
       </label>
-      <Link href="/profile" onClick={onNavigate} className="mt-2 inline-block text-xs font-semibold text-[#6d335b] underline underline-offset-2">Manage wardrobes</Link>
+      <Link href="/profile" onClick={onNavigate} className="mt-2 inline-block text-xs font-semibold text-[#6d335b] underline underline-offset-2">Manage wearers</Link>
     </div>
     <div className="m-4 flex items-center justify-between rounded-2xl bg-slate-50 p-3">
       <Link href="/profile" onClick={onNavigate} className="flex min-w-0 items-center gap-3">

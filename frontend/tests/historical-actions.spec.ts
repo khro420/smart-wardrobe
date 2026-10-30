@@ -105,11 +105,10 @@ test("known unavailable snapshot retains cards and original text without usable 
   expect(calls.filter(x=>x.method==="POST")).toHaveLength(0);
 });
 
-test("outerwear remains visible and cannot be partially visualised",async({page})=>{
+test("outerwear remains visible and can be visualised",async({page})=>{
   const calls=await fixtures(page,{outerwear:true});
   await page.goto("/history/first");
-  await expect(page.getByText("Visualisation is unavailable for outfits containing outerwear.",{exact:false})).toBeVisible();
-  await expect(page.getByRole("link",{name:"Visualise outfit",exact:true})).toHaveCount(0);
+  await expect(page.getByRole("link",{name:"Visualise outfit",exact:true})).toHaveAttribute("href","/try-on?recommendation=recommendation-first");
   await expect(page.getByRole("button",{name:"Save as outfit",exact:true})).toBeEnabled();
   expect(calls.filter(x=>x.path.includes("/visualisations"))).toHaveLength(0);
 });

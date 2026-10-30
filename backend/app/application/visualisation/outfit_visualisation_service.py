@@ -32,12 +32,13 @@ from app.domain.value_objects.visualisation_plan import (
     VisualisationGarment,
     VisualisationPlan,
 )
+from app.infrastructure.ai.vton_preprocessing import compose_layered_upper_garments
 
 LOGGER = logging.getLogger(__name__)
 
 
 def create_visualisation(
-    user_id, person_image_id, outfit_id=None, recommendation_id=None
+    user_id, person_image_id, outfit_id=None, recommendation_id=None, profile_id=None
 ):
     with connection() as conn:
         conn.execute("BEGIN IMMEDIATE")
@@ -47,7 +48,7 @@ def create_visualisation(
         if queued >= runtime().queue_limit:
             raise HTTPException(429, "The try-on queue is full. Please try again shortly.")
         plan, _ = resolve_source(conn, user_id, outfit_id, recommendation_id)
-        person = require_person(conn, person_image_id, user_id)
+        person = require_person(conn, person_image_id, user_id, profile_id)
         plan = replace(
             plan,
             person_image_id=person_image_id,
@@ -56,13 +57,14 @@ def create_visualisation(
         identifier, now = str(uuid.uuid4()), utcnow()
         conn.execute(
             "INSERT INTO visualisations "
-            "(id,user_id,outfit_id,recommendation_id,source_type,person_image_id,"
+            "(id,user_id,profile_id,outfit_id,recommendation_id,source_type,person_image_id,"
             "person_media_id,status,created_at,updated_at,configuration_json,"
             "progress_percent,progress_current,progress_total,progress_message) "
-            "VALUES (?,?,?,?,?,?,?,'queued',?,?,?,0,0,?,?)",
+            "VALUES (?,?,?,?,?,?,?,?,'queued',?,?,?,0,0,?,?)",
             (
                 identifier,
                 user_id,
+                profile_id,
                 outfit_id,
                 recommendation_id,
                 plan.source_type,
@@ -154,13 +156,18 @@ def run_visualisation(visualisation_id, user_id):
                     ),
                     VTONConfiguration(**json.loads(visual["configuration_json"])),
                 )
-            plan.modes
+            plan.render_modes
             person_path, _ = runtime().media.path_for_owner(
                 plan.person_media_id, user_id
             )
+            source_images = {
+                item.garment_id: runtime().media.path_for_owner(item.source_media_id, user_id)[0].read_bytes()
+                for item in plan.render_garments
+            }
             garment_images = tuple(
-                runtime().media.path_for_owner(item.source_media_id, user_id)[0].read_bytes()
-                for item in plan.garments
+                compose_layered_upper_garments(tuple(source_images[item.garment_id] for item in step.garments))
+                if step.composition == "layered_upper" else source_images[step.garments[0].garment_id]
+                for step in plan.render_steps
             )
             person_bytes = person_path.read_bytes()
             def report_progress(current: int, total: int, phase: str) -> None:

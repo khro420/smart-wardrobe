@@ -1,8 +1,8 @@
 """Wardrobe-profile ownership and request selection.
 
-An account is the sign-in boundary.  A wardrobe profile is the person-sized
-boundary: garments, outfits, preferences and recommendations belong to one
-profile, even when several people share an account.
+An account owns one shared wardrobe. A wearer profile holds the person-specific
+preferences, conversations, base images and visualisation history for someone
+who uses that wardrobe.
 """
 
 from __future__ import annotations
@@ -97,9 +97,9 @@ def _unreferenced_media(conn, user_id: str, media_ids: set[str]) -> list[dict]:
             "OR EXISTS (SELECT 1 FROM processing_items WHERE crop_media_id=? OR mask_media_id=? OR vtoff_media_id=? OR mirror_media_id=? OR preferred_media_id=?) "
             "OR EXISTS (SELECT 1 FROM garments WHERE preferred_media_id=?) "
             "OR EXISTS (SELECT 1 FROM person_images WHERE media_id=?) "
-            "OR EXISTS (SELECT 1 FROM visualisations WHERE output_media_id=?) "
+            "OR EXISTS (SELECT 1 FROM visualisations WHERE output_media_id=? OR person_media_id=?) "
             "OR EXISTS (SELECT 1 FROM visualisation_items WHERE source_media_id=?)",
-            (media_id, media_id, media_id, media_id, media_id, media_id, media_id, media_id, media_id, media_id),
+            (media_id, media_id, media_id, media_id, media_id, media_id, media_id, media_id, media_id, media_id, media_id),
         ).fetchone()
         if referenced:
             continue
@@ -111,11 +111,7 @@ def _unreferenced_media(conn, user_id: str, media_ids: set[str]) -> list[dict]:
 
 
 def delete_profile(user_id: str, profile_id: str) -> dict:
-    """Permanently remove one person's profile-scoped wardrobe data.
-
-    A shared sign-in must retain a remaining destination profile; personal images
-    stay account-level and are intentionally not included in this action.
-    """
+    """Remove one wearer while retaining the account's shared wardrobe."""
     removed_media: list[dict] = []
     with connection() as conn:
         conn.execute("BEGIN IMMEDIATE")
@@ -128,13 +124,14 @@ def delete_profile(user_id: str, profile_id: str) -> dict:
         successor = next(row for row in profiles if row["id"] != profile_id)
         media_ids = _profile_media_ids(conn, user_id, profile_id)
         visualisation_ids = [row["id"] for row in conn.execute(
-            "SELECT id FROM visualisations WHERE user_id=? AND (outfit_id IN (SELECT id FROM outfits WHERE profile_id=?) OR recommendation_id IN (SELECT id FROM recommendations WHERE profile_id=?))",
-            (user_id, profile_id, profile_id),
+            "SELECT id FROM visualisations WHERE user_id=? AND profile_id=?",
+            (user_id, profile_id),
         ).fetchall()]
         if visualisation_ids:
             marks = ",".join("?" for _ in visualisation_ids)
             conn.execute(f"DELETE FROM visualisation_items WHERE visualisation_id IN ({marks})", visualisation_ids)
             conn.execute(f"DELETE FROM visualisations WHERE id IN ({marks})", visualisation_ids)
+        conn.execute("DELETE FROM person_images WHERE user_id=? AND profile_id=?", (user_id, profile_id))
         recommendation_ids = [row["id"] for row in conn.execute("SELECT id FROM recommendations WHERE user_id=? AND profile_id=?", (user_id, profile_id)).fetchall()]
         if recommendation_ids:
             marks = ",".join("?" for _ in recommendation_ids)
@@ -143,19 +140,8 @@ def delete_profile(user_id: str, profile_id: str) -> dict:
             conn.execute(f"DELETE FROM recommendation_metadata WHERE recommendation_id IN ({marks})", recommendation_ids)
             conn.execute(f"DELETE FROM recommendation_submissions WHERE recommendation_id IN ({marks})", recommendation_ids)
             conn.execute(f"DELETE FROM recommendations WHERE id IN ({marks})", recommendation_ids)
-        outfit_ids = [row["id"] for row in conn.execute("SELECT id FROM outfits WHERE user_id=? AND profile_id=?", (user_id, profile_id)).fetchall()]
-        if outfit_ids:
-            marks = ",".join("?" for _ in outfit_ids)
-            conn.execute(f"DELETE FROM outfit_items WHERE outfit_id IN ({marks})", outfit_ids)
-            conn.execute(f"DELETE FROM outfits WHERE id IN ({marks})", outfit_ids)
-        job_ids = [row["id"] for row in conn.execute("SELECT id FROM processing_jobs WHERE user_id=? AND profile_id=?", (user_id, profile_id)).fetchall()]
-        if job_ids:
-            marks = ",".join("?" for _ in job_ids)
-            conn.execute(f"DELETE FROM processing_items WHERE job_id IN ({marks})", job_ids)
-            conn.execute(f"DELETE FROM processing_jobs WHERE id IN ({marks})", job_ids)
         conn.execute("DELETE FROM user_preferences WHERE user_id=? AND profile_id=?", (user_id, profile_id))
         conn.execute("DELETE FROM nlp_chats WHERE user_id=? AND profile_id=?", (user_id, profile_id))
-        conn.execute("DELETE FROM garments WHERE user_id=? AND profile_id=?", (user_id, profile_id))
         if target["is_default"]:
             conn.execute("UPDATE wardrobe_profiles SET is_default=1,updated_at=? WHERE id=?", (utcnow(), successor["id"]))
         conn.execute("DELETE FROM wardrobe_profiles WHERE id=? AND user_id=?", (profile_id, user_id))

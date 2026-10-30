@@ -146,7 +146,7 @@ class CatVTONRuntime:
     ) -> GeneratedVisualisation:
         self._load()
         import torch
-        if len(garment_payloads) != len(plan.garments):
+        if len(garment_payloads) != len(plan.render_steps):
             raise VTONFailure("unprocessable")
         size = (plan.configuration.width, plan.configuration.height)
         person = prepare_person(person_payload, size)
@@ -154,10 +154,10 @@ class CatVTONRuntime:
         try:
             torch.cuda.reset_peak_memory_stats()
             result = person
-            # CatVTON accepts one condition image per pass. Apply every frozen
-            # outfit item in saved order so an upper/lower (or layered) source
-            # becomes one composed outfit preview rather than dropping items.
-            for index, (mode, garment_payload) in enumerate(zip(plan.modes, garment_payloads)):
+            # CatVTON accepts one condition image per pass. A shirt plus
+            # outerwear becomes one composed upper reference, preventing the
+            # jacket's full upper-body mask from overwriting shirt detail.
+            for index, (mode, garment_payload) in enumerate(zip(plan.render_modes, garment_payloads)):
                 if progress_callback:
                     progress_callback(index, len(garment_payloads), "applying")
                 garment = prepare_garment(garment_payload, size)
@@ -195,7 +195,12 @@ class CatVTONRuntime:
             metadata={
                 "peak_vram_bytes": torch.cuda.max_memory_allocated(),
                 "device": torch.cuda.get_device_name(),
-                "modes": list(plan.modes),
+                "modes": list(plan.render_modes),
+                "render_steps": [
+                    {"composition": step.composition, "garment_ids": [item.garment_id for item in step.garments]}
+                    for step in plan.render_steps
+                ],
+                "rendered_garment_ids": [garment.garment_id for garment in plan.render_garments],
                 "garment_count": len(plan.garments),
                 "source_revision": CATVTON_SOURCE_REVISION,
                 "model_revision": CATVTON_MODEL_REVISION,
