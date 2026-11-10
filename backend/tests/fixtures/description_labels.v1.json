@@ -1,0 +1,3264 @@
+{
+  "status": "AUTHOR-WRITTEN DRAFT; NO B0 IMPLEMENTATION EXISTS; not independent human review",
+  "oracle": "Frozen old UI/domain definitions and literal expectations, never new normalizer/selector output",
+  "cases": [
+    {
+      "id": "F001",
+      "field": "category",
+      "input": "short_sleeve_top",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "short_sleeve_top"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "short_sleeve_top"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F002",
+      "field": "category",
+      "input": "long_sleeve_top",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "long_sleeve_top"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "long_sleeve_top"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F003",
+      "field": "category",
+      "input": "short_sleeve_outwear",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "short_sleeve_outwear"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "short_sleeve_outwear"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F004",
+      "field": "category",
+      "input": "long_sleeve_outwear",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "long_sleeve_outwear"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "long_sleeve_outwear"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F005",
+      "field": "category",
+      "input": "vest",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "vest"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "vest"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F006",
+      "field": "category",
+      "input": "sling",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "sling"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "sling"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F007",
+      "field": "category",
+      "input": "shorts",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "shorts"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "shorts"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F008",
+      "field": "category",
+      "input": "trousers",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "trousers"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "trousers"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F009",
+      "field": "category",
+      "input": "skirt",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "skirt"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "skirt"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F010",
+      "field": "category",
+      "input": "short_sleeve_dress",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "short_sleeve_dress"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "short_sleeve_dress"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F011",
+      "field": "category",
+      "input": "long_sleeve_dress",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "long_sleeve_dress"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "long_sleeve_dress"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F012",
+      "field": "category",
+      "input": "vest_dress",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "vest_dress"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "vest_dress"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F013",
+      "field": "category",
+      "input": "sling_dress",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "sling_dress"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "sling_dress"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F014",
+      "field": "pattern",
+      "input": "plain",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "plain"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "plain"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F015",
+      "field": "pattern",
+      "input": "abstract",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "abstract"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "abstract"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F016",
+      "field": "pattern",
+      "input": "cartoon",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "cartoon"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "cartoon"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F017",
+      "field": "pattern",
+      "input": "letters, numbers",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "letters, numbers"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "letters, numbers"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F018",
+      "field": "pattern",
+      "input": "camouflage",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "camouflage"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "camouflage"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F019",
+      "field": "pattern",
+      "input": "check",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "check"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "check"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F020",
+      "field": "pattern",
+      "input": "dot",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "dot"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "dot"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F021",
+      "field": "pattern",
+      "input": "fair isle",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "fair isle"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "fair isle"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F022",
+      "field": "pattern",
+      "input": "floral",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "floral"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "floral"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F023",
+      "field": "pattern",
+      "input": "geometric",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "geometric"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "geometric"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F024",
+      "field": "pattern",
+      "input": "paisley",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "paisley"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "paisley"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F025",
+      "field": "pattern",
+      "input": "stripe",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "stripe"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "stripe"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F026",
+      "field": "pattern",
+      "input": "houndstooth",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "houndstooth"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "houndstooth"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F027",
+      "field": "pattern",
+      "input": "herringbone",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "herringbone"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "herringbone"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F028",
+      "field": "pattern",
+      "input": "chevron",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "chevron"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "chevron"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F029",
+      "field": "pattern",
+      "input": "argyle",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "argyle"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "argyle"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F030",
+      "field": "pattern",
+      "input": "leopard",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "leopard"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "leopard"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F031",
+      "field": "pattern",
+      "input": "snakeskin",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "snakeskin"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "snakeskin"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F032",
+      "field": "pattern",
+      "input": "cheetah",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "cheetah"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "cheetah"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F033",
+      "field": "pattern",
+      "input": "peacock",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "peacock"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "peacock"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F034",
+      "field": "pattern",
+      "input": "zebra",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "zebra"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "zebra"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F035",
+      "field": "pattern",
+      "input": "giraffe",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "giraffe"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "giraffe"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F036",
+      "field": "pattern",
+      "input": "toile de jouy",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "toile de jouy"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "toile de jouy"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F037",
+      "field": "pattern",
+      "input": "plant",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "plant"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "plant"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F038",
+      "field": "style",
+      "input": [
+        "casual"
+      ],
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": [
+          "casual"
+        ]
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "casual"
+      ],
+      "ordinary_style_pass": "original singleton/style-source rules still required"
+    },
+    {
+      "id": "F039",
+      "field": "style",
+      "input": [
+        "classic"
+      ],
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": [
+          "classic"
+        ]
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "classic"
+      ],
+      "ordinary_style_pass": "original singleton/style-source rules still required"
+    },
+    {
+      "id": "F040",
+      "field": "style",
+      "input": [
+        "formal"
+      ],
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": [
+          "formal"
+        ]
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "formal"
+      ],
+      "ordinary_style_pass": "original singleton/style-source rules still required"
+    },
+    {
+      "id": "F041",
+      "field": "style",
+      "input": [
+        "minimal"
+      ],
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": [
+          "minimal"
+        ]
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "minimal"
+      ],
+      "ordinary_style_pass": "original singleton/style-source rules still required"
+    },
+    {
+      "id": "F042",
+      "field": "style",
+      "input": [
+        "smart casual"
+      ],
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": [
+          "smart casual"
+        ]
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "smart casual"
+      ],
+      "ordinary_style_pass": "original singleton/style-source rules still required"
+    },
+    {
+      "id": "F043",
+      "field": "style",
+      "input": [
+        "sporty"
+      ],
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": [
+          "sporty"
+        ]
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "sporty"
+      ],
+      "ordinary_style_pass": "original singleton/style-source rules still required"
+    },
+    {
+      "id": "F044",
+      "field": "style",
+      "input": [
+        "streetwear"
+      ],
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": [
+          "streetwear"
+        ]
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "streetwear"
+      ],
+      "ordinary_style_pass": "original singleton/style-source rules still required"
+    },
+    {
+      "id": "F045",
+      "field": "style",
+      "input": [
+        "vintage"
+      ],
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": [
+          "vintage"
+        ]
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "vintage"
+      ],
+      "ordinary_style_pass": "original singleton/style-source rules still required"
+    },
+    {
+      "id": "F046",
+      "field": "style",
+      "input": [
+        "bohemian"
+      ],
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": [
+          "bohemian"
+        ]
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "bohemian"
+      ],
+      "ordinary_style_pass": "original singleton/style-source rules still required"
+    },
+    {
+      "id": "F047",
+      "field": "material",
+      "input": [
+        "cotton"
+      ],
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": [
+          "cotton"
+        ]
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "cotton"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F048",
+      "field": "material",
+      "input": [
+        "denim"
+      ],
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": [
+          "denim"
+        ]
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "denim"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F049",
+      "field": "material",
+      "input": [
+        "leather"
+      ],
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": [
+          "leather"
+        ]
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "leather"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F050",
+      "field": "material",
+      "input": [
+        "linen"
+      ],
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": [
+          "linen"
+        ]
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "linen"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F051",
+      "field": "material",
+      "input": [
+        "silk"
+      ],
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": [
+          "silk"
+        ]
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "silk"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F052",
+      "field": "material",
+      "input": [
+        "synthetic"
+      ],
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": [
+          "synthetic"
+        ]
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "synthetic"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F053",
+      "field": "material",
+      "input": [
+        "wool"
+      ],
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": [
+          "wool"
+        ]
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "wool"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F054",
+      "field": "material",
+      "input": [
+        "not sure"
+      ],
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "unsure"
+      },
+      "expected_state": "Unsure",
+      "expected_canonical_values": [],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F055",
+      "field": "silhouette",
+      "input": "asymmetrical",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "asymmetrical"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "asymmetrical"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F056",
+      "field": "silhouette",
+      "input": "symmetrical",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "symmetrical"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "symmetrical"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F057",
+      "field": "silhouette",
+      "input": "peplum",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "peplum"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "peplum"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F058",
+      "field": "silhouette",
+      "input": "circle",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "circle"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "circle"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F059",
+      "field": "silhouette",
+      "input": "flare",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "flare"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "flare"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F060",
+      "field": "silhouette",
+      "input": "fit and flare",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "fit and flare"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "fit and flare"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F061",
+      "field": "silhouette",
+      "input": "trumpet",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "trumpet"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "trumpet"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F062",
+      "field": "silhouette",
+      "input": "mermaid",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "mermaid"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "mermaid"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F063",
+      "field": "silhouette",
+      "input": "balloon",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "balloon"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "balloon"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F064",
+      "field": "silhouette",
+      "input": "bell",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "bell"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "bell"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F065",
+      "field": "silhouette",
+      "input": "bell bottom",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "bell bottom"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "bell bottom"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F066",
+      "field": "silhouette",
+      "input": "bootcut",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "bootcut"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "bootcut"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F067",
+      "field": "silhouette",
+      "input": "peg",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "peg"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "peg"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F068",
+      "field": "silhouette",
+      "input": "pencil",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "pencil"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "pencil"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F069",
+      "field": "silhouette",
+      "input": "straight",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "straight"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "straight"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F070",
+      "field": "silhouette",
+      "input": "a-line",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "a-line"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "a-line"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F071",
+      "field": "silhouette",
+      "input": "tent",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "tent"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "tent"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F072",
+      "field": "silhouette",
+      "input": "baggy",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "baggy"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "baggy"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F073",
+      "field": "silhouette",
+      "input": "wide leg",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "wide leg"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "wide leg"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F074",
+      "field": "silhouette",
+      "input": "high low",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "high low"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "high low"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F075",
+      "field": "silhouette",
+      "input": "curved",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "curved"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "curved"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F076",
+      "field": "silhouette",
+      "input": "tight",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "tight"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "tight"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F077",
+      "field": "silhouette",
+      "input": "regular",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "regular"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "regular"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F078",
+      "field": "silhouette",
+      "input": "loose",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "loose"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "loose"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F079",
+      "field": "silhouette",
+      "input": "oversized",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "oversized"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "oversized"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F080",
+      "field": "neckline",
+      "input": "collarless",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "collarless"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "collarless"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F081",
+      "field": "neckline",
+      "input": "asymmetric",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "asymmetric"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "asymmetric"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F082",
+      "field": "neckline",
+      "input": "crew",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "crew"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "crew"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F083",
+      "field": "neckline",
+      "input": "round",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "round"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "round"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F084",
+      "field": "neckline",
+      "input": "v-neck",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "v-neck"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "v-neck"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F085",
+      "field": "neckline",
+      "input": "surplice",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "surplice"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "surplice"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F086",
+      "field": "neckline",
+      "input": "oval",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "oval"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "oval"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F087",
+      "field": "neckline",
+      "input": "u-neck",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "u-neck"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "u-neck"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F088",
+      "field": "neckline",
+      "input": "sweetheart",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "sweetheart"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "sweetheart"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F089",
+      "field": "neckline",
+      "input": "queen anne",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "queen anne"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "queen anne"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F090",
+      "field": "neckline",
+      "input": "boat",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "boat"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "boat"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F091",
+      "field": "neckline",
+      "input": "scoop",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "scoop"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "scoop"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F092",
+      "field": "neckline",
+      "input": "square",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "square"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "square"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F093",
+      "field": "neckline",
+      "input": "plunging",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "plunging"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "plunging"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F094",
+      "field": "neckline",
+      "input": "keyhole",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "keyhole"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "keyhole"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F095",
+      "field": "neckline",
+      "input": "halter",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "halter"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "halter"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F096",
+      "field": "neckline",
+      "input": "crossover",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "crossover"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "crossover"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F097",
+      "field": "neckline",
+      "input": "choker",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "choker"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "choker"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F098",
+      "field": "neckline",
+      "input": "high",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "high"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "high"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F099",
+      "field": "neckline",
+      "input": "turtle",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "turtle"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "turtle"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F100",
+      "field": "neckline",
+      "input": "cowl",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "cowl"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "cowl"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F101",
+      "field": "neckline",
+      "input": "straight across",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "straight across"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "straight across"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F102",
+      "field": "neckline",
+      "input": "illusion",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "illusion"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "illusion"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F103",
+      "field": "neckline",
+      "input": "off-the-shoulder",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "off-the-shoulder"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "off-the-shoulder"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F104",
+      "field": "neckline",
+      "input": "one shoulder",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "one shoulder"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "one shoulder"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F105",
+      "field": "sleeve_length",
+      "input": "sleeveless",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "sleeveless"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "sleeveless"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F106",
+      "field": "sleeve_length",
+      "input": "short",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "short"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "short"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F107",
+      "field": "sleeve_length",
+      "input": "elbow-length",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "elbow-length"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "elbow-length"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F108",
+      "field": "sleeve_length",
+      "input": "wrist-length",
+      "source": "UI-selected value on applicable garment; translated to canonical typed action",
+      "wire_operation": {
+        "kind": "set",
+        "value": "wrist-length"
+      },
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "wrist-length"
+      ],
+      "ordinary_style_pass": "not an ordinary suitability assertion"
+    },
+    {
+      "id": "F109",
+      "field": "primary_colour",
+      "input": "black",
+      "source": "explicit owner action",
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "black"
+      ]
+    },
+    {
+      "id": "F110",
+      "field": "primary_colour",
+      "input": "white",
+      "source": "explicit owner action",
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "white"
+      ]
+    },
+    {
+      "id": "F111",
+      "field": "primary_colour",
+      "input": "grey",
+      "source": "explicit owner action",
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "grey"
+      ]
+    },
+    {
+      "id": "F112",
+      "field": "primary_colour",
+      "input": "navy",
+      "source": "explicit owner action",
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "navy"
+      ]
+    },
+    {
+      "id": "F113",
+      "field": "primary_colour",
+      "input": "blue",
+      "source": "explicit owner action",
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "blue"
+      ]
+    },
+    {
+      "id": "F114",
+      "field": "primary_colour",
+      "input": "red",
+      "source": "explicit owner action",
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "red"
+      ]
+    },
+    {
+      "id": "F115",
+      "field": "primary_colour",
+      "input": "green",
+      "source": "explicit owner action",
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "green"
+      ]
+    },
+    {
+      "id": "F116",
+      "field": "primary_colour",
+      "input": "yellow",
+      "source": "explicit owner action",
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "yellow"
+      ]
+    },
+    {
+      "id": "F117",
+      "field": "primary_colour",
+      "input": "orange",
+      "source": "explicit owner action",
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "orange"
+      ]
+    },
+    {
+      "id": "F118",
+      "field": "primary_colour",
+      "input": "pink",
+      "source": "explicit owner action",
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "pink"
+      ]
+    },
+    {
+      "id": "F119",
+      "field": "primary_colour",
+      "input": "purple",
+      "source": "explicit owner action",
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "purple"
+      ]
+    },
+    {
+      "id": "F120",
+      "field": "primary_colour",
+      "input": "brown",
+      "source": "explicit owner action",
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "brown"
+      ]
+    },
+    {
+      "id": "F121",
+      "field": "primary_colour",
+      "input": "beige",
+      "source": "explicit owner action",
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "beige"
+      ]
+    },
+    {
+      "id": "F122",
+      "field": "primary_colour",
+      "input": "cream",
+      "source": "explicit owner action",
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "cream"
+      ]
+    },
+    {
+      "id": "F123",
+      "field": "colour_temperature",
+      "input": "warm",
+      "source": "explicit owner action",
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "warm"
+      ]
+    },
+    {
+      "id": "F124",
+      "field": "colour_temperature",
+      "input": "cool",
+      "source": "explicit owner action",
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "cool"
+      ]
+    },
+    {
+      "id": "F125",
+      "field": "colour_temperature",
+      "input": "neutral",
+      "source": "explicit owner action",
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        "neutral"
+      ]
+    },
+    {
+      "id": "F126",
+      "field": "colour_dominance",
+      "input": true,
+      "source": "explicit owner action",
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        true
+      ]
+    },
+    {
+      "id": "F127",
+      "field": "colour_dominance",
+      "input": false,
+      "source": "explicit owner action",
+      "expected_state": "Known",
+      "expected_canonical_values": [
+        false
+      ]
+    },
+    {
+      "id": "F128",
+      "field": "primary_colour",
+      "input": "#808080",
+      "source": "explicit owner action",
+      "expected_state": "Known",
+      "expected_exact_hex": "#808080",
+      "expected_family": "grey"
+    },
+    {
+      "id": "F129",
+      "field": "primary_colour",
+      "input": "#ffc0cb",
+      "source": "explicit owner action",
+      "expected_state": "Known",
+      "expected_exact_hex": "#ffc0cb",
+      "expected_family": "pink"
+    },
+    {
+      "id": "F130",
+      "field": "primary_colour",
+      "input": "#000080",
+      "source": "explicit owner action",
+      "expected_state": "Known",
+      "expected_exact_hex": "#000080",
+      "expected_family": "navy"
+    },
+    {
+      "id": "F131",
+      "field": "primary_colour",
+      "input": "#ffff00",
+      "source": "explicit owner action",
+      "expected_state": "Known",
+      "expected_exact_hex": "#ffff00",
+      "expected_family": "yellow"
+    },
+    {
+      "id": "F132",
+      "field": "primary_colour",
+      "input": "#800080",
+      "source": "explicit owner action",
+      "expected_state": "Known",
+      "expected_exact_hex": "#800080",
+      "expected_family": "purple"
+    },
+    {
+      "id": "F133",
+      "field": "primary_colour",
+      "input": "#ffffff",
+      "source": "explicit owner action",
+      "expected_state": "Known",
+      "expected_exact_hex": "#ffffff",
+      "expected_family": "white"
+    },
+    {
+      "id": "F134",
+      "field": "primary_colour",
+      "input": "#000000",
+      "source": "explicit owner action",
+      "expected_state": "Known",
+      "expected_exact_hex": "#000000",
+      "expected_family": "black"
+    },
+    {
+      "id": "F135",
+      "field": "primary_colour",
+      "input": "#ffa500",
+      "source": "explicit owner action",
+      "expected_state": "Known",
+      "expected_exact_hex": "#ffa500",
+      "expected_family": "orange"
+    },
+    {
+      "id": "F136",
+      "field": "primary_colour",
+      "input": "#f5f5dc",
+      "source": "explicit owner action",
+      "expected_state": "Known",
+      "expected_exact_hex": "#f5f5dc",
+      "expected_family": "beige"
+    },
+    {
+      "id": "F137",
+      "field": "primary_colour",
+      "input": "#ff0000",
+      "source": "explicit owner action",
+      "expected_state": "Known",
+      "expected_exact_hex": "#ff0000",
+      "expected_family": "red"
+    },
+    {
+      "id": "F138",
+      "field": "primary_colour",
+      "input": "#a52a2a",
+      "source": "explicit owner action",
+      "expected_state": "Known",
+      "expected_exact_hex": "#a52a2a",
+      "expected_family": "brown"
+    },
+    {
+      "id": "F139",
+      "field": "primary_colour",
+      "input": "#008000",
+      "source": "explicit owner action",
+      "expected_state": "Known",
+      "expected_exact_hex": "#008000",
+      "expected_family": "green"
+    },
+    {
+      "id": "F140",
+      "field": "primary_colour",
+      "input": "#0000ff",
+      "source": "explicit owner action",
+      "expected_state": "Known",
+      "expected_exact_hex": "#0000ff",
+      "expected_family": "blue"
+    },
+    {
+      "id": "S01",
+      "case": "style missing",
+      "input": {},
+      "expected": "Absent; no casual default"
+    },
+    {
+      "id": "S02",
+      "case": "style null",
+      "input": {
+        "style": null
+      },
+      "expected": "Absent"
+    },
+    {
+      "id": "S03",
+      "case": "style empty",
+      "input": {
+        "style": []
+      },
+      "expected": "KnownEmpty; ordinary singleton Unknown"
+    },
+    {
+      "id": "S04",
+      "case": "style multiple",
+      "input": {
+        "style": [
+          "casual",
+          "formal"
+        ]
+      },
+      "expected": "Known recorded set; ordinary singleton Unknown"
+    },
+    {
+      "id": "S05",
+      "case": "style unsupported",
+      "input": {
+        "style": [
+          "glam"
+        ]
+      },
+      "expected": "Unrecognized; no inferred smart casual"
+    },
+    {
+      "id": "S06",
+      "case": "style malformed",
+      "input": {
+        "style": [
+          7
+        ]
+      },
+      "expected": "Malformed"
+    },
+    {
+      "id": "S07",
+      "case": "stale selected/source",
+      "input": {
+        "changed_media": true
+      },
+      "expected": "Stale; no suggestion fallback"
+    },
+    {
+      "id": "M01",
+      "case": "material multiple",
+      "input": {
+        "material": [
+          "cotton",
+          "linen"
+        ]
+      },
+      "expected": "Known recorded set; no composition claim"
+    },
+    {
+      "id": "M02",
+      "case": "material mixed unsure",
+      "input": {
+        "material": [
+          "cotton",
+          "not sure"
+        ]
+      },
+      "expected": "Unsure/partial; no absence-of-other-fibre proof"
+    },
+    {
+      "id": "M03",
+      "case": "material blank",
+      "input": {
+        "material": ""
+      },
+      "expected": "Unspecified"
+    },
+    {
+      "id": "M04",
+      "case": "material empty",
+      "input": {
+        "material": []
+      },
+      "expected": "KnownEmpty recorded set; no absent-fibre proof"
+    },
+    {
+      "id": "M05",
+      "case": "material null",
+      "input": {
+        "material": null
+      },
+      "expected": "Absent"
+    },
+    {
+      "id": "M06",
+      "case": "material unsupported",
+      "input": {
+        "material": "rayon"
+      },
+      "expected": "Unrecognized in this version"
+    },
+    {
+      "id": "M07",
+      "case": "new duplicate set",
+      "input": {
+        "material": [
+          "cotton",
+          "cotton"
+        ]
+      },
+      "expected": "422 atomic; legacy duplicate Malformed"
+    },
+    {
+      "id": "R01",
+      "case": "raw fit merge",
+      "input": {
+        "model_fit": "loose",
+        "detector_fit": null
+      },
+      "expected": "Suggestion loose preserved with model origin; selected silhouette remains Absent"
+    },
+    {
+      "id": "R02",
+      "case": "bad model confidence",
+      "input": {
+        "value": "loose",
+        "confidence": "nan"
+      },
+      "expected": "Malformed suggestion; no selected fallback"
+    },
+    {
+      "id": "R03",
+      "case": "unregistered model label",
+      "input": {
+        "field": "silhouette",
+        "label": "loose"
+      },
+      "expected": "Raw suggestion retained, not source-qualified even though canonical spelling"
+    },
+    {
+      "id": "T01",
+      "case": "neckline conflicts",
+      "input": {
+        "custom_tags": [
+          "neckline: crew",
+          "neckline: v-neck"
+        ]
+      },
+      "expected": "Conflicting without typed selection; no arbitrary winner"
+    },
+    {
+      "id": "T02",
+      "case": "replace selected neckline",
+      "input": {
+        "old_raw": "neckline: crew",
+        "set": "v-neck"
+      },
+      "expected": "Current selected v-neck only; old raw crew retained in audit"
+    },
+    {
+      "id": "T03",
+      "case": "bottom suggestions",
+      "input": {
+        "category": "trousers",
+        "raw_neckline": "crew",
+        "raw_sleeve": "short"
+      },
+      "expected": "Inapplicable fields; raw retained before cleanup"
+    },
+    {
+      "id": "T04",
+      "case": "category conflict",
+      "input": {
+        "category": "long_sleeve_top",
+        "selected_sleeve": "short"
+      },
+      "expected": "Conflicting; no category inference to wrist-length"
+    },
+    {
+      "id": "T05",
+      "case": "three quarter",
+      "input": {
+        "sleeve": "three quarter"
+      },
+      "expected": "Unrecognized/inactive fine training vocabulary; never wrist-length"
+    },
+    {
+      "id": "C01",
+      "case": "missing form observations",
+      "input": {},
+      "expected": "Temperature/dominance Absent before and after untouched Accept"
+    },
+    {
+      "id": "C02",
+      "case": "legacy fallback observations",
+      "input": {
+        "primary_colour": "#000000",
+        "temperature": "neutral",
+        "dominance": false
+      },
+      "expected": "Recognized legacy values; no fabricated measurement qualification"
+    },
+    {
+      "id": "C03",
+      "case": "nonanchor exact hex",
+      "input": {
+        "primary_colour": "#123abc"
+      },
+      "expected": "Exact Known; named family Unrecognized"
+    },
+    {
+      "id": "C04",
+      "case": "primary changed",
+      "input": {
+        "old_primary": "blue",
+        "new_primary": "red"
+      },
+      "expected": "Dependent secondary/palette/temperature/dominance Stale"
+    },
+    {
+      "id": "C05",
+      "case": "explicit secondary clear",
+      "input": {
+        "secondary_colour": "clear",
+        "old_palette": [
+          "#ffffff",
+          "#000000"
+        ]
+      },
+      "expected": "Absent; palette[1] does not restore a selected secondary"
+    },
+    {
+      "id": "C06",
+      "case": "palette coverage",
+      "input": {
+        "entries": [
+          {
+            "hex": "#0000ff",
+            "coverage": "0.500000"
+          },
+          {
+            "hex": "#ffffff",
+            "coverage": "0.250000"
+          }
+        ]
+      },
+      "expected": "Exact total3/4, not renormalized; remaining mass unknown"
+    },
+    {
+      "id": "C07",
+      "case": "bad coverage",
+      "input": {
+        "coverage": "1.000001"
+      },
+      "expected": "422 new update; malformed source bounded state"
+    },
+    {
+      "id": "C08",
+      "case": "unrelated name edit",
+      "input": {
+        "name": "New name"
+      },
+      "expected": "Does not refresh/stale unrelated description channels"
+    },
+    {
+      "id": "A01",
+      "case": "automatic missing optional descriptions",
+      "input": {
+        "style": null,
+        "fit": null,
+        "material": null
+      },
+      "expected": "No new mandatory review/admission gate; existing structural/source requirements unchanged"
+    },
+    {
+      "id": "A02",
+      "case": "clear selected vs suggestion",
+      "input": {
+        "selected": "clear",
+        "suggestion": "crew"
+      },
+      "expected": "Absent selected; no fallback promotion"
+    },
+    {
+      "id": "A03",
+      "case": "malformed sidecar mirror",
+      "input": {
+        "mirror": "mismatch"
+      },
+      "expected": "Malformed; no nicer mirror recovery or write"
+    },
+    {
+      "id": "A04",
+      "case": "unknown version",
+      "input": {
+        "contract": "garment-description-evidence-99.0.0"
+      },
+      "expected": "Visible unavailable/invalid evidence, no reinterpretation"
+    },
+    {
+      "id": "A05",
+      "case": "client forged owner/event",
+      "input": {
+        "origin": "owner_selected",
+        "account_id": "foreign"
+      },
+      "expected": "422; no write"
+    },
+    {
+      "id": "A06",
+      "case": "same field legacy/typed",
+      "input": {
+        "legacy_fit": "loose",
+        "typed_silhouette": "tight"
+      },
+      "expected": "422 atomic"
+    },
+    {
+      "id": "A07",
+      "case": "stale update revision",
+      "input": {
+        "expected_revision": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "expected": "409 no partial event/mirror/item/garment update"
+    },
+    {
+      "id": "A08",
+      "case": "reserved tags",
+      "input": {
+        "tags": [
+          "rec:v1:allow:any"
+        ]
+      },
+      "expected": "No new declaration from descriptive channel; 422 new typed write"
+    },
+    {
+      "id": "B01",
+      "case": "new byte bounds",
+      "input": {
+        "single_bytes": [
+          32768,
+          32769
+        ],
+        "batch_bytes": [
+          262144,
+          262145
+        ]
+      },
+      "expected": "Boundary encoding accepted if semantically valid; +1 rejected before write"
+    },
+    {
+      "id": "B02",
+      "case": "optional oversized source",
+      "input": {
+        "raw_optional_over_budget": true
+      },
+      "expected": "Bounded Malformed reason; no truncation, no extra review gate"
+    },
+    {
+      "id": "B03",
+      "case": "immutable old projection",
+      "input": {
+        "same_legacy_row": true
+      },
+      "expected": "Identical old snapshot serialization/digest before/after B0; no new dataclass fields"
+    },
+    {
+      "id": "B04",
+      "case": "parallel strict query",
+      "input": {
+        "two_wearers": true
+      },
+      "expected": "One shared owned/available/confirmed/completed same-owner SELECT, same strict set, new evidence outside candidate loop"
+    },
+    {
+      "id": "B05",
+      "case": "disabled default",
+      "input": {
+        "new_typed_update": true
+      },
+      "expected": "422 unavailable; ordinary old request unchanged; stored known-version B0 read still available"
+    },
+    {
+      "id": "B06",
+      "case": "current owner edit",
+      "input": {
+        "stored_old_recommendation": true
+      },
+      "expected": "Current scope may invalidate; completed replay/old exact score snapshot never recomputed"
+    },
+    {
+      "id": "L001",
+      "field": "pattern",
+      "input": "plain (pattern)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "plain",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L002",
+      "field": "pattern",
+      "input": "abstract (pattern)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "abstract",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L003",
+      "field": "pattern",
+      "input": "cartoon (pattern)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "cartoon",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L004",
+      "field": "pattern",
+      "input": "letters, numbers (pattern)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "letters, numbers",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L005",
+      "field": "pattern",
+      "input": "camouflage (pattern)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "camouflage",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L006",
+      "field": "pattern",
+      "input": "check (pattern)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "check",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L007",
+      "field": "pattern",
+      "input": "dot (pattern)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "dot",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L008",
+      "field": "pattern",
+      "input": "fair isle (pattern)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "fair isle",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L009",
+      "field": "pattern",
+      "input": "floral (pattern)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "floral",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L010",
+      "field": "pattern",
+      "input": "geometric (pattern)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "geometric",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L011",
+      "field": "pattern",
+      "input": "paisley (pattern)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "paisley",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L012",
+      "field": "pattern",
+      "input": "stripe (pattern)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "stripe",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L013",
+      "field": "pattern",
+      "input": "houndstooth (pattern)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "houndstooth",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L014",
+      "field": "pattern",
+      "input": "herringbone (pattern)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "herringbone",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L015",
+      "field": "pattern",
+      "input": "chevron (pattern)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "chevron",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L016",
+      "field": "pattern",
+      "input": "argyle (pattern)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "argyle",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L017",
+      "field": "pattern",
+      "input": "leopard (pattern)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "leopard",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L018",
+      "field": "pattern",
+      "input": "snakeskin (pattern)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "snakeskin",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L019",
+      "field": "pattern",
+      "input": "cheetah (pattern)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "cheetah",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L020",
+      "field": "pattern",
+      "input": "peacock (pattern)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "peacock",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L021",
+      "field": "pattern",
+      "input": "zebra (pattern)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "zebra",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L022",
+      "field": "pattern",
+      "input": "giraffe (pattern)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "giraffe",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L023",
+      "field": "pattern",
+      "input": "toile de jouy (pattern)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "toile de jouy",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L024",
+      "field": "pattern",
+      "input": "plant (pattern)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "plant",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L025",
+      "field": "silhouette",
+      "input": "asymmetrical (fit)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "asymmetrical",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L026",
+      "field": "silhouette",
+      "input": "symmetrical (fit)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "symmetrical",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L027",
+      "field": "silhouette",
+      "input": "peplum (fit)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "peplum",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L028",
+      "field": "silhouette",
+      "input": "circle (fit)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "circle",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L029",
+      "field": "silhouette",
+      "input": "flare (fit)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "flare",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L030",
+      "field": "silhouette",
+      "input": "fit and flare (fit)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "fit and flare",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L031",
+      "field": "silhouette",
+      "input": "trumpet (fit)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "trumpet",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L032",
+      "field": "silhouette",
+      "input": "mermaid (fit)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "mermaid",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L033",
+      "field": "silhouette",
+      "input": "balloon (fit)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "balloon",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L034",
+      "field": "silhouette",
+      "input": "bell (fit)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "bell",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L035",
+      "field": "silhouette",
+      "input": "bell bottom (fit)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "bell bottom",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L036",
+      "field": "silhouette",
+      "input": "bootcut (fit)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "bootcut",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L037",
+      "field": "silhouette",
+      "input": "peg (fit)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "peg",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L038",
+      "field": "silhouette",
+      "input": "pencil (fit)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "pencil",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L039",
+      "field": "silhouette",
+      "input": "straight (fit)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "straight",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L040",
+      "field": "silhouette",
+      "input": "a-line (fit)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "a-line",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L041",
+      "field": "silhouette",
+      "input": "tent (fit)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "tent",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L042",
+      "field": "silhouette",
+      "input": "baggy (fit)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "baggy",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L043",
+      "field": "silhouette",
+      "input": "wide leg (fit)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "wide leg",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L044",
+      "field": "silhouette",
+      "input": "high low (fit)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "high low",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L045",
+      "field": "silhouette",
+      "input": "curved (fit)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "curved",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L046",
+      "field": "silhouette",
+      "input": "tight (fit)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "tight",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L047",
+      "field": "silhouette",
+      "input": "regular (fit)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "regular",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L048",
+      "field": "silhouette",
+      "input": "loose (fit)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "loose",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L049",
+      "field": "silhouette",
+      "input": "oversized (fit)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "oversized",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L050",
+      "field": "neckline",
+      "input": "collarless (neck)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "collarless",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L051",
+      "field": "neckline",
+      "input": "asymmetric (neck)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "asymmetric",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L052",
+      "field": "neckline",
+      "input": "crew (neck)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "crew",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L053",
+      "field": "neckline",
+      "input": "round (neck)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "round",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L054",
+      "field": "neckline",
+      "input": "v-neck (neck)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "v-neck",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L055",
+      "field": "neckline",
+      "input": "surplice (neck)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "surplice",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L056",
+      "field": "neckline",
+      "input": "oval (neck)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "oval",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L057",
+      "field": "neckline",
+      "input": "u-neck (neck)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "u-neck",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L058",
+      "field": "neckline",
+      "input": "sweetheart (neck)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "sweetheart",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L059",
+      "field": "neckline",
+      "input": "queen anne (neck)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "queen anne",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L060",
+      "field": "neckline",
+      "input": "boat (neck)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "boat",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L061",
+      "field": "neckline",
+      "input": "scoop (neck)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "scoop",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L062",
+      "field": "neckline",
+      "input": "square (neck)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "square",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L063",
+      "field": "neckline",
+      "input": "plunging (neck)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "plunging",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L064",
+      "field": "neckline",
+      "input": "keyhole (neck)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "keyhole",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L065",
+      "field": "neckline",
+      "input": "halter (neck)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "halter",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L066",
+      "field": "neckline",
+      "input": "crossover (neck)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "crossover",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L067",
+      "field": "neckline",
+      "input": "choker (neck)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "choker",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L068",
+      "field": "neckline",
+      "input": "high (neck)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "high",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L069",
+      "field": "neckline",
+      "input": "turtle (neck)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "turtle",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L070",
+      "field": "neckline",
+      "input": "cowl (neck)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "cowl",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L071",
+      "field": "neckline",
+      "input": "straight across (neck)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "straight across",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L072",
+      "field": "neckline",
+      "input": "illusion (neck)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "illusion",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L073",
+      "field": "neckline",
+      "input": "off-the-shoulder (neck)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "off-the-shoulder",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L074",
+      "field": "neckline",
+      "input": "one shoulder (neck)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "one shoulder",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L075",
+      "field": "sleeve_length",
+      "input": "sleeveless (length)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "sleeveless",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L076",
+      "field": "sleeve_length",
+      "input": "short (length)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "short",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L077",
+      "field": "sleeve_length",
+      "input": "elbow-length (length)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "elbow-length",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    },
+    {
+      "id": "L078",
+      "field": "sleeve_length",
+      "input": "wrist-length (length)",
+      "source": "legacy recorded field",
+      "expected_legacy_canonical": "wrist-length",
+      "expected_origin": "legacy_selected_unverified",
+      "head_membership": "NOT VERIFIED; no enabled model mapping",
+      "new_owner_write": "422 alias; use canonical value"
+    }
+  ],
+  "integration_obligations": [
+    {
+      "id": "I01",
+      "title": "Full strict source negatives",
+      "expectation": "Foreign account/job, unconfirmed/incomplete/unavailable rows excluded; both wearers see same eligible pool."
+    },
+    {
+      "id": "I02",
+      "title": "Automatic full batch and replay",
+      "expectation": "No mandatory confirmation; complete batch atomic, quota100 account-wide; fault every new write stage, no partial record/event or consumed slot."
+    },
+    {
+      "id": "I03",
+      "title": "Wearer lifecycle and preferences",
+      "expectation": "Phase A active validation/archive retention, explicit selection, fail-closed isolated preferences and fingerprint3 replay remain."
+    },
+    {
+      "id": "I04",
+      "title": "Refinement and scores",
+      "expectation": "All original contexts/compounds/Deny/specialists/generic/baseline, four structures, exact R/C/P/floor/Seen/cap/coverage/limits retained on final combined inputs."
+    },
+    {
+      "id": "I05",
+      "title": "Historical reads",
+      "expectation": "Old and new stored evidence read with active normalizer/config loader disabled; corruption visible, no re-normalization or repair."
+    },
+    {
+      "id": "I06",
+      "title": "UI dirty-field behaviour",
+      "expectation": "Keep/Cancel no request/event; explicit Unknown/false/neutral distinct; apply failure preserves draft and exact revision; raw vs selected separate."
+    },
+    {
+      "id": "I07",
+      "title": "Browser security and pending identity",
+      "expectation": "Captured wearer/header/key survives reload/switch; foreign resource and copied-token durable logout denial remain; no raw reserved tag execution."
+    },
+    {
+      "id": "I08",
+      "title": "Performance and boundaries",
+      "expectation": "0/1/100 strict garments, upper-bound UTF8/sets/palette/head counts, call counts/allocation peaks; normalization once per garment, no per-candidate I/O; >100 ranking rejection remains."
+    },
+    {
+      "id": "I09",
+      "title": "Browser layout",
+      "expectation": "Keyboard/focus, long labels, 360/390/768/1280/1920 widths and native200% zoom; installed Chrome; disposable authenticated synthetic adapters only."
+    },
+    {
+      "id": "I10",
+      "title": "Complete matrix and no model claim",
+      "expectation": "All247 row IDs remain in B1/B2; every finite case separately labelled; no installed label/accuracy/human fashion evaluation inferred."
+    },
+    {
+      "id": "I11",
+      "title": "Source integrity and build",
+      "expectation": "Frozen labels before production edits, exact B0 descendant, old manifests intact; final backend suite/frontend build/types/lint/browser hashes and native exits."
+    },
+    {
+      "id": "I12",
+      "title": "Shared colour/edit race",
+      "expectation": "Primary change between preparation/update conflicts; explicit dependent reassertion requires atomic new binding. Palette mirror cannot overwrite secondary intent."
+    },
+    {
+      "id": "I13",
+      "title": "Processing transfer/currentness",
+      "expectation": "Raw pre-cleanup suggestion and actual candidate owner event transfer with source subject; materialization alone creates no new human event."
+    },
+    {
+      "id": "I14",
+      "title": "Style and reserved evidence",
+      "expectation": "Existing owner-style-confirmation remains optional and separately authenticated; neither typed update nor model-supplied sidecar can forge source/appearance/confirmation."
+    },
+    {
+      "id": "I15",
+      "title": "Baseline fixture gap",
+      "expectation": "Repair missing wearer argument only; original malformed-mirror exception reached and passes, then focused baseline repeated before B0 changes."
+    }
+  ],
+  "counts": {
+    "finite_value_cases": 140,
+    "state_boundary_cases": 44,
+    "legacy_alias_cases": 78,
+    "integration_obligations": 15
+  },
+  "freeze": "Hash after owner approval before production editing; preserve failure evidence; future B1/B2 oracle uses independent Fraction arithmetic."
+}

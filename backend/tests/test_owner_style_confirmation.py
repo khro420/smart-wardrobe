@@ -143,7 +143,7 @@ def test_malformed_mirror_and_declaration_barrier(everyday_api):
     from app.application.wardrobe.wardrobe_service import update_garment
     from fastapi import HTTPException
     with pytest.raises((HTTPException,ValueError)):
-        update_garment(gid,'style-owner',{'attributes':{'style':['casual']},'style_confirmation':{'contract':CONTRACT,'expected_revision':rev,'style':'casual'}})
+        update_garment(gid,'style-owner',client.get('/api/v1/account/wardrobe-profiles').json()[0]['id'],{'attributes':{'style':['casual']},'style_confirmation':{'contract':CONTRACT,'expected_revision':rev,'style':'casual'}})
 
 
 def test_automatic_adapter_cannot_create_pending_attestation(everyday_api,monkeypatch):

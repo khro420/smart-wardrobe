@@ -5,7 +5,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, Home, Shirt, PlusCircle, User, ShieldCheck, LogOut, History } from "lucide-react";
 import Image from "next/image";
-import { ApiError, clearAccessToken, getAccessToken, getSelectedWardrobeProfileId, getWardrobeProfiles, logout, setSelectedWardrobeProfileId, type WardrobeProfile } from "@/lib/api";
+import { ApiError, clearAccessToken, getAccessToken, getWardrobeProfiles, logout, type WardrobeProfile } from "@/lib/api";
+import { selectedWearer, rememberWearer } from "@/lib/wearer-selection";
 import { leaveHomepageFlow } from "@/lib/recommendation-session";
 
 const navItems = [
@@ -36,6 +37,7 @@ function SidebarContent({ pathname, onNavigate, profiles, selectedProfileId, onP
     <div className="mx-4 rounded-2xl border border-[#ead7e2] bg-[#fdf8fb] p-3">
       <label className="block text-[11px] font-semibold uppercase tracking-[0.12em] text-[#6d335b]">Active wearer
         <select value={selectedProfileId ?? ""} onChange={(event) => onProfileChange(event.target.value)} className="mt-2 min-h-11 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm font-semibold text-slate-800" aria-label="Select active wardrobe profile">
+          <option value="" disabled>Choose intended wearer</option>
           {profiles.map((profile) => <option key={profile.id} value={profile.id}>{profile.name}{profile.is_default ? " (default)" : ""}</option>)}
         </select>
       </label>
@@ -92,10 +94,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     let active = true;
     const loadProfiles = () => { void getWardrobeProfiles().then((profiles) => {
         if (!active) return;
-        const stored = getSelectedWardrobeProfileId();
-        const selected = profiles.find((profile) => profile.id === stored) ?? profiles[0];
+        const selected = selectedWearer(profiles);
         setWardrobeProfiles(profiles);
-        if (selected) { setSelectedProfileId(selected.id); setSelectedWardrobeProfileId(selected.id); }
+        if (selected) { setSelectedProfileId(selected.id); rememberWearer(selected.id, profiles.length > 1); }
+        else { setSelectedProfileId(null); sessionStorage.removeItem("smart_wardrobe_profile_id"); }
       }).catch(() => { if (active) setWardrobeProfiles([]); }); };
     loadProfiles();
     window.addEventListener("smart-wardrobe-profiles-changed", loadProfiles);
@@ -103,7 +105,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   }, [pathname]);
 
   const changeProfile = (profileId: string) => {
-    setSelectedWardrobeProfileId(profileId);
+    rememberWearer(profileId, true);
     setSelectedProfileId(profileId);
     leaveHomepageFlow();
     window.location.reload();

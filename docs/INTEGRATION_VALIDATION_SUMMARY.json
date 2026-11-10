@@ -1,0 +1,732 @@
+{
+  "version": "integrated-validation-summary-1.0.0",
+  "team_baseline_commit": "a69d95ba6caf84eacbeec661ee7867068b073a1d",
+  "source919_manifest_sha256": "7efecc48d0781af466a8f41eb9155e583b1a3676f8645f7aa90bd325682388b3",
+  "fresh_production_build_id": "RXWDqhdXuOR9todMp9i-m",
+  "current_unique_counts": {
+    "passed": 16023,
+    "failed": 25,
+    "skipped": 152
+  },
+  "current_unique_nodes": 16200,
+  "current_functional_failures_excluding_missing_historical_evidence": 0,
+  "native_shards": {
+    "backend-shard-0-final": {
+      "counts": {
+        "passed": 2529,
+        "failed": 25
+      },
+      "exit_code": 1
+    },
+    "backend-shard-1-final": {
+      "counts": {
+        "passed": 6412,
+        "skipped": 152
+      },
+      "exit_code": 0
+    },
+    "backend-shard-2": {
+      "counts": {
+        "passed": 7060
+      },
+      "exit_code": 0
+    }
+  },
+  "additional_unique_current_checks": {
+    "source_provenance": 1,
+    "finite_transport_controls": 18,
+    "cv_geometry": 3
+  },
+  "historical_source_assignments_not_current": 43,
+  "historical919_identity_case_new_native_passes": 1,
+  "frontend": {
+    "production_build": "completed fresh",
+    "types_exit": 0,
+    "lint_exit": 0,
+    "lint_errors": 0,
+    "lint_warnings": 5,
+    "production_browser_smoke_passes": 1,
+    "production_browser_smoke_failures": 0
+  },
+  "disposable_schema_upgrade": {
+    "old": 0,
+    "new": 0,
+    "original_tables": 20,
+    "original_rows": 7,
+    "new_tables": [
+      "wardrobe_profile_details_v1"
+    ],
+    "all_original_rows_preserved": true,
+    "all_media_preserved": true
+  },
+  "module_counts": {
+    "tests/test_assistant_decision_integration.py": {
+      "passed": 41
+    },
+    "tests/test_assistant_performance_equivalence.py": {
+      "passed": 12
+    },
+    "tests/test_attribute_bounds_performance.py": {
+      "passed": 3
+    },
+    "tests/test_attribute_candidate_selection.py": {
+      "passed": 3035
+    },
+    "tests/test_attribute_conditions.py": {
+      "passed": 35
+    },
+    "tests/test_attribute_evidence_review.py": {
+      "passed": 10
+    },
+    "tests/test_attribute_history.py": {
+      "passed": 11
+    },
+    "tests/test_attribute_nlp.py": {
+      "passed": 437
+    },
+    "tests/test_attribute_persistence.py": {
+      "passed": 5
+    },
+    "tests/test_attribute_qualification.py": {
+      "passed": 1456
+    },
+    "tests/test_attribute_refinement.py": {
+      "passed": 20
+    },
+    "tests/test_attribute_source_scope.py": {
+      "passed": 11
+    },
+    "tests/test_automatic_admission_integration.py": {
+      "passed": 60
+    },
+    "tests/test_automatic_garment_finalization.py": {
+      "passed": 14
+    },
+    "tests/test_b3_palette_compatibility.py": {
+      "passed": 18
+    },
+    "tests/test_b3_palette_integration.py": {
+      "passed": 13
+    },
+    "tests/test_b3_palette_persistence.py": {
+      "passed": 16
+    },
+    "tests/test_b3_palette_selection.py": {
+      "passed": 58
+    },
+    "tests/test_candidate_ranking.py": {
+      "passed": 22
+    },
+    "tests/test_capacity_100.py": {
+      "passed": 9
+    },
+    "tests/test_capacity_150.py": {
+      "passed": 10
+    },
+    "tests/test_chat_history.py": {
+      "passed": 24
+    },
+    "tests/test_colour_classification.py": {
+      "passed": 47
+    },
+    "tests/test_compact_assistant_integration.py": {
+      "passed": 107
+    },
+    "tests/test_compact_default_readiness.py": {
+      "passed": 21
+    },
+    "tests/test_compact_exhaustive.py": {
+      "passed": 97
+    },
+    "tests/test_compact_integration.py": {
+      "passed": 25
+    },
+    "tests/test_compatibility_decision.py": {
+      "passed": 95
+    },
+    "tests/test_compatibility_evidence_dataset.py": {
+      "passed": 45
+    },
+    "tests/test_compatibility_pair_cache.py": {
+      "passed": 255
+    },
+    "tests/test_confirmed_garment_snapshot.py": {
+      "passed": 68
+    },
+    "tests/test_consolidated_regression_corrections.py": {
+      "passed": 319
+    },
+    "tests/test_context_expansion_equivalence.py": {
+      "passed": 131
+    },
+    "tests/test_context_expansion_history.py": {
+      "passed": 10
+    },
+    "tests/test_context_expansion_integration.py": {
+      "passed": 16
+    },
+    "tests/test_context_expansion_nlp.py": {
+      "passed": 97
+    },
+    "tests/test_context_expansion_policy.py": {
+      "passed": 22
+    },
+    "tests/test_context_relevance_equivalence.py": {
+      "passed": 24
+    },
+    "tests/test_context_relevance_integration.py": {
+      "passed": 17
+    },
+    "tests/test_context_relevance_math.py": {
+      "passed": 76
+    },
+    "tests/test_context_relevance_ranking.py": {
+      "passed": 33
+    },
+    "tests/test_contextual_wedding.py": {
+      "passed": 84
+    },
+    "tests/test_conversational_activation.py": {
+      "passed": 5
+    },
+    "tests/test_conversational_attributes.py": {
+      "passed": 213
+    },
+    "tests/test_conversational_boundaries.py": {
+      "passed": 55
+    },
+    "tests/test_conversational_contexts.py": {
+      "passed": 227
+    },
+    "tests/test_conversational_history.py": {
+      "passed": 5
+    },
+    "tests/test_date_dinner_context.py": {
+      "passed": 260
+    },
+    "tests/test_date_dinner_equivalence.py": {
+      "passed": 10
+    },
+    "tests/test_description_integration.py": {
+      "passed": 5
+    },
+    "tests/test_description_normalization.py": {
+      "passed": 242
+    },
+    "tests/test_description_persistence.py": {
+      "passed": 13
+    },
+    "tests/test_description_projection.py": {
+      "passed": 16
+    },
+    "tests/test_description_source_scope.py": {
+      "passed": 9
+    },
+    "tests/test_durable_logout.py": {
+      "passed": 44
+    },
+    "tests/test_everyday_context.py": {
+      "passed": 82
+    },
+    "tests/test_everyday_context_equivalence.py": {
+      "passed": 256
+    },
+    "tests/test_evidence_diversity.py": {
+      "passed": 24
+    },
+    "tests/test_fail_closed_routing.py": {
+      "passed": 26
+    },
+    "tests/test_final_evaluation_auditor.py": {
+      "failed": 25,
+      "passed": 1
+    },
+    "tests/test_final_recommendation_evaluation.py": {
+      "skipped": 152
+    },
+    "tests/test_forward_style_semantics.py": {
+      "passed": 40
+    },
+    "tests/test_frontend_recommendation_boundary.py": {
+      "passed": 2
+    },
+    "tests/test_functional_gap_closure.py": {
+      "passed": 44
+    },
+    "tests/test_garment_only_refinement_contracts.py": {
+      "passed": 7
+    },
+    "tests/test_garment_only_refinement_history.py": {
+      "passed": 2
+    },
+    "tests/test_garment_only_refinement_persistence.py": {
+      "passed": 25
+    },
+    "tests/test_garment_only_refinement_selection.py": {
+      "passed": 1
+    },
+    "tests/test_garment_wording_descriptors.py": {
+      "passed": 29
+    },
+    "tests/test_garment_workflow.py": {
+      "passed": 15
+    },
+    "tests/test_general_context.py": {
+      "passed": 142
+    },
+    "tests/test_general_context_equivalence.py": {
+      "passed": 35
+    },
+    "tests/test_historical_recommendation_actions.py": {
+      "passed": 9
+    },
+    "tests/test_holistic_compatibility.py": {
+      "passed": 29
+    },
+    "tests/test_holistic_ranking.py": {
+      "passed": 19
+    },
+    "tests/test_homepage_recommendation.py": {
+      "passed": 48
+    },
+    "tests/test_integrated_source_provenance.py": {
+      "passed": 1
+    },
+    "tests/test_integrated_versioned_contracts.py": {
+      "passed": 69
+    },
+    "tests/test_invariant_request_details.py": {
+      "passed": 243
+    },
+    "tests/test_manual_binding.py": {
+      "passed": 35
+    },
+    "tests/test_mirrored_garment_reconstruction.py": {
+      "passed": 3
+    },
+    "tests/test_nlp_evaluation.py": {
+      "passed": 3
+    },
+    "tests/test_nlp_interpreter.py": {
+      "passed": 48
+    },
+    "tests/test_o1_wardrobe.py": {
+      "passed": 3
+    },
+    "tests/test_o2_evaluation_scripts.py": {
+      "passed": 3
+    },
+    "tests/test_o2_recommendation_boundary.py": {
+      "passed": 2
+    },
+    "tests/test_outfit_assistant.py": {
+      "passed": 35
+    },
+    "tests/test_owner_style_confirmation.py": {
+      "passed": 28
+    },
+    "tests/test_owner_style_recommendation_integration.py": {
+      "passed": 37
+    },
+    "tests/test_p2_performance_boundaries.py": {
+      "passed": 16
+    },
+    "tests/test_p2_performance_equivalence.py": {
+      "passed": 488
+    },
+    "tests/test_p2_preference_bounds.py": {
+      "passed": 1
+    },
+    "tests/test_p2_preference_contracts.py": {
+      "passed": 229
+    },
+    "tests/test_p2_preference_history.py": {
+      "passed": 5
+    },
+    "tests/test_p2_preference_integration.py": {
+      "passed": 17
+    },
+    "tests/test_p2_preference_masks.py": {
+      "passed": 8
+    },
+    "tests/test_p2_preference_math.py": {
+      "passed": 25
+    },
+    "tests/test_p2_preference_refinement.py": {
+      "passed": 18
+    },
+    "tests/test_p2_preference_selection.py": {
+      "passed": 19
+    },
+    "tests/test_p2_preference_source_scope.py": {
+      "passed": 1
+    },
+    "tests/test_p2_preference_storage.py": {
+      "passed": 13
+    },
+    "tests/test_p2_preference_values.py": {
+      "passed": 3212
+    },
+    "tests/test_phase5f_audit.py": {
+      "passed": 6
+    },
+    "tests/test_phase_a_authenticated_api.py": {
+      "passed": 8
+    },
+    "tests/test_phase_a_profile_archive.py": {
+      "passed": 8
+    },
+    "tests/test_phase_a_quota_concurrency.py": {
+      "passed": 5
+    },
+    "tests/test_phase_a_refinement_history.py": {
+      "passed": 9
+    },
+    "tests/test_phase_a_shared_dependencies.py": {
+      "passed": 3
+    },
+    "tests/test_phase_a_wearer_identity.py": {
+      "passed": 4
+    },
+    "tests/test_preference_modelling.py": {
+      "passed": 25
+    },
+    "tests/test_prepared_aggregation.py": {
+      "passed": 16
+    },
+    "tests/test_prepared_decision_performance.py": {
+      "passed": 147
+    },
+    "tests/test_processing_subtype_identity_integration.py": {
+      "passed": 63
+    },
+    "tests/test_professional_academic_context.py": {
+      "passed": 77
+    },
+    "tests/test_professional_academic_equivalence.py": {
+      "passed": 377
+    },
+    "tests/test_profile_details.py": {
+      "passed": 3
+    },
+    "tests/test_recommendation_actions.py": {
+      "passed": 23
+    },
+    "tests/test_recommendation_failure_logging.py": {
+      "passed": 30
+    },
+    "tests/test_recommendation_persistence.py": {
+      "passed": 46
+    },
+    "tests/test_recommendation_refinement_categories.py": {
+      "passed": 22
+    },
+    "tests/test_recommendation_refinement_integration.py": {
+      "passed": 26
+    },
+    "tests/test_recommendation_refinement_lineage.py": {
+      "passed": 14
+    },
+    "tests/test_recommendation_refinement_persistence.py": {
+      "passed": 15
+    },
+    "tests/test_recommendation_refinement_ranking.py": {
+      "passed": 41
+    },
+    "tests/test_recommendation_scoring.py": {
+      "passed": 18
+    },
+    "tests/test_reconciliation_architecture.py": {
+      "passed": 4
+    },
+    "tests/test_reconciliation_contracts.py": {
+      "passed": 14
+    },
+    "tests/test_reconciliation_dataset_versions.py": {
+      "passed": 18
+    },
+    "tests/test_reconciliation_source_scope.py": {
+      "passed": 1
+    },
+    "tests/test_release_configuration.py": {
+      "passed": 11
+    },
+    "tests/test_release_suitability.py": {
+      "passed": 39
+    },
+    "tests/test_report_architecture.py": {
+      "passed": 6
+    },
+    "tests/test_request_candidates.py": {
+      "passed": 39
+    },
+    "tests/test_retained_transport_authorities.py": {
+      "passed": 18
+    },
+    "tests/test_rule_based_compatibility.py": {
+      "passed": 236
+    },
+    "tests/test_saved_outfit_visualisation_eligibility.py": {
+      "passed": 55
+    },
+    "tests/test_saved_style_admission.py": {
+      "passed": 529
+    },
+    "tests/test_score_certificate_reuse.py": {
+      "passed": 29
+    },
+    "tests/test_score_validation_equivalence.py": {
+      "passed": 1
+    },
+    "tests/test_scoring_acceptance.py": {
+      "passed": 28
+    },
+    "tests/test_scoring_hot_path_equivalence.py": {
+      "passed": 4
+    },
+    "tests/test_segmentation_geometry.py": {
+      "passed": 3
+    },
+    "tests/test_stream_progress_equivalence.py": {
+      "passed": 12
+    },
+    "tests/test_structural_candidates.py": {
+      "passed": 48
+    },
+    "tests/test_suitability_assistant_e2e.py": {
+      "passed": 89
+    },
+    "tests/test_suitability_controls.py": {
+      "passed": 53
+    },
+    "tests/test_suitability_evaluation.py": {
+      "passed": 16
+    },
+    "tests/test_suitability_policy.py": {
+      "passed": 38
+    },
+    "tests/test_suitability_tag_workflow.py": {
+      "passed": 12
+    },
+    "tests/test_verified_subtype_admission.py": {
+      "passed": 13
+    },
+    "tests/test_verified_subtype_editing.py": {
+      "passed": 3
+    },
+    "tests/test_verified_subtype_evidence.py": {
+      "passed": 10
+    },
+    "tests/test_verified_subtype_history.py": {
+      "passed": 2
+    },
+    "tests/test_verified_subtype_nlp.py": {
+      "passed": 152
+    },
+    "tests/test_verified_subtype_recommendation.py": {
+      "passed": 5
+    },
+    "tests/test_verified_subtype_refinement.py": {
+      "passed": 2
+    },
+    "tests/test_verified_subtype_registry.py": {
+      "passed": 3
+    },
+    "tests/test_verified_subtype_transactions.py": {
+      "passed": 2
+    },
+    "tests/test_verified_subtype_unknowns.py": {
+      "passed": 6
+    },
+    "tests/test_visual_embedding.py": {
+      "passed": 2
+    },
+    "tests/test_vtoff_adapter.py": {
+      "passed": 5
+    },
+    "tests/test_vtoff_standardisation.py": {
+      "passed": 2
+    },
+    "tests/test_vton_contracts.py": {
+      "passed": 8
+    },
+    "tests/test_wardrobe_quota.py": {
+      "passed": 25
+    },
+    "tests/test_wearer_category_admission.py": {
+      "passed": 21
+    },
+    "tests/test_wearer_category_concurrency.py": {
+      "passed": 6
+    },
+    "tests/test_wearer_category_history.py": {
+      "passed": 4
+    },
+    "tests/test_wearer_category_nlp.py": {
+      "passed": 7
+    },
+    "tests/test_wearer_category_policy.py": {
+      "passed": 31
+    },
+    "tests/test_wearer_category_recommendation.py": {
+      "passed": 10
+    },
+    "tests/test_workflow.py": {
+      "passed": 4
+    }
+  },
+  "remaining_evidence_failure_nodes": [
+    {
+      "nodeid": "tests/test_final_evaluation_auditor.py::test_valid_retained_results_pass[D01]",
+      "reason": "Original certified J15 inputs/exports unavailable; native failure retained."
+    },
+    {
+      "nodeid": "tests/test_final_evaluation_auditor.py::test_valid_retained_results_pass[P01]",
+      "reason": "Original certified J15 inputs/exports unavailable; native failure retained."
+    },
+    {
+      "nodeid": "tests/test_final_evaluation_auditor.py::test_valid_retained_results_pass[S19]",
+      "reason": "Original certified J15 inputs/exports unavailable; native failure retained."
+    },
+    {
+      "nodeid": "tests/test_final_evaluation_auditor.py::test_valid_retained_results_pass[S23]",
+      "reason": "Original certified J15 inputs/exports unavailable; native failure retained."
+    },
+    {
+      "nodeid": "tests/test_final_evaluation_auditor.py::test_valid_retained_results_pass[S24]",
+      "reason": "Original certified J15 inputs/exports unavailable; native failure retained."
+    },
+    {
+      "nodeid": "tests/test_final_evaluation_auditor.py::test_valid_retained_results_pass[S26]",
+      "reason": "Original certified J15 inputs/exports unavailable; native failure retained."
+    },
+    {
+      "nodeid": "tests/test_final_evaluation_auditor.py::test_valid_retained_results_pass[S27]",
+      "reason": "Original certified J15 inputs/exports unavailable; native failure retained."
+    },
+    {
+      "nodeid": "tests/test_final_evaluation_auditor.py::test_valid_retained_results_pass[S28]",
+      "reason": "Original certified J15 inputs/exports unavailable; native failure retained."
+    },
+    {
+      "nodeid": "tests/test_final_evaluation_auditor.py::test_valid_retained_results_pass[S29]",
+      "reason": "Original certified J15 inputs/exports unavailable; native failure retained."
+    },
+    {
+      "nodeid": "tests/test_final_evaluation_auditor.py::test_valid_retained_results_pass[S30]",
+      "reason": "Original certified J15 inputs/exports unavailable; native failure retained."
+    },
+    {
+      "nodeid": "tests/test_final_evaluation_auditor.py::test_corrupt_evidence_cannot_pass[foreign]",
+      "reason": "Original certified J15 inputs/exports unavailable; native failure retained."
+    },
+    {
+      "nodeid": "tests/test_final_evaluation_auditor.py::test_corrupt_evidence_cannot_pass[archived]",
+      "reason": "Original certified J15 inputs/exports unavailable; native failure retained."
+    },
+    {
+      "nodeid": "tests/test_final_evaluation_auditor.py::test_corrupt_evidence_cannot_pass[unconfirmed]",
+      "reason": "Original certified J15 inputs/exports unavailable; native failure retained."
+    },
+    {
+      "nodeid": "tests/test_final_evaluation_auditor.py::test_corrupt_evidence_cannot_pass[wrong_job_owner]",
+      "reason": "Original certified J15 inputs/exports unavailable; native failure retained."
+    },
+    {
+      "nodeid": "tests/test_final_evaluation_auditor.py::test_corrupt_evidence_cannot_pass[missing_member]",
+      "reason": "Original certified J15 inputs/exports unavailable; native failure retained."
+    },
+    {
+      "nodeid": "tests/test_final_evaluation_auditor.py::test_corrupt_evidence_cannot_pass[query_origin]",
+      "reason": "Original certified J15 inputs/exports unavailable; native failure retained."
+    },
+    {
+      "nodeid": "tests/test_final_evaluation_auditor.py::test_corrupt_evidence_cannot_pass[score]",
+      "reason": "Original certified J15 inputs/exports unavailable; native failure retained."
+    },
+    {
+      "nodeid": "tests/test_final_evaluation_auditor.py::test_corrupt_evidence_cannot_pass[weight]",
+      "reason": "Original certified J15 inputs/exports unavailable; native failure retained."
+    },
+    {
+      "nodeid": "tests/test_final_evaluation_auditor.py::test_corrupt_evidence_cannot_pass[provenance]",
+      "reason": "Original certified J15 inputs/exports unavailable; native failure retained."
+    },
+    {
+      "nodeid": "tests/test_final_evaluation_auditor.py::test_corrupt_evidence_cannot_pass[snapshot]",
+      "reason": "Original certified J15 inputs/exports unavailable; native failure retained."
+    },
+    {
+      "nodeid": "tests/test_final_evaluation_auditor.py::test_corrupt_evidence_cannot_pass[receipt]",
+      "reason": "Original certified J15 inputs/exports unavailable; native failure retained."
+    },
+    {
+      "nodeid": "tests/test_final_evaluation_auditor.py::test_corrupt_evidence_cannot_pass[extra_write]",
+      "reason": "Original certified J15 inputs/exports unavailable; native failure retained."
+    },
+    {
+      "nodeid": "tests/test_final_evaluation_auditor.py::test_corrupt_evidence_cannot_pass[mandatory_deny]",
+      "reason": "Original certified J15 inputs/exports unavailable; native failure retained."
+    },
+    {
+      "nodeid": "tests/test_final_evaluation_auditor.py::test_equal_score_wrong_stable_id_rejected",
+      "reason": "Original certified J15 inputs/exports unavailable; native failure retained."
+    },
+    {
+      "nodeid": "tests/test_final_evaluation_auditor.py::test_frozen_mismatches_are_retained_as_failures",
+      "reason": "Original certified J15 inputs/exports unavailable; native failure retained."
+    }
+  ],
+  "python": {
+    "version": "3.12.10",
+    "functional_packages": {
+      "annotated-doc": "0.0.5",
+      "annotated-types": "0.8.0",
+      "anyio": "4.15.1",
+      "attrs": "26.1.0",
+      "certifi": "2026.10.19",
+      "click": "8.5.0",
+      "colorama": "0.4.6",
+      "fastapi": "0.146.0",
+      "h11": "0.16.0",
+      "httpcore": "1.0.9",
+      "httpx": "0.28.1",
+      "idna": "3.20",
+      "iniconfig": "2.3.1",
+      "jsonschema": "4.26.0",
+      "jsonschema-specifications": "2025.9.1",
+      "numpy": "2.5.4",
+      "opentelemetry-api": "1.45.1",
+      "packaging": "26.3",
+      "pillow": "13.0.0",
+      "pluggy": "1.7.0",
+      "pydantic": "2.14.1",
+      "pydantic_core": "2.50.1",
+      "Pygments": "2.21.0",
+      "pytest": "9.1.1",
+      "python-multipart": "0.0.32",
+      "referencing": "0.37.0",
+      "rpds-py": "2026.9.1",
+      "starlette": "1.9.0",
+      "typing_extensions": "4.16.0",
+      "typing-inspection": "0.4.4",
+      "uvicorn": "0.54.0"
+    }
+  },
+  "cv_geometry_environment": {},
+  "prior_evidence_preserved": [
+    {
+      "review": "workload_applicability_correction_20261110",
+      "manifest_sha256": "3a3784d85bd4bccee51423f647233c14a7dd5648818efa147e3e4b440ba340a8",
+      "sealed_files_verified": 119
+    },
+    {
+      "review": "phase_a_controlled_retry_919_20261110",
+      "manifest_sha256": "e139d1b51649b4cb611ddceef1e98d44ffc81f3b6c9a21df64e1652f62c61595",
+      "sealed_files_verified": 730
+    }
+  ],
+  "private_data_builds_dependencies_logs_excluded_from_git": true,
+  "real_model_accuracy": "NOT CERTIFIED",
+  "nfr02": "FAIL in prior attempted scope; full Phase A incomplete; no new timing or optimization"
+}

@@ -288,7 +288,7 @@ class GarmentWorkflowTests(unittest.TestCase):
         visualisation_id = str(uuid.uuid4())
         person_media_id = store_media_bytes(png("white"), self.owner, "personal_image")
         with connection() as conn:
-            conn.execute("INSERT INTO person_images VALUES (?, ?, ?, ?, 'available', ?)", (str(uuid.uuid4()), self.owner, person_media_id, "Test image", "2026-01-01T00:00:00+00:00"))
+            conn.execute("INSERT INTO person_images (id,user_id,media_id,display_name,status,created_at) VALUES (?, ?, ?, ?, 'available', ?)", (str(uuid.uuid4()), self.owner, person_media_id, "Test image", "2026-01-01T00:00:00+00:00"))
             conn.execute(
                 "INSERT INTO visualisations (id, user_id, outfit_id, recommendation_id, source_type, person_image_id, output_media_id, status, error_message, created_at, updated_at, completed_at) VALUES (?, ?, ?, NULL, 'outfit', ?, NULL, 'processing', NULL, ?, ?, NULL)",
                 (visualisation_id, self.owner, str(uuid.uuid4()), conn.execute("SELECT id FROM person_images WHERE media_id=?", (person_media_id,)).fetchone()[0], "2026-01-01T00:00:00+00:00", "2026-01-01T00:00:00+00:00"),

@@ -1,5 +1,12 @@
 # Smart Wardrobe
 
+Current integration status and reproducible functional-testing setup:
+[Integrated assistant baseline and outstanding issues](docs/STUDENT2_INTEGRATION_AND_OUTSTANDING_ISSUES.md).
+The assistant functionality is integrated for teammate testing. NFR-02 is not
+accepted: the retained Phase A has slow responses, an HTTP 500 and an unexplained
+worker interruption. Older phase reports describe their original snapshots;
+they do not supersede the current status document.
+
 This repository implements the Smart Wardrobe System described in `RSW_KhorHuaSheng_Project 1`. Its layout follows the report's three-tier deployment view and FastAPI package diagram.
 
 ## Repository layout

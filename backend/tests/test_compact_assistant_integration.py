@@ -1,3 +1,4 @@
+from tests.current_contract_fixtures import wearer_id, wearer, history_scope
 """Four-way real service/API integration; all descriptors are synthetic."""
 from dataclasses import replace,FrozenInstanceError
 import json
@@ -183,7 +184,7 @@ def test_actual_bridge_revalidates_after_selection(assistant_store,monkeypatch,c
 def test_actual_bridge_multiple_preferences(assistant_store,profile):
     with connect(assistant_store[0]) as c:
         for kind,values in (('colours',['blue']),('styles',['vintage']),('garment_categories',[{'kind':'group','value':'dress'}])):
-            c.execute("INSERT INTO user_preferences VALUES(?,'owner',?,?,1,'synthetic',1,'now','now')",(kind,kind,json.dumps({'values':values})))
+            c.execute("INSERT INTO user_preferences (id,user_id,profile_id,preference_type,preference_value_json,weight,source,is_active,created_at,updated_at) VALUES(?,'owner',?,?,?,1,'synthetic',1,'now','now')",(kind,wearer_id('owner'),kind,json.dumps({'values':values})))
     a=configured(assistant_store,profile,REFERENCE).recommend('owner','pref-reference','Suggest a vintage outfit')
     b=configured(assistant_store,profile,COMPACT).recommend('owner','pref-compact','Suggest a vintage outfit')
     assert a['status']==b['status']=='Selected'
@@ -203,15 +204,15 @@ def test_existing_save_and_visualisation_resolution(assistant_store,monkeypatch,
     from app.domain.value_objects.visualisation_plan import VTONConfiguration
     configure_local_workflow()
     monkeypatch.setattr(visual,'runtime',lambda:SimpleNamespace(media=SimpleNamespace(path_for_owner=lambda *_:None),configuration=VTONConfiguration))
-    record=configured(assistant_store,profile,engine).recommend('owner','actions','Suggest an outfit')
+    record=configured(assistant_store,profile,engine).recommend('owner','actions','Suggest an outfit',wearer=wearer('owner'))
     assert record['status']=='Selected'
-    saved=actions.save_as_outfit(record['id'],'owner','Existing action')
-    assert actions.save_as_outfit(record['id'],'owner','Again')['id']==saved['id']
+    saved=actions.save_as_outfit(record['id'],'owner','Existing action',profile_id=wearer_id('owner'))
+    assert actions.save_as_outfit(record['id'],'owner','Again',profile_id=wearer_id('owner'))['id']==saved['id']
     with connect(assistant_store[0]) as c:
         visual.resolve_source(c,'owner',recommendation_id=record['id'])
         stored=c.execute('SELECT * FROM recommendation_metadata').fetchall()
         c.execute("UPDATE garments SET status='archived'")
-    with pytest.raises(HTTPException):actions.save_as_outfit(record['id'],'owner','Archived')
+    with pytest.raises(HTTPException):actions.save_as_outfit(record['id'],'owner','Archived',profile_id=wearer_id('owner'))
     with connect(assistant_store[0]) as c:
         with pytest.raises(HTTPException):visual.resolve_source(c,'owner',recommendation_id=record['id'])
         assert [tuple(r) for r in c.execute('SELECT * FROM recommendation_metadata')]==[tuple(r) for r in stored]
@@ -242,7 +243,7 @@ def test_actual_bridge_every_candidate_matches_public_oracle(assistant_store,mon
     svc=configured(assistant_store,profile,COMPACT);text='Suggest a vintage outfit'
     structured=svc.interpreter.interpret(text).structured_request
     rows=SqliteConfirmedGarmentQuery().get_confirmed_available_garments('owner')
-    preferences=svc.preference_query.get_active_preferences('owner')
+    preferences=svc.preference_query.get_active_preferences('owner',wearer=wearer('owner'))
     expected=list(oracle_records(rows,structured,preferences,profile,None))
     actual=[]
     original=AssistantExecutionSelection.scorer

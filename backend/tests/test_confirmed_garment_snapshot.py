@@ -1,3 +1,4 @@
+from tests.current_contract_fixtures import wearer_id, wearer, history_scope
 """Phase 1 contract and acquisition regressions; no recommendation algorithms."""
 import ast
 from dataclasses import FrozenInstanceError, replace
@@ -141,7 +142,7 @@ def test_adapter_order_matches_legacy_for_same_eligibility(wardrobe):
 def test_stricter_acquisition_does_not_rewrite_history_or_save(wardrobe):
     owner, client, garment_id, query = wardrobe
     # Seed a historical legacy result directly; J-14 closes public legacy generation.
-    recommendation = service.create_recommendation(owner, "Use my wardrobe")
+    recommendation = service.create_recommendation(owner, "Use my wardrobe",profile_id=wearer_id(owner))
     with connection() as conn:
         before = tuple(conn.execute("SELECT * FROM recommendations WHERE id=?", (recommendation["id"],)).fetchone())
         conn.execute("UPDATE garments SET processing_item_id=NULL WHERE id=?", (garment_id,))

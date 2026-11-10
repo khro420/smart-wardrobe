@@ -1,3 +1,4 @@
+from tests.current_contract_fixtures import wearer_id, wearer, history_scope
 """Independent Fraction oracle over fixed descriptors, plus actual confirmed HTTP writes."""
 from fractions import Fraction as F
 from itertools import combinations,product
@@ -64,12 +65,12 @@ def test_fixed_exact_candidates_four_way_http_and_profile_replay(integrated,case
         assert client.patch('/api/v1/wardrobe/garments/'+gid,json={'primary_colour':colour,'attributes':{'style':styles}}).status_code==200
     with db.connection() as c:
         for index,pref in enumerate(case.get('preferences',[])):
-            c.execute('INSERT INTO user_preferences VALUES(?,?,?,?,1,?,1,?,?)',(str(index),'style-owner',pref['type'],json.dumps({'values':pref['values']}),'synthetic','now','now'))
+            c.execute('INSERT INTO user_preferences (id,user_id,profile_id,preference_type,preference_value_json,weight,source,is_active,created_at,updated_at) VALUES(?,?,?,?,?,1,?,1,?,?)',(str(index),'style-owner',wearer_id('style-owner'),pref['type'],json.dumps({'values':pref['values']}),'synthetic','now','now'))
     oracle=independent(case,ids);request=NLPInterpreter().interpret(case['text']).structured_request
     assert request is not None
     engine=assistant_service().engine
     session=engine.generate_candidates('style-owner',request);gate=ScoringEligibilityGate(session,'style-owner',request)
-    preferences=PreferenceNormalizer().normalize('style-owner',SqliteActivePreferenceQuery().get_active_preferences('style-owner'))
+    preferences=PreferenceNormalizer().normalize('style-owner',SqliteActivePreferenceQuery().get_active_preferences('style-owner',wearer=wearer('style-owner')))
     observed=[]
     for evaluated in session:
         verified=gate.verify(evaluated);candidate=verified.candidate

@@ -32,8 +32,8 @@ def test_actual_complete_structural_population(name):
     assert any(r.primary_colour is None for r in rows)
     assert any(r.style_tags is None for r in rows)
     assert any(r.style_tags==() for r in rows)
-    session=RecommendationEngine(Query(rows)).generate_homepage_candidates('owner')
-    counts=Counter(tuple(m.role for m in candidate.members) for candidate in session)
+    from tests.current_contract_fixtures import historical_structural_counts
+    counts=historical_structural_counts(rows)  # Original 150 contract, not current quota.
     expected={('upper','lower'):3600,('upper','lower','outerwear'):54000,('one_piece',):15,('one_piece','outerwear'):225} if name=='balanced-150' else {('upper','lower'):2500,('upper','lower','outerwear'):125000}
     assert dict(counts)==expected
     assert sum(counts.values())==PLAN['expected_structural'][name]

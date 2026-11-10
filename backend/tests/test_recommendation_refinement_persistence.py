@@ -34,7 +34,7 @@ def test_locked_scope_rejects_rank_to_commit_changes(refinement_api,monkeypatch,
     def altered(command):
         with db.connection() as conn:
             if change=='preference':
-                conn.execute("INSERT INTO user_preferences (id,user_id,preference_type,preference_value_json,weight,source,is_active,created_at,updated_at) VALUES (?,?,?,? ,1,'test',1,'now','now')",(str(uuid.uuid4()),command.user_id,'colours','{"values":["green"]}'))
+                conn.execute("INSERT INTO user_preferences (id,user_id,profile_id,preference_type,preference_value_json,weight,source,is_active,created_at,updated_at) VALUES (?,?,?,?,? ,1,'test',1,'now','now')",(str(uuid.uuid4()),command.user_id,command.wearer.profile_id,'colours','{"values":["green"]}'))
             else:
                 gid=command.candidate.members[0].garment.garment_id if change=='selected' else ids['Navy Dress']
                 conn.execute("UPDATE garments SET updated_at='changed-during-rank' WHERE id=?",(gid,))
@@ -55,7 +55,9 @@ def test_concurrent_same_parent_has_one_child_and_one_replay(refinement_api,monk
     with monkeypatch.context() as local:
         local.setattr(repository,'persist_assistant',simultaneous)
         with ThreadPoolExecutor(max_workers=2) as pool:
-            futures=[pool.submit(service.recommend,root['user_id'],descriptor['submission_key'],root['request_text'],descriptor['refinement']) for _ in range(2)]
+            from app.application.recommendation.wearer_identity import resolve_wearer
+            wearer=resolve_wearer(root['user_id'],root['profile_id'])
+            futures=[pool.submit(service.recommend,root['user_id'],descriptor['submission_key'],root['request_text'],descriptor['refinement'],wearer=wearer) for _ in range(2)]
             results=[f.result(timeout=30) for f in futures]
     assert all(r['status']=='Selected' for r in results),results
     assert {r['replayed'] for r in results}=={False,True}

@@ -42,6 +42,10 @@ def create_visualisation(
 ):
     with connection() as conn:
         conn.execute("BEGIN IMMEDIATE")
+        from app.application.wardrobe.profile_service import require_active_profile
+        if profile_id is None:
+            raise HTTPException(422,"Choose a wearer for this visualisation.")
+        require_active_profile(conn,user_id,profile_id)
         queued = conn.execute(
             "SELECT COUNT(*) FROM visualisations WHERE status='queued'"
         ).fetchone()[0]

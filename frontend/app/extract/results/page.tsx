@@ -1,11 +1,14 @@
 "use client";
+import VerifiedSubtypeFields from "@/components/VerifiedSubtypeFields";
+import { useWearerCategoryEligibility } from "@/lib/wearer-category-eligibility";
 
 import { FormEvent, Suspense, useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import Layout from "@/components/Layout";
 import ProtectedImage from "@/components/ProtectedImage";
-import { getWardrobeQuota, wardrobeCapacityText, type WardrobeQuota, cancelProcessingJob, confirmProcessingJob, createMirroredReconstruction, getProcessingJob, reviewProcessingJob, type ProcessingItem, type ProcessingJob } from "@/lib/api";
+import { DESCRIPTION_FIELDS, descriptionUpdate, type DescriptionView, type DescriptionDraft } from "@/lib/api";
+import { getHistoricalProcessingJob, getHistoricalProcessingJobs, getWardrobeQuota, wardrobeCapacityText, type WardrobeQuota, cancelProcessingJob, confirmProcessingJob, createMirroredReconstruction, getProcessingJob, reviewProcessingJob, type ProcessingItem, type ProcessingJob } from "@/lib/api";
 
 const textValue = (value: unknown) => Array.isArray(value) ? value.join(", ") : typeof value === "string" ? value : "";
 const inputClass = "mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:outline-2 focus:outline-offset-2 focus:outline-purple-800";
@@ -17,6 +20,55 @@ const sleeveLengths = ["sleeveless", "short", "elbow-length", "wrist-length"];
 const styles = ["casual", "classic", "formal", "minimal", "smart casual", "sporty", "streetwear", "vintage", "bohemian"];
 const materials = ["cotton", "denim", "leather", "linen", "silk", "synthetic", "wool", "not sure"];
 
+
+function DescriptionControls({ view, draft, onChange, id, readOnly = false }: { view: DescriptionView; draft: DescriptionDraft; onChange: (next: DescriptionDraft) => void; id: string; readOnly?: boolean }) {
+  const categoryPolicy = useWearerCategoryEligibility();
+  const display = (value: unknown): string => Array.isArray(value) ? value.map(display).join("; ") : value && typeof value === "object" && "hex" in value ? `${String(value.hex)} (coverage ${"coverage" in value && value.coverage != null ? String(value.coverage) : "unknown"})` : typeof value === "boolean" ? value ? "Yes" : "No" : typeof value === "string" ? value : "No recorded value";
+  const update = (field: string, kind: DescriptionDraft[string]["kind"], value?: unknown) => {
+    const next = {...draft};
+    if (kind === "keep") delete next[field]; else next[field] = {kind, ...(kind === "set" ? {value} : {})};
+    onChange(next);
+  };
+  const initial = (field: typeof DESCRIPTION_FIELDS[number]): unknown => {
+    const values = view.evidence.fields[field.id]?.canonical_values ?? [];
+    if (field.kind === "set" || field.kind === "palette") return values;
+    if (field.kind === "tags") return values.map(String).join("\n");
+    if (field.kind === "boolean") return typeof values[0] === "boolean" ? String(values[0]) : "";
+    return typeof values[0] === "string" ? values[0] : "";
+  };
+  const category = draft.category?.kind === "set" ? draft.category.value : view.evidence.fields.category?.canonical_values[0];
+  return <section className="min-w-0 space-y-3 [overflow-wrap:anywhere]" aria-label="Optional recorded descriptions">
+    <p className="text-sm">{readOnly ? "Stored descriptions are read-only." : "Optional recorded descriptions. Keep leaves a value unchanged."} Suggestions and saved values with unverified sources are separate from your explicit selections. Visible silhouette does not establish physical fit; material does not establish comfort or fibre verification.</p>
+    <div className="grid min-w-0 gap-3 sm:grid-cols-2">{DESCRIPTION_FIELDS.map(field => {
+      const record = view.evidence.fields[field.id]; const action = draft[field.id]; const kind = action?.kind ?? "keep";
+      const inapplicable = (field.id === "neckline" || field.id === "sleeve_length") && typeof category === "string" && ["shorts", "trousers", "skirt"].includes(category);
+      const origin = record?.selected?.origin === "owner_selected" ? "Your recorded selection" : record?.selected?.origin === "owner_reported_label" ? "Reported label" : "Saved value; source unverified";
+      const value = action?.value;
+      const palette = Array.isArray(value) ? value as {hex: string; coverage: string | null}[] : [];
+      return <fieldset key={field.id} disabled={inapplicable} className="min-w-0 space-y-2 rounded-lg border border-slate-300 p-3 disabled:opacity-60">
+        <legend className="text-sm font-semibold">{field.label}</legend>
+        <p className="text-xs">{record?.state ?? "Unavailable"}: {display(record?.canonical_values?.length ? record.canonical_values : null)}. {origin}.</p>
+        {record?.applicability === "unknown" && <p className="text-xs">Applicability is unknown until the garment role is established.</p>}
+        {record?.selected?.value != null && ["Unrecognized", "Unsure", "Unspecified"].includes(record.state) && <p className="text-xs">Original recorded value: {display(record.selected.value)}. It is not treated as a supported positive fact.</p>}
+        {record?.suggestion && <p className="text-xs text-slate-600">Model suggestion: {display(record.suggestion.value)}. Source vocabulary is not verified; this is not your selected value.</p>}
+        {readOnly ? null : inapplicable ? <p className="text-xs">Not applicable to a bottom garment.</p> : <>
+          <label className="block text-xs">Action<select aria-label={`${field.label} action`} value={kind} onChange={event => update(field.id, event.target.value as DescriptionDraft[string]["kind"], initial(field))} className="mt-1 min-h-11 w-full border border-slate-400 bg-white px-2">
+            <option value="keep">Keep current value</option><option value="set">Record a value</option>{field.clear && <option value="clear">Unknown / clear recorded value</option>}{field.empty && <option value="empty">Record an empty set</option>}{field.id === "material" && <option value="unsure">Not sure</option>}
+          </select></label>
+          {kind === "set" && <>
+            {field.kind === "set" ? <label className="block text-xs">Recorded values (multiple allowed)<select multiple aria-label={`${field.label} values`} value={Array.isArray(value) ? value as string[] : []} onChange={event => update(field.id, "set", Array.from(event.target.selectedOptions,option=>option.value))} className="mt-1 min-h-28 w-full border border-slate-400 bg-white p-2">{field.options.map(option=><option key={option} value={option}>{option}</option>)}</select></label>
+            : field.kind === "enum" || field.kind === "boolean" ? <select aria-label={`${field.label} value`} value={typeof value === "string" ? value : ""} onChange={event=>update(field.id,"set",event.target.value)} className="min-h-11 w-full border border-slate-400 bg-white px-2"><option value="">Choose a recorded value</option>{(field.kind === "boolean" ? ["true","false"] : field.options).filter(option => field.id !== "category" || categoryPolicy.permits(option) || option === value).map(option=><option disabled={field.id === "category" && !categoryPolicy.permits(option)} key={option} value={option}>{option === "true" ? "Yes, I observed this" : option === "false" ? "No, I observed this" : option}</option>)}</select>
+            : field.kind === "palette" ? <div className="space-y-2">{palette.map((entry,index)=><div key={index} className="space-y-1 border border-slate-200 p-2"><label className="block text-xs">Exact hex colour<input aria-label={`Palette colour ${index+1}`} maxLength={7} value={entry.hex} onChange={event=>update(field.id,"set",palette.map((p,i)=>i===index ? {...p,hex:event.target.value} : p))} placeholder="#123abc" className="min-h-11 w-full border border-slate-400 px-2" /></label><label className="block text-xs">Recorded coverage 0–1 (blank means unknown)<input aria-label={`Palette coverage ${index+1}`} inputMode="decimal" value={entry.coverage ?? ""} onChange={event=>update(field.id,"set",palette.map((p,i)=>i===index ? {...p,coverage:event.target.value || null} : p))} className="min-h-11 w-full border border-slate-400 px-2" /></label><button type="button" onClick={()=>update(field.id,"set",palette.filter((_,i)=>i!==index))} className="min-h-11 border border-slate-400 px-2">Remove palette entry {index+1}</button></div>)}<button type="button" disabled={palette.length>=5} onClick={()=>update(field.id,"set",[...palette,{hex:"",coverage:null}])} className="min-h-11 border border-slate-400 px-2">Add palette entry</button></div>
+            : field.kind === "tags" ? <label className="block text-xs">One literal tag per line<textarea aria-label="Literal descriptive tags values" value={typeof value === "string" ? value : ""} onChange={event=>update(field.id,"set",event.target.value)} className="mt-1 min-h-24 w-full border border-slate-400 p-2" /><span>Existing suitability restrictions stay in their separate controls.</span></label>
+            : <><input aria-label={`${field.label} value`} list={field.kind === "colour" ? `${id}-${field.id}` : undefined} maxLength={field.id === "garment_name" ? 100 : 50} value={typeof value === "string" ? value : ""} onChange={event=>update(field.id,"set",event.target.value)} placeholder={field.kind === "colour" ? "Named colour or exact #RRGGBB" : "Recorded value"} className="min-h-11 w-full border border-slate-400 px-2" />{field.kind === "colour" && <datalist id={`${id}-${field.id}`}>{field.options.map(option=><option key={option} value={option} />)}</datalist>}</>}
+          </>}
+        </>}
+      </fieldset>;
+    })}</div>
+    {!readOnly && <button type="button" onClick={()=>onChange({})} className="min-h-11 rounded border border-slate-400 px-3">Cancel description changes</button>}
+  </section>;
+}
+
 function CandidateReview({ item, disabled, onReview, onCreateMirror, onDirty, automatic = false }: {
   automatic?: boolean;
   item: ProcessingItem;
@@ -25,6 +77,7 @@ function CandidateReview({ item, disabled, onReview, onCreateMirror, onDirty, au
   onCreateMirror: (side?: "left" | "right") => Promise<boolean>;
   onDirty: (id: string, dirty: boolean) => void;
 }) {
+  const categoryPolicy = useWearerCategoryEligibility();
   const visible = item.attributes.fashionpedia_visible_attributes as Record<string, { value?: string }> | undefined;
   const suggestion = (field: string) => visible?.[field]?.value ?? "";
   const clean = (value: string) => value.replace(" (pattern)", "").replace(" (length)", "").replace(" (fit)", "").replace(" (neck)", "").replace(" (neckline)", "");
@@ -41,12 +94,33 @@ function CandidateReview({ item, disabled, onReview, onCreateMirror, onDirty, au
     preferred_media: item.mirror_media_id && item.preferred_media_id === item.mirror_media_id ? "mirror" : item.vtoff_media_id && item.preferred_media_id === item.vtoff_media_id ? "vtoff" : "crop",
   });
   const [styleChoice, setStyleChoice] = useState("__keep");
+  const typedDescription = item.description?.editable === true && item.description.update_contract === "garment-description-update-1.0.0";
+  const [descriptionDraft, setDescriptionDraft] = useState<DescriptionDraft>({});
+  const [descriptionRevision, setDescriptionRevision] = useState(item.description?.revision ?? "");
+  const [confirmDescriptionStyle, setConfirmDescriptionStyle] = useState(false);
+  const [descriptionError, setDescriptionError] = useState("");
+
   const [dirty, setDirty] = useState(false);
   const change = (key: keyof typeof draft, value: string | boolean) => {
     setDraft((current) => ({ ...current, [key]: value }));
     setDirty(true); onDirty(item.id, true);
   };
   const decide = async (decision: "accepted" | "rejected") => {
+    if (typedDescription && item.description) {
+      try {
+        const action = decision === "accepted" ? descriptionUpdate(item.description, descriptionDraft, descriptionRevision) : undefined;
+        const selectedStyle = action?.operations.style;
+        const styleValue = selectedStyle?.kind === "set" && Array.isArray(selectedStyle.value) && selectedStyle.value.length === 1 ? selectedStyle.value[0] : undefined;
+        const currentMedia = item.mirror_media_id && item.preferred_media_id === item.mirror_media_id ? "mirror" : item.vtoff_media_id && item.preferred_media_id === item.vtoff_media_id ? "vtoff" : "crop";
+        const success = await onReview({item_id:item.id,decision,
+          ...(action ? {description_update:action} : {}),
+          ...(decision === "accepted" && draft.preferred_media !== currentMedia ? {preferred_media:draft.preferred_media} : {}),
+          ...(decision === "accepted" && confirmDescriptionStyle && typeof styleValue === "string" && item.style_confirmation ? {style_confirmation:{contract:"owner-style-confirmation-1.0.0",expected_revision:item.style_confirmation.revision,style:styleValue}} : {})});
+        if (success) { setDescriptionDraft({}); setConfirmDescriptionStyle(false); setDescriptionError(""); setDirty(false); onDirty(item.id,false); }
+      } catch (cause) { setDescriptionError(cause instanceof Error ? cause.message : "Could not prepare description changes."); }
+      return;
+    }
+
     const reviewedValue = (key: "fit" | "style" | "material", value: string) =>
       Array.isArray(item.attributes[key]) && value === textValue(item.attributes[key]) ? item.attributes[key] : value.trim() || null;
     const existingTags = Array.isArray(item.attributes.custom_tags) ? item.attributes.custom_tags.filter((tag): tag is string => typeof tag === "string") : typeof item.attributes.custom_tags === "string" ? [item.attributes.custom_tags] : [];
@@ -87,13 +161,25 @@ function CandidateReview({ item, disabled, onReview, onCreateMirror, onDirty, au
             <p className="mt-2 text-sm font-medium" role="status">{dirty ? automatic ? "Unsaved corrections" : "Unsaved changes — accept to apply" : `Review: ${item.review_status}`}</p>
           </div>
         </div>
+        <VerifiedSubtypeFields view={item.verified_subtype} category={draft.category} disabled={disabled} onConfirm={async value => { const success = await onReview({ item_id: item.id, decision: "accepted", subtype_update: value }); if (!success) throw new Error("The garment type was not saved. Check the selected wearer and current category."); }} />
         <details className="rounded-lg border border-slate-200 p-3">
           <summary className="cursor-pointer text-sm font-semibold">Edit details and review image</summary>
+          {typedDescription && item.description ? <div className="mt-4 space-y-3">
+            <DescriptionControls id={item.id} view={item.description} draft={descriptionDraft} onChange={next=>{
+              if (!Object.keys(descriptionDraft).length) setDescriptionRevision(item.description!.revision);
+              setDescriptionDraft(next);
+              const currentMedia = item.mirror_media_id && item.preferred_media_id === item.mirror_media_id ? "mirror" : item.vtoff_media_id && item.preferred_media_id === item.vtoff_media_id ? "vtoff" : "crop";
+              const changed = Object.keys(next).length > 0 || draft.preferred_media !== currentMedia;
+              setDirty(changed); onDirty(item.id,changed);
+            }} />
+            <label className="flex items-start gap-2 text-sm"><input type="checkbox" checked={confirmDescriptionStyle} onChange={event=>setConfirmDescriptionStyle(event.target.checked)} />Also record the existing optional style confirmation when I explicitly select one supported style.</label>
+            {descriptionError && <p role="alert" className="text-sm text-red-700">{descriptionError}</p>}
+          </div> : <>
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
             <label className="text-sm">Garment name<input required maxLength={100} value={draft.name} onChange={(e) => change("name", e.target.value)} className={inputClass} /></label>
             <label className="text-sm">Category<select aria-label="Category" value={draft.category} onChange={(e) => change("category", e.target.value)} className={inputClass}>
               {!categories.includes(draft.category) && <option value={draft.category}>{draft.category}</option>}
-              {categories.map((category) => <option key={category} value={category}>{category.replaceAll("_", " ")}</option>)}
+              {categories.filter(value => categoryPolicy.permits(value) || value === draft.category).map((category) => <option disabled={!categoryPolicy.permits(category)} key={category} value={category}>{category.replaceAll("_", " ")}</option>)}
             </select></label>
             <label className="text-sm">Primary colour<input maxLength={50} value={draft.primary_colour} onChange={(e) => change("primary_colour", e.target.value)} placeholder="Not specified" className={inputClass} /></label>
             {([['pattern', 'Pattern', patterns], ['fit', 'Fit (visible silhouette)', silhouettes], ['material', 'Material', materials], ...(supportsUpperDetails ? [['neckline', 'Neckline', necklines], ['sleeve_length', 'Sleeve length', sleeveLengths]] as const : [])] as const).map(([key, label, options]) => <label key={key} className="text-sm">{label}<select value={draft[key]} onChange={(e) => change(key, e.target.value)} className={inputClass}><option value="">Not specified</option>{options.map((option) => <option key={option} value={option}>{option}</option>)}</select></label>)}
@@ -102,6 +188,7 @@ function CandidateReview({ item, disabled, onReview, onCreateMirror, onDirty, au
             <label className="text-sm">Colour temperature<select value={draft.color_temperature} onChange={(event) => change("color_temperature", event.target.value)} className={inputClass}><option value="warm">Warm</option><option value="cool">Cool</option><option value="neutral">Neutral</option></select></label>
             <label className="flex items-center gap-2 self-end rounded-lg border border-slate-300 px-3 py-2 text-sm"><input type="checkbox" checked={draft.is_dominant} onChange={(event) => change("is_dominant", event.target.checked)} />One colour covers most of garment</label>
           </div>
+          </>}
           <p className="mt-3 text-xs text-slate-600">Colour and dominance are automated suggestions; all displayed details remain reviewable. Detection confidence does not establish attribute accuracy.</p>
           {imageChoices.length > 1 ? <fieldset className="mt-4">
             <legend className="text-sm font-semibold">Compare and choose the image to save</legend>
@@ -132,10 +219,19 @@ function CandidateReview({ item, disabled, onReview, onCreateMirror, onDirty, au
 }
 
 function ExtractionResultsContent() {
+  const categoryPolicy = useWearerCategoryEligibility();
   const params = useSearchParams();
   const jobId = params.get("job");
+  const historical = params.get("view") === "historical";
+  const historicalWearer = params.get("wearer_profile_id") ?? undefined;
+  const [pastJobs, setPastJobs] = useState<{id: string; status: string}[]>([]);
   const [job, setJob] = useState<ProcessingJob>();
   const [error, setError] = useState("");
+  useEffect(() => {
+    let active = true;
+    if (historical && !jobId) void getHistoricalProcessingJobs(historicalWearer).then(rows => { if (active) setPastJobs(rows); }).catch(cause => { if (active) setError(cause instanceof Error ? cause.message : "Historical jobs could not be loaded."); });
+    return () => { active = false; };
+  }, [historical, historicalWearer, jobId]);
   const [busy, setBusy] = useState(false);
   const [busyMessage, setBusyMessage] = useState("");
   const actionLock = useRef(false);
@@ -164,19 +260,19 @@ function ExtractionResultsContent() {
     let timer: ReturnType<typeof setTimeout> | undefined;
     const load = async () => {
       try {
-        const next = await getProcessingJob(jobId);
+        const next = historical ? await getHistoricalProcessingJob(jobId) : await getProcessingJob(jobId);
         if (active) {
           setJob(next); setError("");
           // Processing commits the prepared batch before the writer finalises it.
           // Briefly follow that transition; a failed writer still exposes Retry.
           const finalising = next.status === "review_required" && next.admission?.mode === "automatic_structural_v1" && next.admission.state === "prepared";
-          if (["queued", "processing"].includes(next.status) || (finalising && preparedPolls++ < 3)) timer = setTimeout(load, 900);
+          if (!historical && (["queued", "processing"].includes(next.status) || (finalising && preparedPolls++ < 3))) timer = setTimeout(load, 900);
         }
       } catch (e) { if (active) setError(e instanceof Error ? e.message : "Could not load the job."); }
     };
     void load();
     return () => { active = false; clearTimeout(timer); };
-  }, [jobId, reload]);
+  }, [jobId, reload, historical]);
   const review = async (update: Record<string, unknown>) => {
     if (!jobId || actionLock.current) return false;
     actionLock.current = true; setBusy(true); setBusyMessage("Saving your review decision…"); setError("");
@@ -221,6 +317,7 @@ function ExtractionResultsContent() {
     finally { actionLock.current = false; setBusy(false); setBusyMessage(""); }
   };
   const processing = jobId && (!job || ["queued", "processing"].includes(job.status));
+  if (historical) return <Layout><section className="mx-auto max-w-4xl space-y-4"><h1 className="text-2xl font-bold">Processing history — read-only</h1><p>Stored results are retained for the original uploader. Opening history does not process, review or save garments.</p>{error && <p role="alert">{error}</p>}{!jobId && <ul>{pastJobs.map(past => <li key={past.id}><Link className="inline-flex min-h-11 items-center underline" href={`/extract/results?view=historical&job=${encodeURIComponent(past.id)}${historicalWearer ? `&wearer_profile_id=${encodeURIComponent(historicalWearer)}` : ""}`}>{past.status} · {past.id}</Link></li>)}</ul>}{job && <><p>Status: {job.status}</p>{job.items.map(item => <article key={item.id} className="rounded-xl border p-4"><h2>{item.detected_category.replaceAll("_", " ")}</h2><p>{item.review_status}</p>{item.description && <details><summary className="cursor-pointer text-sm font-semibold">Stored descriptions (read-only)</summary><DescriptionControls id={`${item.id}-history`} view={item.description} draft={{}} onChange={()=>undefined} readOnly /></details>}{item.preferred_media_id && <ProtectedImage mediaId={item.preferred_media_id} alt={item.detected_category} className="h-40 w-40 object-contain" />}<dl>{Object.entries(item.attributes).filter(([,value]) => typeof value === "string" || value == null).map(([key,value]) => <div key={key}><dt className="font-semibold">{key}</dt><dd>{value == null ? "Not recorded" : String(value)}</dd></div>)}</dl></article>)}</>}<Link className="underline" href="/profile">Back to wearer management</Link></section></Layout>;
   return <Layout><div className="mx-auto max-w-4xl space-y-6">
     <div><h1 className="text-2xl font-bold">{automaticMode ? "Automatic garment addition" : "Processing garment candidates"}</h1><p className="mt-2 text-sm text-slate-600">{automaticMode ? "Complete garments are saved automatically. Correct only genuinely missing details; style review is optional." : "This submission uses the legacy review flow. Review and accept the items you want to save."}</p></div>
     {params.get("automatic_unavailable") === "1" && <p role="alert" className="rounded-lg border border-amber-300 bg-amber-50 p-4">This backend did not acknowledge automatic garment admission. Automatic saving is unavailable; this job uses its existing legacy review flow. A backend update/restart is needed to enable the new flow.</p>}
@@ -234,19 +331,20 @@ function ExtractionResultsContent() {
     {processing && !error && <section role="status" aria-live="polite" className="rounded-lg border-2 border-dashed border-slate-400 bg-white p-6"><p className="font-semibold capitalize">{job?.status ?? "Loading"}</p><p className="mt-1 text-sm text-slate-600">{job?.progress_message ?? "Loading processing status…"}</p><div className="mt-4"><div className="flex justify-between text-xs font-semibold"><span>Image processing</span><span>{job?.progress_percent ?? 0}%</span></div><div className="mt-2 h-3 overflow-hidden rounded-full bg-slate-200" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={job?.progress_percent ?? 0}><div className="h-full bg-[#6d335b] transition-all duration-500" style={{ width: `${job?.progress_percent ?? 0}%` }} /></div><p className="mt-2 text-xs text-slate-500">You can keep this page open; it updates automatically as each garment is prepared.</p></div></section>}
     {job?.status === "failed" && <p role="alert" className="rounded-lg border border-rose-300 bg-rose-50 p-4 text-rose-800">{job.error_message || "Processing failed. Please try another image."}</p>}
     {job?.status === "cancelled" && <p role="status">Processing cancelled. Your existing wardrobe has not changed.</p>}
+    <p data-testid="wearer-category-guidance" role="status">{categoryPolicy.text}</p>
     {job?.status === "completed" && <p role="status">{automaticMode ? `${job.admission?.garment_ids.length ?? 0} garment(s) automatically added. Saved attributes may be unreviewed.` : "These candidates have already been saved."} <Link href="/wardrobe" className="underline">Open wardrobe</Link></p>}
     {job?.status === "review_required" && <>
       {automaticMode && <section aria-label="Automatic saving outcome" className="rounded-xl border border-amber-300 bg-amber-50 p-4">
         <h2 className="font-semibold">Garments have not been added yet</h2>
-        <p className="mt-2 text-sm">{job.admission?.reason === "category_missing_or_unsupported" ? "A supported category is missing. Correct the category and save corrections once. A missing style is not required for storage, but can prevent a style-dependent recommendation." : job.admission?.reason === "WardrobeQuotaExceeded" ? "This complete batch does not fit the 100 non-archived garment limit. You may archive garments or cancel this operation. No partial batch was saved." : "The complete batch is not ready to save. Check the processing details and any rejected item; all items must be valid. No partial batch was saved."}</p>
-        <button disabled={busy || dirtyIds.size > 0} onClick={() => void retryAutomatic()} className="mt-3 min-h-11 rounded-lg border border-slate-500 px-4 text-sm font-semibold disabled:opacity-40">Retry automatic saving</button>
+        <p className="mt-2 text-sm">{job.admission?.reason?.startsWith("WearerCategory") ? "The selected wearer policy prevents saving this batch. Correct prohibited or unresolved categories, or select an appropriate configured wearer for a new upload. Nothing was partially saved." : job.admission?.reason === "category_missing_or_unsupported" ? "A supported category is missing. Correct the category and save corrections once. A missing style is not required for storage, but can prevent a style-dependent recommendation." : job.admission?.reason === "WardrobeQuotaExceeded" ? "This complete batch does not fit the 100 non-archived garment limit. You may archive garments or cancel this operation. No partial batch was saved." : "The complete batch is not ready to save. Check the processing details and any rejected item; all items must be valid. No partial batch was saved."}</p>
+        <button disabled={busy || categoryPolicy.blocked || dirtyIds.size > 0} onClick={() => void retryAutomatic()} className="mt-3 min-h-11 rounded-lg border border-slate-500 px-4 text-sm font-semibold disabled:opacity-40">Retry automatic saving</button>
       </section>}
       <div className="space-y-4">{job.items.map((item) => <CandidateReview key={item.id} item={item} automatic={automaticMode} disabled={busy} onReview={review} onCreateMirror={(side = "right") => createMirror(item.id, Boolean(item.mirror_media_id), side)} onDirty={(id, dirty) => setDirtyIds((current) => { const next = new Set(current); if (dirty) next.add(id); else next.delete(id); return next; })} />)}</div>
       {!automaticMode && (<div className="space-y-4 rounded-xl border border-slate-200 bg-white p-5">
         <p className="font-semibold">{accepted.length} of {job.items.length} candidates accepted</p>
         <fieldset disabled={busy} className="space-y-2"><legend className="font-semibold">Choose accepted garments to save</legend>
           {job.items.filter((item) => item.review_status === "accepted").map((item, index) => <label key={item.id} className="flex items-center gap-2">
-            <input type="checkbox" data-testid={`save-candidate-${item.id}`} checked={!excludedIds.has(item.id)} onChange={() => setExcludedIds((current) => { const next = new Set(current); if (next.has(item.id)) next.delete(item.id); else next.add(item.id); return next; })} />
+            <input type="checkbox" data-testid={`save-candidate-${item.id}`} disabled={categoryPolicy.blocked || item.wearer_category_eligibility?.usable === false} checked={!excludedIds.has(item.id)} onChange={() => setExcludedIds((current) => { const next = new Set(current); if (next.has(item.id)) next.delete(item.id); else next.add(item.id); return next; })} />
             Save {typeof item.attributes.name === "string" ? item.attributes.name : item.detected_category.replaceAll("_", " ")} ({index + 1})
           </label>)}
         </fieldset>
@@ -256,8 +354,8 @@ function ExtractionResultsContent() {
         {dirtyIds.size > 0 && <p className="text-sm text-amber-800">Accept or reject edited candidates before saving.</p>}
         <label className="block text-sm">Outfit name (required when saving as an outfit)<input value={outfitName} onChange={(e) => setOutfitName(e.target.value)} maxLength={100} className={inputClass} placeholder="For example, Campus outfit" disabled={busy} /></label>
         <div className="flex flex-wrap gap-3">
-          <button disabled={busy || !selected.length || exceedsCapacity || dirtyIds.size > 0} onClick={() => void save("garments")} className="rounded-lg bg-[#6d335b] px-4 py-3 text-sm font-semibold text-white disabled:opacity-40">Save selected garments</button>
-          <button disabled={busy || !selected.length || exceedsCapacity || dirtyIds.size > 0 || !outfitName.trim()} onClick={() => void save("outfit")} className="rounded-lg border border-slate-400 px-4 py-3 text-sm font-semibold disabled:opacity-40">Save as outfit</button>
+          <button disabled={busy || categoryPolicy.blocked || job.items.some(item => selected.includes(item.id) && item.wearer_category_eligibility?.usable === false) || !selected.length || exceedsCapacity || dirtyIds.size > 0} onClick={() => void save("garments")} className="rounded-lg bg-[#6d335b] px-4 py-3 text-sm font-semibold text-white disabled:opacity-40">Save selected garments</button>
+          <button disabled={busy || categoryPolicy.blocked || job.items.some(item => selected.includes(item.id) && item.wearer_category_eligibility?.usable === false) || !selected.length || exceedsCapacity || dirtyIds.size > 0 || !outfitName.trim()} onClick={() => void save("outfit")} className="rounded-lg border border-slate-400 px-4 py-3 text-sm font-semibold disabled:opacity-40">Save as outfit</button>
         </div>
       </div>)}
     </>}

@@ -20,6 +20,8 @@ from app.domain.value_objects.outfit_candidate import OutfitCandidate, Candidate
 from app.shared_contracts.confirmed_garment_snapshot import ConfirmedGarmentSnapshot
 
 VERSION = "compatibility-evidence-1.0.0"
+CURRENT_VERSION = "compatibility-evidence-2.0.0"
+from app.shared_contracts.offline_snapshot_codec import decode_snapshot
 
 
 def fields(value, expected):
@@ -56,11 +58,12 @@ def load_json(path):
                       parse_constant=lambda value: (_ for _ in ()).throw(ValueError("Nonfinite JSON number")))
 
 
-def candidate(record):
+def candidate(record,version=VERSION):
+    if version not in (VERSION,CURRENT_VERSION):raise ValueError("Unsupported dataset contract.")
     members = []
     for index, member in enumerate(record["garments"], 1):
         fields(member, "role snapshot")
-        members.append(CandidateMember(ConfirmedGarmentSnapshot(**member["snapshot"]), member["role"], index))
+        members.append(CandidateMember(decode_snapshot(member["snapshot"],"1.0.0" if version==VERSION else "2.0.0"), member["role"], index))
     return OutfitCandidate(tuple(members))
 
 
@@ -74,7 +77,7 @@ def source_tokens(record):
 
 def validate(raw, allow_synthetic=False):
     fields(raw, "schema_version dataset_version kind validation_locked records")
-    if raw["schema_version"] != VERSION or raw["kind"] not in ("human_review_collection", "synthetic_fixture"):
+    if raw["schema_version"] not in (VERSION,CURRENT_VERSION) or raw["kind"] not in ("human_review_collection", "synthetic_fixture"):
         raise ValueError("Unsupported dataset contract.")
     text(raw["dataset_version"])
     synthetic = raw["kind"] == "synthetic_fixture"
@@ -107,7 +110,7 @@ def validate(raw, allow_synthetic=False):
             raise ValueError("Unique stable source groups required.")
         if not isinstance(record["garments"], list) or not record["garments"]:
             raise ValueError("Actual garment snapshots required.")
-        outfit = candidate(record)
+        outfit = candidate(record,raw["schema_version"])
         signature, *_ = mapper.signature(outfit)
         expected = policy.parse_signature(record["signature"]) if record["signature"] is not None else None
         if signature != expected or (expected is not None and expected.to_dict() != record["signature"]):
@@ -199,7 +202,7 @@ def import_bundle(raw, allow_synthetic=False):
                 "independently_reviewed": record["independently_reviewed"], "normalized_value": record["normalized_value"],
             })
     policy = CompatibilityReferencePolicy(policy_raw, allow_synthetic)
-    return {"schema_version": VERSION, "dataset_hash": artifact_hash(raw), "policy_hash": policy.hash,
+    return {"schema_version": raw["schema_version"], "dataset_hash": artifact_hash(raw), "policy_hash": policy.hash,
             "activation_approved": False, "dataset": raw, "policy": policy_raw}
 
 

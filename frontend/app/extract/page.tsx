@@ -1,13 +1,16 @@
 "use client";
+import { useWearerCategoryEligibility } from "@/lib/wearer-category-eligibility";
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { UploadCloud } from "lucide-react";
+import { captureWearer } from "@/lib/wearer-selection";
 import Layout from "@/components/Layout";
-import { submitWardrobeImage, getWardrobeQuota, wardrobeCapacityText, type WardrobeQuota } from "@/lib/api";
+import { submitWardrobeImage, getProcessingCapabilities, getWardrobeQuota, wardrobeCapacityText, type WardrobeQuota } from "@/lib/api";
 
 export default function ExtractLandingPage() {
+  const categoryPolicy = useWearerCategoryEligibility();
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const [message, setMessage] = useState("Choose a JPEG or PNG wardrobe image (maximum 10 MB).");
@@ -27,15 +30,19 @@ export default function ExtractLandingPage() {
     return () => { window.clearTimeout(initial); window.removeEventListener("focus", refresh); document.removeEventListener("visibilitychange", refresh); };
   }, [refreshQuota]);
   const upload = async (file?: File) => {
-    if (!file || submitting || quota?.remaining === 0) return;
+    if (categoryPolicy.blocked || !file || submitting || quota?.remaining === 0) return;
     if (!["image/jpeg", "image/png"].includes(file.type)) { setMessage("Choose a JPEG or PNG image."); return; }
     if (file.size > 10 * 1024 * 1024) { setMessage("Choose an image smaller than 10 MB."); return; }
     setSubmitting(true); setMessage("Validating and preparing your image…");
-    try { const job = await submitWardrobeImage(file); router.push(`/extract/results?job=${job.id}`); }
+    try {
+      const wearer = await captureWearer();
+      const capability = await getProcessingCapabilities();
+      if (capability.version !== "processing-admission-capabilities-1.0.0" || !capability.admission_modes.includes("automatic_structural_v1")) throw new Error("Automatic Add is unavailable on this backend. Your image was not submitted.");
+      const job = await submitWardrobeImage(file, "automatic_structural_v1", wearer.id); router.push(`/extract/results?job=${job.id}`); }
     catch (error) { setMessage(error instanceof Error ? error.message : "Upload failed. Please try another image."); setSubmitting(false); void refreshQuota(); }
   };
-  return <Layout><div className="w-full space-y-8 border-4 border-black bg-white p-6 shadow-[6px_6px_0_#000] md:p-8">
-    <div className="border-b-4 border-black pb-4 text-center"><h1 className="text-2xl font-mono font-black">Add garments from an image</h1><p className="mt-2 text-xs font-mono text-zinc-500">Review the detected garment details and image before saving. You can correct names, categories, colours and attributes.</p></div>
+  return <Layout><p data-testid="wearer-category-guidance" role="status">{categoryPolicy.text} A category is checked once processing identifies it. Prohibited candidates stay available for correction or cancellation. <Link href="/profile" className="underline">Wearer information</Link></p><div className="w-full space-y-8 border-4 border-black bg-white p-6 shadow-[6px_6px_0_#000] md:p-8">
+    <div className="border-b-4 border-black pb-4 text-center"><h1 className="text-2xl font-mono font-black">Add garments from an image</h1><p className="mt-2 text-xs font-mono text-zinc-500">Eligible garments are added automatically. Optional review lets you correct names, categories, colours and attributes.</p></div>
     <section aria-label="Wardrobe capacity" className="rounded-lg border border-slate-200 p-3 text-sm">
       <p role="status" aria-live="polite">{quota ? wardrobeCapacityText(quota) : "Capacity unavailable"}</p>
       <p className="text-xs text-slate-600">Non-archived entries include unavailable items. Pending uploads do not reserve spaces. Archiving a garment releases its space.</p>

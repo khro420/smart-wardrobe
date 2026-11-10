@@ -9,6 +9,8 @@ from app.domain.value_objects.recommendation_refinement import (
 ARCHIVED_POLICY=('recommendation-refinement-policy-1.0.0',
     'f347c29e22fdd9cd8947e2b70322118d26a0d47c0380c64ab0faf65f1d26f0e4')
 EVIDENCE_VERSION='recommendation-refinement-evidence-1.0.0'
+WEARER_EVIDENCE_VERSION='recommendation-refinement-evidence-1.1.0'
+ATTRIBUTE_EVIDENCE_VERSION='recommendation-refinement-evidence-1.2.0'
 FIELDS={'version','policy_version','policy_sha256','root_id','parent_id','ordinal',
     'request_fingerprint_version','canonical_action','excluded_categories','compatibility_scope_sha256',
     'selection_scope_sha256','garment_snapshot_sha256','preference_snapshot_sha256','request_sha256',
@@ -16,9 +18,20 @@ FIELDS={'version','policy_version','policy_sha256','root_id','parent_id','ordina
 
 
 def bounded_provenance(value, *, draft=False):
+    if type(value) is dict and 'palette_compatibility' in value:
+        from app.application.recommendation.palette_compatibility_codec import bounded_provenance as bounded_c2
+        return bounded_c2(value)
+    if type(value) is dict and 'attribute_preference' in value:
+        from app.application.recommendation.attribute_preference_codec import bounded_provenance as bounded_p2
+        return bounded_p2(value)
+    if type(value) is dict and 'attribute_selection' in value:
+        from app.domain.value_objects.attribute_selection_evidence import bounded_provenance as bounded_attribute
+        return bounded_attribute(value)
+    if type(value) is dict and type(value.get('refinement')) is dict and value['refinement'].get('version')==ATTRIBUTE_EVIDENCE_VERSION:
+        raise ValueError('Attribute refinement requires its immutable selection sidecar.')
     text=json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False)
     refinement=value.get('refinement') if type(value) is dict else None
-    limit=327680 if draft or type(refinement) is dict and refinement.get('version')==EVIDENCE_VERSION else 262144
+    limit=327680 if draft or type(refinement) is dict and refinement.get('version') in (EVIDENCE_VERSION,WEARER_EVIDENCE_VERSION) else 262144
     if len(text.encode())>limit:raise RelativeEncodingLimit('Provenance encoding exceeds its versioned bound.')
     return text
 
@@ -56,7 +69,7 @@ def stored_signature(relative):
     return signature
 
 
-def finalize_supplement(plan,identifier,action,score,relative,garment_hash,preference_hash,request_hash):
+def finalize_supplement(plan,identifier,action,score,relative,garment_hash,preference_hash,request_hash,wearer=None):
     """Writer assigns a root identity; the ranking draft itself is never persisted."""
     root=plan.root_id if plan.ordinal else identifier
     floor=plan.root_R if plan.ordinal else score.request_match.contribution
@@ -69,21 +82,70 @@ def finalize_supplement(plan,identifier,action,score,relative,garment_hash,prefe
         root_R=ratio(floor),root_total=ratio(total),base_signature_sha256=digest(stored_signature(relative)),
         seen_count=len(plan.seen),seen_sha256=digest(plan.seen),mode=plan.mode,
         total_vs_root='same' if score.total==total else 'lower')
+    if wearer is not None:
+        from app.application.recommendation.wearer_identity import wearer_scope
+        if plan.wearer_profile_id!=wearer.profile_id:raise ValueError('Draft wearer mismatch.')
+        data.update(version=WEARER_EVIDENCE_VERSION,request_fingerprint_version=3,
+            wearer_profile_id=wearer.profile_id,wearer_scope_sha256=wearer_scope(wearer.account_id,wearer.profile_id,plan.compatibility_scope_sha256))
+    if plan.attribute_intent is not None:
+        if wearer is None:raise ValueError('Attribute refinement requires captured wearer.')
+        data.update(version=ATTRIBUTE_EVIDENCE_VERSION,request_fingerprint_version=4,
+            attribute_intent_sha256=plan.attribute_intent.sha256,description_collection_sha256=plan.description_collection_sha256,
+            attribute_scope_sha256=plan.attribute_scope_sha256)
     data['selection_scope_sha256']=selection_digest(plan.compatibility_scope_sha256,root,plan.parent_id,
         plan.ordinal,plan.mode,data['root_R'],data['seen_sha256'],len(plan.seen))
+    if plan.preference_profile is not None:
+        from app.domain.value_objects.recommendation_refinement import preference_selection_digest
+        data.update(version='recommendation-refinement-evidence-2.0.0',request_fingerprint_version=5,
+            preference_profile=plan.preference_profile,attribute_preference_sha256=plan.attribute_preference_sha256,
+            attribute_preference_scope_sha256=plan.attribute_preference_scope_sha256)
+        data['selection_scope_sha256']=preference_selection_digest(data['selection_scope_sha256'],plan.preference_profile,plan.attribute_preference_sha256,plan.attribute_preference_scope_sha256)
+    if plan.compatibility_profile is not None:
+        data.update(base_version=data['version'],base_request_fingerprint_version=data['request_fingerprint_version'],
+            version='recommendation-refinement-evidence-3.0.0',request_fingerprint_version=6,
+            compatibility_profile=plan.compatibility_profile,palette_collection_sha256=plan.palette_collection_sha256)
     relative['selection_scope_sha256']=data['selection_scope_sha256']
     return data
 
 
-def validate_refinement(data,relative,score,identifier,request_text,request_payload,candidate=None):
-    if type(data) is not dict or set(data)!=FIELDS or data['version']!=EVIDENCE_VERSION:
+def validate_refinement(data,relative,score,identifier,request_text,request_payload,candidate=None,*,user_id=None,wearer_profile_id=None):
+    if type(data) is dict and data.get('version')=='recommendation-refinement-evidence-3.0.0':
+        from app.application.recommendation.palette_compatibility_verifier import validate_refinement as validate_c2
+        return validate_c2(data,relative,score,identifier,request_text,request_payload,candidate,user_id=user_id,wearer_profile_id=wearer_profile_id)
+    if type(data) is dict and data.get('version')=='recommendation-refinement-evidence-2.0.0':
+        from app.domain.value_objects.recommendation_refinement import preference_selection_digest
+        from app.domain.value_objects.attribute_preferences import PROFILE
+        extra={'preference_profile','attribute_preference_sha256','attribute_preference_scope_sha256'}
+        attribute='attribute_intent_sha256' in data
+        expected=FIELDS|{'wearer_profile_id','wearer_scope_sha256'}|extra
+        if attribute:expected|={'attribute_intent_sha256','description_collection_sha256','attribute_scope_sha256'}
+        if set(data)!=expected or data['preference_profile']!=PROFILE or data['request_fingerprint_version']!=5 or relative.get('version')!='context-relevance-evidence-2.0.0':raise ValueError('Invalid P2 refinement schema/version.')
+        for key in ('attribute_preference_sha256','attribute_preference_scope_sha256'):require_digest(data[key])
+        base=selection_digest(data['compatibility_scope_sha256'],data['root_id'],data['parent_id'],data['ordinal'],data['mode'],data['root_R'],data['seen_sha256'],data['seen_count'])
+        if data['selection_scope_sha256']!=preference_selection_digest(base,PROFILE,data['attribute_preference_sha256'],data['attribute_preference_scope_sha256']) or relative['selection_scope_sha256']!=data['selection_scope_sha256']:
+            raise ValueError('P2 refinement selection scope mismatch.')
+        old={k:v for k,v in data.items() if k not in extra};old.update(version=ATTRIBUTE_EVIDENCE_VERSION if attribute else WEARER_EVIDENCE_VERSION,request_fingerprint_version=4 if attribute else 3,selection_scope_sha256=base)
+        ranking={**relative,'version':'context-relevance-evidence-1.3.0' if attribute else 'context-relevance-evidence-1.2.0','selection_scope_sha256':base}
+        return validate_refinement(old,ranking,score,identifier,request_text,request_payload,candidate,user_id=user_id,wearer_profile_id=wearer_profile_id)
+    attribute=type(data) is dict and data.get('version')==ATTRIBUTE_EVIDENCE_VERSION
+    new=type(data) is dict and data.get('version') in (WEARER_EVIDENCE_VERSION,ATTRIBUTE_EVIDENCE_VERSION)
+    fields=FIELDS|{'wearer_profile_id','wearer_scope_sha256'} if new else FIELDS
+    if attribute:fields=fields|{'attribute_intent_sha256','description_collection_sha256','attribute_scope_sha256'}
+    if type(data) is not dict or set(data)!=fields or data['version'] not in (EVIDENCE_VERSION,WEARER_EVIDENCE_VERSION,ATTRIBUTE_EVIDENCE_VERSION):
         raise ValueError('Exact archived refinement schema required.')
-    if len(json.dumps(data,separators=(',',':'),ensure_ascii=True).encode())>32768:
+    if len(json.dumps(data,separators=(',',':'),ensure_ascii=True).encode())>(36864 if attribute else 32768):
         raise RelativeEncodingLimit('Refinement supplement exceeds 32 KiB.')
     if (data['policy_version'],data['policy_sha256'])!=ARCHIVED_POLICY:
         raise ValueError('Unsupported archived refinement policy.')
-    for key in FIELDS:
+    for key in fields:
         if key.endswith('_sha256'):require_digest(data[key])
+    if new:
+        from app.application.recommendation.wearer_identity import wearer_scope
+        canonical_uuid(data['wearer_profile_id'])
+        if user_id is None or wearer_profile_id!=data['wearer_profile_id'] or data['wearer_scope_sha256']!=wearer_scope(user_id,wearer_profile_id,data['compatibility_scope_sha256']):
+            raise ValueError('Archived wearer scope mismatch.')
+    if attribute and (relative.get('version')!='context-relevance-evidence-1.3.0' or relative.get('attribute_scope_sha256')!=data['attribute_scope_sha256']):
+        raise ValueError('Attribute refinement/ranking scope mismatch.')
     canonical_uuid(identifier);canonical_uuid(data['root_id'])
     ordinal=data['ordinal']
     if type(ordinal) is not int or not 0<=ordinal<=9 or type(data['seen_count']) is not int or data['seen_count']!=ordinal:
@@ -104,7 +166,7 @@ def validate_refinement(data,relative,score,identifier,request_text,request_payl
             raise ValueError('Invalid stored action.')
         if ordinal and parsed.parent_recommendation_id!=data['parent_id'] or not ordinal and parsed.excluded_categories!=exclusions:
             raise ValueError('Action/lineage mismatch.')
-    if type(data['request_fingerprint_version']) is not int or data['request_fingerprint_version']!=(2 if action is not None else 1) or ordinal and action is None:
+    if type(data['request_fingerprint_version']) is not int or data['request_fingerprint_version']!=(4 if attribute else 3 if new else 2 if action is not None else 1) or ordinal and action is None:
         raise ValueError('Fingerprint contract mismatch.')
     floor,total=read_ratio(data['root_R']),read_ratio(data['root_total'])
     if not 0<=floor<=1 or not 0<=total<=1 or score.request_match.contribution<floor or score.total>total:
@@ -113,7 +175,7 @@ def validate_refinement(data,relative,score,identifier,request_text,request_payl
         raise ValueError('Root score mismatch.')
     if data['total_vs_root']!=('same' if score.total==total else 'lower'):
         raise ValueError('False total comparison.')
-    if relative['version']!='context-relevance-evidence-1.2.0' or relative['selection_mode']!='best_evidenced_with_coverage_v1':
+    if relative['version']!=('context-relevance-evidence-1.3.0' if attribute else 'context-relevance-evidence-1.2.0') or relative['selection_mode']!='best_evidenced_with_coverage_v1':
         raise ValueError('A refinement cannot use legacy request match as its floor.')
     blocker=relative['strongest_unresolved']
     if ordinal and blocker is not None and read_ratio(blocker['R_high'])<floor:

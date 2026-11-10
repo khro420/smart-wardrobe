@@ -3,6 +3,7 @@ import uuid
 from fastapi import HTTPException
 
 from app.application.ports.visualisation_repository import connection, runtime, utcnow
+from app.application.wardrobe.profile_service import require_active_profile
 
 
 def require_person(conn, person_image_id: str, user_id: str, profile_id: str | None = None):
@@ -40,6 +41,10 @@ def list_person_images(user_id: str, profile_id: str) -> list[dict]:
 def register_person_image(media_id: str, user_id: str, display_name: str, profile_id: str | None = None) -> dict:
     image_id = str(uuid.uuid4())
     with connection() as conn:
+        conn.execute("BEGIN IMMEDIATE")
+        if profile_id is None:
+            raise HTTPException(422,"Choose a wearer for this personal image.")
+        require_active_profile(conn,user_id,profile_id)
         valid = conn.execute(
             "SELECT id FROM media_assets WHERE id=? AND user_id=? "
             "AND status='available' AND media_type='person_image'",

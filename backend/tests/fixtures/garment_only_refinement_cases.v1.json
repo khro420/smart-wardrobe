@@ -1,0 +1,514 @@
+{
+  "version": "garment-wording-continuation-acceptance-1.0.0",
+  "status": "Frozen for exact approval before production implementation",
+  "authority": "Owner continuation requirements and Option1 wording clarification, existing exact scoring/source contracts, explicit independent fixture component labels. Current exploratory output is retained diagnostic evidence, not a replacement golden.",
+  "wording_cases": [
+    {
+      "id": "W01",
+      "text": "i want a shirt with black trousers",
+      "expected": [
+        {
+          "role": "upper",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "category",
+              "operator": "in",
+              "values": [
+                "long_sleeve_top",
+                "short_sleeve_top",
+                "sling",
+                "vest"
+              ]
+            }
+          ]
+        },
+        {
+          "role": "lower",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "primary_colour",
+              "operator": "in",
+              "values": [
+                "black"
+              ]
+            },
+            {
+              "attribute": "category",
+              "operator": "in",
+              "values": [
+                "trousers"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "W02",
+      "text": "i want a collared shirt with black formal trousers",
+      "expected": [
+        {
+          "role": "upper",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "construction_collared",
+              "operator": "bool_eq",
+              "values": [
+                true
+              ]
+            }
+          ]
+        },
+        {
+          "role": "lower",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "primary_colour",
+              "operator": "in",
+              "values": [
+                "black"
+              ]
+            },
+            {
+              "attribute": "style",
+              "operator": "contains_any",
+              "values": [
+                "formal"
+              ]
+            },
+            {
+              "attribute": "category",
+              "operator": "in",
+              "values": [
+                "trousers"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "W03",
+      "text": "i want a T-shirt with black jeans",
+      "expected": [
+        {
+          "role": "upper",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "category",
+              "operator": "in",
+              "values": [
+                "short_sleeve_top"
+              ]
+            }
+          ]
+        },
+        {
+          "role": "lower",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "primary_colour",
+              "operator": "in",
+              "values": [
+                "black"
+              ]
+            },
+            {
+              "attribute": "category",
+              "operator": "in",
+              "values": [
+                "trousers"
+              ]
+            },
+            {
+              "attribute": "material",
+              "operator": "contains_any",
+              "values": [
+                "denim"
+              ]
+            }
+          ]
+        }
+      ],
+      "mandatory_wording_disclosure": "Coarse short-sleeve top; exact T-shirt/blouse subtype is not verified."
+    },
+    {
+      "id": "W04",
+      "text": "i want a blouse with black trousers",
+      "outcome": "GarmentWordingClarification",
+      "reason": "no_qualified_blouse_subtype"
+    },
+    {
+      "id": "W05",
+      "text": "i want a shirt with black jeans",
+      "expected": [
+        {
+          "role": "upper",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "category",
+              "operator": "in",
+              "values": [
+                "long_sleeve_top",
+                "short_sleeve_top",
+                "sling",
+                "vest"
+              ]
+            }
+          ]
+        },
+        {
+          "role": "lower",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "primary_colour",
+              "operator": "in",
+              "values": [
+                "black"
+              ]
+            },
+            {
+              "attribute": "category",
+              "operator": "in",
+              "values": [
+                "trousers"
+              ]
+            },
+            {
+              "attribute": "material",
+              "operator": "contains_any",
+              "values": [
+                "denim"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "W06",
+      "text": "I want a blue cotton top with long sleeves.",
+      "expected": [
+        {
+          "role": "upper",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "primary_colour",
+              "operator": "in",
+              "values": [
+                "blue"
+              ]
+            },
+            {
+              "attribute": "material",
+              "operator": "contains_any",
+              "values": [
+                "cotton"
+              ]
+            },
+            {
+              "attribute": "sleeve_length",
+              "operator": "in",
+              "values": [
+                "wrist-length"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "W07",
+      "text": "Give me a black top with blue trousers.",
+      "expected": [
+        {
+          "role": "upper",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "primary_colour",
+              "operator": "in",
+              "values": [
+                "black"
+              ]
+            }
+          ]
+        },
+        {
+          "role": "lower",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "primary_colour",
+              "operator": "in",
+              "values": [
+                "blue"
+              ]
+            },
+            {
+              "attribute": "category",
+              "operator": "in",
+              "values": [
+                "trousers"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "W08",
+      "text": "I want an outfit without floral patterns.",
+      "expected": [
+        {
+          "role": "all_selected",
+          "quantifier": "none",
+          "conditions": [
+            {
+              "attribute": "pattern",
+              "operator": "in",
+              "values": [
+                "floral"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "W09",
+      "text": "Find me a white shirt and dark trousers.",
+      "outcome": "GarmentWordingClarification",
+      "reason": "unregistered_dark_colour_family"
+    },
+    {
+      "id": "W10",
+      "text": "I want black tailored trousers.",
+      "expected": [
+        {
+          "role": "lower",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "primary_colour",
+              "operator": "in",
+              "values": [
+                "black"
+              ]
+            },
+            {
+              "attribute": "construction_tailored",
+              "operator": "bool_eq",
+              "values": [
+                true
+              ]
+            },
+            {
+              "attribute": "category",
+              "operator": "in",
+              "values": [
+                "trousers"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "W11",
+      "text": "I want a long-sleeved T-shirt with black jeans.",
+      "expected": [
+        {
+          "role": "upper",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "sleeve_length",
+              "operator": "in",
+              "values": [
+                "wrist-length"
+              ]
+            },
+            {
+              "attribute": "category",
+              "operator": "in",
+              "values": [
+                "long_sleeve_top"
+              ]
+            }
+          ]
+        },
+        {
+          "role": "lower",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "primary_colour",
+              "operator": "in",
+              "values": [
+                "black"
+              ]
+            },
+            {
+              "attribute": "category",
+              "operator": "in",
+              "values": [
+                "trousers"
+              ]
+            },
+            {
+              "attribute": "material",
+              "operator": "contains_any",
+              "values": [
+                "denim"
+              ]
+            }
+          ]
+        }
+      ],
+      "mandatory_wording_disclosure": "Category and sleeve evidence do not establish a distinct T-shirt subtype."
+    },
+    {
+      "id": "W12",
+      "text": "I do not want T-shirts.",
+      "outcome": "GarmentWordingClarification",
+      "reason": "negative_subtype_cannot_silently_exclude_whole_coarse_category"
+    }
+  ],
+  "semantic_comparison": "Ignore only generated group/condition IDs and conjunction ordering; preserve exact role, quantifier, operator, value sets, same-member binding and original source slices. No value/state/outcome relaxation.",
+  "fixed_candidate_scores": [
+    {
+      "key": [
+        [
+          "upper",
+          "T01"
+        ],
+        [
+          "lower",
+          "L01"
+        ]
+      ],
+      "R_raw": null,
+      "R_state": "NotApplicable",
+      "R": "0/1",
+      "C": "1/1",
+      "P": "1/2",
+      "T": "3/10"
+    },
+    {
+      "key": [
+        [
+          "upper",
+          "T01"
+        ],
+        [
+          "lower",
+          "L01"
+        ],
+        [
+          "outerwear",
+          "O01"
+        ]
+      ],
+      "R_raw": null,
+      "R_state": "NotApplicable",
+      "R": "0/1",
+      "C": "1/1",
+      "P": "1/2",
+      "T": "3/10"
+    },
+    {
+      "key": [
+        [
+          "upper",
+          "T02"
+        ],
+        [
+          "lower",
+          "L01"
+        ]
+      ],
+      "R_raw": null,
+      "R_state": "NotApplicable",
+      "R": "0/1",
+      "C": "1/2",
+      "P": "1/2",
+      "T": "1/5"
+    },
+    {
+      "key": [
+        [
+          "upper",
+          "T02"
+        ],
+        [
+          "lower",
+          "L01"
+        ],
+        [
+          "outerwear",
+          "O01"
+        ]
+      ],
+      "R_raw": null,
+      "R_state": "NotApplicable",
+      "R": "0/1",
+      "C": "1/1",
+      "P": "1/2",
+      "T": "3/10"
+    }
+  ],
+  "fixed_selection_sequence": {
+    "root": [
+      [
+        "upper",
+        "T01"
+      ],
+      [
+        "lower",
+        "L01"
+      ]
+    ],
+    "child1": [
+      [
+        "upper",
+        "T02"
+      ],
+      [
+        "lower",
+        "L01"
+      ],
+      [
+        "outerwear",
+        "O01"
+      ]
+    ],
+    "next": "GarmentRefinementExhausted",
+    "root_floor": "0/1",
+    "max_results": 10,
+    "outerwear_only_variants_not_new_bases": true
+  },
+  "twelve_base_fixture": "12 distinct equal-score bases with canonical ordered IDsT01 throughT12; root plus children chooseT01..T10 deterministically, then limit (not global exhaustion).",
+  "Unknown_control": "An unseen potentially valid base with unknown required evidence yields GarmentRefinementInsufficientEvidence, never exhausted; a known Fail never becomes a match.",
+  "ordinary_and_specialist_controls": "Freeze original ordinary root/child semantics and specialist absence of continuation; old code/resource hashes and all old numeric labels remain authoritative.",
+  "checkpoints": {
+    "GA0": "Before edits verify875 exact source hashes/approved scope; fresh owned quiescent DB/media/config/source snapshot. Freeze old receipt/history/preferences/media hashes; no OneDrive/model/Git/global changes.",
+    "GA1": "Current MD09 black evidence/blob consistency and original source spans; frozen new wording+old829 retained cases. Collar/sleeve/tailor Missing/Stale/False/True controls, all on the actual requested member; no name inference.",
+    "GA2": "Pure-B1 applicability/default-off/version/tamper checks; unchanged R NA/null with0 contribution and unchanged60/20/20, original utilities/compatibility; ordinary15 and specialist3 behavior unchanged.",
+    "GA3": "Both engines x P1/P2 x C1/C2; exact independent fixed candidate/score labels, current four compositions, full Seen base semantics and deterministic ties. No pruning, sampling or preference/compatibility rewrite.",
+    "GA4": "Original text/typed+NLP bindings/grammar, wearer/eligibility, descriptions, full account source and preferences/modes retained; exact retries, reserved step keys, same-parent concurrency, atomic failure and unselected/denied source races.",
+    "GA5": "Independent strict new archive/lineage reader, disabled-parser/feature completed replay, old roots not promoted, corrupt/unknown proofs refused; original history and all40 rows/media/preferences unchanged.",
+    "GA6": "Actual account A/B current40 API/browser: W01 and pure B1 descriptor request, distinct valid child, exact retries/history, impossible and prohibited cases. Singleton black-top/blue-trousers has1 base despite6 outerwear variants and must exhaust; broad W01 has30 bases and stops at10 via limit, not false global exhaustion.",
+    "GA7": "Types/build/scoped lint, targeted ordinary/specialist and historical controls only; original source outside scope byte-exact, clean patch application reproduces final source vector, coherent rollback boundaries documented. No broad regression/performance campaign."
+  },
+  "production_edits_performed": false
+}

@@ -296,11 +296,13 @@ def test_opt_in_composition_wires_actual_service(store,monkeypatch):
 def test_api_structured_outcome_mapping(store,status,http):
     fake = Mock()
     fake.recommend.return_value = {'status':status,'complete':http==200}
+    fake.repository.find_homepage_submission.return_value=None
     with TestClient(app) as client:
         app.dependency_overrides[homepage_service] = lambda:fake
         try:
             response = client.post('/api/v1/recommendations/homepage',headers={'Authorization':'Bearer '+issue_access_token('owner')},json={'submission_key':'flow'})
             assert response.status_code == http and response.json()['status'] == status
-            fake.recommend.assert_called_once_with('owner','flow')
+            from unittest.mock import ANY
+            fake.recommend.assert_called_once_with('owner','flow',wearer=ANY)
         finally:
             app.dependency_overrides.pop(homepage_service,None)

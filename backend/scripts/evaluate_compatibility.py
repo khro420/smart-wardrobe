@@ -16,6 +16,7 @@ from app.application.recommendation.request_candidate_engine import RequestCandi
 from app.application.recommendation.suitability_request_evaluator import SuitabilityRequestEvaluator
 from app.shared_contracts.confirmed_garment_query import ConfirmedGarmentQuery
 from app.shared_contracts.confirmed_garment_snapshot import ConfirmedGarmentSnapshot
+from app.shared_contracts.offline_snapshot_codec import decode_snapshot
 from app.application.ports.active_preference_query import ActivePreferenceQuery
 from app.domain.value_objects.preference_snapshot import PreferenceSnapshot
 from app.domain.value_objects.structured_outfit_request import StructuredOutfitRequest,GarmentCategoryConstraint
@@ -35,8 +36,10 @@ class OfflinePreferences(ActivePreferenceQuery):
 
 def load_cases(path,allow_synthetic,policy):
     raw = json.loads(Path(path).read_text(encoding="utf-8"))
-    if not isinstance(raw,dict) or raw.get("schema_version") != "1.0.0" or not isinstance(raw.get("version"),str) or not raw["version"] or raw.get("validation_locked") is not True or not isinstance(raw.get("cases"),list):
+    if not isinstance(raw,dict) or raw.get("schema_version") not in ("1.0.0","2.0.0") or not isinstance(raw.get("version"),str) or not raw["version"] or raw.get("validation_locked") is not True or not isinstance(raw.get("cases"),list):
         raise ValueError("Versioned cases and a locked-validation declaration are required.")
+    if raw['schema_version']=='2.0.0' and set(raw)!={'schema_version','version','kind','validation_locked','cases'}:
+        raise ValueError('Unexpected versioned evaluation fields.')
     synthetic = raw.get("kind") == "synthetic_fixture"
     if raw.get("kind") not in ("synthetic_fixture","held_out_review_dataset") or (synthetic and not allow_synthetic) or (policy.synthetic and not synthetic):
         raise ValueError("Synthetic fixtures require explicit opt-in and cannot claim real validation.")
@@ -45,6 +48,8 @@ def load_cases(path,allow_synthetic,policy):
     for item in raw["cases"]:
         if not isinstance(item,dict) or not isinstance(item.get("case_id"),str) or not item["case_id"] or item["case_id"] in ids or item.get("partition") not in ("development","validation"):
             raise ValueError("Invalid/duplicate case ID or partition.")
+        if raw['schema_version']=='2.0.0' and set(item)!={'case_id','partition','source_ids','user_id','wardrobe','request','preferences'}:
+            raise ValueError('Unexpected versioned evaluation case fields.')
         ids.add(item["case_id"])
         sources = item.get("source_ids")
         if not isinstance(sources,list) or not sources or any(not isinstance(x,str) or not x for x in sources):
@@ -79,7 +84,7 @@ def evaluate(reference_path=DEFAULT_REFERENCES,case_path=None,profile_path=DEFAU
         if fields.get("garment_categories") is not None:
             fields["garment_categories"] = tuple(GarmentCategoryConstraint(**x) for x in fields["garment_categories"])
         request = StructuredOutfitRequest(**fields)
-        rows = tuple(ConfirmedGarmentSnapshot(**x) for x in item["wardrobe"])
+        rows = tuple(decode_snapshot(({"structural_role":None,"layering_index":None,**x} if raw["schema_version"]=="1.0.0" else x),raw["schema_version"]) for x in item["wardrobe"])
         preferences = tuple(PreferenceSnapshot(**x) for x in item.get("preferences",[]))
         results = []
         for name in profiles:

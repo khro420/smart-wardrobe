@@ -7,7 +7,7 @@ from app.domain.value_objects.request_candidate_evaluation import RequestGenerat
 
 
 class RequestCandidateEngine:
-    def __init__(self, query=None, structural_engine=None, evaluator_factory=None, optimized=True, *, evaluator_specification=None):
+    def __init__(self, query=None, structural_engine=None, evaluator_factory=None, optimized=True, *, evaluator_specification=None, attribute_context=None, attribute_verifier=None):
         if query is None and structural_engine is None:
             raise ValueError("Inject the Phase 1 query or Phase 3A engine.")
         self.structural_engine = structural_engine or RecommendationEngine(query)
@@ -18,6 +18,10 @@ class RequestCandidateEngine:
             evaluator_specification.construct()  # Validate before acquiring garments.
             evaluator_factory = evaluator_specification.construct
         self.evaluator_factory = evaluator_factory or (lambda: RequestConstraintEvaluator(optimized=optimized))
+        if (attribute_context is None)!=(attribute_verifier is None):raise ValueError('Both attribute admission and independent verification are required.')
+        self.attribute_context,self.attribute_verifier=attribute_context,attribute_verifier
+        self.attribute_seen=()
+        self.attribute_counter_guard=None
 
     def generate_candidates(self,user_id,request):
         if not isinstance(request,StructuredOutfitRequest):
@@ -28,8 +32,8 @@ class RequestCandidateEngine:
                 return RequestCandidateSession(None,request,evaluator,RequestGenerationResult("PolicyUnavailable",reason="request_policy_unavailable"))
             structural = self.structural_engine.generate_homepage_candidates(user_id)
             result = structural.result
-            if result.status in ("ProcessingFailure","Interrupted","PolicyUnavailable"):
+            if result.status in ("ProcessingFailure","Interrupted","PolicyUnavailable","WardrobeCapacityExceeded"):
                 return RequestCandidateSession(structural,request,evaluator,RequestGenerationResult(result.status,reason=result.reason))
-            return RequestCandidateSession(structural,request,evaluator)
+            return RequestCandidateSession(structural,request,evaluator,attribute_context=self.attribute_context,attribute_verifier=self.attribute_verifier,attribute_seen=self.attribute_seen,attribute_counter_guard=self.attribute_counter_guard)
         except Exception:
             return RequestCandidateSession(None,request,None,RequestGenerationResult("ProcessingFailure",reason="request_evaluation_setup_failed"))

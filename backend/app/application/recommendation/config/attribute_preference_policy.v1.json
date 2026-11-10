@@ -1,0 +1,1926 @@
+{
+  "contract": "attribute-preference-policy-1.0.0",
+  "decision": "attribute-preference-decision-2.0.0",
+  "axes": [
+    {
+      "axis": "primary_colour",
+      "family": "colour",
+      "default_scope": "all_selected",
+      "aggregation": "any"
+    },
+    {
+      "axis": "secondary_colour",
+      "family": "colour",
+      "default_scope": "all_selected",
+      "aggregation": "mean"
+    },
+    {
+      "axis": "palette_colour",
+      "family": "colour",
+      "default_scope": "all_selected",
+      "aggregation": "mean"
+    },
+    {
+      "axis": "palette_coverage",
+      "family": "colour",
+      "default_scope": "all_selected",
+      "aggregation": "mean"
+    },
+    {
+      "axis": "colour_temperature",
+      "family": "colour",
+      "default_scope": "all_selected",
+      "aggregation": "mean"
+    },
+    {
+      "axis": "colour_dominance",
+      "family": "colour",
+      "default_scope": "all_selected",
+      "aggregation": "mean"
+    },
+    {
+      "axis": "style",
+      "family": "styles",
+      "default_scope": "base",
+      "aggregation": "mean"
+    },
+    {
+      "axis": "category",
+      "family": "garment_categories",
+      "default_scope": "all_selected",
+      "aggregation": "any"
+    },
+    {
+      "axis": "formality",
+      "family": "formality",
+      "default_scope": "all_selected",
+      "aggregation": "or_goals_all_members"
+    },
+    {
+      "axis": "pattern",
+      "family": "pattern",
+      "default_scope": "all_selected",
+      "aggregation": "mean"
+    },
+    {
+      "axis": "material",
+      "family": "material",
+      "default_scope": "all_selected",
+      "aggregation": "mean"
+    },
+    {
+      "axis": "silhouette",
+      "family": "silhouette",
+      "default_scope": "base",
+      "aggregation": "mean"
+    },
+    {
+      "axis": "neckline",
+      "family": "neckline",
+      "default_scope": "base_upper_body",
+      "aggregation": "mean"
+    },
+    {
+      "axis": "sleeve_length",
+      "family": "sleeve_length",
+      "default_scope": "base_upper_body",
+      "aggregation": "mean"
+    },
+    {
+      "axis": "descriptive_tag",
+      "family": "descriptive_tag",
+      "default_scope": "all_selected",
+      "aggregation": "mean"
+    }
+  ],
+  "finite": [
+    {
+      "axis": "category",
+      "value": "short_sleeve_top",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "category",
+      "value": "long_sleeve_top",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "category",
+      "value": "short_sleeve_outwear",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "category",
+      "value": "long_sleeve_outwear",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "category",
+      "value": "vest",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "category",
+      "value": "sling",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "category",
+      "value": "shorts",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "category",
+      "value": "trousers",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "category",
+      "value": "skirt",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "category",
+      "value": "short_sleeve_dress",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "category",
+      "value": "long_sleeve_dress",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "category",
+      "value": "vest_dress",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "category",
+      "value": "sling_dress",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "primary_colour",
+      "value": "black",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "primary_colour",
+      "value": "white",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "primary_colour",
+      "value": "grey",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "primary_colour",
+      "value": "navy",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "primary_colour",
+      "value": "blue",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "primary_colour",
+      "value": "red",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "primary_colour",
+      "value": "green",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "primary_colour",
+      "value": "yellow",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "primary_colour",
+      "value": "orange",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "primary_colour",
+      "value": "pink",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "primary_colour",
+      "value": "purple",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "primary_colour",
+      "value": "brown",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "primary_colour",
+      "value": "beige",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "primary_colour",
+      "value": "cream",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "secondary_colour",
+      "value": "black",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "secondary_colour",
+      "value": "white",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "secondary_colour",
+      "value": "grey",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "secondary_colour",
+      "value": "navy",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "secondary_colour",
+      "value": "blue",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "secondary_colour",
+      "value": "red",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "secondary_colour",
+      "value": "green",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "secondary_colour",
+      "value": "yellow",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "secondary_colour",
+      "value": "orange",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "secondary_colour",
+      "value": "pink",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "secondary_colour",
+      "value": "purple",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "secondary_colour",
+      "value": "brown",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "secondary_colour",
+      "value": "beige",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "secondary_colour",
+      "value": "cream",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "style",
+      "value": "casual",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "style",
+      "value": "classic",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "style",
+      "value": "formal",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "style",
+      "value": "minimal",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "style",
+      "value": "smart casual",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "style",
+      "value": "sporty",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "style",
+      "value": "streetwear",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "style",
+      "value": "vintage",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "style",
+      "value": "bohemian",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "pattern",
+      "value": "plain",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "pattern",
+      "value": "abstract",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "pattern",
+      "value": "cartoon",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "pattern",
+      "value": "letters, numbers",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "pattern",
+      "value": "camouflage",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "pattern",
+      "value": "check",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "pattern",
+      "value": "dot",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "pattern",
+      "value": "fair isle",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "pattern",
+      "value": "floral",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "pattern",
+      "value": "geometric",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "pattern",
+      "value": "paisley",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "pattern",
+      "value": "stripe",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "pattern",
+      "value": "houndstooth",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "pattern",
+      "value": "herringbone",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "pattern",
+      "value": "chevron",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "pattern",
+      "value": "argyle",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "pattern",
+      "value": "leopard",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "pattern",
+      "value": "snakeskin",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "pattern",
+      "value": "cheetah",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "pattern",
+      "value": "peacock",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "pattern",
+      "value": "zebra",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "pattern",
+      "value": "giraffe",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "pattern",
+      "value": "toile de jouy",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "pattern",
+      "value": "plant",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "material",
+      "value": "cotton",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "material",
+      "value": "denim",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "material",
+      "value": "leather",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "material",
+      "value": "linen",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "material",
+      "value": "silk",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "material",
+      "value": "synthetic",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "material",
+      "value": "wool",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "silhouette",
+      "value": "asymmetrical",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "silhouette",
+      "value": "symmetrical",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "silhouette",
+      "value": "peplum",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "silhouette",
+      "value": "circle",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "silhouette",
+      "value": "flare",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "silhouette",
+      "value": "fit and flare",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "silhouette",
+      "value": "trumpet",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "silhouette",
+      "value": "mermaid",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "silhouette",
+      "value": "balloon",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "silhouette",
+      "value": "bell",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "silhouette",
+      "value": "bell bottom",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "silhouette",
+      "value": "bootcut",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "silhouette",
+      "value": "peg",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "silhouette",
+      "value": "pencil",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "silhouette",
+      "value": "straight",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "silhouette",
+      "value": "a-line",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "silhouette",
+      "value": "tent",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "silhouette",
+      "value": "baggy",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "silhouette",
+      "value": "wide leg",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "silhouette",
+      "value": "high low",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "silhouette",
+      "value": "curved",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "silhouette",
+      "value": "tight",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "silhouette",
+      "value": "regular",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "silhouette",
+      "value": "loose",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "silhouette",
+      "value": "oversized",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "neckline",
+      "value": "collarless",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "neckline",
+      "value": "asymmetric",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "neckline",
+      "value": "crew",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "neckline",
+      "value": "round",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "neckline",
+      "value": "v-neck",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "neckline",
+      "value": "surplice",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "neckline",
+      "value": "oval",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "neckline",
+      "value": "u-neck",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "neckline",
+      "value": "sweetheart",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "neckline",
+      "value": "queen anne",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "neckline",
+      "value": "boat",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "neckline",
+      "value": "scoop",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "neckline",
+      "value": "square",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "neckline",
+      "value": "plunging",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "neckline",
+      "value": "keyhole",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "neckline",
+      "value": "halter",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "neckline",
+      "value": "crossover",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "neckline",
+      "value": "choker",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "neckline",
+      "value": "high",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "neckline",
+      "value": "turtle",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "neckline",
+      "value": "cowl",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "neckline",
+      "value": "straight across",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "neckline",
+      "value": "illusion",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "neckline",
+      "value": "off-the-shoulder",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "neckline",
+      "value": "one shoulder",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "sleeve_length",
+      "value": "sleeveless",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "sleeve_length",
+      "value": "short",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "sleeve_length",
+      "value": "elbow-length",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "sleeve_length",
+      "value": "wrist-length",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "colour_temperature",
+      "value": "warm",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "colour_temperature",
+      "value": "cool",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "colour_temperature",
+      "value": "neutral",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "palette_colour",
+      "value": "black",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "palette_colour",
+      "value": "white",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "palette_colour",
+      "value": "grey",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "palette_colour",
+      "value": "navy",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "palette_colour",
+      "value": "blue",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "palette_colour",
+      "value": "red",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "palette_colour",
+      "value": "green",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "palette_colour",
+      "value": "yellow",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "palette_colour",
+      "value": "orange",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "palette_colour",
+      "value": "pink",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "palette_colour",
+      "value": "purple",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "palette_colour",
+      "value": "brown",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "palette_colour",
+      "value": "beige",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "palette_colour",
+      "value": "cream",
+      "status": "Blocked",
+      "blocker": "No cream hex anchor registered"
+    },
+    {
+      "axis": "colour_dominance",
+      "value": true,
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "colour_dominance",
+      "value": false,
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "primary_colour",
+      "value": "#808080",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "primary_colour",
+      "value": "#ffc0cb",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "primary_colour",
+      "value": "#000080",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "primary_colour",
+      "value": "#ffff00",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "primary_colour",
+      "value": "#800080",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "primary_colour",
+      "value": "#ffffff",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "primary_colour",
+      "value": "#000000",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "primary_colour",
+      "value": "#ffa500",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "primary_colour",
+      "value": "#f5f5dc",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "primary_colour",
+      "value": "#ff0000",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "primary_colour",
+      "value": "#a52a2a",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "primary_colour",
+      "value": "#008000",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "primary_colour",
+      "value": "#0000ff",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "secondary_colour",
+      "value": "#808080",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "secondary_colour",
+      "value": "#ffc0cb",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "secondary_colour",
+      "value": "#000080",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "secondary_colour",
+      "value": "#ffff00",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "secondary_colour",
+      "value": "#800080",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "secondary_colour",
+      "value": "#ffffff",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "secondary_colour",
+      "value": "#000000",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "secondary_colour",
+      "value": "#ffa500",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "secondary_colour",
+      "value": "#f5f5dc",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "secondary_colour",
+      "value": "#ff0000",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "secondary_colour",
+      "value": "#a52a2a",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "secondary_colour",
+      "value": "#008000",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "secondary_colour",
+      "value": "#0000ff",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "palette_colour",
+      "value": "#808080",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "palette_colour",
+      "value": "#ffc0cb",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "palette_colour",
+      "value": "#000080",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "palette_colour",
+      "value": "#ffff00",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "palette_colour",
+      "value": "#800080",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "palette_colour",
+      "value": "#ffffff",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "palette_colour",
+      "value": "#000000",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "palette_colour",
+      "value": "#ffa500",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "palette_colour",
+      "value": "#f5f5dc",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "palette_colour",
+      "value": "#ff0000",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "palette_colour",
+      "value": "#a52a2a",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "palette_colour",
+      "value": "#008000",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "palette_colour",
+      "value": "#0000ff",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "formality",
+      "value": "casual",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "formality",
+      "value": "smart_casual",
+      "status": "Proposed",
+      "blocker": null
+    },
+    {
+      "axis": "formality",
+      "value": "formal",
+      "status": "Blocked",
+      "blocker": "Existing suitability capability disables formal"
+    }
+  ],
+  "dynamic": {
+    "exact_hex": "#000000..#ffffff, lowercase canonical, primary/secondary/palette membership; no approximate family mapping",
+    "palette_coverage": "colour + minimum exact decimal string 0..1, maximum six decimal places; per-member recorded image palette only",
+    "descriptive_tag": "exact NFC nonblank literal, <=100 codepoints, <=20 total liked+avoided, reserved namespaces and legacy field tags rejected"
+  },
+  "limits": {
+    "configuration_bytes": 32768,
+    "legacy_capture_bytes": 65536,
+    "snapshot_bytes": 131072,
+    "selected_member_description_bytes": 32768,
+    "selected_member_legacy_facts_bytes": 16384,
+    "selected_members": 3,
+    "ledger_bytes": 65536,
+    "P2_evidence_bytes": 344064,
+    "P2_core_bytes": 368640,
+    "B1_selected_evidence_bytes": 196608,
+    "P2_provenance_bytes": 1048576,
+    "score_bytes_unchanged": 262144,
+    "request_projection_bytes_unchanged": 65536,
+    "maximum_lineage_records": 10,
+    "rational_digits_unchanged": 4096,
+    "families": 10,
+    "axes": 15,
+    "values_per_axis": 32,
+    "total_values": 320,
+    "tags_total_values": 20,
+    "tag_codepoints": 100,
+    "new_weight_decimal_places": 6,
+    "legacy_capture_max_rows": 16,
+    "aggregation_cache_entries": 256
+  },
+  "model_sources": [],
+  "measured_sources": [],
+  "aggregation": "exact_lower_fixed_configured_denominators",
+  "default_activation": false,
+  "evidence_qualification": {
+    "new_axes": "Pinned B1 attribute-evidence-policy-1.0.0; current owner selection/reported labels; named primary/category retain strict identity source",
+    "legacy_inheritance": [
+      "colours",
+      "styles",
+      "garment_categories",
+      "formality"
+    ],
+    "model_sources": [],
+    "measured_sources": [],
+    "unknown": "No invented positive utility; complete recorded labels do not assert fibre purity",
+    "inapplicable": "Omit from member domain; empty domain contributes zero and retains configured denominators"
+  },
+  "arithmetic": {
+    "family": "sum(wf*Uf)/sum(wf) over active configured families",
+    "colour": "sum(aj*uj)/sum(aj) inside one colour family",
+    "decision": "lower bound only; raw upper is informational",
+    "masked": "zero utility; original configured denominator retained",
+    "unconfigured": "no contribution or denominator",
+    "new_weight": "exact decimal string0..1, at most6places",
+    "inherited_weight": "original precise_weight rational; no new rounding"
+  },
+  "mask_rules": {
+    "hard_implied_utility_one_v1": "Same qualification/channel and compatible role domains; all_present for mean, exists-subset for any; none single predicate for avoided absence; coverage monotonicity same colour/channel; no inference from excluded conjunctions or selected winner",
+    "duplicate_R_semantic_test_suppressed": "Original singleton style/objective rule, base scope/no avoids; separate from hard entailment",
+    "legacy_required_colours_v1": "Existing named-primary any-member requirement, same all_selected scope and no avoids",
+    "legacy_required_garment_categories_v1": "Existing any-member category/group requirement wholly contained in liked categories, all_selected and no avoids",
+    "legacy_required_formality_v1": "Only exact generic StructuredOutfitRequest raw all-member declaration contract, same target/scope and no avoids; expanded context admission is not interchangeable"
+  },
+  "archive_bridge": {
+    "version": "p1-preference-archive-bridge-1.0.0",
+    "vocabulary": {
+      "version": "1.0.0",
+      "fields": {
+        "style": [
+          {
+            "value": "casual",
+            "aliases": [
+              "casual style",
+              "casual look"
+            ]
+          },
+          {
+            "value": "classic",
+            "aliases": [
+              "classic style",
+              "classic look",
+              "classic outfit"
+            ]
+          },
+          {
+            "value": "formal",
+            "aliases": [
+              "formal style",
+              "formal look"
+            ]
+          },
+          {
+            "value": "minimal",
+            "aliases": [
+              "minimal",
+              "minimalist",
+              "minimalist style"
+            ]
+          },
+          {
+            "value": "smart casual",
+            "aliases": [
+              "smart casual style",
+              "smart casual look"
+            ]
+          },
+          {
+            "value": "sporty",
+            "aliases": [
+              "sporty",
+              "sporty style",
+              "athletic look"
+            ]
+          },
+          {
+            "value": "streetwear",
+            "aliases": [
+              "streetwear",
+              "streetwear style"
+            ]
+          },
+          {
+            "value": "vintage",
+            "aliases": [
+              "vintage",
+              "vintage style"
+            ]
+          },
+          {
+            "value": "bohemian",
+            "aliases": [
+              "bohemian",
+              "boho",
+              "boho style"
+            ]
+          }
+        ],
+        "colours": [
+          {
+            "value": "black",
+            "aliases": [
+              "black"
+            ]
+          },
+          {
+            "value": "white",
+            "aliases": [
+              "white"
+            ]
+          },
+          {
+            "value": "grey",
+            "aliases": [
+              "grey",
+              "gray"
+            ]
+          },
+          {
+            "value": "navy",
+            "aliases": [
+              "navy",
+              "navy blue"
+            ]
+          },
+          {
+            "value": "blue",
+            "aliases": [
+              "blue"
+            ]
+          },
+          {
+            "value": "red",
+            "aliases": [
+              "red"
+            ]
+          },
+          {
+            "value": "green",
+            "aliases": [
+              "green"
+            ]
+          },
+          {
+            "value": "yellow",
+            "aliases": [
+              "yellow"
+            ]
+          },
+          {
+            "value": "orange",
+            "aliases": [
+              "orange"
+            ]
+          },
+          {
+            "value": "pink",
+            "aliases": [
+              "pink"
+            ]
+          },
+          {
+            "value": "purple",
+            "aliases": [
+              "purple"
+            ]
+          },
+          {
+            "value": "brown",
+            "aliases": [
+              "brown"
+            ]
+          },
+          {
+            "value": "beige",
+            "aliases": [
+              "beige"
+            ]
+          },
+          {
+            "value": "cream",
+            "aliases": [
+              "cream"
+            ]
+          }
+        ],
+        "garment_categories": [
+          {
+            "kind": "category",
+            "value": "short_sleeve_top",
+            "aliases": [
+              "short sleeve top",
+              "short sleeved top"
+            ]
+          },
+          {
+            "kind": "category",
+            "value": "long_sleeve_top",
+            "aliases": [
+              "long sleeve top",
+              "long sleeved top"
+            ]
+          },
+          {
+            "kind": "category",
+            "value": "short_sleeve_outwear",
+            "aliases": [
+              "short sleeve outerwear",
+              "short sleeved outerwear"
+            ]
+          },
+          {
+            "kind": "category",
+            "value": "long_sleeve_outwear",
+            "aliases": [
+              "long sleeve outerwear",
+              "long sleeved outerwear"
+            ]
+          },
+          {
+            "kind": "category",
+            "value": "vest",
+            "aliases": [
+              "vest"
+            ]
+          },
+          {
+            "kind": "category",
+            "value": "sling",
+            "aliases": [
+              "sling top"
+            ]
+          },
+          {
+            "kind": "category",
+            "value": "shorts",
+            "aliases": [
+              "shorts"
+            ]
+          },
+          {
+            "kind": "category",
+            "value": "trousers",
+            "aliases": [
+              "trousers",
+              "pants"
+            ]
+          },
+          {
+            "kind": "category",
+            "value": "skirt",
+            "aliases": [
+              "skirt"
+            ]
+          },
+          {
+            "kind": "category",
+            "value": "short_sleeve_dress",
+            "aliases": [
+              "short sleeve dress",
+              "short sleeved dress"
+            ]
+          },
+          {
+            "kind": "category",
+            "value": "long_sleeve_dress",
+            "aliases": [
+              "long sleeve dress",
+              "long sleeved dress"
+            ]
+          },
+          {
+            "kind": "category",
+            "value": "vest_dress",
+            "aliases": [
+              "vest dress"
+            ]
+          },
+          {
+            "kind": "category",
+            "value": "sling_dress",
+            "aliases": [
+              "sling dress"
+            ]
+          },
+          {
+            "kind": "group",
+            "value": "top",
+            "aliases": [
+              "top",
+              "tops"
+            ]
+          },
+          {
+            "kind": "group",
+            "value": "bottom",
+            "aliases": [
+              "bottom",
+              "bottoms"
+            ]
+          },
+          {
+            "kind": "group",
+            "value": "dress",
+            "aliases": [
+              "dress",
+              "dresses"
+            ]
+          },
+          {
+            "kind": "group",
+            "value": "outerwear",
+            "aliases": [
+              "outerwear"
+            ]
+          }
+        ],
+        "formality": [
+          {
+            "value": "casual",
+            "aliases": [
+              "casual outfit",
+              "casual clothes",
+              "casually dressed"
+            ]
+          },
+          {
+            "value": "smart_casual",
+            "aliases": [
+              "smart casual outfit",
+              "smart casual clothes"
+            ]
+          },
+          {
+            "value": "formal",
+            "aliases": [
+              "formal outfit",
+              "formal clothes",
+              "formally dressed"
+            ]
+          }
+        ]
+      },
+      "category_groups": {
+        "top": [
+          "short_sleeve_top",
+          "long_sleeve_top",
+          "vest",
+          "sling"
+        ],
+        "bottom": [
+          "shorts",
+          "trousers",
+          "skirt"
+        ],
+        "dress": [
+          "short_sleeve_dress",
+          "long_sleeve_dress",
+          "vest_dress",
+          "sling_dress"
+        ],
+        "outerwear": [
+          "short_sleeve_outwear",
+          "long_sleeve_outwear"
+        ]
+      }
+    },
+    "colour_anchors": {
+      "#000000": "black",
+      "#ffffff": "white",
+      "#808080": "grey",
+      "#000080": "navy",
+      "#0000ff": "blue",
+      "#ff0000": "red",
+      "#008000": "green",
+      "#ffff00": "yellow",
+      "#ffa500": "orange",
+      "#ffc0cb": "pink",
+      "#800080": "purple",
+      "#a52a2a": "brown",
+      "#f5f5dc": "beige"
+    },
+    "suitability": {
+      "schema_version": "1.0.0",
+      "version": "owner-declarations-1.0.0",
+      "reserved_prefix": "rec:v1",
+      "enabled_occasions": [
+        "campus",
+        "work",
+        "casual_outing",
+        "shopping",
+        "dinner",
+        "party",
+        "date",
+        "travel"
+      ],
+      "unavailable_occasions": [
+        "exercise"
+      ],
+      "enabled_formality": [
+        "casual",
+        "smart_casual"
+      ],
+      "unavailable_formality": [
+        "formal"
+      ],
+      "decisions": [
+        "allow",
+        "deny"
+      ],
+      "aggregation": "all_constituents_fail_then_unknown",
+      "annotation_source": "owner_declared_custom_tags",
+      "default_activation": false
+    },
+    "attribute_policy": {
+      "version": "attribute-evidence-policy-1.0.0",
+      "fields": {
+        "garment_name": {
+          "policy": "strict_record",
+          "rule": "Current bounded exact NFC strict-snapshot name; recorded name only, never parsed for hidden attributes.",
+          "model_suggestion": "Blocked for new hard evidence",
+          "source_qualified_automatic_measurement": "No approved emitter/measurement registry exists; Blocked pending separate amendment"
+        },
+        "category": {
+          "policy": "strict_record",
+          "rule": "Existing exact canonical strict category/role rules; category does not prove fine sleeve/neckline.",
+          "model_suggestion": "Blocked for new hard evidence",
+          "source_qualified_automatic_measurement": "No approved emitter/measurement registry exists; Blocked pending separate amendment"
+        },
+        "style": {
+          "policy": "existing_saved_style",
+          "rule": "Original saved-style/source/currentness gate for legacy singleton requests; new recorded set operations accept current explicit B0 selection. Ordinary context singleton gate stays authoritative.",
+          "model_suggestion": "Blocked for new hard evidence",
+          "source_qualified_automatic_measurement": "No approved emitter/measurement registry exists; Blocked pending separate amendment"
+        },
+        "primary_colour": {
+          "policy": "legacy_named_or_selected_exact",
+          "rule": "Existing named primary operations retain original mapper; NEW exact hex needs current explicit selected B0 channel. No fallback-black measurement certification.",
+          "model_suggestion": "Blocked for new hard evidence",
+          "source_qualified_automatic_measurement": "No approved emitter/measurement registry exists; Blocked pending separate amendment"
+        },
+        "secondary_colour": {
+          "policy": "selected_current",
+          "rule": "Explicit current selected secondary; exact anchors may yield named family; never borrow primary or stale palette[1].",
+          "model_suggestion": "Blocked for new hard evidence",
+          "source_qualified_automatic_measurement": "No approved emitter/measurement registry exists; Blocked pending separate amendment"
+        },
+        "palette_colour": {
+          "policy": "selected_current",
+          "rule": "Current explicit palette selection; exact identity or pinned exact hex anchor family. Cream has no registered anchor and is blocked for palette family matching.",
+          "model_suggestion": "Blocked for new hard evidence",
+          "source_qualified_automatic_measurement": "No approved emitter/measurement registry exists; Blocked pending separate amendment"
+        },
+        "palette_coverage": {
+          "policy": "selected_current",
+          "rule": "Current selected palette exact recorded fraction; unknown mass bounded; no textile/whole-outfit coverage claim.",
+          "model_suggestion": "Blocked for new hard evidence",
+          "source_qualified_automatic_measurement": "No approved emitter/measurement registry exists; Blocked pending separate amendment"
+        },
+        "pattern": {
+          "policy": "selected_current",
+          "rule": "Current explicit B0 owner selection; unregistered predicted labels remain unqualified even with matching spelling.",
+          "model_suggestion": "Blocked for new hard evidence",
+          "source_qualified_automatic_measurement": "No approved emitter/measurement registry exists; Blocked pending separate amendment"
+        },
+        "silhouette": {
+          "policy": "selected_current",
+          "rule": "Current explicit B0 owner observation; no physical fit/size claim or detector-null fallback promotion.",
+          "model_suggestion": "Blocked for new hard evidence",
+          "source_qualified_automatic_measurement": "No approved emitter/measurement registry exists; Blocked pending separate amendment"
+        },
+        "neckline": {
+          "policy": "selected_current",
+          "rule": "Current explicit B0 owner observation on applicable upper-body role; no reserved tag parsing.",
+          "model_suggestion": "Blocked for new hard evidence",
+          "source_qualified_automatic_measurement": "No approved emitter/measurement registry exists; Blocked pending separate amendment"
+        },
+        "sleeve_length": {
+          "policy": "selected_current",
+          "rule": "Current selected fine length consistent with category; no long=>wrist-length or vest=>sleeveless inference.",
+          "model_suggestion": "Blocked for new hard evidence",
+          "source_qualified_automatic_measurement": "No approved emitter/measurement registry exists; Blocked pending separate amendment"
+        },
+        "material": {
+          "policy": "owner_reported_membership",
+          "rule": "Current B0 owner-selected/reported label membership; no inferred fibre percentage/purity. Unsure blocks both polarities.",
+          "model_suggestion": "Blocked for new hard evidence",
+          "source_qualified_automatic_measurement": "No approved emitter/measurement registry exists; Blocked pending separate amendment"
+        },
+        "colour_temperature": {
+          "policy": "selected_current",
+          "rule": "Explicit current owner observation; neutral fallback without source not accepted.",
+          "model_suggestion": "Blocked for new hard evidence",
+          "source_qualified_automatic_measurement": "No approved emitter/measurement registry exists; Blocked pending separate amendment"
+        },
+        "colour_dominance": {
+          "policy": "selected_current",
+          "rule": "Explicit true/false current owner observation; absent is never false.",
+          "model_suggestion": "Blocked for new hard evidence",
+          "source_qualified_automatic_measurement": "No approved emitter/measurement registry exists; Blocked pending separate amendment"
+        },
+        "descriptive_tag": {
+          "policy": "selected_literal",
+          "rule": "Current explicitly selected literal tag set, reserved namespaces and legacy field tags excluded from new literal request channel.",
+          "model_suggestion": "Blocked for new hard evidence",
+          "source_qualified_automatic_measurement": "No approved emitter/measurement registry exists; Blocked pending separate amendment"
+        },
+        "condition": {
+          "policy": "reviewed_current",
+          "rule": "Original Known AppearanceEvidence.current(snapshot), dated owner observation clean_intact/needs_attention. Unknown is unresolved.",
+          "model_suggestion": "Blocked for new hard evidence",
+          "source_qualified_automatic_measurement": "No approved emitter/measurement registry exists; Blocked pending separate amendment"
+        },
+        "construction_collared": {
+          "policy": "reviewed_current",
+          "rule": "Original current reviewed collared_neckline boolean; no mapping from neckline categories.",
+          "model_suggestion": "Blocked for new hard evidence",
+          "source_qualified_automatic_measurement": "No approved emitter/measurement registry exists; Blocked pending separate amendment"
+        },
+        "construction_structured": {
+          "policy": "reviewed_current",
+          "rule": "Original current reviewed structured_shape boolean; no inference from style.",
+          "model_suggestion": "Blocked for new hard evidence",
+          "source_qualified_automatic_measurement": "No approved emitter/measurement registry exists; Blocked pending separate amendment"
+        },
+        "construction_tailored": {
+          "policy": "reviewed_current",
+          "rule": "Original current reviewed tailored_cut boolean; no inference from silhouette.",
+          "model_suggestion": "Blocked for new hard evidence",
+          "source_qualified_automatic_measurement": "No approved emitter/measurement registry exists; Blocked pending separate amendment"
+        }
+      },
+      "operators": {
+        "in": [
+          "category",
+          "primary_colour",
+          "secondary_colour",
+          "pattern",
+          "silhouette",
+          "neckline",
+          "sleeve_length",
+          "colour_temperature",
+          "condition"
+        ],
+        "contains_any": [
+          "style",
+          "material",
+          "palette_colour",
+          "descriptive_tag"
+        ],
+        "contains_all": [
+          "style",
+          "material",
+          "palette_colour",
+          "descriptive_tag"
+        ],
+        "exact_text": [
+          "garment_name",
+          "descriptive_tag"
+        ],
+        "exact_hex": [
+          "primary_colour",
+          "secondary_colour",
+          "palette_colour"
+        ],
+        "coverage_ge": [
+          "palette_coverage"
+        ],
+        "bool_eq": [
+          "colour_dominance",
+          "construction_collared",
+          "construction_structured",
+          "construction_tailored"
+        ]
+      },
+      "model_sources": [],
+      "measured_sources": [],
+      "field_map": {
+        "palette_colour": "colour_palette",
+        "palette_coverage": "colour_palette",
+        "descriptive_tag": "descriptive_tags"
+      },
+      "reviewed_map": {
+        "condition": [
+          "clean_intact",
+          "needs_attention"
+        ],
+        "construction_collared": "collared_neckline",
+        "construction_structured": "structured_shape",
+        "construction_tailored": "tailored_cut"
+      },
+      "primary_aliases": {
+        "black": "black",
+        "white": "white",
+        "grey": "grey",
+        "gray": "grey",
+        "navy": "navy",
+        "navy blue": "navy",
+        "blue": "blue",
+        "red": "red",
+        "green": "green",
+        "yellow": "yellow",
+        "orange": "orange",
+        "pink": "pink",
+        "purple": "purple",
+        "brown": "brown",
+        "beige": "beige",
+        "cream": "cream"
+      },
+      "qualification_note": "Known recorded facts do not certify physical truth; no additional review or scoring bonus."
+    }
+  }
+}

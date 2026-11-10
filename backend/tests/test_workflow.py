@@ -1,3 +1,4 @@
+from tests.current_contract_fixtures import wearer_id, wearer, history_scope
 """End-to-end smoke test for the documented garment-processing workflow."""
 
 import os
@@ -114,7 +115,7 @@ class WorkflowTests(unittest.TestCase):
             )
 
             # Seed a pre-existing legacy record; its API read/save/VIS paths remain supported.
-            legacy = recommendation_service.create_recommendation("demo-user", "Suggest an outfit from my confirmed wardrobe")
+            legacy = recommendation_service.create_recommendation("demo-user", "Suggest an outfit from my confirmed wardrobe",profile_id=wearer_id("demo-user"))
             recommendation = client.get("/api/v1/recommendations").json()[0]
             self.assertEqual(recommendation["id"], legacy["id"])
             self.assertEqual(recommendation["items"][0]["garment_id"], garments[0]["id"])

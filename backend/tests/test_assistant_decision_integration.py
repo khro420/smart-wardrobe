@@ -1,4 +1,5 @@
-﻿"""Real SQLite/service/API checks; garment descriptors are synthetic test data."""
+﻿from tests.current_contract_fixtures import wearer_id, wearer, history_scope
+"""Real SQLite/service/API checks; garment descriptors are synthetic test data."""
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import replace
 from fractions import Fraction
@@ -50,7 +51,7 @@ def test_real_persistence_all_structures_and_exact_history(assistant_store,profi
         c.execute("UPDATE garments SET status='archived'")
     replay=selected(assistant_store,DEFERRED if profile==DECISION else DECISION).recommend('owner','real',text)
     assert replay['replayed'] and replay['score_metadata']==result['score_metadata'] and replay['scoring_display']==view
-    history=ChatHistoryService(SqliteChatHistoryQuery(assistant_store[0],cursor_secret='test')).get('owner',result['chat_id'])
+    history=ChatHistoryService(SqliteChatHistoryQuery(assistant_store[0],cursor_secret='test')).get('owner',result['chat_id'],**history_scope('owner',result['chat_id']))
     assert history['recommendation']['scoring_display']==view
     assert not history['recommendation']['items'][0]['currently_eligible']
     with connect(assistant_store[0]) as c: assert tuple(c.execute('SELECT * FROM recommendation_metadata').fetchone())==before
@@ -166,7 +167,7 @@ def test_experimental_stream_failure_guarantees(assistant_store,mode,monkeypatch
         result.scoring_profile=DECISION
         return result
     monkeypatch.setattr(legacy,'service',experimental)
-    legacy.test_stream_failure_after_provisional_winner(assistant_store,mode)
+    legacy.test_stream_failure_after_provisional_winner(assistant_store,mode,monkeypatch)
 
 
 def test_stale_snapshot_and_failed_transaction_experimental(assistant_store,monkeypatch):
@@ -204,7 +205,7 @@ def test_experimental_visualisation_prepare_preserves_original_history(assistant
 
 def test_exact_request_preference_variation_and_no_client_profile_override(assistant_store,monkeypatch):
     with connect(assistant_store[0]) as c:
-        c.execute("INSERT INTO user_preferences VALUES('p','owner','colours','{\"values\":[\"blue\"]}',1,'test',1,'now','now')")
+        c.execute('INSERT INTO user_preferences (id,user_id,profile_id,preference_type,preference_value_json,weight,source,is_active,created_at,updated_at) VALUES(\'p\',\'owner\',?,\'colours\',\'{"values":["blue"]}\',1,\'test\',1,\'now\',\'now\')', (wearer_id('owner'),))
     r=selected(assistant_store).recommend('owner','r-p','Suggest an outfit with vintage style')
     assert (r['request_match_score'],r['preference_score'],r['compatibility_score'],r['total_score'])==(1,1,None,.9)
     assert r['scoring_display']['decision_contribution']=={'numerator':1,'denominator':2}

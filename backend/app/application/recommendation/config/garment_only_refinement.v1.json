@@ -1,0 +1,1 @@
+{"version":"garment-only-refinement-policy-1.0.0","profile":"garment_only_refinement_v1","default_activation":false,"max_results":10,"request_match":"NotApplicable_null_contribution_zero","floor":"captured_request_match_contribution","seen":"ordered_base_without_outerwear","weights":["3/5","1/5","1/5"]}

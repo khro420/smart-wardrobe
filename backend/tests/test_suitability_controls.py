@@ -1,3 +1,4 @@
+from tests.current_contract_fixtures import wearer_id, wearer, history_scope
 """Actual API-confirmed wardrobe records, content CAS and opt-in suitability only."""
 from concurrent.futures import ThreadPoolExecutor
 from fractions import Fraction
@@ -85,7 +86,7 @@ def test_actual_concurrent_connections_allow_one_write_not_silent_loss(lifecycle
     revision=garment(client,gid)['tag_edit']['revision']
     def submit(value):
         try:
-            update_garment(gid,'style-owner',{'attributes':{'custom_tags':['ordinary note',tag('occasion',value)]}},revision)
+            update_garment(gid,'style-owner',wearer_id('style-owner'),{'attributes':{'custom_tags':['ordinary note',tag('occasion',value)]}},revision)
             return 200
         except Exception as exc:return getattr(exc,'status_code',str(exc))
     with ThreadPoolExecutor(max_workers=2) as pool:results=list(pool.map(submit,['campus','work']))
@@ -164,7 +165,7 @@ def test_successful_tag_edit_preserves_archived_recommendations_and_visualisatio
     outfit=client.post('/api/v1/wardrobe/outfits',json={'name':'Historical fixture','garment_ids':[gid]}).json()['id']
     person=client.post('/api/v1/media/person-images',files={'file':('person.jpg',jpeg(),'image/jpeg')}).json()['id']
     from app.application.visualisation.outfit_visualisation_service import create_visualisation
-    create_visualisation('style-owner',person,outfit_id=outfit)
+    create_visualisation('style-owner',person,outfit_id=outfit,profile_id=wearer_id('style-owner'))
     tables=('recommendations','recommendation_items','recommendation_item_snapshots','recommendation_metadata','nlp_chats','visualisations','visualisation_items')
     def frozen():
         with db.connection() as c: return {t:[tuple(r) for r in c.execute('SELECT * FROM '+t)] for t in tables}

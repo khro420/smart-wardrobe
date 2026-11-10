@@ -1,3 +1,4 @@
+from tests.current_contract_fixtures import wearer_id, wearer, history_scope
 """Diagnostic reproductions of deferred gaps; passing is NOT release approval."""
 from types import SimpleNamespace
 from unittest.mock import Mock
@@ -18,6 +19,8 @@ def test_corrected_save_and_source_validation_reject_strict_gap(store,monkeypatc
     from app.infrastructure.workflow_runtime import configure_local_workflow
     configure_local_workflow()
     path,repository,command = store
+    from dataclasses import replace
+    command=replace(command,wearer=wearer("owner"))
     record = repository.persist(assistant(command))
     with connect(path) as conn:
         if change == "accepted": conn.execute("UPDATE processing_items SET review_status='accepted'")
@@ -32,7 +35,7 @@ def test_corrected_save_and_source_validation_reject_strict_gap(store,monkeypatc
             visualisation.resolve_source(conn,"owner",recommendation_id=record["id"])
         assert error.value.status_code == 409
     with pytest.raises(HTTPException) as error:
-        legacy.save_as_outfit(record["id"],"owner","Audit diagnostic")
+        legacy.save_as_outfit(record["id"],"owner","Audit diagnostic",profile_id=wearer_id("owner"))
     assert error.value.status_code == 409
     with connect(path) as conn:
         assert conn.execute("SELECT status FROM recommendations WHERE id=?",(record["id"],)).fetchone()[0] == "available"
@@ -57,7 +60,7 @@ def test_disabled_contract_guard_blocks_all_generation(store,monkeypatch):
 
 
 @pytest.mark.parametrize("interrupted",[False,True])
-def test_real_http_boundary_discards_late_candidate_failure(store,interrupted):
+def test_real_http_boundary_discards_late_candidate_failure(store,interrupted,monkeypatch):
     from app.application.ports.assistant_runtime import assistant_service
     from app.application.nlp.nlp_interpreter import NLPInterpreter
     from app.application.recommendation.candidate_generator import CandidateGenerator
@@ -71,7 +74,13 @@ def test_real_http_boundary_discards_late_candidate_failure(store,interrupted):
             if interrupted: raise KeyboardInterrupt()
             raise RuntimeError("injected after valid candidate")
     engine=RequestCandidateEngine(structural_engine=RecommendationEngine(SqliteConfirmedGarmentQuery(),generator=LateFailure()))
-    service=OutfitAssistantService(NLPInterpreter(),engine,SimpleNamespace(get_active_preferences=lambda _:()),repository,execution_engine="reference")  # Fault targets the reference generator.
+    service=OutfitAssistantService(NLPInterpreter(),engine,SimpleNamespace(get_active_preferences=lambda _,wearer=None:()),repository,execution_engine="reference")  # Fault targets the reference generator.
+    original_prepared=service._prepared_engine
+    def fault_in_actual_prepared_engine(*args,**kwargs):
+        active=original_prepared(*args,**kwargs)
+        active.structural_engine.generator=LateFailure()
+        return active
+    monkeypatch.setattr(service,'_prepared_engine',fault_in_actual_prepared_engine)
     with TestClient(app) as client:
         app.dependency_overrides[assistant_service]=lambda:service
         try:

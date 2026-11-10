@@ -1,3 +1,4 @@
+from app.shared_contracts.offline_snapshot_codec import legacy_projection
 """All populated examples here are SYNTHETIC, never human review evidence."""
 from dataclasses import asdict, replace
 import copy
@@ -28,7 +29,7 @@ def example(name="synthetic-reference", partition="reference", rating=0, colour=
         "independently_reviewed": False, "lookup_reference": partition == "reference", "source_ids": [name],
         "evidence_source": "synthetic test fixture; no real garment or reviewer", "captured_at": "2026-10-01T10:00:00Z",
         "images": [{"image_ref": image, "sha256": hashlib.sha256(name.encode()).hexdigest(), "garment_ids": [name]}],
-        "garments": [{"role": "one_piece", "snapshot": json.loads(json.dumps(asdict(row)))}], "signature": sig.to_dict(),
+        "garments": [{"role": "one_piece", "snapshot": legacy_projection(row)["snapshot"]}], "signature": sig.to_dict(),
         "reviews": [{"reviewer_id": "synthetic-a", "rating": rating, "reviewed_at": "2026-10-02T10:00:00Z", "image_refs": [image], "dataset_version": "synthetic-tests-1"},
                     {"reviewer_id": "synthetic-b", "rating": rating, "reviewed_at": "2026-10-02T10:00:00Z", "image_refs": [image], "dataset_version": "synthetic-tests-1"}],
         "adjudication": {"reviewer_id": "synthetic-adjudicator", "decision": "accepted", "note": "Synthetic arithmetic only", "reviewed_at": "2026-10-03T10:00:00Z"},
@@ -198,7 +199,7 @@ def test_collection_all_four_structures_reuses_actual_production_signatures():
             record = example("synthetic-structure-"+str(index))
             image = record["images"][0]
             image["garment_ids"] = [x.garment.garment_id for x in outfit.members]
-            record["garments"] = [{"role": x.role, "snapshot": json.loads(json.dumps(asdict(x.garment)))} for x in outfit.members]
+            record["garments"] = [{"role": x.role, "snapshot": legacy_projection(x.garment)["snapshot"]} for x in outfit.members]
             record["signature"] = mapper.signature(outfit)[0].to_dict()
             raw["records"].append(record)
         assert session.result.complete

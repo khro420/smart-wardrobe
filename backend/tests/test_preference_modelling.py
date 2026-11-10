@@ -73,14 +73,16 @@ def test_actual_account_api_projection_scope_inactive_and_no_writes():
     query = SqliteActivePreferenceQuery()
     with connection() as conn:
         before = [tuple(row) for row in conn.execute("SELECT * FROM user_preferences ORDER BY id")]
-    rows = query.get_active_preferences(owner)
+    from app.application.recommendation.wearer_identity import resolve_wearer
+    owner_wearer,other_wearer=resolve_wearer(owner),resolve_wearer(other)
+    rows = query.get_active_preferences(owner,owner_wearer)
     assert len(rows) == 1 and rows[0].user_id == owner and rows[0].source == "user_profile"
     assert PreferenceNormalizer().normalize(owner,rows).preferences[0].importance == Fraction(3,5)
     with connection() as conn:
         assert [tuple(row) for row in conn.execute("SELECT * FROM user_preferences ORDER BY id")] == before
         conn.execute("UPDATE user_preferences SET is_active=0 WHERE id=?",(identifier,))
-    assert query.get_active_preferences(owner) == ()
-    assert len(query.get_active_preferences(other)) == 1
+    assert query.get_active_preferences(owner,owner_wearer) == ()
+    assert len(query.get_active_preferences(other,other_wearer)) == 1
     with pytest.raises(ValueError): query.get_active_preferences("")
     with pytest.raises(ValueError): query.get_active_preferences("missing-account")
 

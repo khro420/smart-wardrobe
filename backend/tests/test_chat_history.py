@@ -18,8 +18,15 @@ def save(store,text='Suggest an outfit',key='key'):
     return store[1].persist(replace(assistant(store[2]),request_text=text,submission_key=key))
 
 
+class LegacyFixtureQuery(SqliteChatHistoryQuery):
+    def search(self,user_id,search='',limit=50,cursor=None,profile_id=None,view='legacy_unrecorded'):
+        return super().search(user_id,search,limit,cursor,None,'legacy_unrecorded')
+    def get(self,user_id,chat_id,profile_id=None,view='legacy_unrecorded'):
+        return super().get(user_id,chat_id,None,'legacy_unrecorded')
+
+
 def query(store):
-    return SqliteChatHistoryQuery(store[0],cursor_secret='synthetic-test-secret')
+    return LegacyFixtureQuery(store[0],cursor_secret='synthetic-test-secret')
 
 
 def test_empty_and_case_insensitive_literal_search(store):
@@ -99,7 +106,7 @@ def test_historical_media_requires_actual_owner_and_availability(store,owner,sta
 
 def test_valid_legacy_missing_snapshot_metadata_and_keyword_interpretation(store):
     with connect(store[0]) as c:
-        c.execute("INSERT INTO nlp_chats VALUES('oldchat','owner','Legacy request','outfit_recommendation','{\"keywords\":[\"legacy\"]}','completed','now','now')")
+        c.execute("INSERT INTO nlp_chats (id,user_id,request_text,interpreted_intent,extracted_entities_json,status,created_at,completed_at) VALUES('oldchat','owner','Legacy request','outfit_recommendation','{\"keywords\":[\"legacy\"]}','completed','now','now')")
         c.execute("INSERT INTO recommendations(id,user_id,chat_id,recommendation_type,status,created_at,total_score) VALUES('old','owner','oldchat','wardrobe_outfit','saved','now',0.5)")
         c.execute("INSERT INTO recommendation_items VALUES('old','garment','one_piece',1,'now')")
     result = query(store).get('owner','oldchat')
@@ -164,7 +171,10 @@ def test_actual_composition_read_service(store,monkeypatch):
     import app.infrastructure.persistence.chat_history_query_adapter as adapter
     monkeypatch.setattr(adapter,'SqliteChatHistoryQuery',lambda:query(store))
     with TestClient(app) as client:
-        result = client.get('/api/v1/chats/'+saved['chat_id'],headers={'Authorization':'Bearer '+issue_access_token('owner')})
+        with connect(store[0]) as conn:
+            conn.execute('UPDATE nlp_chats SET profile_id=NULL')
+            conn.execute('UPDATE recommendations SET profile_id=NULL')
+        result = client.get('/api/v1/chats/'+saved['chat_id']+'?view=legacy_unrecorded',headers={'Authorization':'Bearer '+issue_access_token('owner')})
         assert result.status_code == 200 and result.json()['chat_id'] == saved['chat_id']
 
 
@@ -192,19 +202,22 @@ def test_actual_phase5c_record_and_malformed_interpretation(assistant_store,monk
 def test_api_auth_privacy_validation_and_read_only(store):
     saved = save(store)
     with TestClient(app) as client:
+        with connect(store[0]) as conn:
+            conn.execute('UPDATE nlp_chats SET profile_id=NULL')
+            conn.execute('UPDATE recommendations SET profile_id=NULL')
         app.dependency_overrides[chat_history_service] = lambda:ChatHistoryService(query(store))
         try:
             assert client.get('/api/v1/chats').status_code == 401
             headers = {'Authorization':'Bearer '+issue_access_token('owner')}
-            assert client.get('/api/v1/chats',headers=headers).json()['total'] == 1
-            result = client.get('/api/v1/chats/'+saved['chat_id'],headers=headers)
+            assert client.get('/api/v1/chats?view=legacy_unrecorded',headers=headers).json()['total'] == 1
+            result = client.get('/api/v1/chats/'+saved['chat_id']+'?view=legacy_unrecorded',headers=headers)
             assert result.status_code == 200 and result.json()['read_only']
             other = {'Authorization':'Bearer '+issue_access_token('other')}
-            assert client.get('/api/v1/chats',headers=other).json()['total'] == 0
-            assert client.get('/api/v1/chats/'+saved['chat_id'],headers=other).status_code == 404
-            assert client.get('/api/v1/chats/missing',headers=headers).status_code == 404
+            assert client.get('/api/v1/chats?view=legacy_unrecorded',headers=other).json()['total'] == 0
+            assert client.get('/api/v1/chats/'+saved['chat_id']+'?view=legacy_unrecorded',headers=other).status_code == 404
+            assert client.get('/api/v1/chats/missing?view=legacy_unrecorded',headers=headers).status_code == 404
             for params in ({'limit':0},{'limit':101},{'search':'x'*501},{'cursor':'bad'}):
-                assert client.get('/api/v1/chats',headers=headers,params=params).status_code == 422
+                assert client.get('/api/v1/chats?view=legacy_unrecorded',headers=headers,params=params).status_code == 422
             assert client.post('/api/v1/chats',headers=headers,json={}).status_code == 405
-            assert client.patch('/api/v1/chats/'+saved['chat_id'],headers=headers,json={}).status_code == 405
+            assert client.patch('/api/v1/chats/'+saved['chat_id']+'?view=legacy_unrecorded',headers=headers,json={}).status_code == 405
         finally: app.dependency_overrides.pop(chat_history_service,None)

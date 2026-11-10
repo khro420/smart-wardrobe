@@ -1,6 +1,6 @@
 """Independent structural-only engine with explicit, single-use completion."""
 from dataclasses import replace
-from app.application.recommendation.garment_retrieval_service import GarmentRetrievalService
+from app.application.recommendation.garment_retrieval_service import GarmentRetrievalService,WardrobeCapacityExceeded
 from app.application.recommendation.candidate_generator import CandidateGenerator
 from app.application.recommendation.mandatory_rule_evaluator import MandatoryRuleEvaluator
 from app.domain.value_objects.candidate_generation_result import CandidateGenerationResult
@@ -95,5 +95,7 @@ class RecommendationEngine:
             if not self.generator.has_base(retrieved.garments):
                 return CandidateGenerationSession((), CandidateGenerationResult("InsufficientStructure", True, exclusions=retrieved.exclusions))
             return CandidateGenerationSession(self.generator.enumerate(retrieved.garments, self.evaluator), CandidateGenerationResult("Pending", False, exclusions=retrieved.exclusions))
+        except WardrobeCapacityExceeded:
+            return CandidateGenerationSession((),CandidateGenerationResult('WardrobeCapacityExceeded',False,reason='strict_pool_exceeds_100'))
         except Exception:
             return CandidateGenerationSession((), CandidateGenerationResult("ProcessingFailure", False, reason="structural_generation_setup_failed"))

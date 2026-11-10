@@ -96,7 +96,8 @@ def baseline(tmp_path_factory):
 @pytest.mark.parametrize("variant", ["key", "preferences", "constants", "combined"])
 def test_complete_candidate_evidence_scores_winner_and_completion(baseline, variant):
     path, cases, expected = baseline
-    assert execute(path, variant, cases) == expected
+    from tests.current_contract_fixtures import original_fields_exact
+    original_fields_exact(expected,execute(path,variant,cases))
 
 
 def test_oracle_covers_all_structures_and_three_states(baseline):

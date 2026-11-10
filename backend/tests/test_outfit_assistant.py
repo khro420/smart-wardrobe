@@ -25,14 +25,23 @@ from tests.test_recommendation_persistence import store,connect
 @pytest.fixture
 def assistant_store(store,monkeypatch):
     monkeypatch.setattr(preferences,'DATABASE_PATH',store[0])
+    from app.application.wardrobe.profile_service import ensure_default_profile
     with connect(store[0]) as c:
+        ensure_default_profile(c,'owner')
+        ensure_default_profile(c,'other')
         c.execute("UPDATE garments SET style_tags='[\"vintage\"]'")
     return store
 
 
+class ScopedFixturePreferences(preferences.SqliteActivePreferenceQuery):
+    def get_active_preferences(self,user_id,wearer=None):
+        from app.application.recommendation.wearer_identity import resolve_wearer
+        return super().get_active_preferences(user_id,wearer or resolve_wearer(user_id))
+
+
 def service(store,repo=None,query=None,evaluator=None,prefs=None):
     return OutfitAssistantService(NLPInterpreter(),RequestCandidateEngine(query or SqliteConfirmedGarmentQuery(),evaluator_factory=evaluator),
-        prefs or preferences.SqliteActivePreferenceQuery(),repo or store[1])
+        prefs or ScopedFixturePreferences(),repo or store[1])
 
 
 def count(store):
@@ -119,10 +128,10 @@ def test_all_structures_and_collective_constraints(assistant_store,structure):
 def test_preference_snapshot_is_stable_during_processing(assistant_store):
     path = assistant_store[0]
     with connect(path) as c:
-        c.execute("INSERT INTO user_preferences VALUES('p','owner','colours','{\"values\":[\"blue\"]}',1,'test',1,'now','now')")
+        c.execute("INSERT INTO user_preferences (id,user_id,preference_type,preference_value_json,weight,source,is_active,created_at,updated_at,profile_id) VALUES('p','owner','colours','{\"values\":[\"blue\"]}',1,'test',1,'now','now',(SELECT id FROM wardrobe_profiles WHERE user_id='owner' AND is_default=1))")
     class EditingPreferences:
         def get_active_preferences(self,user_id):
-            rows = preferences.SqliteActivePreferenceQuery().get_active_preferences(user_id)
+            rows = ScopedFixturePreferences().get_active_preferences(user_id)
             with connect(path) as c:
                 c.execute("UPDATE user_preferences SET preference_value_json='{\"values\":[\"red\"]}'")
             return rows
@@ -134,7 +143,7 @@ def test_preference_snapshot_is_stable_during_processing(assistant_store):
 def test_independent_ranking_calculation_and_generic_ties(assistant_store):
     add_garment(assistant_store,'a','vest_dress','red','["classic"]')
     with connect(assistant_store[0]) as c:
-        c.execute("INSERT INTO user_preferences VALUES('p','owner','colours','{\"values\":[\"red\"]}',1,'test',1,'now','now')")
+        c.execute("INSERT INTO user_preferences (id,user_id,preference_type,preference_value_json,weight,source,is_active,created_at,updated_at,profile_id) VALUES('p','owner','colours','{\"values\":[\"red\"]}',1,'test',1,'now','now',(SELECT id FROM wardrobe_profiles WHERE user_id='owner' AND is_default=1))")
     result = service(assistant_store).recommend('owner','flow','Suggest an outfit')
     # No request fields: R=0, C unavailable, red preference P=1 -> S=.30.
     assert result['items'][0]['garment_id'] == 'a' and result['total_score'] == .3
@@ -195,10 +204,11 @@ def test_concurrent_retries_new_keys_and_lost_response(assistant_store):
 
 
 @pytest.mark.parametrize('mode',['failure','interrupt','incomplete','close'])
-def test_stream_failure_after_provisional_winner(assistant_store,mode):
+def test_stream_failure_after_provisional_winner(assistant_store,mode,monkeypatch):
     rows = SqliteConfirmedGarmentQuery().get_confirmed_available_garments('owner')
     base = service(assistant_store)
     base.execution_engine = 'reference'  # Fault injection targets the reference stream.
+    monkeypatch.setattr(base,'_prepared_engine',lambda garments,user_id:base.engine)
     original = base.engine.structural_engine.generate_homepage_candidates
     first = next(original('owner'))
     def broken():

@@ -1,0 +1,570 @@
+{
+  "contract": "garment-description-vocabulary-1.0.0",
+  "enums": {
+    "category": [
+      "short_sleeve_top",
+      "long_sleeve_top",
+      "short_sleeve_outwear",
+      "long_sleeve_outwear",
+      "vest",
+      "sling",
+      "shorts",
+      "trousers",
+      "skirt",
+      "short_sleeve_dress",
+      "long_sleeve_dress",
+      "vest_dress",
+      "sling_dress"
+    ],
+    "pattern": [
+      "plain",
+      "abstract",
+      "cartoon",
+      "letters, numbers",
+      "camouflage",
+      "check",
+      "dot",
+      "fair isle",
+      "floral",
+      "geometric",
+      "paisley",
+      "stripe",
+      "houndstooth",
+      "herringbone",
+      "chevron",
+      "argyle",
+      "leopard",
+      "snakeskin",
+      "cheetah",
+      "peacock",
+      "zebra",
+      "giraffe",
+      "toile de jouy",
+      "plant"
+    ],
+    "style": [
+      "casual",
+      "classic",
+      "formal",
+      "minimal",
+      "smart casual",
+      "sporty",
+      "streetwear",
+      "vintage",
+      "bohemian"
+    ],
+    "material": [
+      "cotton",
+      "denim",
+      "leather",
+      "linen",
+      "silk",
+      "synthetic",
+      "wool"
+    ],
+    "silhouette": [
+      "asymmetrical",
+      "symmetrical",
+      "peplum",
+      "circle",
+      "flare",
+      "fit and flare",
+      "trumpet",
+      "mermaid",
+      "balloon",
+      "bell",
+      "bell bottom",
+      "bootcut",
+      "peg",
+      "pencil",
+      "straight",
+      "a-line",
+      "tent",
+      "baggy",
+      "wide leg",
+      "high low",
+      "curved",
+      "tight",
+      "regular",
+      "loose",
+      "oversized"
+    ],
+    "neckline": [
+      "collarless",
+      "asymmetric",
+      "crew",
+      "round",
+      "v-neck",
+      "surplice",
+      "oval",
+      "u-neck",
+      "sweetheart",
+      "queen anne",
+      "boat",
+      "scoop",
+      "square",
+      "plunging",
+      "keyhole",
+      "halter",
+      "crossover",
+      "choker",
+      "high",
+      "turtle",
+      "cowl",
+      "straight across",
+      "illusion",
+      "off-the-shoulder",
+      "one shoulder"
+    ],
+    "sleeve_length": [
+      "sleeveless",
+      "short",
+      "elbow-length",
+      "wrist-length"
+    ],
+    "colour_temperature": [
+      "warm",
+      "cool",
+      "neutral"
+    ],
+    "primary_colour": [
+      "black",
+      "white",
+      "grey",
+      "navy",
+      "blue",
+      "red",
+      "green",
+      "yellow",
+      "orange",
+      "pink",
+      "purple",
+      "brown",
+      "beige",
+      "cream"
+    ],
+    "secondary_colour": [
+      "black",
+      "white",
+      "grey",
+      "navy",
+      "blue",
+      "red",
+      "green",
+      "yellow",
+      "orange",
+      "pink",
+      "purple",
+      "brown",
+      "beige",
+      "cream"
+    ]
+  },
+  "exact_hex_anchors": {
+    "#808080": "grey",
+    "#ffc0cb": "pink",
+    "#000080": "navy",
+    "#ffff00": "yellow",
+    "#800080": "purple",
+    "#ffffff": "white",
+    "#000000": "black",
+    "#ffa500": "orange",
+    "#f5f5dc": "beige",
+    "#ff0000": "red",
+    "#a52a2a": "brown",
+    "#008000": "green",
+    "#0000ff": "blue"
+  },
+  "legacy_aliases": [
+    {
+      "field": "pattern",
+      "raw": "plain (pattern)",
+      "canonical": "plain"
+    },
+    {
+      "field": "pattern",
+      "raw": "abstract (pattern)",
+      "canonical": "abstract"
+    },
+    {
+      "field": "pattern",
+      "raw": "cartoon (pattern)",
+      "canonical": "cartoon"
+    },
+    {
+      "field": "pattern",
+      "raw": "letters, numbers (pattern)",
+      "canonical": "letters, numbers"
+    },
+    {
+      "field": "pattern",
+      "raw": "camouflage (pattern)",
+      "canonical": "camouflage"
+    },
+    {
+      "field": "pattern",
+      "raw": "check (pattern)",
+      "canonical": "check"
+    },
+    {
+      "field": "pattern",
+      "raw": "dot (pattern)",
+      "canonical": "dot"
+    },
+    {
+      "field": "pattern",
+      "raw": "fair isle (pattern)",
+      "canonical": "fair isle"
+    },
+    {
+      "field": "pattern",
+      "raw": "floral (pattern)",
+      "canonical": "floral"
+    },
+    {
+      "field": "pattern",
+      "raw": "geometric (pattern)",
+      "canonical": "geometric"
+    },
+    {
+      "field": "pattern",
+      "raw": "paisley (pattern)",
+      "canonical": "paisley"
+    },
+    {
+      "field": "pattern",
+      "raw": "stripe (pattern)",
+      "canonical": "stripe"
+    },
+    {
+      "field": "pattern",
+      "raw": "houndstooth (pattern)",
+      "canonical": "houndstooth"
+    },
+    {
+      "field": "pattern",
+      "raw": "herringbone (pattern)",
+      "canonical": "herringbone"
+    },
+    {
+      "field": "pattern",
+      "raw": "chevron (pattern)",
+      "canonical": "chevron"
+    },
+    {
+      "field": "pattern",
+      "raw": "argyle (pattern)",
+      "canonical": "argyle"
+    },
+    {
+      "field": "pattern",
+      "raw": "leopard (pattern)",
+      "canonical": "leopard"
+    },
+    {
+      "field": "pattern",
+      "raw": "snakeskin (pattern)",
+      "canonical": "snakeskin"
+    },
+    {
+      "field": "pattern",
+      "raw": "cheetah (pattern)",
+      "canonical": "cheetah"
+    },
+    {
+      "field": "pattern",
+      "raw": "peacock (pattern)",
+      "canonical": "peacock"
+    },
+    {
+      "field": "pattern",
+      "raw": "zebra (pattern)",
+      "canonical": "zebra"
+    },
+    {
+      "field": "pattern",
+      "raw": "giraffe (pattern)",
+      "canonical": "giraffe"
+    },
+    {
+      "field": "pattern",
+      "raw": "toile de jouy (pattern)",
+      "canonical": "toile de jouy"
+    },
+    {
+      "field": "pattern",
+      "raw": "plant (pattern)",
+      "canonical": "plant"
+    },
+    {
+      "field": "silhouette",
+      "raw": "asymmetrical (fit)",
+      "canonical": "asymmetrical"
+    },
+    {
+      "field": "silhouette",
+      "raw": "symmetrical (fit)",
+      "canonical": "symmetrical"
+    },
+    {
+      "field": "silhouette",
+      "raw": "peplum (fit)",
+      "canonical": "peplum"
+    },
+    {
+      "field": "silhouette",
+      "raw": "circle (fit)",
+      "canonical": "circle"
+    },
+    {
+      "field": "silhouette",
+      "raw": "flare (fit)",
+      "canonical": "flare"
+    },
+    {
+      "field": "silhouette",
+      "raw": "fit and flare (fit)",
+      "canonical": "fit and flare"
+    },
+    {
+      "field": "silhouette",
+      "raw": "trumpet (fit)",
+      "canonical": "trumpet"
+    },
+    {
+      "field": "silhouette",
+      "raw": "mermaid (fit)",
+      "canonical": "mermaid"
+    },
+    {
+      "field": "silhouette",
+      "raw": "balloon (fit)",
+      "canonical": "balloon"
+    },
+    {
+      "field": "silhouette",
+      "raw": "bell (fit)",
+      "canonical": "bell"
+    },
+    {
+      "field": "silhouette",
+      "raw": "bell bottom (fit)",
+      "canonical": "bell bottom"
+    },
+    {
+      "field": "silhouette",
+      "raw": "bootcut (fit)",
+      "canonical": "bootcut"
+    },
+    {
+      "field": "silhouette",
+      "raw": "peg (fit)",
+      "canonical": "peg"
+    },
+    {
+      "field": "silhouette",
+      "raw": "pencil (fit)",
+      "canonical": "pencil"
+    },
+    {
+      "field": "silhouette",
+      "raw": "straight (fit)",
+      "canonical": "straight"
+    },
+    {
+      "field": "silhouette",
+      "raw": "a-line (fit)",
+      "canonical": "a-line"
+    },
+    {
+      "field": "silhouette",
+      "raw": "tent (fit)",
+      "canonical": "tent"
+    },
+    {
+      "field": "silhouette",
+      "raw": "baggy (fit)",
+      "canonical": "baggy"
+    },
+    {
+      "field": "silhouette",
+      "raw": "wide leg (fit)",
+      "canonical": "wide leg"
+    },
+    {
+      "field": "silhouette",
+      "raw": "high low (fit)",
+      "canonical": "high low"
+    },
+    {
+      "field": "silhouette",
+      "raw": "curved (fit)",
+      "canonical": "curved"
+    },
+    {
+      "field": "silhouette",
+      "raw": "tight (fit)",
+      "canonical": "tight"
+    },
+    {
+      "field": "silhouette",
+      "raw": "regular (fit)",
+      "canonical": "regular"
+    },
+    {
+      "field": "silhouette",
+      "raw": "loose (fit)",
+      "canonical": "loose"
+    },
+    {
+      "field": "silhouette",
+      "raw": "oversized (fit)",
+      "canonical": "oversized"
+    },
+    {
+      "field": "neckline",
+      "raw": "collarless (neck)",
+      "canonical": "collarless"
+    },
+    {
+      "field": "neckline",
+      "raw": "asymmetric (neck)",
+      "canonical": "asymmetric"
+    },
+    {
+      "field": "neckline",
+      "raw": "crew (neck)",
+      "canonical": "crew"
+    },
+    {
+      "field": "neckline",
+      "raw": "round (neck)",
+      "canonical": "round"
+    },
+    {
+      "field": "neckline",
+      "raw": "v-neck (neck)",
+      "canonical": "v-neck"
+    },
+    {
+      "field": "neckline",
+      "raw": "surplice (neck)",
+      "canonical": "surplice"
+    },
+    {
+      "field": "neckline",
+      "raw": "oval (neck)",
+      "canonical": "oval"
+    },
+    {
+      "field": "neckline",
+      "raw": "u-neck (neck)",
+      "canonical": "u-neck"
+    },
+    {
+      "field": "neckline",
+      "raw": "sweetheart (neck)",
+      "canonical": "sweetheart"
+    },
+    {
+      "field": "neckline",
+      "raw": "queen anne (neck)",
+      "canonical": "queen anne"
+    },
+    {
+      "field": "neckline",
+      "raw": "boat (neck)",
+      "canonical": "boat"
+    },
+    {
+      "field": "neckline",
+      "raw": "scoop (neck)",
+      "canonical": "scoop"
+    },
+    {
+      "field": "neckline",
+      "raw": "square (neck)",
+      "canonical": "square"
+    },
+    {
+      "field": "neckline",
+      "raw": "plunging (neck)",
+      "canonical": "plunging"
+    },
+    {
+      "field": "neckline",
+      "raw": "keyhole (neck)",
+      "canonical": "keyhole"
+    },
+    {
+      "field": "neckline",
+      "raw": "halter (neck)",
+      "canonical": "halter"
+    },
+    {
+      "field": "neckline",
+      "raw": "crossover (neck)",
+      "canonical": "crossover"
+    },
+    {
+      "field": "neckline",
+      "raw": "choker (neck)",
+      "canonical": "choker"
+    },
+    {
+      "field": "neckline",
+      "raw": "high (neck)",
+      "canonical": "high"
+    },
+    {
+      "field": "neckline",
+      "raw": "turtle (neck)",
+      "canonical": "turtle"
+    },
+    {
+      "field": "neckline",
+      "raw": "cowl (neck)",
+      "canonical": "cowl"
+    },
+    {
+      "field": "neckline",
+      "raw": "straight across (neck)",
+      "canonical": "straight across"
+    },
+    {
+      "field": "neckline",
+      "raw": "illusion (neck)",
+      "canonical": "illusion"
+    },
+    {
+      "field": "neckline",
+      "raw": "off-the-shoulder (neck)",
+      "canonical": "off-the-shoulder"
+    },
+    {
+      "field": "neckline",
+      "raw": "one shoulder (neck)",
+      "canonical": "one shoulder"
+    },
+    {
+      "field": "sleeve_length",
+      "raw": "sleeveless (length)",
+      "canonical": "sleeveless"
+    },
+    {
+      "field": "sleeve_length",
+      "raw": "short (length)",
+      "canonical": "short"
+    },
+    {
+      "field": "sleeve_length",
+      "raw": "elbow-length (length)",
+      "canonical": "elbow-length"
+    },
+    {
+      "field": "sleeve_length",
+      "raw": "wrist-length (length)",
+      "canonical": "wrist-length"
+    }
+  ]
+}

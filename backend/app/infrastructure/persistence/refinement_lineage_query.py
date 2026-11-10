@@ -2,7 +2,7 @@
 import json
 from app.domain.value_objects.recommendation_refinement import canonical_uuid,step_key
 
-SELECT_RECORD='''SELECT r.id,r.user_id,c.request_text,c.extracted_entities_json,
+SELECT_RECORD='''SELECT r.*,c.request_text,c.extracted_entities_json,
     m.provenance_json,m.score_json FROM recommendations r
     JOIN nlp_chats c ON c.id=r.chat_id AND c.user_id=r.user_id
     JOIN recommendation_metadata m ON m.recommendation_id=r.id
@@ -17,8 +17,25 @@ def read_record(conn,user,identifier):
 
 
 def bounded_record(row):
-    if len(row['provenance_json'].encode())>327680 or len(row['score_json'].encode())>262144:
+    if len(row['provenance_json'].encode())>1048576 or len(row['score_json'].encode())>262144:
         raise ValueError('Oversized stored lineage record.')
+    try:
+        provenance=json.loads(row['provenance_json'])
+    except ValueError as exc:
+        if len(row['provenance_json'].encode())>327680:
+            raise ValueError('Oversized or invalid stored lineage record.') from exc
+        raise
+    if 'attribute_preference' in provenance:
+        from app.application.recommendation.attribute_preference_codec import bounded_provenance
+        bounded_provenance(provenance)
+        if provenance.get('refinement',{}).get('version')!='recommendation-refinement-evidence-2.0.0':raise ValueError('P2 lineage requires its versioned supplement.')
+        if len(row['extracted_entities_json'].encode())>65536:raise ValueError('Oversized P2 request projection.')
+    elif 'attribute_selection' in provenance:
+        from app.domain.value_objects.attribute_conditions import decode
+        from app.domain.value_objects.attribute_selection_evidence import bounded_provenance
+        bounded_provenance(decode(row['provenance_json'].encode(),589824))
+        if len(row['extracted_entities_json'].encode())>65536:raise ValueError('Oversized attribute request projection.')
+    elif len(row['provenance_json'].encode())>327680:raise ValueError('Oversized legacy lineage record.')
     return row
 
 
@@ -29,7 +46,7 @@ def read_chain(conn,user,parent_id):
     root_id=canonical_uuid(proof.get('root_id'))
     root=parent if root_id==parent_id else read_record(conn,user,root_id)
     keys=tuple(step_key(root_id,n) for n in range(1,10))
-    rows=conn.execute('''SELECT s.submission_key,r.id,r.user_id,c.request_text,c.extracted_entities_json,
+    rows=conn.execute('''SELECT s.submission_key,r.*,c.request_text,c.extracted_entities_json,
         CASE WHEN r.id=? THEN NULL ELSE m.provenance_json END AS provenance_json,
         CASE WHEN r.id=? THEN NULL ELSE m.score_json END AS score_json FROM recommendation_submissions s
         JOIN recommendations r ON r.id=s.recommendation_id AND r.user_id=s.user_id

@@ -1,9 +1,261 @@
 """Pin explicitly authorized integration changes without weakening scoring oracles."""
+from tests.retained_evidence import review_path, review_reference, assert_relocated_authority
 import hashlib
 import json
+import os
 from pathlib import Path
+from functools import lru_cache
 
 BACKEND = Path(__file__).resolve().parents[1]
+
+
+@lru_cache(maxsize=1)
+def p2_manifest():
+    """Named approved P2 descendant; old authorities and numerical labels stay fixed."""
+    root=review_path('phase_b2_preference_implementation_20261105')
+    approval=json.loads((root/'approval.json').read_text(encoding='utf-8'))
+    scope_path=root/'approved-contract/proposed-source-scope.json'
+    assert hashlib.sha256(scope_path.read_bytes()).hexdigest()==approval['scope_sha256']=='3a05553d5e8e494a1ea2274f19bffed4cb46c32b6ccfb442f410c69e9021499a'
+    scope=json.loads(scope_path.read_text(encoding='utf-8'))
+    manifest_path=Path(os.environ.get('B2_MANIFEST_PATH',str(root/'checkpoint-manifest.json'))).resolve()
+    assert manifest_path.is_relative_to(root.resolve())
+    data=json.loads(manifest_path.read_text(encoding='utf-8'))
+    baseline=json.loads((root/'approved-contract/baseline-source-hashes.json').read_text(encoding='utf-8'))
+    assert data['version']=='p2-preference-sources-1.0.0' and data['default_activation'] is False
+    allowed={e['path']:e['before_sha256'] for key in ('existing_production','existing_verification') for e in scope[key]}
+    amendment=root/'approved-auth-inventory-amendment.json'
+    if amendment.exists():
+        record=json.loads(amendment.read_text(encoding='utf-8'))
+        assert record['answer']=='Approve the exact one-line verification amendment'
+        assert record['path']=='backend/tests/test_durable_logout.py'
+        assert record['proposed_after_sha256']=='94004d6f39054c4c9238e20c9041e065e0b196d6071380371ed2f3aa9f69ae42'
+        assert hashlib.sha256((BACKEND.parent/record['path']).read_bytes()).hexdigest()==record['proposed_after_sha256']
+        allowed[record['path']]=record['before_sha256']
+    assert set(data['replacements'])<=set(allowed)
+    assert set(data['additions'])<={e['path'] for key in ('new_production','new_verification') for e in scope[key]}
+    for path,value in data['replacements'].items():assert value['before']==allowed[path]==baseline[path],path
+    for path,value in data['frozen_inputs'].items():assert hashlib.sha256((root/'approved-contract'/path).read_bytes()).hexdigest()==value,path
+    assert approval['contract_sha256']=='45df918f40beda26116584ba396cc8f12bf1f71310b198b37f5bfb078480027e'
+    return data
+
+
+def validate_b3_manifest(data):
+    root=review_path('phase_b3_c_functional_completion_20261106')
+    scope_path=root/'approved-contract/proposed-source-scope.json'
+    contract_path=root/'approved-contract/B3_PALETTE_CONTRACT.json'
+    scope_hash='57f2354e3c622b56e9732132c97f0eb51df884e2479659e3de6477161d547b4b'
+    contract_hash='22ae7ef2a5cfbaae4d2d02782215e693f561412f49480f26aa08d3402ee6ffeb'
+    assert hashlib.sha256(scope_path.read_bytes()).hexdigest()==scope_hash==data['scope_sha256']
+    assert hashlib.sha256(contract_path.read_bytes()).hexdigest()==contract_hash==data['contract_sha256']
+    approval=json.loads((root/'approval.json').read_text(encoding='utf-8'))
+    assert approval['answer']=='Approve exact B3 scope, C2 contract and FC-CP0–CP5'
+    assert approval['scope_sha256']==scope_hash and approval['contract_sha256']==contract_hash
+    assert hashlib.sha256((root/'approval.json').read_bytes()).hexdigest()==data['approval_sha256']
+    assert data['version']=='b3-palette-sources-1.0.0' and data['default_activation'] is False
+    baseline=json.loads((root/'approved-contract/baseline-source-hashes.json').read_text(encoding='utf-8'))
+    predecessor=root.parent/'phase_b2_performance_optimization_20261106'
+    assert baseline==json.loads((predecessor/'FINAL_INTEGRITY.json').read_text(encoding='utf-8'))['final_inputs']
+    assert hashlib.sha256((predecessor/'checkpoint-manifest.json').read_bytes()).hexdigest()=='d867bffb63b8ff689e674d818ea0be9ae29adea4b8827cf0ad46cac3c278d2c5'
+    scope=json.loads(scope_path.read_text(encoding='utf-8'))
+    allowed={e['path']:e['before_sha256'] for kind in ('existing_production','existing_verification') for e in scope[kind]}
+    additions={e['path'] for kind in ('new_production','new_verification') for e in scope[kind]}
+    assert len(allowed)==28 and len(additions)==17
+    assert set(data['replacements'])<=set(allowed) and set(data['additions'])==additions
+    assert set(data['files'])==set(baseline)|additions
+    for path,value in data['files'].items():
+        assert type(value) is str and len(value)==64
+        if path in data['replacements']:
+            entry=data['replacements'][path]
+            assert entry['before']==allowed[path]==baseline[path] and entry['after']==value,path
+        elif path in additions:assert value==data['additions'][path],path
+        else:assert value==baseline[path],('Unapproved B3 edit',path)
+        assert hashlib.sha256((BACKEND.parent/path).read_bytes()).hexdigest()==reconciliation_digest(path,value),path
+    fixture=json.loads((BACKEND/'tests/fixtures/b3_palette_sources.v1.json').read_text(encoding='utf-8'))
+    assert fixture['contract']=='b3-palette-delivery-1.0.0' and fixture['default_activation'] is False and fixture['historical_labels_unchanged'] is True and fixture['additional_historical_exceptions']==[]
+    assert fixture['scope_sha256']==scope_hash and fixture['contract_sha256']==contract_hash
+    assert fixture['files']=={p:v for p,v in data['files'].items() if p in set(data['replacements'])|additions and p!='backend/tests/fixtures/b3_palette_sources.v1.json'}
+    return data
+
+
+@lru_cache(maxsize=1)
+def b3_manifest():
+    root=review_path('phase_b3_c_functional_completion_20261106')
+    path=Path(os.environ.get('B3_MANIFEST_PATH',str(root/'checkpoint-manifest.json'))).resolve()
+    assert path.is_relative_to(root.resolve())
+    return validate_b3_manifest(json.loads(path.read_text(encoding='utf-8')))
+
+
+def b3_digest(path,previous):
+    if not (BACKEND/'tests/fixtures/b3_palette_sources.v1.json').exists():return reconciliation_digest(path,previous)
+    data=b3_manifest()
+    if path in data['replacements']:
+        entry=data['replacements'][path]
+        assert entry['before']==previous,('Unrecognised B3 predecessor',path)
+        return reconciliation_digest(path,entry['after'])
+    if path in data['additions']:
+        assert previous is None
+        return reconciliation_digest(path,data['additions'][path])
+    return reconciliation_digest(path,previous)
+
+
+def validate_performance_manifest(data):
+    """A new exact descendant; original B2 manifest/labels are never repinned."""
+    root=review_path('phase_b2_performance_optimization_20261106')
+    scope_path=root/'approved-contract/proposed-source-scope.json'
+    scope_hash='5ea641229c15d0a9e8e58702def74501f3e8162f2eab8b04a4b15d72b85efb45'
+    assert hashlib.sha256(scope_path.read_bytes()).hexdigest()==scope_hash
+    approval=json.loads((root/'approval.json').read_text(encoding='utf-8'))
+    assert approval['answer']=='Approve exact isolated optimisation scope and PERF-CP0–CP5'
+    assert approval['scope_sha256']==scope_hash==data['scope_sha256']
+    assert data['version']=='p2-performance-sources-1.0.0' and data['default_activation'] is False
+    assert data['approval_sha256']==hashlib.sha256((root/'approval.json').read_bytes()).hexdigest()
+    base_path=root/'frozen-baseline-hashes.json'
+    assert data['baseline_inputs_sha256']==hashlib.sha256(base_path.read_bytes()).hexdigest()
+    baseline=json.loads(base_path.read_text(encoding='utf-8'))
+    b2=root.parent/'phase_b2_preference_implementation_20261105'
+    assert baseline==json.loads((b2/'FINAL_INTEGRITY.json').read_text(encoding='utf-8'))['final_inputs']
+    assert hashlib.sha256((b2/'checkpoint-manifest.json').read_bytes()).hexdigest()=='345be482a09d927fd4586080a8becb0ab3b89591a2a1c2a28dd12e2833ce5b86'
+    scope=json.loads(scope_path.read_text(encoding='utf-8'))
+    allowed={e['path']:e['before_sha256'] for kind in ('existing_production','existing_verification') for e in scope[kind]}
+    additions={e['path'] for e in scope['new_verification']}
+    assert len(allowed)==4 and len(additions)==4
+    assert set(data['replacements'])==set(allowed) and set(data['additions'])==additions
+    assert set(data['files'])==set(baseline)|additions
+    for path,value in data['files'].items():
+        assert type(value) is str and len(value)==64
+        if path in allowed:
+            entry=data['replacements'][path]
+            assert entry['before']==allowed[path]==baseline[path] and entry['after']==value,path
+        elif path in additions:assert data['additions'][path]==value,path
+        else:assert value==baseline[path],('Unapproved performance edit',path)
+        assert hashlib.sha256((BACKEND.parent/path).read_bytes()).hexdigest()==b3_digest(path,value),path
+    fixture=json.loads((BACKEND/'tests/fixtures/p2_performance_sources.v1.json').read_text(encoding='utf-8'))
+    assert fixture['contract']=='p2-performance-delivery-1.0.0' and fixture['default_activation'] is False
+    assert fixture['scope_sha256']==scope_hash and fixture['historical_labels_unchanged'] is True and fixture['no_additional_exceptions'] is True
+    assert set(fixture['files'])==(set(allowed)|additions)-{'backend/tests/fixtures/p2_performance_sources.v1.json'}
+    for path,entry in fixture['files'].items():
+        assert entry['before']==baseline.get(path) and entry['after']==data['files'][path],path
+    return data
+
+
+@lru_cache(maxsize=1)
+def performance_manifest():
+    root=review_path('phase_b2_performance_optimization_20261106')
+    path=Path(os.environ.get('P2_PERF_MANIFEST_PATH',str(root/'checkpoint-manifest.json'))).resolve()
+    assert path.is_relative_to(root.resolve())
+    return validate_performance_manifest(json.loads(path.read_text(encoding='utf-8')))
+
+
+def performance_digest(path,previous):
+    if not (BACKEND/'tests/fixtures/p2_performance_sources.v1.json').exists():return previous
+    data=performance_manifest();entry=data['replacements'].get(path)
+    if entry is not None:
+        assert entry['before']==previous,('Unrecognised performance predecessor',path)
+        return b3_digest(path,entry['after'])
+    if path in data['additions']:
+        assert previous is None
+        return b3_digest(path,data['additions'][path])
+    return b3_digest(path,previous)
+
+
+def p2_digest(path,previous):
+    data=p2_manifest();entry=data['replacements'].get(path)
+    if entry is not None:
+        assert entry['before']==previous,('Unrecognised P2 predecessor',path)
+        expected=performance_digest(path,entry['after'])
+        assert hashlib.sha256((BACKEND.parent/path).read_bytes()).hexdigest()==expected,path
+        return expected
+    return performance_digest(path,previous)
+
+
+@lru_cache(maxsize=1)
+def attribute_manifest():
+    """Capture immutable approval once; callers still hash every current source.
+
+    The harness freezes and rechecks all source/support inputs around each run.
+    Historical authorities and numerical labels retain their original bytes.
+    """
+    data=json.loads((BACKEND/'tests/fixtures/attribute_sources.v1.json').read_text(encoding='utf-8'))
+    assert data['version']=='attribute-sources-1.0.0' and data['default_activation'] is False
+    scope_path=review_reference(data['approved_scope_path'])
+    assert hashlib.sha256(scope_path.read_bytes()).hexdigest()==data['approved_scope_sha256']=='a1c7d382a14d57590ce9313ea9e414a987e9da4cf9d867a1b792944e881f11c0'
+    assert hashlib.sha256((scope_path.parent/'CONTRACT_FREEZE.json').read_bytes()).hexdigest()=='2f485059176133fe6145d70b618f8c2379cc4b19f0175e8600ab8471bc99785d'
+    freeze=json.loads((scope_path.parent/'CONTRACT_FREEZE.json').read_text(encoding='utf-8'))
+    assert hashlib.sha256(scope_path.read_bytes()).hexdigest()==freeze['artifacts']['proposed-source-scope.json']
+    scope=json.loads(scope_path.read_text(encoding='utf-8'))
+    starting=json.loads((scope_path.parent/'starting-source-hashes.json').read_text(encoding='utf-8'))
+    assert data['baseline_application']=={p.removeprefix('backend/'):h for p,h in starting.items() if p.startswith('backend/app/')}
+    for p,h in data['ancestry_authorities'].items():
+        assert starting[p]==h,p
+        if hashlib.sha256((BACKEND.parent/p).read_bytes()).hexdigest()!=h:
+            assert_relocated_authority(p,BACKEND.parent,h)
+    allowed={e['path']:e['before_sha256'] for k in ('existing_production','existing_verification') for e in scope[k]}
+    assert set(data['replacements'])<=set(allowed)
+    assert set(data['additions'])<={e['path'] for k in ('new_production','new_verification') for e in scope[k]}
+    for path,change in data['replacements'].items():assert change['before']==allowed[path],path
+    for name,value in data['frozen_inputs'].items():
+        assert hashlib.sha256((scope_path.parent/name).read_bytes()).hexdigest()==value,name
+    assert hashlib.sha256((BACKEND/'tests/fixtures/attribute_labels.v1.json').read_bytes()).hexdigest()==data['frozen_fixture_sha256']
+    return data
+
+
+def attribute_digest(path,previous):
+    entry=attribute_manifest()['replacements'].get(path)
+    if entry is None:return p2_digest(path,previous)
+    assert entry['before']==previous,('Unrecognised B1 predecessor',path)
+    expected=p2_digest(path,entry['after'])
+    assert hashlib.sha256((BACKEND.parent/path).read_bytes()).hexdigest()==expected,path
+    return expected
+
+
+def description_digest(path, previous):
+    """B0 descendant: exact authorized transitions, never replacement historical labels."""
+    data=json.loads((BACKEND/'tests/fixtures/description_sources.v1.json').read_text(encoding='utf-8'))
+    assert data['version']=='description-sources-1.0.0' and data['default_activation'] is False
+    scope_path=review_reference(data['approved_scope_path'])
+    assert hashlib.sha256(scope_path.read_bytes()).hexdigest()=='f1f55258481581ea0d5c08addf6ff4070ad82a0acb11e347abd0f584371c1a7c'
+    approved=json.loads(scope_path.read_text(encoding='utf-8'))
+    allowed={e['path']:e['before_sha256'] for k in ('existing_production','existing_verification') for e in approved[k]}
+    assert set(data['replacements'])<=set(allowed)
+    assert set(data['additions'])<={e['path'] for k in ('new_production','new_verification') for e in approved[k]}
+    assert hashlib.sha256(review_reference(data['frozen_labels_path']).read_bytes()).hexdigest()=='feea8a9b73663af6e4a03f17ce15c7527a3aaebb362b0498b298a47ada784640'
+    assert hashlib.sha256((BACKEND/'tests/fixtures/description_labels.v1.json').read_bytes()).hexdigest()=='feea8a9b73663af6e4a03f17ce15c7527a3aaebb362b0498b298a47ada784640'
+    change=data['replacements'].get(path)
+    if change:
+        assert change['before']==previous==allowed[path],path
+        expected=attribute_digest(path,change['after'])
+        assert hashlib.sha256((BACKEND.parent/path).read_bytes()).hexdigest()==expected,path
+        return expected
+    return attribute_digest(path,previous)
+
+
+def phase_a_manifest():
+    data=json.loads((BACKEND/'tests/fixtures/phase_a_wearer_sources.v1.json').read_text(encoding='utf-8'))
+    assert data['version']=='phase-a-wearer-sources-1.0.0'
+    assert data['workspace_applied'] is False and data['runtime_changed'] is False
+    scope_path=review_reference(data['approved_scope_path'])
+    assert hashlib.sha256(scope_path.read_bytes()).hexdigest()=='0cb83bb84caf71ca4f4d4f0922a1f3ec5621a6ab10e5022b1a0c542944b23b7e'
+    scope=json.loads(scope_path.read_text('utf-8'))
+    amendment_path=review_reference(data['fixture_amendment_path'])
+    assert hashlib.sha256(amendment_path.read_bytes()).hexdigest()=='8d5729246a131419d99ab4dae4f10e54f0b8cab49fbb55c56b4f0efc9d4131bb'
+    amendment=json.loads(amendment_path.read_text('utf-8'))
+    assert amendment['version']=='phase-a-fixture-amendment-1.0.0' and amendment['owner_answer']=='Approve this fixture-only addition'
+    assert amendment['existing_verification_addition']=='backend/tests/test_garment_workflow.py'
+    assert set(data['allowed_existing'])==set(scope['existing_production'])|set(scope['existing_verification_changes'])|{amendment['existing_verification_addition']}
+    assert set(data['new_production'])==set(scope['new_production'])
+    assert hashlib.sha256(review_reference(data['frozen_labels_path']).read_bytes()).hexdigest()=='4d70ca349fe86a82620a277743c4b248ea9765d9734ef7bed907d7cdd1798ec5'
+    return data
+
+
+def phase_a_digest(path,previous):
+    data=phase_a_manifest()
+    entry=data['captured_sources'].get(path)
+    if entry is None:return previous
+    assert previous in entry['ancestry'],('Unrecognised source predecessor',path)
+    if entry['start']!=entry['final']:assert path in data['allowed_existing'],path
+    expected=description_digest(path,entry['final'])
+    assert hashlib.sha256((BACKEND.parent/path).read_bytes()).hexdigest()==expected,path
+    return expected
 
 
 def recommendation_refinement_digest(path, previous):
@@ -11,9 +263,10 @@ def recommendation_refinement_digest(path, previous):
     assert data['version']=='recommendation-refinement-sources-1.0.0' and data['default_activation'] is False
     entry=data['source_guard'] if path=='backend/tests/integration_source_guard.py' else data['replacements'].get(path)
     if entry and previous in (entry['before'],entry['after']):
-        assert hashlib.sha256((BACKEND.parent/path).read_bytes()).hexdigest()==entry['after'],path
-        return entry['after']
-    return previous
+        expected=phase_a_digest(path,entry['after'])
+        assert hashlib.sha256((BACKEND.parent/path).read_bytes()).hexdigest()==expected,path
+        return expected
+    return phase_a_digest(path,previous)
 
 
 def context_18_activation_correction_manifest(verify=False):
@@ -115,7 +368,7 @@ def automatic_admission_manifest(verify=True):
             assert hashlib.sha256((BACKEND.parent/name).read_bytes()).hexdigest() == context_relevance_digest(name,change['after']), name
     if verify:
         for name, digest in data['additions'].items():
-            assert hashlib.sha256((BACKEND.parent/name).read_bytes()).hexdigest() == digest, name
+            assert hashlib.sha256((BACKEND.parent/name).read_bytes()).hexdigest() == phase_a_digest(name,digest), name
     return data
 
 
@@ -144,7 +397,7 @@ def owner_style_manifest():
         assert set(change) == {'before','after'}
         assert hashlib.sha256((BACKEND.parent/name).read_bytes()).hexdigest() == automatic_admission_digest(name,change['after']), name
     for name, digest in data['additions'].items():
-        assert hashlib.sha256((BACKEND.parent/name).read_bytes()).hexdigest() == digest, name
+        assert hashlib.sha256((BACKEND.parent/name).read_bytes()).hexdigest() == phase_a_digest(name,digest), name
     return data
 
 
@@ -389,11 +642,11 @@ def compact_integration():
 
 
 def integrated_digest(name,previous):
-    change=compact_integration()['replacements'].get(name)
-    if change:
-        assert change['before']==previous,name
-        return score_certificate_digest(name, forward_style_digest(name, saved_outfit_digest(name, default_digest(name,change['after']))))
-    return score_certificate_digest(name, forward_style_digest(name, saved_outfit_digest(name, default_digest(name,previous))))
+    """Accepted ancestor entry; acyclic exact descendant resolution."""
+    source_hash(name,previous)
+    data=attribute_manifest();path='backend/'+name
+    baseline=data['baseline_application'][name]
+    return p2_digest(path,data['replacements'][path]['after'] if path in data['replacements'] else baseline)
 
 
 def invariant_request_digest(name,previous):
@@ -540,7 +793,10 @@ def saved_outfit_digest(name, previous):
     return previous
 
 
+@lru_cache(maxsize=1)
 def approved():
+    # Capture the expected descendant map once for this frozen certification
+    # process. source_hash still compares every actual file on every call.
     hashes = json.loads((BACKEND/"tests/fixtures/integration_actions_sources.v1.json").read_text())
     replacements=assistant_integration()["replacements"]
     for name, digest in hashes.items():
@@ -588,7 +844,7 @@ def prepared_decision_additions():
     return hashes
 
 
-def source_set(current, original, extras=()):
+def _legacy_source_set(current, original, extras=()):
     additions = {**failure_logging_manifest()['additions'], **suitability_controls_manifest()['additions'], **experimental_additions(), **pair_cache_additions(), **decision_additions(), **prepared_decision_additions(), **assistant_integration()["additions"], **critical_path_additions()['additions'], **compact_additions(), **compact_integration()['additions']}
     additions.update({name.removeprefix('backend/'):digest for name,digest in durable_logout_manifest()['additions'].items()})
     additions.update({name.removeprefix('backend/'):digest for name,digest in wedding_manifest()['additions'].items() if name.startswith('backend/')})
@@ -597,11 +853,15 @@ def source_set(current, original, extras=()):
     additions.update({name.removeprefix('backend/'):digest for name,digest in owner_style_manifest()['additions'].items()})
     additions.update({name.removeprefix('backend/'):digest for name,digest in automatic_admission_manifest()['additions'].items()})
     additions.update({name.removeprefix('backend/'):value for name,value in context_relevance_manifest()['additions'].items() if name.startswith('backend/')})
+    for name,value in {**phase_a_manifest()['new_production'],**json.loads((BACKEND/'tests/fixtures/description_sources.v1.json').read_text(encoding='utf-8'))['additions'],**attribute_manifest()['additions']}.items():
+        if name.startswith('backend/app/'):
+            assert hashlib.sha256((BACKEND.parent/name).read_bytes()).hexdigest()==description_digest(name,value),name
+            additions[name.removeprefix('backend/')]=value
     assert not set(additions) & (set(original) | set(approved()) | set(extras))
     assert current == set(original) | set(approved()) | set(extras) | set(additions)
 
 
-def source_hash(name, original_digest):
+def _legacy_source_hash(name, original_digest):
     replacements=assistant_integration()["replacements"]
     if name in replacements:
         legacy=json.loads((BACKEND/"tests/fixtures/integration_actions_sources.v1.json").read_text(encoding="utf-8"))
@@ -609,3 +869,93 @@ def source_hash(name, original_digest):
     expected=approved()
     digest=expected[name] if name in expected else failure_logging_digest(name, forward_style_digest(name, original_digest))
     assert hashlib.sha256((BACKEND/name).read_bytes()).hexdigest() == wedding_digest('backend/'+name,digest), name
+
+
+def source_set(current,original,extras=()):
+    """Exact approved A+B0+B1+B2 set; old archive/member manifests stay frozen."""
+    data=attribute_manifest();p2=p2_manifest();expected=set(data['baseline_application'])
+    expected.update(p.removeprefix('backend/') for p in data['additions'] if p.startswith('backend/app/'))
+    expected.update(p.removeprefix('backend/') for p in p2['additions'] if p.startswith('backend/app/'))
+    b3=b3_manifest() if (BACKEND/'tests/fixtures/b3_palette_sources.v1.json').exists() else {'additions':{}}
+    expected.update(p.removeprefix('backend/') for p in b3['additions'] if p.startswith('backend/app/'))
+    assert set(original)<=expected and set(extras)<=expected
+    reconciliation=reconciliation_manifest()
+    added={p.removeprefix('backend/') for p in reconciliation['additions'] if p.startswith('backend/app/')}
+    expected.update(added)
+    assert current==expected
+    for name in expected:
+        path='backend/'+name
+        previous=data['baseline_application'].get(name)
+        after=(reconciliation_digest(path,None) if name in added else b3_digest(path,None) if path in b3['additions'] else performance_digest(path,p2['additions'][path]) if path in p2['additions'] else
+            p2_digest(path,data['replacements'][path]['after'] if path in data['replacements'] else data['additions'].get(path,previous)))
+        assert hashlib.sha256((BACKEND/name).read_bytes()).hexdigest()==after,name
+
+
+def source_hash(name,original_digest):
+    """Verify a frozen historical ancestor and every current descendant byte."""
+    data=attribute_manifest();path='backend/'+name
+    assert original_digest in data['historical_source_ancestry'].get(name,()),('Unknown frozen ancestor',name)
+    previous=data['baseline_application'][name]
+    expected=p2_digest(path,data['replacements'][path]['after'] if path in data['replacements'] else previous)
+    assert hashlib.sha256((BACKEND/name).read_bytes()).hexdigest()==expected,name
+
+
+RECONCILIATION_ROOT=review_path('phase_regression_contract_reconciliation_20261107')
+RECONCILIATION_SCOPE='6914426ba97ebd99caa5382b0bc0f5bdf1ffa4382a123f4e3991b324ad7831c3'
+
+
+def validate_reconciliation_manifest(data):
+    root=RECONCILIATION_ROOT
+    scope_path=root/'approved-contract/proposed-source-scope.json'
+    assert hashlib.sha256(scope_path.read_bytes()).hexdigest()==RECONCILIATION_SCOPE==data['scope_sha256']
+    scope=json.loads(scope_path.read_text(encoding='utf-8'))
+    approval=json.loads((root/'approval.json').read_text(encoding='utf-8'))
+    assert approval['answer']=='Approve exact isolated reconciliation scope, version contracts and RR-CP0\u2013CP6'
+    assert approval['scope_sha256']==RECONCILIATION_SCOPE
+    for name,key in (('SCHEMA_VERSION_RECONCILIATION_CONTRACT.json','schema_contract_sha256'),('INDEPENDENT_ACCEPTANCE_SPECIFICATION.json','acceptance_spec_sha256')):
+        assert hashlib.sha256((root/'approved-contract'/name).read_bytes()).hexdigest()==scope[key]==approval[key]
+    assert data['approval_sha256']==hashlib.sha256((root/'approval.json').read_bytes()).hexdigest()
+    assert data['baseline_sha256']==hashlib.sha256((root/'baseline-source-hashes.json').read_bytes()).hexdigest()
+    base=json.loads((root/'baseline-source-hashes.json').read_text(encoding='utf-8'))
+    original=root.parent/'phase_final_consolidated_verification_20261106/final-combined-source-manifest.json'
+    assert hashlib.sha256(original.read_bytes()).hexdigest()==scope['baseline_manifest_sha256']
+    assert base==json.loads(original.read_text(encoding='utf-8'))['files'] and len(base)==833
+    allowed={e['path']:e['before_sha256'] for k in ('existing_production','existing_verification') for e in scope[k]}
+    additions={e['path'] for k in ('new_production','new_support','new_verification') for e in scope[k]}
+    assert data['version']=='regression-reconciliation-sources-1.0.0' and data['default_activation'] is False
+    assert data['historical_labels_unchanged'] is True and data['additional_historical_exceptions']==[]
+    assert set(data['replacements'])<=set(allowed) and set(data['additions'])<=additions
+    assert set(data['files'])==set(base)|set(data['additions'])
+    for path,value in data['files'].items():
+        assert type(value) is str and len(value)==64
+        if path in data['replacements']:
+            entry=data['replacements'][path]
+            assert entry['before']==base[path]==allowed[path] and entry['after']==value,path
+        elif path in data['additions']:assert data['additions'][path]==value,path
+        else:assert base[path]==value,('Unapproved reconciliation edit',path)
+        assert hashlib.sha256((BACKEND.parent/path).read_bytes()).hexdigest()==value,path
+    fixture=json.loads((BACKEND/'tests/fixtures/reconciliation_sources.v1.json').read_text(encoding='utf-8'))
+    assert fixture['contract']=='regression-reconciliation-delivery-1.0.0' and fixture['default_activation'] is False
+    assert fixture['scope_sha256']==RECONCILIATION_SCOPE and fixture['historical_labels_unchanged'] is True and fixture['additional_historical_exceptions']==[]
+    assert fixture['files']=={p:h for p,h in data['files'].items() if p in set(data['replacements'])|set(data['additions']) and p!='backend/tests/fixtures/reconciliation_sources.v1.json'}
+    return data
+
+
+@lru_cache(maxsize=1)
+def reconciliation_manifest():
+    path=Path(os.environ.get('RR_MANIFEST_PATH',str(RECONCILIATION_ROOT/'checkpoint-manifest.json'))).resolve()
+    assert path.is_relative_to(RECONCILIATION_ROOT.resolve())
+    return validate_reconciliation_manifest(json.loads(path.read_text(encoding='utf-8')))
+
+
+def reconciliation_digest(path,previous):
+    if not (BACKEND/'tests/fixtures/reconciliation_sources.v1.json').exists():return previous
+    data=reconciliation_manifest()
+    if path in data['replacements']:
+        entry=data['replacements'][path]
+        assert entry['before']==previous,('Unknown reconciliation predecessor',path)
+        return entry['after']
+    if path in data['additions']:
+        assert previous is None,('Unknown new-path predecessor',path)
+        return data['additions'][path]
+    return previous

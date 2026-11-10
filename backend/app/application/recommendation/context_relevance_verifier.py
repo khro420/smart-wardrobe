@@ -47,11 +47,22 @@ class PublicAlignmentFacts:
 
 def validate_evidence(data,score,candidate=None,request=None):
     """Decode allowlisted archived revisions, never today's active catalogue."""
+    if type(data) is dict and data.get('version')=='context-relevance-evidence-3.0.0':
+        from app.application.recommendation.palette_compatibility_verifier import validate_relative
+        return validate_relative(data,score,candidate,request)
+    if type(data) is dict and data.get('version')=='context-relevance-evidence-2.0.0':
+        from app.application.recommendation.attribute_preference_verifier import validate_relative
+        return validate_relative(data,score,candidate,request)
     required={'version','explanation_version','policy_version','policy_sha256','catalogue_version','catalogue_sha256',
         'requested_profile','actual_profile','selection_mode','fallback_reason','objective','coverage','strongest_unresolved',
         'selected_members','winning_key','numeric_ties','preference_denominator','preferences','relative_R','score_components','total','weights'}
-    scoped=type(data) is dict and data.get('version')=='context-relevance-evidence-1.2.0'
-    expanded=type(data) is dict and data.get('version') in ('context-relevance-evidence-1.1.0','context-relevance-evidence-1.2.0')
+    attribute=type(data) is dict and data.get('version')=='context-relevance-evidence-1.3.0'
+    scoped=type(data) is dict and data.get('version') in ('context-relevance-evidence-1.2.0','context-relevance-evidence-1.3.0')
+    expanded=type(data) is dict and data.get('version') in ('context-relevance-evidence-1.1.0','context-relevance-evidence-1.2.0','context-relevance-evidence-1.3.0')
+    if attribute:
+        from app.domain.value_objects.context_relevance import require_digest
+        required|={'attribute_scope_sha256','attribute_selection_sha256'}
+        require_digest(data.get('attribute_scope_sha256'));require_digest(data.get('attribute_selection_sha256'))
     if scoped:
         from app.domain.value_objects.context_relevance import require_digest
         required.add('selection_scope_sha256')
@@ -63,7 +74,7 @@ def validate_evidence(data,score,candidate=None,request=None):
         record=archived_record(data.get('policy_version'),data.get('policy_sha256'),data.get('catalogue_version'),data.get('catalogue_sha256'),data.get('bundle_sha256'))
     if type(data) is not dict or set(data)!=required:raise ValueError('Exact ranking proof schema required.')
     bounded_json(data)
-    if (data['version']!=('context-relevance-evidence-1.2.0' if scoped else 'context-relevance-evidence-1.1.0' if expanded else 'context-relevance-evidence-1.0.0') or data['explanation_version']!=('context-relevance-explanation-1.2.0' if scoped else 'context-relevance-explanation-1.1.0' if expanded else 'context-relevance-explanation-1.0.0')
+    if (data['version']!=('context-relevance-evidence-1.3.0' if attribute else 'context-relevance-evidence-1.2.0' if scoped else 'context-relevance-evidence-1.1.0' if expanded else 'context-relevance-evidence-1.0.0') or data['explanation_version']!=('context-relevance-explanation-1.3.0' if attribute else 'context-relevance-explanation-1.2.0' if scoped else 'context-relevance-explanation-1.1.0' if expanded else 'context-relevance-explanation-1.0.0')
         or (record is None if expanded else (data['policy_version'],data['policy_sha256'],data['catalogue_version'],data['catalogue_sha256']) not in ARCHIVED_REVISIONS)
         or data['requested_profile']!=PROFILE or data['actual_profile']!=score.profile_name):raise ValueError('Unapproved archived ranking identity.')
     if expanded:
@@ -78,7 +89,7 @@ def validate_evidence(data,score,candidate=None,request=None):
     if any(type(coverage[k]) is not int or not 0<=coverage[k]<=1000000 for k in names-{'global_optimum_certified'}):raise ValueError('Invalid coverage counts.')
     partitions=('point_candidates','unresolved_candidates','objective_unavailable_candidates')+ (('already_seen','below_floor_points','unresolved_below_floor') if scoped else ())
     if coverage['hard_passed']<1 or coverage['hard_passed']!=sum(coverage[k] for k in partitions):raise ValueError('Incomplete coverage ledger.')
-    if scoped and (coverage['objective_unavailable_candidates'] or data['selection_mode']!='best_evidenced_with_coverage_v1'):
+    if scoped and not attribute and (coverage['objective_unavailable_candidates'] or data['selection_mode']!='best_evidenced_with_coverage_v1'):
         raise ValueError('Refinement cannot store a baseline or unavailable objective.')
     objective=RelativeObjective(**data['objective']) if data['objective'] is not None else None
     if objective:

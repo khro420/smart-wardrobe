@@ -1,0 +1,265 @@
+{
+  "version": "recorded-palette-compatibility-1.0.0",
+  "profile": "recorded_palette_compatibility_v1",
+  "default_activation": false,
+  "anchors": {
+    "#000000": "black",
+    "#ffffff": "white",
+    "#808080": "grey",
+    "#000080": "navy",
+    "#0000ff": "blue",
+    "#ff0000": "red",
+    "#008000": "green",
+    "#ffff00": "yellow",
+    "#ffa500": "orange",
+    "#ffc0cb": "pink",
+    "#800080": "purple",
+    "#a52a2a": "brown",
+    "#f5f5dc": "beige"
+  },
+  "achromatic": [
+    "black",
+    "white",
+    "grey"
+  ],
+  "style_aliases": {
+    "casual": "casual",
+    "classic": "classic",
+    "formal": "formal",
+    "minimal": "minimal",
+    "smart casual": "smart casual",
+    "sporty": "sporty",
+    "streetwear": "streetwear",
+    "vintage": "vintage",
+    "bohemian": "bohemian",
+    "casual style": "casual",
+    "casual look": "casual",
+    "classic style": "classic",
+    "classic look": "classic",
+    "classic outfit": "classic",
+    "formal style": "formal",
+    "formal look": "formal",
+    "minimalist": "minimal",
+    "minimalist style": "minimal",
+    "smart casual style": "smart casual",
+    "smart casual look": "smart casual",
+    "sporty style": "sporty",
+    "athletic look": "sporty",
+    "streetwear style": "streetwear",
+    "vintage style": "vintage",
+    "boho": "bohemian",
+    "boho style": "bohemian"
+  },
+  "attribute_policy": {
+    "version": "attribute-evidence-policy-1.0.0",
+    "fields": {
+      "garment_name": {
+        "policy": "strict_record",
+        "rule": "Current bounded exact NFC strict-snapshot name; recorded name only, never parsed for hidden attributes.",
+        "model_suggestion": "Blocked for new hard evidence",
+        "source_qualified_automatic_measurement": "No approved emitter/measurement registry exists; Blocked pending separate amendment"
+      },
+      "category": {
+        "policy": "strict_record",
+        "rule": "Existing exact canonical strict category/role rules; category does not prove fine sleeve/neckline.",
+        "model_suggestion": "Blocked for new hard evidence",
+        "source_qualified_automatic_measurement": "No approved emitter/measurement registry exists; Blocked pending separate amendment"
+      },
+      "style": {
+        "policy": "existing_saved_style",
+        "rule": "Original saved-style/source/currentness gate for legacy singleton requests; new recorded set operations accept current explicit B0 selection. Ordinary context singleton gate stays authoritative.",
+        "model_suggestion": "Blocked for new hard evidence",
+        "source_qualified_automatic_measurement": "No approved emitter/measurement registry exists; Blocked pending separate amendment"
+      },
+      "primary_colour": {
+        "policy": "legacy_named_or_selected_exact",
+        "rule": "Existing named primary operations retain original mapper; NEW exact hex needs current explicit selected B0 channel. No fallback-black measurement certification.",
+        "model_suggestion": "Blocked for new hard evidence",
+        "source_qualified_automatic_measurement": "No approved emitter/measurement registry exists; Blocked pending separate amendment"
+      },
+      "secondary_colour": {
+        "policy": "selected_current",
+        "rule": "Explicit current selected secondary; exact anchors may yield named family; never borrow primary or stale palette[1].",
+        "model_suggestion": "Blocked for new hard evidence",
+        "source_qualified_automatic_measurement": "No approved emitter/measurement registry exists; Blocked pending separate amendment"
+      },
+      "palette_colour": {
+        "policy": "selected_current",
+        "rule": "Current explicit palette selection; exact identity or pinned exact hex anchor family. Cream has no registered anchor and is blocked for palette family matching.",
+        "model_suggestion": "Blocked for new hard evidence",
+        "source_qualified_automatic_measurement": "No approved emitter/measurement registry exists; Blocked pending separate amendment"
+      },
+      "palette_coverage": {
+        "policy": "selected_current",
+        "rule": "Current selected palette exact recorded fraction; unknown mass bounded; no textile/whole-outfit coverage claim.",
+        "model_suggestion": "Blocked for new hard evidence",
+        "source_qualified_automatic_measurement": "No approved emitter/measurement registry exists; Blocked pending separate amendment"
+      },
+      "pattern": {
+        "policy": "selected_current",
+        "rule": "Current explicit B0 owner selection; unregistered predicted labels remain unqualified even with matching spelling.",
+        "model_suggestion": "Blocked for new hard evidence",
+        "source_qualified_automatic_measurement": "No approved emitter/measurement registry exists; Blocked pending separate amendment"
+      },
+      "silhouette": {
+        "policy": "selected_current",
+        "rule": "Current explicit B0 owner observation; no physical fit/size claim or detector-null fallback promotion.",
+        "model_suggestion": "Blocked for new hard evidence",
+        "source_qualified_automatic_measurement": "No approved emitter/measurement registry exists; Blocked pending separate amendment"
+      },
+      "neckline": {
+        "policy": "selected_current",
+        "rule": "Current explicit B0 owner observation on applicable upper-body role; no reserved tag parsing.",
+        "model_suggestion": "Blocked for new hard evidence",
+        "source_qualified_automatic_measurement": "No approved emitter/measurement registry exists; Blocked pending separate amendment"
+      },
+      "sleeve_length": {
+        "policy": "selected_current",
+        "rule": "Current selected fine length consistent with category; no long=>wrist-length or vest=>sleeveless inference.",
+        "model_suggestion": "Blocked for new hard evidence",
+        "source_qualified_automatic_measurement": "No approved emitter/measurement registry exists; Blocked pending separate amendment"
+      },
+      "material": {
+        "policy": "owner_reported_membership",
+        "rule": "Current B0 owner-selected/reported label membership; no inferred fibre percentage/purity. Unsure blocks both polarities.",
+        "model_suggestion": "Blocked for new hard evidence",
+        "source_qualified_automatic_measurement": "No approved emitter/measurement registry exists; Blocked pending separate amendment"
+      },
+      "colour_temperature": {
+        "policy": "selected_current",
+        "rule": "Explicit current owner observation; neutral fallback without source not accepted.",
+        "model_suggestion": "Blocked for new hard evidence",
+        "source_qualified_automatic_measurement": "No approved emitter/measurement registry exists; Blocked pending separate amendment"
+      },
+      "colour_dominance": {
+        "policy": "selected_current",
+        "rule": "Explicit true/false current owner observation; absent is never false.",
+        "model_suggestion": "Blocked for new hard evidence",
+        "source_qualified_automatic_measurement": "No approved emitter/measurement registry exists; Blocked pending separate amendment"
+      },
+      "descriptive_tag": {
+        "policy": "selected_literal",
+        "rule": "Current explicitly selected literal tag set, reserved namespaces and legacy field tags excluded from new literal request channel.",
+        "model_suggestion": "Blocked for new hard evidence",
+        "source_qualified_automatic_measurement": "No approved emitter/measurement registry exists; Blocked pending separate amendment"
+      },
+      "condition": {
+        "policy": "reviewed_current",
+        "rule": "Original Known AppearanceEvidence.current(snapshot), dated owner observation clean_intact/needs_attention. Unknown is unresolved.",
+        "model_suggestion": "Blocked for new hard evidence",
+        "source_qualified_automatic_measurement": "No approved emitter/measurement registry exists; Blocked pending separate amendment"
+      },
+      "construction_collared": {
+        "policy": "reviewed_current",
+        "rule": "Original current reviewed collared_neckline boolean; no mapping from neckline categories.",
+        "model_suggestion": "Blocked for new hard evidence",
+        "source_qualified_automatic_measurement": "No approved emitter/measurement registry exists; Blocked pending separate amendment"
+      },
+      "construction_structured": {
+        "policy": "reviewed_current",
+        "rule": "Original current reviewed structured_shape boolean; no inference from style.",
+        "model_suggestion": "Blocked for new hard evidence",
+        "source_qualified_automatic_measurement": "No approved emitter/measurement registry exists; Blocked pending separate amendment"
+      },
+      "construction_tailored": {
+        "policy": "reviewed_current",
+        "rule": "Original current reviewed tailored_cut boolean; no inference from silhouette.",
+        "model_suggestion": "Blocked for new hard evidence",
+        "source_qualified_automatic_measurement": "No approved emitter/measurement registry exists; Blocked pending separate amendment"
+      }
+    },
+    "operators": {
+      "in": [
+        "category",
+        "primary_colour",
+        "secondary_colour",
+        "pattern",
+        "silhouette",
+        "neckline",
+        "sleeve_length",
+        "colour_temperature",
+        "condition"
+      ],
+      "contains_any": [
+        "style",
+        "material",
+        "palette_colour",
+        "descriptive_tag"
+      ],
+      "contains_all": [
+        "style",
+        "material",
+        "palette_colour",
+        "descriptive_tag"
+      ],
+      "exact_text": [
+        "garment_name",
+        "descriptive_tag"
+      ],
+      "exact_hex": [
+        "primary_colour",
+        "secondary_colour",
+        "palette_colour"
+      ],
+      "coverage_ge": [
+        "palette_coverage"
+      ],
+      "bool_eq": [
+        "colour_dominance",
+        "construction_collared",
+        "construction_structured",
+        "construction_tailored"
+      ]
+    },
+    "model_sources": [],
+    "measured_sources": [],
+    "field_map": {
+      "palette_colour": "colour_palette",
+      "palette_coverage": "colour_palette",
+      "descriptive_tag": "descriptive_tags"
+    },
+    "reviewed_map": {
+      "condition": [
+        "clean_intact",
+        "needs_attention"
+      ],
+      "construction_collared": "collared_neckline",
+      "construction_structured": "structured_shape",
+      "construction_tailored": "tailored_cut"
+    },
+    "primary_aliases": {
+      "black": "black",
+      "white": "white",
+      "grey": "grey",
+      "gray": "grey",
+      "navy": "navy",
+      "navy blue": "navy",
+      "blue": "blue",
+      "red": "red",
+      "green": "green",
+      "yellow": "yellow",
+      "orange": "orange",
+      "pink": "pink",
+      "purple": "purple",
+      "brown": "brown",
+      "beige": "beige",
+      "cream": "cream"
+    },
+    "qualification_note": "Known recorded facts do not certify physical truth; no additional review or scoring bonus."
+  },
+  "model_sources": [],
+  "measured_sources": [],
+  "interpretation": "recorded_fraction_proxy_not_physical_measurement",
+  "colour_bounds": "Q,Q+1-m_g*m_h",
+  "decision": "mean_pair_mean_atom_interval_midpoint",
+  "no_pair": "1/2",
+  "weights": [
+    "3/5",
+    "1/5",
+    "1/5"
+  ],
+  "maximum_palette_entries": 5,
+  "maximum_garments": 100,
+  "pair_capacity": 19900,
+  "aggregate_capacity": 256
+}

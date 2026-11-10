@@ -1,3 +1,4 @@
+from tests.current_contract_fixtures import wearer_id, wearer, history_scope
 """O2 checks for the confirmed-garment recommendation identifier boundary."""
 
 from io import BytesIO
@@ -52,7 +53,7 @@ class RecommendationBoundaryTests(unittest.TestCase):
         with TestClient(app, headers={"X-User-Id": "recommendation-owner"}) as owner:
             owned = confirmed_garment(owner, "Owned recommendation top", "navy")
             # Historical fixture only; public legacy generation is closed by J-14.
-            recommendation = recommendation_service.create_recommendation("recommendation-owner", "Use my confirmed wardrobe")
+            recommendation = recommendation_service.create_recommendation("recommendation-owner", "Use my confirmed wardrobe",profile_id=wearer_id("recommendation-owner"))
         with TestClient(app, headers={"X-User-Id": "recommendation-other"}) as other:
             foreign = confirmed_garment(other, "Other person's top", "red")
 

@@ -1,3 +1,4 @@
+from tests.current_contract_fixtures import wearer_id, wearer, history_scope
 """J-4 real confirmed wardrobes, authenticated HTTP, actual composition; no model claims."""
 import json
 import os
@@ -174,7 +175,7 @@ def test_each_member_aggregate_including_outerwear(integrated,index,state):
             elif state=='deny_and_unknown':tags=[tag(decision='deny')]
         make(client,create,category,tags)
     # Maximum colour preference and matching style cannot rescue a mandatory failure.
-    with db.connection() as c:c.execute("INSERT INTO user_preferences VALUES('p','style-owner','colours','{\"values\":[\"blue\"]}',1,'test',1,'now','now')")
+    with db.connection() as c:c.execute('INSERT INTO user_preferences (id,user_id,profile_id,preference_type,preference_value_json,weight,source,is_active,created_at,updated_at) VALUES(\'p\',\'style-owner\',?,\'colours\',\'{"values":["blue"]}\',1,\'test\',1,\'now\',\'now\')', (wearer_id('style-owner'),))
     _,result=submit(client,'Suggest a casual outfit for campus with vintage style using blue colours with a top and trousers and outerwear')
     expected='Selected' if state=='allow' else 'NoMatchingCandidates' if state in ('deny','deny_and_unknown') else 'InsufficientEvidence'
     assert result['outcome']==expected,result
@@ -215,8 +216,8 @@ def test_inflight_capture_survives_test_only_composition_rebind(integrated,monke
     client,create=integrated;make(client,create,tags=[tag()])
     selected_service=assistant_service()
     original=selected_service.preference_query.get_active_preferences
-    def switch_after_capture(owner):
-        rows=original(owner)
+    def switch_after_capture(owner,wearer=None):
+        rows=original(owner,wearer)
         monkeypatch.setenv('SMART_WARDROBE_ASSISTANT_SUITABILITY_ENABLED','false')
         configure_local_workflow()
         return rows

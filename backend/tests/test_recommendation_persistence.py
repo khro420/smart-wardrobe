@@ -218,7 +218,7 @@ def test_foreign_keys_unique_order_and_chat(store):
         with pytest.raises(sqlite3.IntegrityError):
             c.execute("INSERT INTO recommendation_submissions VALUES('other','assistant','foreign','hash',?)", (result["id"],))
         with pytest.raises(sqlite3.IntegrityError):
-            c.execute("INSERT INTO recommendations SELECT 'duplicate',user_id,chat_id,recommendation_type,status,created_at,expires_at,request_match_score,compatibility_score,preference_score,total_score FROM recommendations WHERE id=?", (result["id"],))
+            c.execute("INSERT INTO recommendations SELECT 'duplicate',user_id,profile_id,chat_id,recommendation_type,status,created_at,expires_at,request_match_score,compatibility_score,preference_score,total_score FROM recommendations WHERE id=?", (result["id"],))
 
 
 @pytest.mark.parametrize("conflict", [False, True])
@@ -250,7 +250,7 @@ def test_migration_conflict_audit_is_atomic(tmp_path, case):
         c.executescript(db.SCHEMA)
         for owner in ("owner", "other"):
             c.execute("INSERT INTO users VALUES(?,?, '',?,'active','now','now')", (owner, owner+'@test', owner))
-        c.execute("INSERT INTO nlp_chats VALUES('chat',?,'request',NULL,NULL,'completed','now','now')", ("other" if case == "foreign_chat" else "owner",))
+        c.execute("INSERT INTO nlp_chats (id,user_id,request_text,interpreted_intent,extracted_entities_json,status,created_at,completed_at) VALUES('chat',?,'request',NULL,NULL,'completed','now','now')", ("other" if case == "foreign_chat" else "owner",))
         chat = "missing" if case == "missing_chat" else "chat"
         c.execute("INSERT INTO recommendations(id,user_id,chat_id,recommendation_type,status,created_at) VALUES('r','owner',?,'assistant','available','now')", (chat,))
         if case == "duplicate_chat":

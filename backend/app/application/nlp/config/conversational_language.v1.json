@@ -1,0 +1,141 @@
+{
+  "version": "conversational-language-1.1.3",
+  "profile": "conversational_language_v1",
+  "base_bundle": "context_18_v1",
+  "contexts": {
+    "social.meal": [
+      "out\\s+to\\s+eat",
+      "(?:going|go)\\s+to\\s+eat",
+      "dining\\s+out",
+      "(?:grab(?:bing)?|get(?:ting)?)\\s+(?:some\\s+)?food",
+      "(?:going|heading|off)\\s+to\\s+(?:a\\s+|the\\s+)?restaurant",
+      "dinner|lunch|supper|meal",
+      "(?:outfit|clothes|clothing|wear|something)\\s+for\\s+(?:a\\s+|the\\s+)?restaurant",
+      "for\\s+(?:a\\s+|the\\s+)?restaurant(?=,\\s+(?:i\\s+need|i\\s+want|suggest)\\s+(?:an?\\s+)?(?:outfit|clothes|clothing))"
+    ],
+    "everyday.academic_attendance": [
+      "class(?:es)?|lectures?",
+      "(?:regular\\s+)?campus\\s+day",
+      "(?:to|for)\\s+(?:uni|university|campus)"
+    ],
+    "academic.library_study": [
+      "stud(?:y|ying)(?:\\s+session)?\\s+(?:at|in)\\s+(?:(?:a|the)\\s+)?library",
+      "library\\s+study(?:\\s+session)?",
+      "library\\s+to\\s+study"
+    ],
+    "academic.group_study": [
+      "group\\s+study(?:\\s+session)?",
+      "group\\s+project\\s+meeting(?:\\s+at\\s+university)?",
+      "meeting\\s+(?:my\\s+)?classmates\\s+for\\s+(?:a\\s+)?study\\s+session",
+      "stud(?:y|ying)\\s+with\\s+(?:my\\s+)?classmates"
+    ],
+    "professional.office_day": [
+      "(?:regular\\s+)?office(?:\\s+day)?",
+      "day\\s+at\\s+(?:the\\s+)?office"
+    ],
+    "professional.workplace_meeting": [
+      "(?:work|workplace|office)\\s+meeting",
+      "meeting\\s+(?:with\\s+)?(?:my\\s+)?colleagues(?:\\s+at\\s+(?:work|the\\s+office))?"
+    ],
+    "professional.job_interview": [
+      "job\\s+interview",
+      "interviewed\\s+for\\s+(?:a\\s+)?job"
+    ],
+    "academic.presentation": [
+      "(?:uni|university)\\s+presentation",
+      "presentation\\s+(?:at|for)\\s+(?:(?:my|a|the)\\s+)?(?:uni|university)",
+      "presenting\\s+at\\s+(?:uni|university)"
+    ],
+    "ceremony.wedding": [
+      "wedding(?:\\s+guest)?"
+    ],
+    "everyday.shopping": [
+      "shopping(?:\\s+trip)?",
+      "(?:to\\s+)?the\\s+shops"
+    ],
+    "everyday.casual_outing": [
+      "casual\\s+outing",
+      "(?:hang(?:ing)?\\s+out|(?:going\\s+)?out)\\s+with\\s+(?:my\\s+)?friends",
+      "meet\\s+friends\\s+for\\s+a\\s+casual\\s+outing"
+    ],
+    "social.date": [
+      "dinner\\s+date",
+      "date\\s+(?:for|over)\\s+dinner",
+      "date(?:\\s+night)?"
+    ],
+    "social.birthday_gathering": [
+      "birthday\\s+(?:party|gathering|celebration)"
+    ],
+    "social.house_gathering": [
+      "(?:my\\s+)?friend(?:\\x27s|s\\x27)\\s+(?:house|place)",
+      "(?:gathering|visit)\\s+(?:at|to)\\s+(?:my\\s+)?friend(?:\\x27s|s\\x27)\\s+(?:house|place)",
+      "house\\s+gathering",
+      "visiting\\s+friends\\s+at\\s+their\\s+house"
+    ],
+    "leisure.cinema_outing": [
+      "(?:watch(?:ing)?|see(?:ing)?|catch(?:ing)?)\\s+(?:(?:a|the)\\s+)?(?:movie|film)(?:\\s+at\\s+(?:the\\s+)?cinema)?",
+      "trip\\s+to\\s+(?:the\\s+)?cinema",
+      "cinema(?:\\s+outing)?|movies"
+    ],
+    "social.cafe_meetup": [
+      "cafe\\s+meetup",
+      "coffee(?:\\s+meetup|\\s+with\\s+(?:my\\s+|a\\s+)?(?:someone|friends?|family|colleagues))?",
+      "meeting\\s+(?:my\\s+)?(?:someone|friends?|family)\\s+at\\s+(?:a\\s+)?cafe"
+    ],
+    "leisure.city_sightseeing": [
+      "city\\s+sightseeing(?:\\s+(?:trip|outing))?",
+      "sightseeing\\s+(?:around|in)\\s+(?:the\\s+)?city",
+      "(?:see(?:ing)?|explor(?:e|ing))\\s+(?:the\\s+)?city\\s+sights"
+    ],
+    "travel.journey": [
+      "(?:train|bus|flight)\\s+(?:journey|trip)",
+      "(?:train|bus|flight)\\s+for\\s+(?:a\\s+)?trip",
+      "trip\\s+by\\s+(?:bus|train)",
+      "travell?ing\\s+(?:by|on)\\s+(?:a\\s+)?(?:train|bus|flight)",
+      "(?:travel\\s+)?journey"
+    ]
+  },
+  "function_frames": [
+    "\\b(?:i['\\u2019]m|i\\s+am|i\\s+have|i['\\u2019]ve|i\\s+will|i['\\u2019]ll|i['\\u2019]d\\s+like|i\\s+would\\s+like|i\\s+want|i\\s+need(?:\\s+to\\s+go)?|we\\s+have)\\b",
+    "\\b(?:what\\s+(?:should|can)\\s+i\\s+wear|please\\s+help\\s+me\\s+dress|help\\s+me\\s+(?:dress|choose|pick)|can\\s+you\\s+find\\s+me|can\\s+i\\s+have)\\b",
+    "\\b(?:gonna|got|need|off|going|go|do|attend|visit|grab|meet|meeting|find|having|attending|visiting|working|watching|studying|presenting|giving|taking|take|spend|doing)\\b",
+    "\\b(?:plans|planned|coming\\s+up|this\\s+morning)\\b",
+    "\\bheading\\s+(?:for|to)\\b",
+    "\\bgetting\\s+ready\\s+for\\b",
+    "\\bim\\b(?=\\s+(?:going|gonna|having|heading|getting|attending|visiting|meeting|working|studying|watching|taking|travell?ing|exploring|presenting|giving|being|conducting|doing|sightseeing|off)\\b)",
+    "\\bive\\b(?=\\s+(?:got|planned)\\b)",
+    "\\bill\\b(?=\\s+(?:be|go|attend|have|meet|visit|wear|take|head|study|watch|travel|present|give)\\b)",
+    "\\bid\\s+like\\b",
+    "\\b(?:we['\\u2019]re|we\\s+are)\\b(?=\\s+(?:going|gonna|having|heading|getting|attending|visiting|meeting|working|studying|watching|taking|travell?ing|exploring|presenting|giving|being|conducting|off)\\b)",
+    "\\bit['\\u2019]?s\\s+time\\s+(?:for|to)\\b",
+    "\\bwanna\\b(?=\\s+(?:wear|go|attend|have|meet|visit|watch|study|travel|get|find|choose|pick)\\b)"
+  ],
+  "attribute_aliases": [
+    {
+      "pattern": "long[\\s-]+sleeves?|long[\\s-]+sleeved",
+      "field": "sleeve_length",
+      "value": "wrist-length"
+    },
+    {
+      "pattern": "loose[\\s-]+fitting",
+      "field": "silhouette",
+      "value": "loose"
+    }
+  ],
+  "scope": "Finite lexical supplement only. No new suitability, scoring, evidence or context authority.",
+  "member_binding_contract": "conversational-member-binding-1.1.0",
+  "bare_upper_noun_contract": "bare-upper-noun-binding-1.1.1",
+  "noun_descriptors": [
+    {
+      "pattern": "collared",
+      "field": "construction_collared",
+      "value": true
+    },
+    {
+      "pattern": "tailored",
+      "field": "construction_tailored",
+      "value": true
+    }
+  ],
+  "wording_contract": "garment-wording-descriptors-1.0.0"
+}

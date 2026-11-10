@@ -1,0 +1,3313 @@
+{
+  "specification": {
+    "contract": "verified-subtype-frozen-acceptance-1.0.0",
+    "status": "Frozen independently before production implementation; approval required",
+    "authority": "User requested project policy, unchanged original registries/assertions and exact proposed fictional owner declarations. Never replace expected outcomes with newly observed implementation output.",
+    "registry_sha256": "3d288b0b551aa518bb823dd9220300f7c1f24b16657ca719287380e4271cc479",
+    "fixture_plan_sha256": "c58972d1db67e52c9dc84bd5e3b98032569f33fad6a1d9480837835b63297c3b",
+    "source_scope_sha256": "4650eee57294a932c9c5bea5b8403174de76f9a324177c18bdbd0dc93177f322",
+    "eligibility_matrix": [
+      {
+        "wearer": "male",
+        "parent": "short_sleeve_top",
+        "state": "Known",
+        "value": "t_shirt",
+        "expected": "Permit"
+      },
+      {
+        "wearer": "male",
+        "parent": "short_sleeve_top",
+        "state": "Known",
+        "value": "polo_shirt",
+        "expected": "Permit"
+      },
+      {
+        "wearer": "male",
+        "parent": "short_sleeve_top",
+        "state": "Known",
+        "value": "button_up_shirt",
+        "expected": "Permit"
+      },
+      {
+        "wearer": "male",
+        "parent": "short_sleeve_top",
+        "state": "Known",
+        "value": "knit_top",
+        "expected": "Permit"
+      },
+      {
+        "wearer": "male",
+        "parent": "short_sleeve_top",
+        "state": "Known",
+        "value": "blouse",
+        "expected": "Deny"
+      },
+      {
+        "wearer": "male",
+        "parent": "short_sleeve_top",
+        "state": "Absent",
+        "value": null,
+        "expected": "Unknown"
+      },
+      {
+        "wearer": "male",
+        "parent": "short_sleeve_top",
+        "state": "Unspecified",
+        "value": null,
+        "expected": "Unknown"
+      },
+      {
+        "wearer": "male",
+        "parent": "short_sleeve_top",
+        "state": "Suggestion",
+        "value": null,
+        "expected": "Unknown"
+      },
+      {
+        "wearer": "male",
+        "parent": "short_sleeve_top",
+        "state": "Stale",
+        "value": null,
+        "expected": "Unknown"
+      },
+      {
+        "wearer": "male",
+        "parent": "short_sleeve_top",
+        "state": "Conflicting",
+        "value": null,
+        "expected": "Unknown"
+      },
+      {
+        "wearer": "male",
+        "parent": "long_sleeve_top",
+        "state": "Known",
+        "value": "t_shirt",
+        "expected": "Permit"
+      },
+      {
+        "wearer": "male",
+        "parent": "long_sleeve_top",
+        "state": "Known",
+        "value": "polo_shirt",
+        "expected": "Permit"
+      },
+      {
+        "wearer": "male",
+        "parent": "long_sleeve_top",
+        "state": "Known",
+        "value": "button_up_shirt",
+        "expected": "Permit"
+      },
+      {
+        "wearer": "male",
+        "parent": "long_sleeve_top",
+        "state": "Known",
+        "value": "knit_top",
+        "expected": "Permit"
+      },
+      {
+        "wearer": "male",
+        "parent": "long_sleeve_top",
+        "state": "Known",
+        "value": "blouse",
+        "expected": "Deny"
+      },
+      {
+        "wearer": "male",
+        "parent": "long_sleeve_top",
+        "state": "Absent",
+        "value": null,
+        "expected": "Unknown"
+      },
+      {
+        "wearer": "male",
+        "parent": "long_sleeve_top",
+        "state": "Unspecified",
+        "value": null,
+        "expected": "Unknown"
+      },
+      {
+        "wearer": "male",
+        "parent": "long_sleeve_top",
+        "state": "Suggestion",
+        "value": null,
+        "expected": "Unknown"
+      },
+      {
+        "wearer": "male",
+        "parent": "long_sleeve_top",
+        "state": "Stale",
+        "value": null,
+        "expected": "Unknown"
+      },
+      {
+        "wearer": "male",
+        "parent": "long_sleeve_top",
+        "state": "Conflicting",
+        "value": null,
+        "expected": "Unknown"
+      },
+      {
+        "wearer": "female",
+        "parent": "short_sleeve_top",
+        "state": "Known",
+        "value": "t_shirt",
+        "expected": "Permit"
+      },
+      {
+        "wearer": "female",
+        "parent": "short_sleeve_top",
+        "state": "Known",
+        "value": "polo_shirt",
+        "expected": "Permit"
+      },
+      {
+        "wearer": "female",
+        "parent": "short_sleeve_top",
+        "state": "Known",
+        "value": "button_up_shirt",
+        "expected": "Permit"
+      },
+      {
+        "wearer": "female",
+        "parent": "short_sleeve_top",
+        "state": "Known",
+        "value": "knit_top",
+        "expected": "Permit"
+      },
+      {
+        "wearer": "female",
+        "parent": "short_sleeve_top",
+        "state": "Known",
+        "value": "blouse",
+        "expected": "Permit"
+      },
+      {
+        "wearer": "female",
+        "parent": "short_sleeve_top",
+        "state": "Absent",
+        "value": null,
+        "expected": "Permit"
+      },
+      {
+        "wearer": "female",
+        "parent": "short_sleeve_top",
+        "state": "Unspecified",
+        "value": null,
+        "expected": "Permit"
+      },
+      {
+        "wearer": "female",
+        "parent": "short_sleeve_top",
+        "state": "Suggestion",
+        "value": null,
+        "expected": "Permit"
+      },
+      {
+        "wearer": "female",
+        "parent": "short_sleeve_top",
+        "state": "Stale",
+        "value": null,
+        "expected": "Permit"
+      },
+      {
+        "wearer": "female",
+        "parent": "short_sleeve_top",
+        "state": "Conflicting",
+        "value": null,
+        "expected": "Permit"
+      },
+      {
+        "wearer": "female",
+        "parent": "long_sleeve_top",
+        "state": "Known",
+        "value": "t_shirt",
+        "expected": "Permit"
+      },
+      {
+        "wearer": "female",
+        "parent": "long_sleeve_top",
+        "state": "Known",
+        "value": "polo_shirt",
+        "expected": "Permit"
+      },
+      {
+        "wearer": "female",
+        "parent": "long_sleeve_top",
+        "state": "Known",
+        "value": "button_up_shirt",
+        "expected": "Permit"
+      },
+      {
+        "wearer": "female",
+        "parent": "long_sleeve_top",
+        "state": "Known",
+        "value": "knit_top",
+        "expected": "Permit"
+      },
+      {
+        "wearer": "female",
+        "parent": "long_sleeve_top",
+        "state": "Known",
+        "value": "blouse",
+        "expected": "Permit"
+      },
+      {
+        "wearer": "female",
+        "parent": "long_sleeve_top",
+        "state": "Absent",
+        "value": null,
+        "expected": "Permit"
+      },
+      {
+        "wearer": "female",
+        "parent": "long_sleeve_top",
+        "state": "Unspecified",
+        "value": null,
+        "expected": "Permit"
+      },
+      {
+        "wearer": "female",
+        "parent": "long_sleeve_top",
+        "state": "Suggestion",
+        "value": null,
+        "expected": "Permit"
+      },
+      {
+        "wearer": "female",
+        "parent": "long_sleeve_top",
+        "state": "Stale",
+        "value": null,
+        "expected": "Permit"
+      },
+      {
+        "wearer": "female",
+        "parent": "long_sleeve_top",
+        "state": "Conflicting",
+        "value": null,
+        "expected": "Permit"
+      }
+    ],
+    "nlp_cases": [
+      {
+        "text": "I want a t-shirt.",
+        "role": "upper",
+        "quantifier": "exists",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "t_shirt"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 9,
+          "end": 16,
+          "text": "t-shirt"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "i wanna wear a t-shirt",
+        "role": "upper",
+        "quantifier": "exists",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "t_shirt"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 15,
+          "end": 22,
+          "text": "t-shirt"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "I don't want a t-shirt.",
+        "role": "all_selected",
+        "quantifier": "none",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "t_shirt"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 15,
+          "end": 22,
+          "text": "t-shirt"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "I cant wear a t-shirt",
+        "role": "all_selected",
+        "quantifier": "none",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "t_shirt"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 14,
+          "end": 21,
+          "text": "t-shirt"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "I want a t shirt.",
+        "role": "upper",
+        "quantifier": "exists",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "t_shirt"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 9,
+          "end": 16,
+          "text": "t shirt"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "i wanna wear a t shirt",
+        "role": "upper",
+        "quantifier": "exists",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "t_shirt"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 15,
+          "end": 22,
+          "text": "t shirt"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "I don't want a t shirt.",
+        "role": "all_selected",
+        "quantifier": "none",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "t_shirt"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 15,
+          "end": 22,
+          "text": "t shirt"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "I cant wear a t shirt",
+        "role": "all_selected",
+        "quantifier": "none",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "t_shirt"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 14,
+          "end": 21,
+          "text": "t shirt"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "I want a tee.",
+        "role": "upper",
+        "quantifier": "exists",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "t_shirt"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 9,
+          "end": 12,
+          "text": "tee"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "i wanna wear a tee",
+        "role": "upper",
+        "quantifier": "exists",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "t_shirt"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 15,
+          "end": 18,
+          "text": "tee"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "I don't want a tee.",
+        "role": "all_selected",
+        "quantifier": "none",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "t_shirt"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 15,
+          "end": 18,
+          "text": "tee"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "I cant wear a tee",
+        "role": "all_selected",
+        "quantifier": "none",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "t_shirt"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 14,
+          "end": 17,
+          "text": "tee"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "I want a tee shirt.",
+        "role": "upper",
+        "quantifier": "exists",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "t_shirt"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 9,
+          "end": 18,
+          "text": "tee shirt"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "i wanna wear a tee shirt",
+        "role": "upper",
+        "quantifier": "exists",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "t_shirt"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 15,
+          "end": 24,
+          "text": "tee shirt"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "I don't want a tee shirt.",
+        "role": "all_selected",
+        "quantifier": "none",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "t_shirt"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 15,
+          "end": 24,
+          "text": "tee shirt"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "I cant wear a tee shirt",
+        "role": "all_selected",
+        "quantifier": "none",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "t_shirt"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 14,
+          "end": 23,
+          "text": "tee shirt"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "I want a polo shirt.",
+        "role": "upper",
+        "quantifier": "exists",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "polo_shirt"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 9,
+          "end": 19,
+          "text": "polo shirt"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "i wanna wear a polo shirt",
+        "role": "upper",
+        "quantifier": "exists",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "polo_shirt"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 15,
+          "end": 25,
+          "text": "polo shirt"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "I don't want a polo shirt.",
+        "role": "all_selected",
+        "quantifier": "none",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "polo_shirt"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 15,
+          "end": 25,
+          "text": "polo shirt"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "I cant wear a polo shirt",
+        "role": "all_selected",
+        "quantifier": "none",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "polo_shirt"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 14,
+          "end": 24,
+          "text": "polo shirt"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "I want a polo.",
+        "role": "upper",
+        "quantifier": "exists",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "polo_shirt"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 9,
+          "end": 13,
+          "text": "polo"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "i wanna wear a polo",
+        "role": "upper",
+        "quantifier": "exists",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "polo_shirt"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 15,
+          "end": 19,
+          "text": "polo"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "I don't want a polo.",
+        "role": "all_selected",
+        "quantifier": "none",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "polo_shirt"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 15,
+          "end": 19,
+          "text": "polo"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "I cant wear a polo",
+        "role": "all_selected",
+        "quantifier": "none",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "polo_shirt"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 14,
+          "end": 18,
+          "text": "polo"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "I want a button-up shirt.",
+        "role": "upper",
+        "quantifier": "exists",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "button_up_shirt"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 9,
+          "end": 24,
+          "text": "button-up shirt"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "i wanna wear a button-up shirt",
+        "role": "upper",
+        "quantifier": "exists",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "button_up_shirt"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 15,
+          "end": 30,
+          "text": "button-up shirt"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "I don't want a button-up shirt.",
+        "role": "all_selected",
+        "quantifier": "none",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "button_up_shirt"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 15,
+          "end": 30,
+          "text": "button-up shirt"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "I cant wear a button-up shirt",
+        "role": "all_selected",
+        "quantifier": "none",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "button_up_shirt"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 14,
+          "end": 29,
+          "text": "button-up shirt"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "I want a button up shirt.",
+        "role": "upper",
+        "quantifier": "exists",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "button_up_shirt"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 9,
+          "end": 24,
+          "text": "button up shirt"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "i wanna wear a button up shirt",
+        "role": "upper",
+        "quantifier": "exists",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "button_up_shirt"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 15,
+          "end": 30,
+          "text": "button up shirt"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "I don't want a button up shirt.",
+        "role": "all_selected",
+        "quantifier": "none",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "button_up_shirt"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 15,
+          "end": 30,
+          "text": "button up shirt"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "I cant wear a button up shirt",
+        "role": "all_selected",
+        "quantifier": "none",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "button_up_shirt"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 14,
+          "end": 29,
+          "text": "button up shirt"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "I want a knit top.",
+        "role": "upper",
+        "quantifier": "exists",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "knit_top"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 9,
+          "end": 17,
+          "text": "knit top"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "i wanna wear a knit top",
+        "role": "upper",
+        "quantifier": "exists",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "knit_top"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 15,
+          "end": 23,
+          "text": "knit top"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "I don't want a knit top.",
+        "role": "all_selected",
+        "quantifier": "none",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "knit_top"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 15,
+          "end": 23,
+          "text": "knit top"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "I cant wear a knit top",
+        "role": "all_selected",
+        "quantifier": "none",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "knit_top"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 14,
+          "end": 22,
+          "text": "knit top"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "I want a knitted top.",
+        "role": "upper",
+        "quantifier": "exists",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "knit_top"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 9,
+          "end": 20,
+          "text": "knitted top"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "i wanna wear a knitted top",
+        "role": "upper",
+        "quantifier": "exists",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "knit_top"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 15,
+          "end": 26,
+          "text": "knitted top"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "I don't want a knitted top.",
+        "role": "all_selected",
+        "quantifier": "none",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "knit_top"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 15,
+          "end": 26,
+          "text": "knitted top"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "I cant wear a knitted top",
+        "role": "all_selected",
+        "quantifier": "none",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "knit_top"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 14,
+          "end": 25,
+          "text": "knitted top"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "I want a sweater top.",
+        "role": "upper",
+        "quantifier": "exists",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "knit_top"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 9,
+          "end": 20,
+          "text": "sweater top"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "i wanna wear a sweater top",
+        "role": "upper",
+        "quantifier": "exists",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "knit_top"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 15,
+          "end": 26,
+          "text": "sweater top"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "I don't want a sweater top.",
+        "role": "all_selected",
+        "quantifier": "none",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "knit_top"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 15,
+          "end": 26,
+          "text": "sweater top"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "I cant wear a sweater top",
+        "role": "all_selected",
+        "quantifier": "none",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "knit_top"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 14,
+          "end": 25,
+          "text": "sweater top"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "I want a blouse.",
+        "role": "upper",
+        "quantifier": "exists",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "blouse"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 9,
+          "end": 15,
+          "text": "blouse"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "i wanna wear a blouse",
+        "role": "upper",
+        "quantifier": "exists",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "blouse"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 15,
+          "end": 21,
+          "text": "blouse"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "I don't want a blouse.",
+        "role": "all_selected",
+        "quantifier": "none",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "blouse"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 15,
+          "end": 21,
+          "text": "blouse"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "I cant wear a blouse",
+        "role": "all_selected",
+        "quantifier": "none",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "operator": "in",
+            "values": [
+              "blouse"
+            ]
+          }
+        ],
+        "subtype_span": {
+          "start": 14,
+          "end": 20,
+          "text": "blouse"
+        },
+        "no_occasion_invented": true
+      },
+      {
+        "text": "I want a red blouse.",
+        "role": "upper",
+        "quantifier": "exists",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "value": "blouse"
+          },
+          {
+            "attribute": "primary_colour",
+            "value": "red"
+          }
+        ],
+        "no_subtype_implies_descriptor": true
+      },
+      {
+        "text": "I want a blue polo shirt.",
+        "role": "upper",
+        "quantifier": "exists",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "value": "polo_shirt"
+          },
+          {
+            "attribute": "primary_colour",
+            "value": "blue"
+          }
+        ],
+        "no_subtype_implies_descriptor": true
+      },
+      {
+        "text": "I want a long-sleeved T-shirt.",
+        "role": "upper",
+        "quantifier": "exists",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "value": "t_shirt"
+          },
+          {
+            "attribute": "sleeve_length",
+            "value": "wrist-length"
+          }
+        ],
+        "no_subtype_implies_descriptor": true
+      },
+      {
+        "text": "I want a collared button-up shirt.",
+        "role": "upper",
+        "quantifier": "exists",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "value": "button_up_shirt"
+          },
+          {
+            "attribute": "construction_collared",
+            "value": true
+          }
+        ],
+        "no_subtype_implies_descriptor": true
+      },
+      {
+        "text": "I want a cotton T-shirt.",
+        "role": "upper",
+        "quantifier": "exists",
+        "same_member_predicates": [
+          {
+            "attribute": "verified_subtype",
+            "value": "t_shirt"
+          },
+          {
+            "attribute": "material",
+            "value": "cotton"
+          }
+        ],
+        "no_subtype_implies_descriptor": true
+      }
+    ],
+    "malformed_source_controls": {
+      "wearers": [
+        "male",
+        "female"
+      ],
+      "cases": [
+        "invalid event hash",
+        "broken prior chain",
+        "unknown registry version",
+        "foreign subject link",
+        "unbounded or nonfinite event",
+        "forged owner_selected contributor"
+      ],
+      "expected": "Source-integrity failure/refusal; never a generic Female Permit or an implicit Unknown default."
+    },
+    "negative_and_ambiguous_cases": [
+      {
+        "text": "I want a T-shirt blouse.",
+        "expected": "Ambiguous/conflicting product identity; clarify rather than select one subtype."
+      },
+      {
+        "text": "I play polo.",
+        "expected": "Not a garment polo predicate; no invented occasion."
+      },
+      {
+        "text": "I want a button-down shirt.",
+        "expected": "Clarify unsupported button-down distinction, do not silently equate to button-up."
+      },
+      {
+        "text": "I want an Oxford shirt.",
+        "expected": "Clarify unregistered Oxford distinction, do not infer subtype from a fixture name."
+      },
+      {
+        "text": "I want a silky top.",
+        "expected": "Existing qualified material semantics only where represented; silk never implies blouse."
+      },
+      {
+        "text": "I want a collared shirt.",
+        "expected": "Original broad shirt plus independently qualified neckline; collar never implies polo/button-up."
+      },
+      {
+        "text": "I want a shirt.",
+        "expected": "Original broad upper categories long_sleeve_top/short_sleeve_top/sling/vest; no subtype."
+      },
+      {
+        "text": "I prefer a blouse.",
+        "expected": "Existing soft preference guidance; no hard subtype or request-local score."
+      },
+      {
+        "text": "I want a blouse without a blouse.",
+        "expected": "Explicit conflict, no silent condition dropping."
+      },
+      {
+        "text": "I want a T-shirt named \"blouse\".",
+        "expected": "Unquoted T-shirt kind plus exact quoted garment name; quoted blouse never becomes subtype."
+      },
+      {
+        "text": "I want a garment named \"polo shirt\".",
+        "expected": "Exact literal garment-name semantics, no subtype inferred."
+      },
+      {
+        "text": "I want a blouse with blue trousers.",
+        "expected": "Blouse on upper; blue+trousers on same lower; never blue blouse as substitute."
+      },
+      {
+        "text": "I want a dark polo shirt.",
+        "expected": "Retain existing unsupported dark guidance; do not ignore modifier."
+      },
+      {
+        "text": "I do not want a T-shirt.",
+        "expected": "Exclusion only; unknown subtype cannot prove absence."
+      }
+    ],
+    "source_spans": "For every emitted NLP predicate, original_text[start:end] == recorded text. Preserve ASCII/curly/missing apostrophe controls, case, informal frames and literal tags. No normalized text persisted as original input.",
+    "contexts": [
+      {
+        "situation": "everyday.shopping",
+        "original_text": "I'm heading for shopping.",
+        "expected": "Original context identity, spans and all original hard conditions retained. Add each explicit subtype noun only in a controlled garment-requirement clause; subtype does not alter context policy."
+      },
+      {
+        "situation": "everyday.academic_attendance",
+        "original_text": "I'm getting ready for university.",
+        "expected": "Original context identity, spans and all original hard conditions retained. Add each explicit subtype noun only in a controlled garment-requirement clause; subtype does not alter context policy."
+      },
+      {
+        "situation": "everyday.casual_outing",
+        "original_text": "I'm hanging out with friends.",
+        "expected": "Original context identity, spans and all original hard conditions retained. Add each explicit subtype noun only in a controlled garment-requirement clause; subtype does not alter context policy."
+      },
+      {
+        "situation": "social.date",
+        "original_text": "Help me pick clothes for a dinner date.",
+        "expected": "Original context identity, spans and all original hard conditions retained. Add each explicit subtype noun only in a controlled garment-requirement clause; subtype does not alter context policy."
+      },
+      {
+        "situation": "social.meal",
+        "original_text": "Need an outfit for a restaurant.",
+        "expected": "Original context identity, spans and all original hard conditions retained. Add each explicit subtype noun only in a controlled garment-requirement clause; subtype does not alter context policy."
+      },
+      {
+        "situation": "academic.library_study",
+        "original_text": "Suggest clothes for library study.",
+        "expected": "Original context identity, spans and all original hard conditions retained. Add each explicit subtype noun only in a controlled garment-requirement clause; subtype does not alter context policy."
+      },
+      {
+        "situation": "academic.group_study",
+        "original_text": "I'm studying with my classmates.",
+        "expected": "Original context identity, spans and all original hard conditions retained. Add each explicit subtype noun only in a controlled garment-requirement clause; subtype does not alter context policy."
+      },
+      {
+        "situation": "professional.office_day",
+        "original_text": "I'm getting ready for a day at the office.",
+        "expected": "Original context identity, spans and all original hard conditions retained. Add each explicit subtype noun only in a controlled garment-requirement clause; subtype does not alter context policy."
+      },
+      {
+        "situation": "professional.workplace_meeting",
+        "original_text": "Help me pick clothes for a work meeting.",
+        "expected": "Original context identity, spans and all original hard conditions retained. Add each explicit subtype noun only in a controlled garment-requirement clause; subtype does not alter context policy."
+      },
+      {
+        "situation": "social.birthday_gathering",
+        "original_text": "I'm heading for a birthday celebration.",
+        "expected": "Original context identity, spans and all original hard conditions retained. Add each explicit subtype noun only in a controlled garment-requirement clause; subtype does not alter context policy."
+      },
+      {
+        "situation": "social.house_gathering",
+        "original_text": "I'm visiting my friend's house.",
+        "expected": "Original context identity, spans and all original hard conditions retained. Add each explicit subtype noun only in a controlled garment-requirement clause; subtype does not alter context policy."
+      },
+      {
+        "situation": "leisure.cinema_outing",
+        "original_text": "I'm going to catch a film.",
+        "expected": "Original context identity, spans and all original hard conditions retained. Add each explicit subtype noun only in a controlled garment-requirement clause; subtype does not alter context policy."
+      },
+      {
+        "situation": "social.cafe_meetup",
+        "original_text": "Need an outfit for coffee with friends.",
+        "expected": "Original context identity, spans and all original hard conditions retained. Add each explicit subtype noun only in a controlled garment-requirement clause; subtype does not alter context policy."
+      },
+      {
+        "situation": "leisure.city_sightseeing",
+        "original_text": "I'm exploring the city sights.",
+        "expected": "Original context identity, spans and all original hard conditions retained. Add each explicit subtype noun only in a controlled garment-requirement clause; subtype does not alter context policy."
+      },
+      {
+        "situation": "travel.journey",
+        "original_text": "I'm travelling by train.",
+        "expected": "Original context identity, spans and all original hard conditions retained. Add each explicit subtype noun only in a controlled garment-requirement clause; subtype does not alter context policy."
+      },
+      {
+        "situation": "ceremony.wedding",
+        "original_text": "I'm attending a wedding as a guest.",
+        "expected": "Original context identity, spans and all original hard conditions retained. Add each explicit subtype noun only in a controlled garment-requirement clause; subtype does not alter context policy."
+      },
+      {
+        "situation": "academic.presentation",
+        "original_text": "I'm giving a university presentation.",
+        "expected": "Original context identity, spans and all original hard conditions retained. Add each explicit subtype noun only in a controlled garment-requirement clause; subtype does not alter context policy."
+      },
+      {
+        "situation": "professional.job_interview",
+        "original_text": "I'm being interviewed for a job; the dress code is smart casual.",
+        "expected": "Original context identity, spans and all original hard conditions retained. Add each explicit subtype noun only in a controlled garment-requirement clause; subtype does not alter context policy."
+      }
+    ],
+    "context_subtype_cases": [
+      {
+        "text": "I'm heading for shopping with a t-shirt.",
+        "situation": "everyday.shopping",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "t_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm heading for shopping with a polo shirt.",
+        "situation": "everyday.shopping",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "polo_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm heading for shopping with a button-up shirt.",
+        "situation": "everyday.shopping",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "button_up_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm heading for shopping with a knit top.",
+        "situation": "everyday.shopping",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "knit_top",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm heading for shopping with a blouse.",
+        "situation": "everyday.shopping",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "blouse",
+        "expected_male": "Wearer policy conflict",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm getting ready for university with a t-shirt.",
+        "situation": "everyday.academic_attendance",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "t_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm getting ready for university with a polo shirt.",
+        "situation": "everyday.academic_attendance",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "polo_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm getting ready for university with a button-up shirt.",
+        "situation": "everyday.academic_attendance",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "button_up_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm getting ready for university with a knit top.",
+        "situation": "everyday.academic_attendance",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "knit_top",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm getting ready for university with a blouse.",
+        "situation": "everyday.academic_attendance",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "blouse",
+        "expected_male": "Wearer policy conflict",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm hanging out with friends with a t-shirt.",
+        "situation": "everyday.casual_outing",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "t_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm hanging out with friends with a polo shirt.",
+        "situation": "everyday.casual_outing",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "polo_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm hanging out with friends with a button-up shirt.",
+        "situation": "everyday.casual_outing",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "button_up_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm hanging out with friends with a knit top.",
+        "situation": "everyday.casual_outing",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "knit_top",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm hanging out with friends with a blouse.",
+        "situation": "everyday.casual_outing",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "blouse",
+        "expected_male": "Wearer policy conflict",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "Help me pick clothes for a dinner date with a t-shirt.",
+        "situation": "social.date",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "t_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "Help me pick clothes for a dinner date with a polo shirt.",
+        "situation": "social.date",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "polo_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "Help me pick clothes for a dinner date with a button-up shirt.",
+        "situation": "social.date",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "button_up_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "Help me pick clothes for a dinner date with a knit top.",
+        "situation": "social.date",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "knit_top",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "Help me pick clothes for a dinner date with a blouse.",
+        "situation": "social.date",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "blouse",
+        "expected_male": "Wearer policy conflict",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "Need an outfit for a restaurant with a t-shirt.",
+        "situation": "social.meal",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "t_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "Need an outfit for a restaurant with a polo shirt.",
+        "situation": "social.meal",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "polo_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "Need an outfit for a restaurant with a button-up shirt.",
+        "situation": "social.meal",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "button_up_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "Need an outfit for a restaurant with a knit top.",
+        "situation": "social.meal",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "knit_top",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "Need an outfit for a restaurant with a blouse.",
+        "situation": "social.meal",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "blouse",
+        "expected_male": "Wearer policy conflict",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "Suggest clothes for library study with a t-shirt.",
+        "situation": "academic.library_study",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "t_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "Suggest clothes for library study with a polo shirt.",
+        "situation": "academic.library_study",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "polo_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "Suggest clothes for library study with a button-up shirt.",
+        "situation": "academic.library_study",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "button_up_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "Suggest clothes for library study with a knit top.",
+        "situation": "academic.library_study",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "knit_top",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "Suggest clothes for library study with a blouse.",
+        "situation": "academic.library_study",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "blouse",
+        "expected_male": "Wearer policy conflict",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm studying with my classmates with a t-shirt.",
+        "situation": "academic.group_study",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "t_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm studying with my classmates with a polo shirt.",
+        "situation": "academic.group_study",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "polo_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm studying with my classmates with a button-up shirt.",
+        "situation": "academic.group_study",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "button_up_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm studying with my classmates with a knit top.",
+        "situation": "academic.group_study",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "knit_top",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm studying with my classmates with a blouse.",
+        "situation": "academic.group_study",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "blouse",
+        "expected_male": "Wearer policy conflict",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm getting ready for a day at the office with a t-shirt.",
+        "situation": "professional.office_day",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "t_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm getting ready for a day at the office with a polo shirt.",
+        "situation": "professional.office_day",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "polo_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm getting ready for a day at the office with a button-up shirt.",
+        "situation": "professional.office_day",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "button_up_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm getting ready for a day at the office with a knit top.",
+        "situation": "professional.office_day",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "knit_top",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm getting ready for a day at the office with a blouse.",
+        "situation": "professional.office_day",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "blouse",
+        "expected_male": "Wearer policy conflict",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "Help me pick clothes for a work meeting with a t-shirt.",
+        "situation": "professional.workplace_meeting",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "t_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "Help me pick clothes for a work meeting with a polo shirt.",
+        "situation": "professional.workplace_meeting",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "polo_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "Help me pick clothes for a work meeting with a button-up shirt.",
+        "situation": "professional.workplace_meeting",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "button_up_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "Help me pick clothes for a work meeting with a knit top.",
+        "situation": "professional.workplace_meeting",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "knit_top",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "Help me pick clothes for a work meeting with a blouse.",
+        "situation": "professional.workplace_meeting",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "blouse",
+        "expected_male": "Wearer policy conflict",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm heading for a birthday celebration with a t-shirt.",
+        "situation": "social.birthday_gathering",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "t_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm heading for a birthday celebration with a polo shirt.",
+        "situation": "social.birthday_gathering",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "polo_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm heading for a birthday celebration with a button-up shirt.",
+        "situation": "social.birthday_gathering",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "button_up_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm heading for a birthday celebration with a knit top.",
+        "situation": "social.birthday_gathering",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "knit_top",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm heading for a birthday celebration with a blouse.",
+        "situation": "social.birthday_gathering",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "blouse",
+        "expected_male": "Wearer policy conflict",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm visiting my friend's house with a t-shirt.",
+        "situation": "social.house_gathering",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "t_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm visiting my friend's house with a polo shirt.",
+        "situation": "social.house_gathering",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "polo_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm visiting my friend's house with a button-up shirt.",
+        "situation": "social.house_gathering",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "button_up_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm visiting my friend's house with a knit top.",
+        "situation": "social.house_gathering",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "knit_top",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm visiting my friend's house with a blouse.",
+        "situation": "social.house_gathering",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "blouse",
+        "expected_male": "Wearer policy conflict",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm going to catch a film with a t-shirt.",
+        "situation": "leisure.cinema_outing",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "t_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm going to catch a film with a polo shirt.",
+        "situation": "leisure.cinema_outing",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "polo_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm going to catch a film with a button-up shirt.",
+        "situation": "leisure.cinema_outing",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "button_up_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm going to catch a film with a knit top.",
+        "situation": "leisure.cinema_outing",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "knit_top",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm going to catch a film with a blouse.",
+        "situation": "leisure.cinema_outing",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "blouse",
+        "expected_male": "Wearer policy conflict",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "Need an outfit for coffee with friends with a t-shirt.",
+        "situation": "social.cafe_meetup",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "t_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "Need an outfit for coffee with friends with a polo shirt.",
+        "situation": "social.cafe_meetup",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "polo_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "Need an outfit for coffee with friends with a button-up shirt.",
+        "situation": "social.cafe_meetup",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "button_up_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "Need an outfit for coffee with friends with a knit top.",
+        "situation": "social.cafe_meetup",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "knit_top",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "Need an outfit for coffee with friends with a blouse.",
+        "situation": "social.cafe_meetup",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "blouse",
+        "expected_male": "Wearer policy conflict",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm exploring the city sights with a t-shirt.",
+        "situation": "leisure.city_sightseeing",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "t_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm exploring the city sights with a polo shirt.",
+        "situation": "leisure.city_sightseeing",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "polo_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm exploring the city sights with a button-up shirt.",
+        "situation": "leisure.city_sightseeing",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "button_up_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm exploring the city sights with a knit top.",
+        "situation": "leisure.city_sightseeing",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "knit_top",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm exploring the city sights with a blouse.",
+        "situation": "leisure.city_sightseeing",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "blouse",
+        "expected_male": "Wearer policy conflict",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm travelling by train with a t-shirt.",
+        "situation": "travel.journey",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "t_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm travelling by train with a polo shirt.",
+        "situation": "travel.journey",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "polo_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm travelling by train with a button-up shirt.",
+        "situation": "travel.journey",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "button_up_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm travelling by train with a knit top.",
+        "situation": "travel.journey",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "knit_top",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm travelling by train with a blouse.",
+        "situation": "travel.journey",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "blouse",
+        "expected_male": "Wearer policy conflict",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm attending a wedding as a guest with a t-shirt.",
+        "situation": "ceremony.wedding",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "t_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm attending a wedding as a guest with a polo shirt.",
+        "situation": "ceremony.wedding",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "polo_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm attending a wedding as a guest with a button-up shirt.",
+        "situation": "ceremony.wedding",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "button_up_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm attending a wedding as a guest with a knit top.",
+        "situation": "ceremony.wedding",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "knit_top",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm attending a wedding as a guest with a blouse.",
+        "situation": "ceremony.wedding",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "blouse",
+        "expected_male": "Wearer policy conflict",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm giving a university presentation with a t-shirt.",
+        "situation": "academic.presentation",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "t_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm giving a university presentation with a polo shirt.",
+        "situation": "academic.presentation",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "polo_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm giving a university presentation with a button-up shirt.",
+        "situation": "academic.presentation",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "button_up_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm giving a university presentation with a knit top.",
+        "situation": "academic.presentation",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "knit_top",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm giving a university presentation with a blouse.",
+        "situation": "academic.presentation",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "blouse",
+        "expected_male": "Wearer policy conflict",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm being interviewed for a job; the dress code is smart casual with a t-shirt.",
+        "situation": "professional.job_interview",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "t_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm being interviewed for a job; the dress code is smart casual with a polo shirt.",
+        "situation": "professional.job_interview",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "polo_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm being interviewed for a job; the dress code is smart casual with a button-up shirt.",
+        "situation": "professional.job_interview",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "button_up_shirt",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm being interviewed for a job; the dress code is smart casual with a knit top.",
+        "situation": "professional.job_interview",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "knit_top",
+        "expected_male": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      },
+      {
+        "text": "I'm being interviewed for a job; the dress code is smart casual with a blouse.",
+        "situation": "professional.job_interview",
+        "role": "upper",
+        "quantifier": "exists",
+        "required_subtype": "blouse",
+        "expected_male": "Wearer policy conflict",
+        "expected_female": "Exact qualified identity only; otherwise unresolved evidence/no eligible result",
+        "original_context_and_specialist_role_retained": true
+      }
+    ],
+    "milestones": {
+      "VS0": [
+        "Verify891 source hashes, exact owned services/account/config; obtain fresh quiesced coherent backup and restored-copy proof before any schema/data change.",
+        "Keep original40 garment/extraction/media/profile/preference values and all original history table rows exactly; record approved append-only effects separately."
+      ],
+      "VS1": [
+        "Closed five identifiers, exact parents, bounded version/digest; reject unknown aliases, unsupported emitters, duplicate fields, forged owner, malformed/nonfinite/oversized records.",
+        "Every Unknown state and parent-inapplicable case independently fixed; no name/filename/colour/pattern/material inference."
+      ],
+      "VS2": [
+        "Male fresh known blouse admission409; Female same blouse eligible; shared ownership/quota100 unchanged.",
+        "Male applicable unknown top unresolved, Female generic unknown accepted; unrelated trousers/outerwear do not need subtype review.",
+        "Original automatic/manual/review batch transaction rollback and no-partial-save controls remain."
+      ],
+      "VS3": [
+        "Pre/post same-transaction guards stop blouse->allowed subtype/category, omit/clear/stale, forged metadata and reparent bypass.",
+        "Explicit Female owner correction appends reason/CAS and preserves prior audit; fresh Male unknown permitted-kind confirmation works.",
+        "Two concurrent review CAS requests produce exactly one success; exact action retry coalesces; conflicting retry refused."
+      ],
+      "VS4": [
+        "Every frozen wording produces its declared exact kind/quantifier/member binding; original text/spans and quoted literals unchanged.",
+        "Bare shirt remains original broad categories; qualified collared/long-sleeve/material conditions are independently required.",
+        "Male explicit blouse -> wearer policy conflict before substitution; Female -> qualified blouse only.",
+        "All18 frozen contexts preserve situation IDs, required specialist roles, source spans and original Unknown/Fail behavior."
+      ],
+      "VS5": [
+        "Both engines x P1/P2 x C1/C2: only permitted qualified members, exact original R/C/P arithmetic and deterministic comparison on identical candidates; no subtype bonus.",
+        "All four generic compositions preserved; Male canonical dresses/skirts remain denied, Female retains all four. Positive upper subtype requests permit only the original upper/lower structures, not one-piece substitution.",
+        "Garment-only and15 ordinary-context bound alternatives retain every subtype/descriptor, actual-base Seen, original R-floor/capture, exact retry, cap10 and concurrent child coalescing.",
+        "Unknown potentially relevant unseen bases -> insufficient evidence, not false exhaustion; independent mandatory-fail/below-floor/already-Seen/unrelated-source counterexamples preserve genuine exhaustion.",
+        "Any unselected or denied captured head changes before commit -> stale-scope refusal/rollback."
+      ],
+      "VS6": [
+        "Read original v1 records/receipts unchanged, including former coarse T-shirt intent, scores and MD04 selections; no promotion/deletion/rewrite.",
+        "Read new v2 with feature disabled and current model/policy/DB loaders unavailable; independently reconstruct captured subtype predicates.",
+        "Tampered registry/event/subject/media/revision or selected member -> refusal. Current prohibited reuse of old selections blocked; original completed receipt retry remains exact."
+      ],
+      "VS7": [
+        "Restore-copy rehearsal executes exact15 declarations, including MD03/MD20 owner attestation caveats; verify original table/media hashes and expected26/12/2 A vs40 B decisions.",
+        "Only after successful rehearsal append same API declarations to isolated demo; preferences remain current blue A/red B. Test red-preference comparison on restored copy.",
+        "Live actual-account API and browser: A cannot receive/admit blouse; B can receive MD04 and MD23 with qualified explicit requests, A can receive T-shirt/polo; no frontend bypass.",
+        "Review/edit UI displays Unknown/suggestions/confirmed distinctly, category-compatible choices and readable policy guidance.",
+        "Focused backend, API/browser, TypeScript/build, exact source scope and disposable patch-application check; disclose every failed attempt. No broad campaign/performance work."
+      ]
+    },
+    "numerical_oracle": "Use retained exact mathematical assertions for identical candidate facts and independent fixed subtype admit/refuse labels. Filtering may change the winner; do not require old now-prohibited winner or relabel its old history. No new score snapshots become golden authority.",
+    "live_criteria": "Male A Permit26/Deny12/Unknown2 and Female B genericPermit40 after exact plan only. Male explicitly requesting blouse409 conflict; Female positive blouse has no other subtype. MD04 and MD23 covered with explicit name+kind on separate eligible requests. P1/P2+C1/C2 controls on restored copy without altering current live preferences.",
+    "original_test_bytes": "Original affected assertions remain; approved descendant source authority is appended only in the three exact existing verification paths."
+  },
+  "fixture_plan": {
+    "contract": "verified-subtype-fixture-plan-1.0.0",
+    "status": "Frozen proposal for owner approval; no declarations yet written",
+    "owner": "c6468322-6478-4c7c-b025-047938a5403d",
+    "wearer_A": "99cc52e8-473e-4192-b6d9-a6fa3227d45c",
+    "wearer_B": "94f3e9af-86ce-48a1-b21d-c0612526dde3",
+    "registry_proposal_sha256": "3d288b0b551aa518bb823dd9220300f7c1f24b16657ca719287380e4271cc479",
+    "counts": {
+      "account_inventory": 40,
+      "applicable": 15,
+      "new_known_declarations": 13,
+      "new_unspecified_declarations": 2,
+      "inapplicable_no_event": 25,
+      "male_permit": 26,
+      "male_deny": 12,
+      "male_unknown": 2,
+      "female_general_permit": 40
+    },
+    "approval_meaning": "Approve the exact proposed fictional owner identities, including MD03 and MD20 limitations, not an assertion that labels/pixels independently prove these identities. If an identity is not attested it stays Unspecified; no automatic inferred substitute.",
+    "preservation": "Rows and media identified by hashes must retain values. New journal only; no rename/category/extracted attribute/preference/gender/history changes.",
+    "garments": [
+      {
+        "fixture": "MD01",
+        "garment_id": "d693ef11-00cc-417e-a9c1-35cb082ed063",
+        "name": "TEST FIXTURE MD01 White plain T-shirt",
+        "original_category": "short_sleeve_top",
+        "processing_item_id": "1c26de37-fcd3-44dd-9d7d-956649bd9226",
+        "media_id": "00b941de-5219-4dba-ae67-f6bec84bc23b",
+        "media_sha256": "53a8cd8437b9dce565d01c8ab499ae12487bea2420500d32732b5c68936276ea",
+        "original_garment_row_sha256": "fa3e1990ab73446f47162673088883377992f6d562931dd4ab21b56532602920",
+        "original_processing_row_sha256": "acc36ca2558c4b8c769c7844a9b004b5666dbc8754b3329aaf8af5a9798d1767",
+        "applicable": true,
+        "proposed_state": "Known",
+        "proposed_value": "t_shirt",
+        "write": "Append owner review event through subtype API",
+        "origin": "owner_selected",
+        "review_basis": "synthetic_fixture_declaration",
+        "reviewer_scope": "94f3e9af-86ce-48a1-b21d-c0612526dde3",
+        "expected_male_A": "Permit",
+        "expected_female_B_general": "Permit",
+        "review_note": "Proposed explicit synthetic owner product-identity declaration; current name, extracted fields and image are review targets only, not subtype verification."
+      },
+      {
+        "fixture": "MD02",
+        "garment_id": "070367b8-6948-4b46-8b58-c2ae5c34addf",
+        "name": "TEST FIXTURE MD02 Black plain T-shirt",
+        "original_category": "short_sleeve_top",
+        "processing_item_id": "da96f74d-9427-4ea3-84d1-dcc47e203daa",
+        "media_id": "f2d25a5c-7dc7-4b73-89d2-74465f718f31",
+        "media_sha256": "268703f3b10dcfb64dfc1fe2f271a4c1b05617d8c48f724c70459ebb72cc29b5",
+        "original_garment_row_sha256": "0bdfda03cbbd2b2ee56ab243cde64cb6f21b363e4b667abed81049679289500a",
+        "original_processing_row_sha256": "0d1b1c0549cd46e6866f7ad122f6dd14f7a256e8d9e3d14aa6de34cb219e355f",
+        "applicable": true,
+        "proposed_state": "Known",
+        "proposed_value": "t_shirt",
+        "write": "Append owner review event through subtype API",
+        "origin": "owner_selected",
+        "review_basis": "synthetic_fixture_declaration",
+        "reviewer_scope": "94f3e9af-86ce-48a1-b21d-c0612526dde3",
+        "expected_male_A": "Permit",
+        "expected_female_B_general": "Permit",
+        "review_note": "Proposed explicit synthetic owner product-identity declaration; current name, extracted fields and image are review targets only, not subtype verification."
+      },
+      {
+        "fixture": "MD03",
+        "garment_id": "32427af3-8244-47aa-b9d9-bea30c7810b4",
+        "name": "TEST FIXTURE MD03 Blue long-sleeve V-neck",
+        "original_category": "long_sleeve_top",
+        "processing_item_id": "7f0b382f-f500-472d-9f42-4ce2ac0bec25",
+        "media_id": "c4a93ca9-f13c-4604-a830-06f55123c10d",
+        "media_sha256": "eae99631cc4133ff99db8c2ffa89a164e016a3fce6b4c8e98e29b271dd66f356",
+        "original_garment_row_sha256": "82ee098f0bce0cf5d8fade7cd9a9df4c748c49aaa23d70eee5c3fa438c3c39bf",
+        "original_processing_row_sha256": "4cd58c424f8283688c57ef572c0ef745562f27e56f57f05b6e4dc4d83438b81d",
+        "applicable": true,
+        "proposed_state": "Known",
+        "proposed_value": "t_shirt",
+        "write": "Append owner review event through subtype API",
+        "origin": "owner_selected",
+        "review_basis": "synthetic_fixture_declaration",
+        "reviewer_scope": "94f3e9af-86ce-48a1-b21d-c0612526dde3",
+        "expected_male_A": "Permit",
+        "expected_female_B_general": "Permit",
+        "review_note": "Generic long-sleeve cotton V-neck illustration does not establish T-shirt identity; this is a proposed new fictional owner declaration, not an inference. If not approved, retain Unspecified and recompute male count."
+      },
+      {
+        "fixture": "MD04",
+        "garment_id": "1ce62602-5a30-4f14-81e3-a83b96201648",
+        "name": "TEST FIXTURE MD04 Red floral blouse",
+        "original_category": "short_sleeve_top",
+        "processing_item_id": "4aa7f225-0ba9-4480-ae9b-aeb0d660f6b1",
+        "media_id": "ed434335-aa71-465e-ba12-5ac6144e17df",
+        "media_sha256": "87635f3350c9822ec9fcc0233f645a657db9e7f831cce25768f164f95a9b8425",
+        "original_garment_row_sha256": "bb252ce0daf78d3fb4b84dbca5496de5730de5d8027ce6d421333817dcdebb06",
+        "original_processing_row_sha256": "de04fee0ea44021a24c2c8a335e00b26e84c1cb2a25c9b8e3d139d7e13f053de",
+        "applicable": true,
+        "proposed_state": "Known",
+        "proposed_value": "blouse",
+        "write": "Append owner review event through subtype API",
+        "origin": "owner_selected",
+        "review_basis": "synthetic_fixture_declaration",
+        "reviewer_scope": "94f3e9af-86ce-48a1-b21d-c0612526dde3",
+        "expected_male_A": "Deny",
+        "expected_female_B_general": "Permit",
+        "review_note": "Floral/red/wrap drawing/name are not source authority; proposed explicit fictional owner declaration."
+      },
+      {
+        "fixture": "MD05",
+        "garment_id": "bc920ceb-5036-40d0-af85-691e35783030",
+        "name": "TEST FIXTURE MD05 Green graphic tee",
+        "original_category": "short_sleeve_top",
+        "processing_item_id": "31b136e9-4ec0-4741-aece-f35354055280",
+        "media_id": "359f5cb5-346a-4b55-9a96-d39fe382c49c",
+        "media_sha256": "4245d2eecc5332ff868cd817ab27af5d0155bc3be13bfe29da065dbb3c25ddf9",
+        "original_garment_row_sha256": "7d320e417d3bdbd8e7bd32594a3f975908d364b18d8ef7413a746251ae7f409f",
+        "original_processing_row_sha256": "13740e0edbf0aa6ad388bd99c8a06451414d0e117d6d458fcf4765e5b9ea80fb",
+        "applicable": true,
+        "proposed_state": "Known",
+        "proposed_value": "t_shirt",
+        "write": "Append owner review event through subtype API",
+        "origin": "owner_selected",
+        "review_basis": "synthetic_fixture_declaration",
+        "reviewer_scope": "94f3e9af-86ce-48a1-b21d-c0612526dde3",
+        "expected_male_A": "Permit",
+        "expected_female_B_general": "Permit",
+        "review_note": "Proposed explicit synthetic owner product-identity declaration; current name, extracted fields and image are review targets only, not subtype verification."
+      },
+      {
+        "fixture": "MD06",
+        "garment_id": "2f0a6c48-89b1-4120-a5e0-d3df89d25173",
+        "name": "TEST FIXTURE MD06 Grey striped knit top",
+        "original_category": "long_sleeve_top",
+        "processing_item_id": "97895df7-c0ab-4faf-9e20-3de61f30c15c",
+        "media_id": "3d9d1719-9e3a-4c8a-afac-854bddcdf79f",
+        "media_sha256": "cc58e892ef07359c320634507812823f0fcf5b3edc40bbd14897e6d40ebb2def",
+        "original_garment_row_sha256": "6863f719ded6d1efcb737e3ec6b8edbcc23b5cd303a96c6eb32ac3794a304cc7",
+        "original_processing_row_sha256": "027c2d40ebe8405f57221d987db9f7380579627792dbce68e75a69cabff08372",
+        "applicable": true,
+        "proposed_state": "Known",
+        "proposed_value": "knit_top",
+        "write": "Append owner review event through subtype API",
+        "origin": "owner_selected",
+        "review_basis": "synthetic_fixture_declaration",
+        "reviewer_scope": "94f3e9af-86ce-48a1-b21d-c0612526dde3",
+        "expected_male_A": "Permit",
+        "expected_female_B_general": "Permit",
+        "review_note": "Proposed explicit synthetic owner product-identity declaration; current name, extracted fields and image are review targets only, not subtype verification."
+      },
+      {
+        "fixture": "MD07",
+        "garment_id": "1da2fd81-b6fc-4799-a056-863da27b1410",
+        "name": "TEST FIXTURE MD07 Navy check shirt",
+        "original_category": "long_sleeve_top",
+        "processing_item_id": "90f20804-042f-4de1-b933-36027d1acb6c",
+        "media_id": "8d1cef8f-3bb5-473b-9475-db1454f097fd",
+        "media_sha256": "9c167abed50ac692e3c796df23df296ba191da5ee28554916f4b62154a6244ad",
+        "original_garment_row_sha256": "150a30abb784fddf2a9d489f745f7d3a40c260fac70aff3539e992df23d74722",
+        "original_processing_row_sha256": "b74c48c573bc949c6c594e856f7f2f06192a4f3b18a93a0cd2ffed53b86e2b00",
+        "applicable": true,
+        "proposed_state": "Known",
+        "proposed_value": "button_up_shirt",
+        "write": "Append owner review event through subtype API",
+        "origin": "owner_selected",
+        "review_basis": "synthetic_fixture_declaration",
+        "reviewer_scope": "94f3e9af-86ce-48a1-b21d-c0612526dde3",
+        "expected_male_A": "Permit",
+        "expected_female_B_general": "Permit",
+        "review_note": "Proposed explicit synthetic owner product-identity declaration; current name, extracted fields and image are review targets only, not subtype verification."
+      },
+      {
+        "fixture": "MD08",
+        "garment_id": "4c9f7a49-8959-4b5b-887c-2991fe117f0b",
+        "name": "TEST FIXTURE MD08 Blue denim jeans",
+        "original_category": "trousers",
+        "processing_item_id": "98f5fa28-af7c-40c5-8a4c-e381ee83f254",
+        "media_id": "c39b9471-e1a0-40ad-a66a-40cc97ca5cac",
+        "media_sha256": "32a0ac146b2ec7d5678138b245900a8b09a330e8876ac830c16b0ab4216e236a",
+        "original_garment_row_sha256": "ee89af0c0ade254743044a8b814724edb0e447fdf05cd5537723eea3cab5a603",
+        "original_processing_row_sha256": "df38296779c75d51ce79781f2251a64e42f10e798906e39619b6309b55e6d808",
+        "applicable": false,
+        "proposed_state": "Inapplicable",
+        "proposed_value": null,
+        "write": "None",
+        "origin": null,
+        "review_basis": null,
+        "reviewer_scope": null,
+        "expected_male_A": "Permit",
+        "expected_female_B_general": "Permit",
+        "review_note": "Outside both subtype parents; preserve existing canonical policy, no new subtype review or event."
+      },
+      {
+        "fixture": "MD09",
+        "garment_id": "c63efd34-ec9a-4cc8-a0bf-22dfd2fa27a5",
+        "name": "TEST FIXTURE MD09 Black denim jeans",
+        "original_category": "trousers",
+        "processing_item_id": "f9aee3a5-ed79-4580-87d3-0d05eddc0c2e",
+        "media_id": "a0945da6-3038-4d85-9c20-c81c10a96bbc",
+        "media_sha256": "93c803452f108a7efae681f1df333c23dbafeb27a5221996d4ee4065ec1fd469",
+        "original_garment_row_sha256": "141d6abaaa11b2d1d8f299ab3e48c79cc9be7b689ed351e3471bd67b15f0634c",
+        "original_processing_row_sha256": "43b3d6db2934777dcb1b60491deebbf826f4a01b862348edb2f3a3c33fc81df3",
+        "applicable": false,
+        "proposed_state": "Inapplicable",
+        "proposed_value": null,
+        "write": "None",
+        "origin": null,
+        "review_basis": null,
+        "reviewer_scope": null,
+        "expected_male_A": "Permit",
+        "expected_female_B_general": "Permit",
+        "review_note": "Outside both subtype parents; preserve existing canonical policy, no new subtype review or event."
+      },
+      {
+        "fixture": "MD10",
+        "garment_id": "8a82042c-ec50-48ca-82ca-b2062fa5f1c9",
+        "name": "TEST FIXTURE MD10 Brown cotton shorts",
+        "original_category": "shorts",
+        "processing_item_id": "795377f5-590c-4b91-bd6e-9db533431e9b",
+        "media_id": "e8ba9170-fe10-4295-801b-f80b9c75695c",
+        "media_sha256": "1c96858e5e206d483a028377e1fc43fdfc5e29712b088969f4fae0b463b1bc25",
+        "original_garment_row_sha256": "b1921d608ac589a0879a1401ab56c70f02e30a4208c92c0850cb74d1fb4e57da",
+        "original_processing_row_sha256": "93e7705411f9406a4fcb2115a03345c9d9f81c91e3badbe1b0e10434ac024a9d",
+        "applicable": false,
+        "proposed_state": "Inapplicable",
+        "proposed_value": null,
+        "write": "None",
+        "origin": null,
+        "review_basis": null,
+        "reviewer_scope": null,
+        "expected_male_A": "Permit",
+        "expected_female_B_general": "Permit",
+        "review_note": "Outside both subtype parents; preserve existing canonical policy, no new subtype review or event."
+      },
+      {
+        "fixture": "MD11",
+        "garment_id": "d6d792ad-3494-4123-af03-2c20cda91a29",
+        "name": "TEST FIXTURE MD11 Beige linen shorts",
+        "original_category": "shorts",
+        "processing_item_id": "cf29a883-8a5b-4a58-b9f1-eabbf407ec24",
+        "media_id": "40f77e5b-f1c7-4a4d-b5d3-a155a23eef47",
+        "media_sha256": "eab051fd6aeac6bae44e3dfaee70e57273f8829771f730316d5dcfc8e3c54e7a",
+        "original_garment_row_sha256": "131783b64db63731ab4556925ccbc35e1c4d90af2cb7db3887a6f3d8944f8552",
+        "original_processing_row_sha256": "06f725afe1c6b43281d463a15df9cec758c7f96aa8fc4a7dbd8f58d57330233a",
+        "applicable": false,
+        "proposed_state": "Inapplicable",
+        "proposed_value": null,
+        "write": "None",
+        "origin": null,
+        "review_basis": null,
+        "reviewer_scope": null,
+        "expected_male_A": "Permit",
+        "expected_female_B_general": "Permit",
+        "review_note": "Outside both subtype parents; preserve existing canonical policy, no new subtype review or event."
+      },
+      {
+        "fixture": "MD12",
+        "garment_id": "3ef1809a-1e36-48f8-87d9-040bdc061fd1",
+        "name": "TEST FIXTURE MD12 Green casual shorts",
+        "original_category": "shorts",
+        "processing_item_id": "4c3d3053-4586-4a47-a89c-db667daa3e8e",
+        "media_id": "6827075f-f222-40f7-8490-242126fc7a2b",
+        "media_sha256": "314d626bcae8d709565010b6e26ab3a3e4e191a4f92f4255cbd26b47ebca58e2",
+        "original_garment_row_sha256": "e743280c0de9a8d06b978faaffacf3848fccae816d644719f9ebe7682479bf4f",
+        "original_processing_row_sha256": "f13ce35b2c897503af9695fa682b89bde165f7177e71049cc2a2f6098d87b0c0",
+        "applicable": false,
+        "proposed_state": "Inapplicable",
+        "proposed_value": null,
+        "write": "None",
+        "origin": null,
+        "review_basis": null,
+        "reviewer_scope": null,
+        "expected_male_A": "Permit",
+        "expected_female_B_general": "Permit",
+        "review_note": "Outside both subtype parents; preserve existing canonical policy, no new subtype review or event."
+      },
+      {
+        "fixture": "MD13",
+        "garment_id": "ba6e7088-f604-439b-a5f4-7886bc24906d",
+        "name": "TEST FIXTURE MD13 Pink floral skirt",
+        "original_category": "skirt",
+        "processing_item_id": "4a1b14f6-6f67-4cac-b9e9-099d6c602ffe",
+        "media_id": "4d21fb46-295e-449e-95f0-eb7d6a0a2594",
+        "media_sha256": "3e80aa4a75db40486e26f835e237d40b6583aba2dc5529baef51f442e3ad3b3d",
+        "original_garment_row_sha256": "45bd495c5931cde10c92c5b07f14791266461025d4f4381f8a00afb7d78fac3f",
+        "original_processing_row_sha256": "8a264dcac5998324e3d25deb6b3fe6835ed4a438183d172de0581c87f474c07f",
+        "applicable": false,
+        "proposed_state": "Inapplicable",
+        "proposed_value": null,
+        "write": "None",
+        "origin": null,
+        "review_basis": null,
+        "reviewer_scope": null,
+        "expected_male_A": "Deny",
+        "expected_female_B_general": "Permit",
+        "review_note": "Outside both subtype parents; preserve existing canonical policy, no new subtype review or event."
+      },
+      {
+        "fixture": "MD14",
+        "garment_id": "b1fb5724-b454-4711-b478-6f8e187c79d1",
+        "name": "TEST FIXTURE MD14 White cotton skirt",
+        "original_category": "skirt",
+        "processing_item_id": "103879d2-b81c-45d5-85d9-ab4d8ef4ecd3",
+        "media_id": "49e1f07a-db44-4b2e-90fc-7a9b09e584bc",
+        "media_sha256": "8a74babe04d03bf55bc469f8bc2d9108c60d8b5851e817d067917ace6765338f",
+        "original_garment_row_sha256": "592642c76d9892b081fd55c6b3aa7c46abaf87f17123e22f961aceae03cc1ac4",
+        "original_processing_row_sha256": "e804ab172ef505b302bfc7ead0c0bc64ef9b95bc99605075121af8d4aebcdc2c",
+        "applicable": false,
+        "proposed_state": "Inapplicable",
+        "proposed_value": null,
+        "write": "None",
+        "origin": null,
+        "review_basis": null,
+        "reviewer_scope": null,
+        "expected_male_A": "Deny",
+        "expected_female_B_general": "Permit",
+        "review_note": "Outside both subtype parents; preserve existing canonical policy, no new subtype review or event."
+      },
+      {
+        "fixture": "MD15",
+        "garment_id": "8c0650d8-b97b-4722-a768-5970a1d29297",
+        "name": "TEST FIXTURE MD15 Blue light jacket",
+        "original_category": "long_sleeve_outwear",
+        "processing_item_id": "08bd4973-6edd-43ca-869e-b36d8099576b",
+        "media_id": "8beb1d47-1d26-4d72-9107-3809392db8e0",
+        "media_sha256": "a09045ecb9ddba30dd67d2b8b03035bac8196f70182b3edb61358e636a9f022b",
+        "original_garment_row_sha256": "0615f9c04abc28aafbc2252484840362d5ff3504dfc1d18f8217b34094ea073a",
+        "original_processing_row_sha256": "b9544c5eadc14827357e428e71712ffff57ce946515bee69983a8dd7bcb05da4",
+        "applicable": false,
+        "proposed_state": "Inapplicable",
+        "proposed_value": null,
+        "write": "None",
+        "origin": null,
+        "review_basis": null,
+        "reviewer_scope": null,
+        "expected_male_A": "Permit",
+        "expected_female_B_general": "Permit",
+        "review_note": "Outside both subtype parents; preserve existing canonical policy, no new subtype review or event."
+      },
+      {
+        "fixture": "MD16",
+        "garment_id": "606dcb3c-4f99-428e-838d-6d749761ffd8",
+        "name": "TEST FIXTURE MD16 Yellow cotton dress",
+        "original_category": "short_sleeve_dress",
+        "processing_item_id": "73e2ab7f-6e87-49b9-8f6b-f8fdeed811eb",
+        "media_id": "ac36a130-6084-4c07-8b49-42f345f5d3b6",
+        "media_sha256": "33ec1aa3b081cd09495138e16fd5c6f35e07431471607ac55e07e718a543da87",
+        "original_garment_row_sha256": "c4b4266820d9c5b21a43be9d450b2cc9dee288e637d8fe73e9527343cf76132c",
+        "original_processing_row_sha256": "5081cda52df71f67fbb7d3d81f02476a5ef437f28e74b3efcec24ce04e3f1f8e",
+        "applicable": false,
+        "proposed_state": "Inapplicable",
+        "proposed_value": null,
+        "write": "None",
+        "origin": null,
+        "review_basis": null,
+        "reviewer_scope": null,
+        "expected_male_A": "Deny",
+        "expected_female_B_general": "Permit",
+        "review_note": "Outside both subtype parents; preserve existing canonical policy, no new subtype review or event."
+      },
+      {
+        "fixture": "MD17",
+        "garment_id": "a829760b-5cdc-48e2-beef-18d0cc87aa49",
+        "name": "TEST FIXTURE MD17 Green linen dress",
+        "original_category": "vest_dress",
+        "processing_item_id": "638bcdde-e349-4e5c-8f82-9ef0e586c4fe",
+        "media_id": "a6d50fba-048a-4ea5-b2ed-fc86de9ae394",
+        "media_sha256": "1e158293e76957d9fc1fe7c4051c73c9b8629aca115bb4537726901e14900341",
+        "original_garment_row_sha256": "e5b62b4ca468cad860cba9734fbec4f5a9ff281caa07d0c728e1d0108619a48a",
+        "original_processing_row_sha256": "dba033512cd268bf9a06653ae26f9bca146be8a10a27ff54d2e1d6bf3b2cdea6",
+        "applicable": false,
+        "proposed_state": "Inapplicable",
+        "proposed_value": null,
+        "write": "None",
+        "origin": null,
+        "review_basis": null,
+        "reviewer_scope": null,
+        "expected_male_A": "Deny",
+        "expected_female_B_general": "Permit",
+        "review_note": "Outside both subtype parents; preserve existing canonical policy, no new subtype review or event."
+      },
+      {
+        "fixture": "MD18",
+        "garment_id": "bbd5ad9f-59f1-41a9-8910-0abc26ffdb50",
+        "name": "TEST FIXTURE MD18 Pink floral dress",
+        "original_category": "sling_dress",
+        "processing_item_id": "fd7edb15-e196-4896-91ca-ebe60cb71c67",
+        "media_id": "00020b37-31e8-49b6-8806-915fce8e2576",
+        "media_sha256": "32e41e2792456053083bf352633bd033cb0b8c467b44ba90d170e9af13b55eb0",
+        "original_garment_row_sha256": "c89d005aa99b948fe92e5c1ffda4b8338f37ca8f15636f90b8c40497782afde2",
+        "original_processing_row_sha256": "fd97ab703701f6a988e550f40d0e982cdfd414c885387d227db2a90698eb3b17",
+        "applicable": false,
+        "proposed_state": "Inapplicable",
+        "proposed_value": null,
+        "write": "None",
+        "origin": null,
+        "review_basis": null,
+        "reviewer_scope": null,
+        "expected_male_A": "Deny",
+        "expected_female_B_general": "Permit",
+        "review_note": "Outside both subtype parents; preserve existing canonical policy, no new subtype review or event."
+      },
+      {
+        "fixture": "MD19",
+        "garment_id": "f9e776ca-a630-4e5f-8759-575488d430a4",
+        "name": "TEST FIXTURE MD19 White Oxford-style shirt",
+        "original_category": "long_sleeve_top",
+        "processing_item_id": "be8a8285-f530-4665-ba40-00424104254a",
+        "media_id": "40a4e9d9-1c1d-4579-beae-789cb4359b82",
+        "media_sha256": "a2f909c4b71bf1a648fd5f9d39e4c60a039f805a7a150b45d087dc45e793d8db",
+        "original_garment_row_sha256": "ef4fe8dd620891e05867590a9ae0dba16785497c1bfd98b57d232a4a047a6168",
+        "original_processing_row_sha256": "3e2d64c871d0e4a540f61d2ecee286e560b30be70e4c7151142993c05b6e5e2b",
+        "applicable": true,
+        "proposed_state": "Known",
+        "proposed_value": "button_up_shirt",
+        "write": "Append owner review event through subtype API",
+        "origin": "owner_selected",
+        "review_basis": "synthetic_fixture_declaration",
+        "reviewer_scope": "94f3e9af-86ce-48a1-b21d-c0612526dde3",
+        "expected_male_A": "Permit",
+        "expected_female_B_general": "Permit",
+        "review_note": "Proposed explicit synthetic owner product-identity declaration; current name, extracted fields and image are review targets only, not subtype verification."
+      },
+      {
+        "fixture": "MD20",
+        "garment_id": "e24cf6d1-6929-490c-9a89-40f20ef8c6da",
+        "name": "TEST FIXTURE MD20 Blue polo-style top",
+        "original_category": "short_sleeve_top",
+        "processing_item_id": "a6a44e69-43e1-46af-8231-b4ce003458d1",
+        "media_id": "8e041790-a445-49be-8700-e5d3f4ecc2b8",
+        "media_sha256": "a4e188e158f64f9a395a147ad5fb9634539adc1119a71c5e85809055b43202ab",
+        "original_garment_row_sha256": "ae9e05363fc20d13872b32c8fe91eb34480a14ae24da17c3b5721fba39e62cdc",
+        "original_processing_row_sha256": "ee6bca5fa7e3fcb6d0b35dce68b53a3b55b1cc3c0f0ff95071ac202944998009",
+        "applicable": true,
+        "proposed_state": "Known",
+        "proposed_value": "polo_shirt",
+        "write": "Append owner review event through subtype API",
+        "origin": "owner_selected",
+        "review_basis": "synthetic_fixture_declaration",
+        "reviewer_scope": "94f3e9af-86ce-48a1-b21d-c0612526dde3",
+        "expected_male_A": "Permit",
+        "expected_female_B_general": "Permit",
+        "review_note": "Collar/front line does not verify a partial placket. Polo is proposed fictional owner attestation; no claim that current pixels prove it."
+      },
+      {
+        "fixture": "MD21",
+        "garment_id": "aa6b5c0d-7aed-41d0-9349-53f443968dbe",
+        "name": "TEST FIXTURE MD21 White knit top",
+        "original_category": "long_sleeve_top",
+        "processing_item_id": "85d38f42-6af3-44f9-91ea-cbf054bb8509",
+        "media_id": "bd88de2c-48ef-4c36-b31c-650fee5ca9bb",
+        "media_sha256": "602943f7dd5aa329b4983bc7361be995242e608a903eeb3c549c5e3c525c9626",
+        "original_garment_row_sha256": "f16f3ecf84268a2f20a2f858cf6c00b82d195c64aefd2e3c69dbd9e4cb064243",
+        "original_processing_row_sha256": "225676cb061c78a9333d8c823479d5e4e7f6b5552a6a7fe7780426713dd035fe",
+        "applicable": true,
+        "proposed_state": "Known",
+        "proposed_value": "knit_top",
+        "write": "Append owner review event through subtype API",
+        "origin": "owner_selected",
+        "review_basis": "synthetic_fixture_declaration",
+        "reviewer_scope": "94f3e9af-86ce-48a1-b21d-c0612526dde3",
+        "expected_male_A": "Permit",
+        "expected_female_B_general": "Permit",
+        "review_note": "Proposed explicit synthetic owner product-identity declaration; current name, extracted fields and image are review targets only, not subtype verification."
+      },
+      {
+        "fixture": "MD22",
+        "garment_id": "f66cb31b-51b1-4fd5-a45d-f374c69c4f61",
+        "name": "TEST FIXTURE MD22 Navy linen shirt",
+        "original_category": "long_sleeve_top",
+        "processing_item_id": "6e1ce390-a3c0-4752-8879-2aa3bd45e08c",
+        "media_id": "1ec4417d-e0ae-467c-aa08-3bcf7022002a",
+        "media_sha256": "e5e498ed21778b9530707ffe9dc6dfa0be434fd3e37abda59a06735b8636f39c",
+        "original_garment_row_sha256": "e1dc670b1e940efa4d02486dbb288d560b462d2795c042d238c895f734e610ab",
+        "original_processing_row_sha256": "a056dc18056af9c8d6686086467192d97d170d7ee8a12c015bf8073060dfc924",
+        "applicable": true,
+        "proposed_state": "Known",
+        "proposed_value": "button_up_shirt",
+        "write": "Append owner review event through subtype API",
+        "origin": "owner_selected",
+        "review_basis": "synthetic_fixture_declaration",
+        "reviewer_scope": "94f3e9af-86ce-48a1-b21d-c0612526dde3",
+        "expected_male_A": "Permit",
+        "expected_female_B_general": "Permit",
+        "review_note": "Proposed explicit synthetic owner product-identity declaration; current name, extracted fields and image are review targets only, not subtype verification."
+      },
+      {
+        "fixture": "MD23",
+        "garment_id": "0387e53d-30ba-4903-a631-90a5161fced7",
+        "name": "TEST FIXTURE MD23 Red silk blouse",
+        "original_category": "long_sleeve_top",
+        "processing_item_id": "53a66340-0cc6-4b9a-9ffb-224dac05815d",
+        "media_id": "3459ce61-413c-4f97-b846-cfed44771d81",
+        "media_sha256": "9aa53dcf090f9ed3d56f140ae4624774cb5c94c75ec94665431d963f3f601fd3",
+        "original_garment_row_sha256": "750daf0f045a1d70fbf7489034541a3669953aa65b27cae0e1f41a4bcb19167c",
+        "original_processing_row_sha256": "8f47ef6508ba565d0a4045b1c62521cfd9979d6593ab86d3bc89f4a6c59df6bf",
+        "applicable": true,
+        "proposed_state": "Known",
+        "proposed_value": "blouse",
+        "write": "Append owner review event through subtype API",
+        "origin": "owner_selected",
+        "review_basis": "synthetic_fixture_declaration",
+        "reviewer_scope": "94f3e9af-86ce-48a1-b21d-c0612526dde3",
+        "expected_male_A": "Deny",
+        "expected_female_B_general": "Permit",
+        "review_note": "Silk/red/name and generic long-sleeve drawing do not verify blouse; proposed explicit fictional owner declaration."
+      },
+      {
+        "fixture": "MD24",
+        "garment_id": "fb682a8f-23cc-4ac9-9ba5-da01e3f989ac",
+        "name": "TEST FIXTURE MD24 Navy tailored trousers",
+        "original_category": "trousers",
+        "processing_item_id": "8c40cf2f-d6cf-43ff-9b26-2c9a4e0f3a39",
+        "media_id": "8f766aaf-afcb-4834-86ee-d3f4e48e8ebd",
+        "media_sha256": "336f45aa7f41a94f3544fcc81aa35ee75b45fe82834a42324487ab6b883079da",
+        "original_garment_row_sha256": "0144184cc676f2ddd4d762d78512ede14acf5a835e38b1e71bdde20fac2ba004",
+        "original_processing_row_sha256": "98f72d27c18a4303b510ba6d5575ab606e0afd49c7ba01169afc8cdfc3c1901a",
+        "applicable": false,
+        "proposed_state": "Inapplicable",
+        "proposed_value": null,
+        "write": "None",
+        "origin": null,
+        "review_basis": null,
+        "reviewer_scope": null,
+        "expected_male_A": "Permit",
+        "expected_female_B_general": "Permit",
+        "review_note": "Outside both subtype parents; preserve existing canonical policy, no new subtype review or event."
+      },
+      {
+        "fixture": "MD25",
+        "garment_id": "adbad284-4772-4694-b86e-d6b0ff5b6e60",
+        "name": "TEST FIXTURE MD25 Grey tailored trousers",
+        "original_category": "trousers",
+        "processing_item_id": "7bef297a-b534-4a5f-a0ba-b3090bfd0d43",
+        "media_id": "512a8f4c-ddb4-4e73-a446-5fe6f59922fb",
+        "media_sha256": "0026c7daa1e06aac3cc2885079027b5a8eda0807b8411fd775214ed093f55b15",
+        "original_garment_row_sha256": "337601d0d49241910b218f6b59454419574368fca8b066ecec744d8fb1e56122",
+        "original_processing_row_sha256": "700cf2e8be69cdf10e316459da29efde8aba4c9ee5a8ba519befece28a293da4",
+        "applicable": false,
+        "proposed_state": "Inapplicable",
+        "proposed_value": null,
+        "write": "None",
+        "origin": null,
+        "review_basis": null,
+        "reviewer_scope": null,
+        "expected_male_A": "Permit",
+        "expected_female_B_general": "Permit",
+        "review_note": "Outside both subtype parents; preserve existing canonical policy, no new subtype review or event."
+      },
+      {
+        "fixture": "MD26",
+        "garment_id": "27c2900d-eee1-4d77-915f-750c349f68b4",
+        "name": "TEST FIXTURE MD26 Beige cotton chinos",
+        "original_category": "trousers",
+        "processing_item_id": "e6588f97-b084-4546-947d-382db7ff52fc",
+        "media_id": "c67a7b9a-2f1e-40dd-9924-1bcadec7a723",
+        "media_sha256": "9725f05e0a508703687d8f7663fe1901305ac69e45e5f47e77e4cf72aac98423",
+        "original_garment_row_sha256": "4828cc9cd06c3b0878b8e45238be60c34d146c21bba69c068eda95dd5b311359",
+        "original_processing_row_sha256": "296901b6b301a1e910e6fea54feb85f8ae759c1ca84adf6e7fa30b86cd0c8523",
+        "applicable": false,
+        "proposed_state": "Inapplicable",
+        "proposed_value": null,
+        "write": "None",
+        "origin": null,
+        "review_basis": null,
+        "reviewer_scope": null,
+        "expected_male_A": "Permit",
+        "expected_female_B_general": "Permit",
+        "review_note": "Outside both subtype parents; preserve existing canonical policy, no new subtype review or event."
+      },
+      {
+        "fixture": "MD27",
+        "garment_id": "27d15d86-ba19-47db-a4cf-a8126330b7cd",
+        "name": "TEST FIXTURE MD27 Black pencil skirt",
+        "original_category": "skirt",
+        "processing_item_id": "ceb5a8e7-0cfc-4ec6-97ae-ba0835f44532",
+        "media_id": "b3f065da-e641-4749-87d0-5fb3dc62c4bd",
+        "media_sha256": "3729219419cb6848e31957bb06766f4c149963f55915d8d868a05d6290eb5f1c",
+        "original_garment_row_sha256": "0978781b4f4cffe401da141ad584c53fdbd2f4df84662ea3cc7ac59b79053b8f",
+        "original_processing_row_sha256": "a9320ade9d8f89e25735a576fcc14737da0f860b0f297c587bee58a375b7c94b",
+        "applicable": false,
+        "proposed_state": "Inapplicable",
+        "proposed_value": null,
+        "write": "None",
+        "origin": null,
+        "review_basis": null,
+        "reviewer_scope": null,
+        "expected_male_A": "Deny",
+        "expected_female_B_general": "Permit",
+        "review_note": "Outside both subtype parents; preserve existing canonical policy, no new subtype review or event."
+      },
+      {
+        "fixture": "MD28",
+        "garment_id": "a76d7baa-396c-416c-869d-d22cff6b7ff8",
+        "name": "TEST FIXTURE MD28 Navy blazer",
+        "original_category": "long_sleeve_outwear",
+        "processing_item_id": "729a9744-f689-4715-87dc-cf8241f0ddc7",
+        "media_id": "bd51c19a-dc00-47d1-8de7-5708a6de41e8",
+        "media_sha256": "93773dc81b122b75101130dff0299d47e3e3b1ef94c33f5552f369d494fe9d66",
+        "original_garment_row_sha256": "7f5ebc7cbdd705c246b453807a5c64561b0ecca7655d5551b5d743e1b4ec54bf",
+        "original_processing_row_sha256": "1f518a944a9a5773c9c694a7e8e1441a8a5fc6659d7eeab13aa251dcdddd367b",
+        "applicable": false,
+        "proposed_state": "Inapplicable",
+        "proposed_value": null,
+        "write": "None",
+        "origin": null,
+        "review_basis": null,
+        "reviewer_scope": null,
+        "expected_male_A": "Permit",
+        "expected_female_B_general": "Permit",
+        "review_note": "Outside both subtype parents; preserve existing canonical policy, no new subtype review or event."
+      },
+      {
+        "fixture": "MD29",
+        "garment_id": "4b4616b4-65b3-455d-bdf0-6e1b0b29ad04",
+        "name": "TEST FIXTURE MD29 Grey light jacket",
+        "original_category": "short_sleeve_outwear",
+        "processing_item_id": "487ceab1-63e4-4079-99ba-d5791db67605",
+        "media_id": "49e0c97d-8a5e-4514-9ffb-d856a80a8e01",
+        "media_sha256": "d419f721513b370b69bd38f3b957483128475e3034b8fd6e629175b17d22b9cd",
+        "original_garment_row_sha256": "c21d33ace8d7febbb4ece9ba2817bdcea27f488f985fd0dde9652c82ecdc184f",
+        "original_processing_row_sha256": "9d197ca1c4b0dbef338059c21b1c39d8a0b07bb861a2aaa6708c52d8ef4fc3ae",
+        "applicable": false,
+        "proposed_state": "Inapplicable",
+        "proposed_value": null,
+        "write": "None",
+        "origin": null,
+        "review_basis": null,
+        "reviewer_scope": null,
+        "expected_male_A": "Permit",
+        "expected_female_B_general": "Permit",
+        "review_note": "Outside both subtype parents; preserve existing canonical policy, no new subtype review or event."
+      },
+      {
+        "fixture": "MD30",
+        "garment_id": "b9f23651-d704-4108-b6cc-8dd362d592fa",
+        "name": "TEST FIXTURE MD30 Beige cardigan",
+        "original_category": "long_sleeve_outwear",
+        "processing_item_id": "2063913d-48fe-402a-82e5-e3b6dd4e08a3",
+        "media_id": "3730d69f-71bf-41d9-b72a-8ca8f9c21a0b",
+        "media_sha256": "aa168508e8c3c59f087069d7d8e58c500fbc21f64c3f57fe587ba18cb9610a9b",
+        "original_garment_row_sha256": "c4ca748b84cce2b66935e1966ace89fae00578e4c5d409dfbe045e0c07c3b8ff",
+        "original_processing_row_sha256": "409bcbaf4ff787257d9859a418e4cf975ef9dadc48664635bc1c383e23a83d03",
+        "applicable": false,
+        "proposed_state": "Inapplicable",
+        "proposed_value": null,
+        "write": "None",
+        "origin": null,
+        "review_basis": null,
+        "reviewer_scope": null,
+        "expected_male_A": "Permit",
+        "expected_female_B_general": "Permit",
+        "review_note": "Outside both subtype parents; preserve existing canonical policy, no new subtype review or event."
+      },
+      {
+        "fixture": "MD31",
+        "garment_id": "7e444274-c4eb-45aa-a5f0-d26aa8bb1bc6",
+        "name": "TEST FIXTURE MD31 Navy silk dress",
+        "original_category": "vest_dress",
+        "processing_item_id": "dd639164-cbe3-40f2-88dd-c3629812b70b",
+        "media_id": "80e08157-3a85-4b4d-b094-7641760f0344",
+        "media_sha256": "50b92e0b66316eb81760171616b8de1d975f93e4398e7dd30212d954fe48d7da",
+        "original_garment_row_sha256": "6fefd2a1fae9b21f51532adb90e1dbf8e638133f79d7e1b9cbd7581ebaab6f5c",
+        "original_processing_row_sha256": "f560e84c489962b05d4c554d28477fdf855743bc4933afde70092c8a73001f45",
+        "applicable": false,
+        "proposed_state": "Inapplicable",
+        "proposed_value": null,
+        "write": "None",
+        "origin": null,
+        "review_basis": null,
+        "reviewer_scope": null,
+        "expected_male_A": "Deny",
+        "expected_female_B_general": "Permit",
+        "review_note": "Outside both subtype parents; preserve existing canonical policy, no new subtype review or event."
+      },
+      {
+        "fixture": "MD32",
+        "garment_id": "d4a58a4f-5af6-40af-a67c-6ee8af9b8511",
+        "name": "TEST FIXTURE MD32 Red long-sleeve dress",
+        "original_category": "long_sleeve_dress",
+        "processing_item_id": "62f6faf6-5562-4e03-ac6a-9d959c40cf5b",
+        "media_id": "61144602-e970-4ac2-aa01-7145711a48d6",
+        "media_sha256": "34996f99f60dc8a6570b05206a68680a9ff60551ecfeb1e221ea0d0700954586",
+        "original_garment_row_sha256": "5adc72b9823c7e64387be819a9a2dc27feb7f40d547fb2ee629bbe6766fc2b8c",
+        "original_processing_row_sha256": "1098d21345c328b466f6be0c704cd1f1174efa35d08f5124e0f5e47adf8b0ce6",
+        "applicable": false,
+        "proposed_state": "Inapplicable",
+        "proposed_value": null,
+        "write": "None",
+        "origin": null,
+        "review_basis": null,
+        "reviewer_scope": null,
+        "expected_male_A": "Deny",
+        "expected_female_B_general": "Permit",
+        "review_note": "Outside both subtype parents; preserve existing canonical policy, no new subtype review or event."
+      },
+      {
+        "fixture": "MD33",
+        "garment_id": "71b7b2dd-ccef-4a6e-9eb2-31bf1a2ee890",
+        "name": "TEST FIXTURE MD33 Blue checked dress",
+        "original_category": "short_sleeve_dress",
+        "processing_item_id": "7b6a3703-903c-4cb2-a5da-d27ee929ac5c",
+        "media_id": "04ac15ea-1afd-4318-94af-3e7e7eabaef6",
+        "media_sha256": "e09994bb29b0899247e4471559924e64f356e5bbbd0f64489d19b6556356b173",
+        "original_garment_row_sha256": "5d38e9870d4e410c4d4828c5a50114fc05bd2be6698b579aa860251890237f94",
+        "original_processing_row_sha256": "69a2415405e957b0329d8acdaad885106d33b8368ed748f699e9e74e75fe633e",
+        "applicable": false,
+        "proposed_state": "Inapplicable",
+        "proposed_value": null,
+        "write": "None",
+        "origin": null,
+        "review_basis": null,
+        "reviewer_scope": null,
+        "expected_male_A": "Deny",
+        "expected_female_B_general": "Permit",
+        "review_note": "Outside both subtype parents; preserve existing canonical policy, no new subtype review or event."
+      },
+      {
+        "fixture": "MD34",
+        "garment_id": "970090e1-9ab0-4a18-8264-fc237c740c5c",
+        "name": "TEST FIXTURE MD34 Orange smart top",
+        "original_category": "short_sleeve_top",
+        "processing_item_id": "c66976e9-bf5f-4d20-a350-8d411e9d4085",
+        "media_id": "02ccc86f-16bd-4f25-84fc-960272fd16b6",
+        "media_sha256": "9be878da9caa468042648878653ec438fcc59211fa4a62c6633b024170ff44e0",
+        "original_garment_row_sha256": "0e1574344a62748e2c996a8073ae9eeb13ac45082737433bad2470d9884946ce",
+        "original_processing_row_sha256": "2ef8d41a027d2ea2045eb1001e527ecbf433a51b278881545dfa3d21939940c5",
+        "applicable": true,
+        "proposed_state": "Unspecified",
+        "proposed_value": null,
+        "write": "Append owner review event through subtype API",
+        "origin": "owner_selected",
+        "review_basis": "synthetic_fixture_declaration",
+        "reviewer_scope": "94f3e9af-86ce-48a1-b21d-c0612526dde3",
+        "expected_male_A": "Unknown",
+        "expected_female_B_general": "Permit",
+        "review_note": "Generic smart top does not establish one product identity; keep Unspecified."
+      },
+      {
+        "fixture": "MD35",
+        "garment_id": "24cf8056-85f9-4972-b266-e4defaa36efc",
+        "name": "TEST FIXTURE MD35 White formal shirt",
+        "original_category": "long_sleeve_top",
+        "processing_item_id": "115b13b6-27b2-4d5a-b0fd-ba66c851498c",
+        "media_id": "0336d38a-6df5-4899-8fb3-8ca957cf1d68",
+        "media_sha256": "c98a4c7aef8cf10efddc7acd74ca03472fb747b3a2c1c584e094185abcefd907",
+        "original_garment_row_sha256": "ef840b1490a412741165b643ce293ab5827891065a51980fb6c96352a2c3dcff",
+        "original_processing_row_sha256": "daf71fbd2a7fdcedbe27bc8e39fe5173379940d911af05f512abc7f1336c8788",
+        "applicable": true,
+        "proposed_state": "Known",
+        "proposed_value": "button_up_shirt",
+        "write": "Append owner review event through subtype API",
+        "origin": "owner_selected",
+        "review_basis": "synthetic_fixture_declaration",
+        "reviewer_scope": "94f3e9af-86ce-48a1-b21d-c0612526dde3",
+        "expected_male_A": "Permit",
+        "expected_female_B_general": "Permit",
+        "review_note": "Proposed explicit synthetic owner product-identity declaration; current name, extracted fields and image are review targets only, not subtype verification."
+      },
+      {
+        "fixture": "MD36",
+        "garment_id": "fe5db768-55e6-4480-b4dc-0665471abc3f",
+        "name": "TEST FIXTURE MD36 Black formal trousers",
+        "original_category": "trousers",
+        "processing_item_id": "fc89db04-b11f-4b51-8ff7-78fd2e46430e",
+        "media_id": "61572939-3678-4b97-aec8-94d0d5ff4f59",
+        "media_sha256": "7b5708ea7b8792844b5224dc0f9d3a69c76614aa04dec32e72af3e4704320798",
+        "original_garment_row_sha256": "e0f3cb2c4987b330d09a3962d1227edb74c5a29b5cd95e009fc8f58b5fc78e06",
+        "original_processing_row_sha256": "eaec53b50663a29b46f50c6136a7a8ef34e6befbcaea48d53917d3fd90235eb8",
+        "applicable": false,
+        "proposed_state": "Inapplicable",
+        "proposed_value": null,
+        "write": "None",
+        "origin": null,
+        "review_basis": null,
+        "reviewer_scope": null,
+        "expected_male_A": "Permit",
+        "expected_female_B_general": "Permit",
+        "review_note": "Outside both subtype parents; preserve existing canonical policy, no new subtype review or event."
+      },
+      {
+        "fixture": "MD37",
+        "garment_id": "fb210422-dc65-41e8-b61b-463eeb9b331d",
+        "name": "TEST FIXTURE MD37 Grey formal blazer",
+        "original_category": "long_sleeve_outwear",
+        "processing_item_id": "c37bbcac-b862-4c0e-ab77-a85273a9e4e2",
+        "media_id": "d15ee6ef-7296-41e3-9239-00dfc9a1cd36",
+        "media_sha256": "eb5813ab9303548f1565965c2390f219a0f66ea58d667e3422ba85abdf90490c",
+        "original_garment_row_sha256": "0963e43cd8b715dc3a027414a2c498474402bf4641704639ed91b248397da7a4",
+        "original_processing_row_sha256": "2182d5af4062ddafeb2d1cfab948967d63d4be55267b475e6f25f6160a837a3d",
+        "applicable": false,
+        "proposed_state": "Inapplicable",
+        "proposed_value": null,
+        "write": "None",
+        "origin": null,
+        "review_basis": null,
+        "reviewer_scope": null,
+        "expected_male_A": "Permit",
+        "expected_female_B_general": "Permit",
+        "review_note": "Outside both subtype parents; preserve existing canonical policy, no new subtype review or event."
+      },
+      {
+        "fixture": "MD38",
+        "garment_id": "2c73d26b-12a7-4215-b596-6156c8ec794d",
+        "name": "TEST FIXTURE MD38 Black formal dress",
+        "original_category": "vest_dress",
+        "processing_item_id": "1229483e-a364-44a7-9857-81c833551c96",
+        "media_id": "8adf0dd1-8027-403a-b764-b5f152ffc881",
+        "media_sha256": "3aeb24c58b2c4f50416a3d450d42ca51b703b11b21ac81fec7f30fb337975128",
+        "original_garment_row_sha256": "c4c42bd36c361cdb024c10545d02215c45ddc73ac8d153fa14c873843594f849",
+        "original_processing_row_sha256": "73ee1693858617923d6deaa442bdad647157c36a2e66868b2a82e91d4ed60175",
+        "applicable": false,
+        "proposed_state": "Inapplicable",
+        "proposed_value": null,
+        "write": "None",
+        "origin": null,
+        "review_basis": null,
+        "reviewer_scope": null,
+        "expected_male_A": "Deny",
+        "expected_female_B_general": "Permit",
+        "review_note": "Outside both subtype parents; preserve existing canonical policy, no new subtype review or event."
+      },
+      {
+        "fixture": "MD39",
+        "garment_id": "13337d15-9c3a-4fd6-b9db-1a1d19b93bea",
+        "name": "TEST FIXTURE MD39 Purple unknown-material top",
+        "original_category": "short_sleeve_top",
+        "processing_item_id": "87d64ae8-feec-430b-b701-a67577b53581",
+        "media_id": "0318afeb-a9da-4f86-a751-73c73c9b342c",
+        "media_sha256": "90ee3ce61935d138e18f5e4f1b82bcef0adf5a88a019adbc5444a24f7ae95c3e",
+        "original_garment_row_sha256": "0eaea4be7e0e7c743df8ef89c68bcbe20d539f6f22f69ad46a1b96612bf05091",
+        "original_processing_row_sha256": "f1e47b2ae1dfdb63f44c49a0819b75efd663d3412a801ec01401ef81722cc491",
+        "applicable": true,
+        "proposed_state": "Unspecified",
+        "proposed_value": null,
+        "write": "Append owner review event through subtype API",
+        "origin": "owner_selected",
+        "review_basis": "synthetic_fixture_declaration",
+        "reviewer_scope": "94f3e9af-86ce-48a1-b21d-c0612526dde3",
+        "expected_male_A": "Unknown",
+        "expected_female_B_general": "Permit",
+        "review_note": "Weak existing description and generic silhouette; keep Unspecified, preserve every existing Unknown field."
+      },
+      {
+        "fixture": "MD40",
+        "garment_id": "cd369570-5d5b-41cf-bc44-f27e3021e468",
+        "name": "TEST FIXTURE MD40 Grey unknown-description trousers",
+        "original_category": "trousers",
+        "processing_item_id": "672d46da-077b-4360-aea0-09e83d3479ea",
+        "media_id": "98da88f7-a139-49d0-828a-983bd53b0286",
+        "media_sha256": "5113f999739d595b5ec56aef7ecc8d0762490a96a7f7953ca9796cfea0f3474a",
+        "original_garment_row_sha256": "1a5c0255095a22bf5794486239029b1d76e7c4b30c8d2eaecdcdc6aa0fd74b77",
+        "original_processing_row_sha256": "37fb837c987f6d200f4c18d0d07a73a255ce61488bfda1782705a43ae5090d33",
+        "applicable": false,
+        "proposed_state": "Inapplicable",
+        "proposed_value": null,
+        "write": "None",
+        "origin": null,
+        "review_basis": null,
+        "reviewer_scope": null,
+        "expected_male_A": "Permit",
+        "expected_female_B_general": "Permit",
+        "review_note": "Outside both subtype parents; preserve existing canonical policy, no new subtype review or event."
+      }
+    ]
+  }
+}

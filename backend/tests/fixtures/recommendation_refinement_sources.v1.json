@@ -105,6 +105,6 @@
     "after": "75fa9a0a5d519895920895a4cbc113909ab557e92858fbd63c68a86261df0848"
   },
   "frozen_labels_sha256": "3a15cea941b21ef0e9c2116c93b99699f6019a2f4a7ff2dd6e025b2ad90841de",
-  "retained_starting_hashes": "C:\\Users\\chong\\AppData\\Local\\SmartWardrobe\\reviews\\optional_refinement_implementation_20261028\\starting-hashes.json",
+  "retained_starting_hashes": "retained://optional_refinement_implementation_20261028/starting-hashes.json",
   "starting_hashes_sha256": "f2f98db0ce1655c1c4c1abd2601b239beea95480f71a99111438d503051539f0"
 }

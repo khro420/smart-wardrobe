@@ -1,0 +1,83 @@
+import {test,expect,type Page} from '@playwright/test';
+import path from 'node:path';
+const A='99cc52e8-473e-4192-b6d9-a6fa3227d45c',B='94f3e9af-86ce-48a1-b21d-c0612526dde3';
+test.beforeEach(async({page})=>{await page.addInitScript(({token,a})=>{sessionStorage.setItem('smart_wardrobe_access_token',token);if(!sessionStorage.getItem('smart_wardrobe_profile_id'))sessionStorage.setItem('smart_wardrobe_profile_id',a);},{token:process.env.SW_SETUP_TOKEN!,a:A});});
+async function send(page:Page,text:string,status=201){
+  await page.getByRole('button',{name:'New Chat',exact:true}).click();await page.getByLabel('What would you like to wear?',{exact:true}).fill(text);
+  const pending=page.waitForResponse(r=>r.url().includes('/recommendations?pipeline=integrated')&&r.request().method()==='POST');
+  await page.getByRole('button',{name:'Suggest an outfit',exact:true}).click();const response=await pending;expect(response.status()).toBe(status);return response.json();
+}
+test('live existing40: shared management, male/female selection, hard denial, NLP and history',async({page})=>{
+  await page.goto('/wardrobe');await page.getByRole('combobox',{name:'Select active wardrobe profile'}).first().selectOption(A);
+  await expect(page.getByTestId('garment-wearer-availability')).toHaveCount(40);
+  await expect(page.getByTestId('garment-wearer-availability').filter({hasText:'not usable'})).toHaveCount(10);
+  await page.goto('/assistant');await expect(page.getByTestId('wearer-category-guidance')).toContainText('8 garment categories');
+  const male=await send(page,'Recommend an outfit.');expect(male.items.every((i:{category:string})=>i.category!=='skirt'&&!i.category.endsWith('_dress'))).toBe(true);
+  const denied=await send(page,'i want a dress for shopping',409);expect(denied.outcome).toBe('WearerCategoryNotPermitted');await expect(page.getByText(/This garment category is not supported for the selected male wearer/).first()).toBeVisible();
+  const binding=await send(page,'i want a shirt with black trousers');expect(binding.items.some((i:{category:string})=>i.category==='trousers')).toBe(true);expect(binding.items.some((i:{garment_role:string})=>i.garment_role==='upper')).toBe(true);
+  await page.goto('/history/'+binding.chat_id);await expect(page.getByText('i want a shirt with black trousers',{exact:true})).toBeVisible();
+  await page.getByRole('combobox',{name:'Select active wardrobe profile'}).first().selectOption(B);await page.goto('/assistant');await expect(page.getByTestId('wearer-category-guidance')).toContainText('13 garment categories');
+  const female=await send(page,'i want a dress for shopping');expect(female.items.some((i:{category:string})=>i.category.endsWith('_dress'))).toBe(true);
+  await page.screenshot({path:path.join(process.env.SW_REVIEW_DIR!,'female-category-request.png'),fullPage:true});
+  await page.goto('/wardrobe');await expect(page.getByTestId('garment-wearer-availability')).toHaveCount(40);await expect(page.getByTestId('garment-wearer-availability').filter({hasText:'not usable'})).toHaveCount(0);
+  await page.getByRole('combobox',{name:'Select active wardrobe profile'}).first().selectOption('904ea0b9-aff3-4a7b-a234-89ab9c9bbfc8');await page.goto('/assistant');await page.getByRole('button',{name:'New Chat',exact:true}).click();await expect(page.getByTestId('wearer-category-guidance')).toContainText('Choose Male or Female');
+  await page.getByLabel('What would you like to wear?',{exact:true}).fill('Going shopping.');await expect(page.getByRole('button',{name:'Suggest an outfit',exact:true})).toBeDisabled();
+});
+
+test('approved picker: male8/female13 positive choices, all13 negative choices and blocked draft retention',async({page})=>{
+  await page.goto('/assistant');
+  await page.getByRole('combobox',{name:'Select active wardrobe profile'}).first().selectOption(A);
+  await expect(page.getByTestId('wearer-category-guidance')).toContainText('8 garment categories');
+  await page.getByRole('button',{name:'New Chat',exact:true}).click();
+  const details=page.locator('details').filter({has:page.getByText('Optional garment requirements',{exact:true})});
+  await details.locator('summary').click();
+  await page.getByRole('button',{name:'Edit garment requirements',exact:true}).click();
+  await page.getByRole('button',{name:'Add another garment rule',exact:true}).click();
+  await page.getByLabel('Feature 1 in rule 1',{exact:true}).selectOption('category');
+  const values=page.getByLabel('Values 1 in rule 1',{exact:true});
+  await expect(values.locator('option')).toHaveCount(8);
+  await expect(values.locator('option[value="skirt"]')).toHaveCount(0);
+  await expect(values.locator('option[value$="_dress"]')).toHaveCount(0);
+  await page.getByLabel('Requirement for rule 1',{exact:true}).selectOption('none');
+  await expect(values.locator('option')).toHaveCount(13);
+  await expect(values.locator('option[value="skirt"]')).toHaveJSProperty('disabled',false);
+  await values.selectOption('skirt');
+  await page.getByRole('button',{name:'Apply garment requirements',exact:true}).click();
+  await page.getByLabel('What would you like to wear?',{exact:true}).fill('Recommend an outfit.');
+  const negativePending=page.waitForResponse(r=>r.url().includes('/recommendations?pipeline=integrated')&&r.request().method()==='POST');
+  await page.getByRole('button',{name:'Suggest an outfit',exact:true}).click();
+  const negative=await negativePending;expect(negative.status()).toBe(201);
+  const negativeInput=negative.request().postDataJSON().attribute_conditions;
+  expect(negativeInput.groups[0].quantifier).toBe('none');expect(negativeInput.groups[0].conditions[0].values).toEqual(['skirt']);
+  // A stale locally saved positive draft must remain visible and unapplied;
+  // this changes only this controlled browser's storage, never server history.
+  await page.getByRole('button',{name:'New Chat',exact:true}).click();
+  await page.evaluate(({a})=>{
+    const key=Object.keys(sessionStorage).find(key=>key.startsWith('smart_wardrobe_interaction:')&&key.endsWith(':wearer:'+a));if(!key)throw new Error('No scoped draft');
+    const draft=JSON.parse(sessionStorage.getItem(key)!);
+    draft.attributeDraftVersion='assistant-attribute-draft-1.0.0';
+    draft.attributeConditions={version:'attribute-conditions-1.0.0',groups:[{id:'g01',role:'all_selected',quantifier:'exists',conditions:[{id:'c01',attribute:'category',operator:'in',values:['skirt']}]}]};
+    sessionStorage.setItem(key,JSON.stringify(draft));
+  },{a:A});
+  await page.reload();await expect(page.getByTestId('wearer-category-guidance')).toContainText('8 garment categories');
+  const savedDetails=page.locator('details').filter({has:page.getByText('Optional garment requirements',{exact:true})});await savedDetails.locator('summary').click();
+  await page.getByRole('button',{name:'Edit garment requirements',exact:true}).click();
+  const savedValues=page.getByLabel('Values 1 in rule 1',{exact:true});
+  await expect(savedValues).toHaveValues(['skirt']);await expect(savedValues.locator('option')).toHaveCount(9);await expect(savedValues.locator('option[value="skirt"]')).toHaveJSProperty('disabled',true);
+  await page.getByRole('button',{name:'Apply garment requirements',exact:true}).click();
+  await expect(page.getByText('This category is not permitted for the selected wearer. Your draft is retained; change the requirement or select another wearer.',{exact:true})).toBeVisible();
+  await expect(savedValues).toHaveValues(['skirt']);
+  await page.getByRole('button',{name:'Cancel garment changes',exact:true}).click();
+  await page.getByRole('combobox',{name:'Select active wardrobe profile'}).first().selectOption(B);await page.goto('/assistant');
+  await expect(page.getByTestId('wearer-category-guidance')).toContainText('13 garment categories');
+  await page.getByRole('button',{name:'New Chat',exact:true}).click();
+  const femaleDetails=page.locator('details').filter({has:page.getByText('Optional garment requirements',{exact:true})});await femaleDetails.locator('summary').click();
+  await page.getByRole('button',{name:'Edit garment requirements',exact:true}).click();await page.getByRole('button',{name:'Add another garment rule',exact:true}).click();
+  await page.getByLabel('Feature 1 in rule 1',{exact:true}).selectOption('category');
+  const femaleValues=page.getByLabel('Values 1 in rule 1',{exact:true});await expect(femaleValues.locator('option')).toHaveCount(13);await expect(femaleValues.locator('option[value="skirt"]')).toHaveJSProperty('disabled',false);
+  await femaleValues.selectOption('skirt');await page.getByRole('button',{name:'Apply garment requirements',exact:true}).click();
+  await page.getByLabel('What would you like to wear?',{exact:true}).fill('Recommend an outfit.');
+  const femalePending=page.waitForResponse(r=>r.url().includes('/recommendations?pipeline=integrated')&&r.request().method()==='POST');await page.getByRole('button',{name:'Suggest an outfit',exact:true}).click();
+  const female=await femalePending;expect(female.status()).toBe(201);expect((await female.json()).items.some((item:{category:string})=>item.category==='skirt')).toBe(true);
+  await page.screenshot({path:path.join(process.env.SW_REVIEW_DIR!,'approved-category-picker.png'),fullPage:true});
+});

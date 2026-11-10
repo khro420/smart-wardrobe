@@ -1,0 +1,3623 @@
+{
+  "version": "consolidated-regression-correction-acceptance-1.0.0",
+  "authority": "Owner request plus frozen original independent meanings; implementation output is not an oracle.",
+  "binding": [
+    {
+      "id": "reported",
+      "text": "i want a blue cotton top with long sleeves and blue jeans",
+      "expected_groups": [
+        [
+          "upper",
+          "exists",
+          [
+            [
+              "primary_colour",
+              "in",
+              [
+                "blue"
+              ]
+            ],
+            [
+              "material",
+              "contains_any",
+              [
+                "cotton"
+              ]
+            ],
+            [
+              "sleeve_length",
+              "in",
+              [
+                "wrist-length"
+              ]
+            ]
+          ]
+        ],
+        [
+          "lower",
+          "exists",
+          [
+            [
+              "primary_colour",
+              "in",
+              [
+                "blue"
+              ]
+            ],
+            [
+              "category",
+              "in",
+              [
+                "trousers"
+              ]
+            ],
+            [
+              "material",
+              "contains_any",
+              [
+                "denim"
+              ]
+            ]
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "prenominal",
+      "text": "i want a blue cotton long-sleeved top with blue jeans",
+      "expected_groups": [
+        [
+          "upper",
+          "exists",
+          [
+            [
+              "primary_colour",
+              "in",
+              [
+                "blue"
+              ]
+            ],
+            [
+              "material",
+              "contains_any",
+              [
+                "cotton"
+              ]
+            ],
+            [
+              "sleeve_length",
+              "in",
+              [
+                "wrist-length"
+              ]
+            ]
+          ]
+        ],
+        [
+          "lower",
+          "exists",
+          [
+            [
+              "primary_colour",
+              "in",
+              [
+                "blue"
+              ]
+            ],
+            [
+              "category",
+              "in",
+              [
+                "trousers"
+              ]
+            ],
+            [
+              "material",
+              "contains_any",
+              [
+                "denim"
+              ]
+            ]
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "reversed",
+      "text": "I want blue jeans and a blue cotton top with long sleeves.",
+      "expected_groups": [
+        [
+          "upper",
+          "exists",
+          [
+            [
+              "primary_colour",
+              "in",
+              [
+                "blue"
+              ]
+            ],
+            [
+              "material",
+              "contains_any",
+              [
+                "cotton"
+              ]
+            ],
+            [
+              "sleeve_length",
+              "in",
+              [
+                "wrist-length"
+              ]
+            ]
+          ]
+        ],
+        [
+          "lower",
+          "exists",
+          [
+            [
+              "primary_colour",
+              "in",
+              [
+                "blue"
+              ]
+            ],
+            [
+              "category",
+              "in",
+              [
+                "trousers"
+              ]
+            ],
+            [
+              "material",
+              "contains_any",
+              [
+                "denim"
+              ]
+            ]
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "with-coordination",
+      "text": "I want a blue cotton top with long sleeves with blue jeans.",
+      "expected_groups": [
+        [
+          "upper",
+          "exists",
+          [
+            [
+              "primary_colour",
+              "in",
+              [
+                "blue"
+              ]
+            ],
+            [
+              "material",
+              "contains_any",
+              [
+                "cotton"
+              ]
+            ],
+            [
+              "sleeve_length",
+              "in",
+              [
+                "wrist-length"
+              ]
+            ]
+          ]
+        ],
+        [
+          "lower",
+          "exists",
+          [
+            [
+              "primary_colour",
+              "in",
+              [
+                "blue"
+              ]
+            ],
+            [
+              "category",
+              "in",
+              [
+                "trousers"
+              ]
+            ],
+            [
+              "material",
+              "contains_any",
+              [
+                "denim"
+              ]
+            ]
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "comma",
+      "text": "I want a blue cotton top with long sleeves, and blue jeans.",
+      "expected_groups": [
+        [
+          "upper",
+          "exists",
+          [
+            [
+              "primary_colour",
+              "in",
+              [
+                "blue"
+              ]
+            ],
+            [
+              "material",
+              "contains_any",
+              [
+                "cotton"
+              ]
+            ],
+            [
+              "sleeve_length",
+              "in",
+              [
+                "wrist-length"
+              ]
+            ]
+          ]
+        ],
+        [
+          "lower",
+          "exists",
+          [
+            [
+              "primary_colour",
+              "in",
+              [
+                "blue"
+              ]
+            ],
+            [
+              "category",
+              "in",
+              [
+                "trousers"
+              ]
+            ],
+            [
+              "material",
+              "contains_any",
+              [
+                "denim"
+              ]
+            ]
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "material-clause",
+      "text": "I want a blue top made of cotton with long sleeves and blue jeans.",
+      "expected_groups": [
+        [
+          "upper",
+          "exists",
+          [
+            [
+              "primary_colour",
+              "in",
+              [
+                "blue"
+              ]
+            ],
+            [
+              "material",
+              "contains_any",
+              [
+                "cotton"
+              ]
+            ],
+            [
+              "sleeve_length",
+              "in",
+              [
+                "wrist-length"
+              ]
+            ]
+          ]
+        ],
+        [
+          "lower",
+          "exists",
+          [
+            [
+              "primary_colour",
+              "in",
+              [
+                "blue"
+              ]
+            ],
+            [
+              "category",
+              "in",
+              [
+                "trousers"
+              ]
+            ],
+            [
+              "material",
+              "contains_any",
+              [
+                "denim"
+              ]
+            ]
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "negative-lower",
+      "text": "I want a blue cotton top with long sleeves and no blue jeans.",
+      "expected_groups": [
+        [
+          "upper",
+          "exists",
+          [
+            [
+              "primary_colour",
+              "in",
+              [
+                "blue"
+              ]
+            ],
+            [
+              "material",
+              "contains_any",
+              [
+                "cotton"
+              ]
+            ],
+            [
+              "sleeve_length",
+              "in",
+              [
+                "wrist-length"
+              ]
+            ]
+          ]
+        ],
+        [
+          "lower",
+          "none",
+          [
+            [
+              "primary_colour",
+              "in",
+              [
+                "blue"
+              ]
+            ],
+            [
+              "category",
+              "in",
+              [
+                "trousers"
+              ]
+            ],
+            [
+              "material",
+              "contains_any",
+              [
+                "denim"
+              ]
+            ]
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "sleeves-genuinely-lower",
+      "text": "I want blue jeans with long sleeves and a blue cotton top.",
+      "expected_groups": [
+        [
+          "upper",
+          "exists",
+          [
+            [
+              "primary_colour",
+              "in",
+              [
+                "blue"
+              ]
+            ],
+            [
+              "material",
+              "contains_any",
+              [
+                "cotton"
+              ]
+            ]
+          ]
+        ],
+        [
+          "lower",
+          "exists",
+          [
+            [
+              "primary_colour",
+              "in",
+              [
+                "blue"
+              ]
+            ],
+            [
+              "category",
+              "in",
+              [
+                "trousers"
+              ]
+            ],
+            [
+              "material",
+              "contains_any",
+              [
+                "denim"
+              ]
+            ],
+            [
+              "sleeve_length",
+              "in",
+              [
+                "wrist-length"
+              ]
+            ]
+          ]
+        ]
+      ],
+      "demo_expected": "NoMatchingCandidates"
+    }
+  ],
+  "ambiguous": [
+    "I want a top with cotton and long sleeves and blue jeans.",
+    "I want a top with blue and red jeans.",
+    "I want a blue top with long sleeves and blue jeans or a dress.",
+    "I want a top without floral and blue jeans."
+  ],
+  "language": [
+    {
+      "id": "social.meal:01",
+      "text": "I'm going out to eat.",
+      "situation": "social.meal",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.meal:02",
+      "text": "I'm having dinner.",
+      "situation": "social.meal",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.meal:03",
+      "text": "What should I wear for dinner?",
+      "situation": "social.meal",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.meal:04",
+      "text": "Going to a restaurant tonight.",
+      "situation": "social.meal",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.meal:05",
+      "text": "Gonna grab some food with friends.",
+      "situation": "social.meal",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.meal:06",
+      "text": "I'm meeting my friends for lunch.",
+      "situation": "social.meal",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.meal:07",
+      "text": "Please find an outfit for supper.",
+      "situation": "social.meal",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.meal:08",
+      "text": "Lunch with friends today.",
+      "situation": "social.meal",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.meal:09",
+      "text": "Dinner plans tonight; suggest something to wear.",
+      "situation": "social.meal",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.meal:10",
+      "text": "I'd like an outfit for dining out.",
+      "situation": "social.meal",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.meal:11",
+      "text": "For dinner, I want a plain cotton v-neck top.",
+      "situation": "social.meal",
+      "groups": [
+        {
+          "role": "upper",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "pattern",
+              "operator": "in",
+              "values": [
+                "plain"
+              ]
+            },
+            {
+              "attribute": "material",
+              "operator": "contains_any",
+              "values": [
+                "cotton"
+              ]
+            },
+            {
+              "attribute": "neckline",
+              "operator": "in",
+              "values": [
+                "v-neck"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.meal:12",
+      "text": "I'm going out to eat with no floral patterns.",
+      "situation": "social.meal",
+      "groups": [
+        {
+          "role": "all_selected",
+          "quantifier": "none",
+          "conditions": [
+            {
+              "attribute": "pattern",
+              "operator": "in",
+              "values": [
+                "floral"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "everyday.academic_attendance:01",
+      "text": "I have class today.",
+      "situation": "everyday.academic_attendance",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "everyday.academic_attendance:02",
+      "text": "Need an outfit for uni.",
+      "situation": "everyday.academic_attendance",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "everyday.academic_attendance:03",
+      "text": "What should I wear to campus?",
+      "situation": "everyday.academic_attendance",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "everyday.academic_attendance:04",
+      "text": "I'm going to class.",
+      "situation": "everyday.academic_attendance",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "everyday.academic_attendance:05",
+      "text": "Going to university for lectures.",
+      "situation": "everyday.academic_attendance",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "everyday.academic_attendance:06",
+      "text": "Got lectures this morning.",
+      "situation": "everyday.academic_attendance",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "everyday.academic_attendance:07",
+      "text": "Please help me dress for class.",
+      "situation": "everyday.academic_attendance",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "everyday.academic_attendance:08",
+      "text": "An outfit for a regular campus day, please.",
+      "situation": "everyday.academic_attendance",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "everyday.academic_attendance:09",
+      "text": "Tomorrow I have classes.",
+      "situation": "everyday.academic_attendance",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "everyday.academic_attendance:10",
+      "text": "Off to my lecture.",
+      "situation": "everyday.academic_attendance",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "everyday.academic_attendance:11",
+      "text": "I'm going to class and want a plain cotton v-neck top.",
+      "situation": "everyday.academic_attendance",
+      "groups": [
+        {
+          "role": "upper",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "pattern",
+              "operator": "in",
+              "values": [
+                "plain"
+              ]
+            },
+            {
+              "attribute": "material",
+              "operator": "contains_any",
+              "values": [
+                "cotton"
+              ]
+            },
+            {
+              "attribute": "neckline",
+              "operator": "in",
+              "values": [
+                "v-neck"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "everyday.academic_attendance:12",
+      "text": "For class, no floral patterns please.",
+      "situation": "everyday.academic_attendance",
+      "groups": [
+        {
+          "role": "all_selected",
+          "quantifier": "none",
+          "conditions": [
+            {
+              "attribute": "pattern",
+              "operator": "in",
+              "values": [
+                "floral"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "academic.library_study:01",
+      "text": "I'm going to study at the library.",
+      "situation": "academic.library_study",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "academic.library_study:02",
+      "text": "Need an outfit for library study.",
+      "situation": "academic.library_study",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "academic.library_study:03",
+      "text": "What should I wear to study in the library?",
+      "situation": "academic.library_study",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "academic.library_study:04",
+      "text": "Studying at the library today.",
+      "situation": "academic.library_study",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "academic.library_study:05",
+      "text": "Gonna do some studying at the library.",
+      "situation": "academic.library_study",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "academic.library_study:06",
+      "text": "Off to the library to study.",
+      "situation": "academic.library_study",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "academic.library_study:07",
+      "text": "Library study session tomorrow.",
+      "situation": "academic.library_study",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "academic.library_study:08",
+      "text": "Please suggest clothes for studying at a library.",
+      "situation": "academic.library_study",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "academic.library_study:09",
+      "text": "For a study session in the library, what should I wear?",
+      "situation": "academic.library_study",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "academic.library_study:10",
+      "text": "I have a library study session.",
+      "situation": "academic.library_study",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "academic.library_study:11",
+      "text": "I'm studying at the library and want a plain cotton v-neck top.",
+      "situation": "academic.library_study",
+      "groups": [
+        {
+          "role": "upper",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "pattern",
+              "operator": "in",
+              "values": [
+                "plain"
+              ]
+            },
+            {
+              "attribute": "material",
+              "operator": "contains_any",
+              "values": [
+                "cotton"
+              ]
+            },
+            {
+              "attribute": "neckline",
+              "operator": "in",
+              "values": [
+                "v-neck"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "academic.library_study:12",
+      "text": "No floral patterns for my library study session.",
+      "situation": "academic.library_study",
+      "groups": [
+        {
+          "role": "all_selected",
+          "quantifier": "none",
+          "conditions": [
+            {
+              "attribute": "pattern",
+              "operator": "in",
+              "values": [
+                "floral"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "academic.group_study:01",
+      "text": "Got a group study session.",
+      "situation": "academic.group_study",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "academic.group_study:02",
+      "text": "Need something for group study.",
+      "situation": "academic.group_study",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "academic.group_study:03",
+      "text": "What should I wear for a group study session?",
+      "situation": "academic.group_study",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "academic.group_study:04",
+      "text": "Group study with classmates today.",
+      "situation": "academic.group_study",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "academic.group_study:05",
+      "text": "I'm doing a group project meeting at university.",
+      "situation": "academic.group_study",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "academic.group_study:06",
+      "text": "Meeting my classmates for a study session.",
+      "situation": "academic.group_study",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "academic.group_study:07",
+      "text": "Gonna study with my classmates.",
+      "situation": "academic.group_study",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "academic.group_study:08",
+      "text": "Please suggest an outfit for our group study.",
+      "situation": "academic.group_study",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "academic.group_study:09",
+      "text": "Tomorrow we have a group study session.",
+      "situation": "academic.group_study",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "academic.group_study:10",
+      "text": "For group study, what can I wear?",
+      "situation": "academic.group_study",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "academic.group_study:11",
+      "text": "Group study, with a plain cotton v-neck top please.",
+      "situation": "academic.group_study",
+      "groups": [
+        {
+          "role": "upper",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "pattern",
+              "operator": "in",
+              "values": [
+                "plain"
+              ]
+            },
+            {
+              "attribute": "material",
+              "operator": "contains_any",
+              "values": [
+                "cotton"
+              ]
+            },
+            {
+              "attribute": "neckline",
+              "operator": "in",
+              "values": [
+                "v-neck"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "academic.group_study:12",
+      "text": "Group study with no floral patterns.",
+      "situation": "academic.group_study",
+      "groups": [
+        {
+          "role": "all_selected",
+          "quantifier": "none",
+          "conditions": [
+            {
+              "attribute": "pattern",
+              "operator": "in",
+              "values": [
+                "floral"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "professional.office_day:01",
+      "text": "What should I wear to the office?",
+      "situation": "professional.office_day",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "professional.office_day:02",
+      "text": "Need an outfit for an office day.",
+      "situation": "professional.office_day",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "professional.office_day:03",
+      "text": "I'm going to the office tomorrow.",
+      "situation": "professional.office_day",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "professional.office_day:04",
+      "text": "Off to the office.",
+      "situation": "professional.office_day",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "professional.office_day:05",
+      "text": "Gonna spend the day at the office.",
+      "situation": "professional.office_day",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "professional.office_day:06",
+      "text": "An outfit for my regular office day, please.",
+      "situation": "professional.office_day",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "professional.office_day:07",
+      "text": "Office day today.",
+      "situation": "professional.office_day",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "professional.office_day:08",
+      "text": "I'll be working in the office.",
+      "situation": "professional.office_day",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "professional.office_day:09",
+      "text": "For a day at the office, what should I wear?",
+      "situation": "professional.office_day",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "professional.office_day:10",
+      "text": "Please help me choose clothes for the office.",
+      "situation": "professional.office_day",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "professional.office_day:11",
+      "text": "I need a plain cotton v-neck top for an office day.",
+      "situation": "professional.office_day",
+      "groups": [
+        {
+          "role": "upper",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "pattern",
+              "operator": "in",
+              "values": [
+                "plain"
+              ]
+            },
+            {
+              "attribute": "material",
+              "operator": "contains_any",
+              "values": [
+                "cotton"
+              ]
+            },
+            {
+              "attribute": "neckline",
+              "operator": "in",
+              "values": [
+                "v-neck"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "professional.office_day:12",
+      "text": "An office day outfit without floral patterns.",
+      "situation": "professional.office_day",
+      "groups": [
+        {
+          "role": "all_selected",
+          "quantifier": "none",
+          "conditions": [
+            {
+              "attribute": "pattern",
+              "operator": "in",
+              "values": [
+                "floral"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "professional.workplace_meeting:01",
+      "text": "Got a work meeting.",
+      "situation": "professional.workplace_meeting",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "professional.workplace_meeting:02",
+      "text": "I'm meeting my colleagues at work.",
+      "situation": "professional.workplace_meeting",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "professional.workplace_meeting:03",
+      "text": "What should I wear to a workplace meeting?",
+      "situation": "professional.workplace_meeting",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "professional.workplace_meeting:04",
+      "text": "Need an outfit for an office meeting.",
+      "situation": "professional.workplace_meeting",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "professional.workplace_meeting:05",
+      "text": "Meeting with colleagues at the office tomorrow.",
+      "situation": "professional.workplace_meeting",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "professional.workplace_meeting:06",
+      "text": "Gonna attend a work meeting.",
+      "situation": "professional.workplace_meeting",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "professional.workplace_meeting:07",
+      "text": "A work meeting today, please suggest clothes.",
+      "situation": "professional.workplace_meeting",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "professional.workplace_meeting:08",
+      "text": "Please find something for a workplace meeting.",
+      "situation": "professional.workplace_meeting",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "professional.workplace_meeting:09",
+      "text": "For my work meeting, what can I wear?",
+      "situation": "professional.workplace_meeting",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "professional.workplace_meeting:10",
+      "text": "I have a meeting with my colleagues.",
+      "situation": "professional.workplace_meeting",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "professional.workplace_meeting:11",
+      "text": "Work meeting, with a plain cotton v-neck top.",
+      "situation": "professional.workplace_meeting",
+      "groups": [
+        {
+          "role": "upper",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "pattern",
+              "operator": "in",
+              "values": [
+                "plain"
+              ]
+            },
+            {
+              "attribute": "material",
+              "operator": "contains_any",
+              "values": [
+                "cotton"
+              ]
+            },
+            {
+              "attribute": "neckline",
+              "operator": "in",
+              "values": [
+                "v-neck"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "professional.workplace_meeting:12",
+      "text": "A work meeting with no floral patterns.",
+      "situation": "professional.workplace_meeting",
+      "groups": [
+        {
+          "role": "all_selected",
+          "quantifier": "none",
+          "conditions": [
+            {
+              "attribute": "pattern",
+              "operator": "in",
+              "values": [
+                "floral"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "professional.job_interview:01",
+      "text": "I have a job interview tomorrow.",
+      "situation": "professional.job_interview",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "professional.job_interview:02",
+      "text": "What should I wear to a job interview?",
+      "situation": "professional.job_interview",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "professional.job_interview:03",
+      "text": "Need an outfit for a job interview.",
+      "situation": "professional.job_interview",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "professional.job_interview:04",
+      "text": "I'm being interviewed for a job.",
+      "situation": "professional.job_interview",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "professional.job_interview:05",
+      "text": "Got a job interview coming up.",
+      "situation": "professional.job_interview",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "professional.job_interview:06",
+      "text": "I'm attending a job interview as a candidate; the dress code is smart casual.",
+      "situation": "professional.job_interview",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "professional.job_interview:07",
+      "text": "For a job interview as the interviewer; the dress code is smart casual.",
+      "situation": "professional.job_interview",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "professional.job_interview:08",
+      "text": "I'm the candidate at a job interview; the dress code is smart casual.",
+      "situation": "professional.job_interview",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "professional.job_interview:09",
+      "text": "Please suggest clothes for a job interview.",
+      "situation": "professional.job_interview",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "professional.job_interview:10",
+      "text": "Tomorrow I'm a candidate at a job interview; the dress code is smart casual.",
+      "situation": "professional.job_interview",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "professional.job_interview:11",
+      "text": "For a job interview as a candidate, the dress code is smart casual; I want a plain cotton v-neck top.",
+      "situation": "professional.job_interview",
+      "groups": [
+        {
+          "role": "upper",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "pattern",
+              "operator": "in",
+              "values": [
+                "plain"
+              ]
+            },
+            {
+              "attribute": "material",
+              "operator": "contains_any",
+              "values": [
+                "cotton"
+              ]
+            },
+            {
+              "attribute": "neckline",
+              "operator": "in",
+              "values": [
+                "v-neck"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "professional.job_interview:12",
+      "text": "Job interview as a candidate; the dress code is smart casual, with no floral patterns.",
+      "situation": "professional.job_interview",
+      "groups": [
+        {
+          "role": "all_selected",
+          "quantifier": "none",
+          "conditions": [
+            {
+              "attribute": "pattern",
+              "operator": "in",
+              "values": [
+                "floral"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "academic.presentation:01",
+      "text": "I have a university presentation.",
+      "situation": "academic.presentation",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "academic.presentation:02",
+      "text": "What should I wear for a presentation at university?",
+      "situation": "academic.presentation",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "academic.presentation:03",
+      "text": "Need an outfit for my university presentation.",
+      "situation": "academic.presentation",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "academic.presentation:04",
+      "text": "I'm presenting at university.",
+      "situation": "academic.presentation",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "academic.presentation:05",
+      "text": "Got a presentation for uni.",
+      "situation": "academic.presentation",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "academic.presentation:06",
+      "text": "University presentation today.",
+      "situation": "academic.presentation",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "academic.presentation:07",
+      "text": "I'm attending a university presentation as an attendee.",
+      "situation": "academic.presentation",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "academic.presentation:08",
+      "text": "I'm giving a university presentation as a presenter.",
+      "situation": "academic.presentation",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "academic.presentation:09",
+      "text": "Please find clothes for presenting at university.",
+      "situation": "academic.presentation",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "academic.presentation:10",
+      "text": "For my university presentation tomorrow, what can I wear?",
+      "situation": "academic.presentation",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "academic.presentation:11",
+      "text": "Presenting at university with a plain cotton v-neck top.",
+      "situation": "academic.presentation",
+      "groups": [
+        {
+          "role": "upper",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "pattern",
+              "operator": "in",
+              "values": [
+                "plain"
+              ]
+            },
+            {
+              "attribute": "material",
+              "operator": "contains_any",
+              "values": [
+                "cotton"
+              ]
+            },
+            {
+              "attribute": "neckline",
+              "operator": "in",
+              "values": [
+                "v-neck"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "academic.presentation:12",
+      "text": "No floral patterns for a university presentation as a presenter.",
+      "situation": "academic.presentation",
+      "groups": [
+        {
+          "role": "all_selected",
+          "quantifier": "none",
+          "conditions": [
+            {
+              "attribute": "pattern",
+              "operator": "in",
+              "values": [
+                "floral"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "ceremony.wedding:01",
+      "text": "I'm going to a wedding, what should I wear?",
+      "situation": "ceremony.wedding",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "ceremony.wedding:02",
+      "text": "What should I wear to a wedding?",
+      "situation": "ceremony.wedding",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "ceremony.wedding:03",
+      "text": "I'm attending a wedding as a guest.",
+      "situation": "ceremony.wedding",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "ceremony.wedding:04",
+      "text": "Need an outfit for a wedding.",
+      "situation": "ceremony.wedding",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "ceremony.wedding:05",
+      "text": "Wedding guest tomorrow.",
+      "situation": "ceremony.wedding",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "ceremony.wedding:06",
+      "text": "Got a wedding to attend.",
+      "situation": "ceremony.wedding",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "ceremony.wedding:07",
+      "text": "Please help me dress for a wedding.",
+      "situation": "ceremony.wedding",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "ceremony.wedding:08",
+      "text": "Going to a wedding tonight.",
+      "situation": "ceremony.wedding",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "ceremony.wedding:09",
+      "text": "For a wedding as a guest; the dress code is smart casual.",
+      "situation": "ceremony.wedding",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "ceremony.wedding:10",
+      "text": "An outfit for attending a wedding, please.",
+      "situation": "ceremony.wedding",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "ceremony.wedding:11",
+      "text": "A wedding guest outfit with a plain cotton v-neck top.",
+      "situation": "ceremony.wedding",
+      "groups": [
+        {
+          "role": "upper",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "pattern",
+              "operator": "in",
+              "values": [
+                "plain"
+              ]
+            },
+            {
+              "attribute": "material",
+              "operator": "contains_any",
+              "values": [
+                "cotton"
+              ]
+            },
+            {
+              "attribute": "neckline",
+              "operator": "in",
+              "values": [
+                "v-neck"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "ceremony.wedding:12",
+      "text": "No floral patterns for a wedding as a guest.",
+      "situation": "ceremony.wedding",
+      "groups": [
+        {
+          "role": "all_selected",
+          "quantifier": "none",
+          "conditions": [
+            {
+              "attribute": "pattern",
+              "operator": "in",
+              "values": [
+                "floral"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "everyday.shopping:01",
+      "text": "Going shopping.",
+      "situation": "everyday.shopping",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "everyday.shopping:02",
+      "text": "I'm going shopping.",
+      "situation": "everyday.shopping",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "everyday.shopping:03",
+      "text": "What should I wear to go shopping?",
+      "situation": "everyday.shopping",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "everyday.shopping:04",
+      "text": "Need an outfit for a shopping trip.",
+      "situation": "everyday.shopping",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "everyday.shopping:05",
+      "text": "Gonna go shopping today.",
+      "situation": "everyday.shopping",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "everyday.shopping:06",
+      "text": "Off to the shops.",
+      "situation": "everyday.shopping",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "everyday.shopping:07",
+      "text": "Please suggest clothes for shopping.",
+      "situation": "everyday.shopping",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "everyday.shopping:08",
+      "text": "A shopping trip tomorrow.",
+      "situation": "everyday.shopping",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "everyday.shopping:09",
+      "text": "For shopping, what can I wear?",
+      "situation": "everyday.shopping",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "everyday.shopping:10",
+      "text": "Got some shopping planned.",
+      "situation": "everyday.shopping",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "everyday.shopping:11",
+      "text": "Going shopping with a plain cotton v-neck top.",
+      "situation": "everyday.shopping",
+      "groups": [
+        {
+          "role": "upper",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "pattern",
+              "operator": "in",
+              "values": [
+                "plain"
+              ]
+            },
+            {
+              "attribute": "material",
+              "operator": "contains_any",
+              "values": [
+                "cotton"
+              ]
+            },
+            {
+              "attribute": "neckline",
+              "operator": "in",
+              "values": [
+                "v-neck"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "everyday.shopping:12",
+      "text": "Going shopping with no floral patterns.",
+      "situation": "everyday.shopping",
+      "groups": [
+        {
+          "role": "all_selected",
+          "quantifier": "none",
+          "conditions": [
+            {
+              "attribute": "pattern",
+              "operator": "in",
+              "values": [
+                "floral"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "everyday.casual_outing:01",
+      "text": "I'm going out with friends.",
+      "situation": "everyday.casual_outing",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "everyday.casual_outing:02",
+      "text": "What should I wear to hang out with friends?",
+      "situation": "everyday.casual_outing",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "everyday.casual_outing:03",
+      "text": "Need an outfit for a casual outing.",
+      "situation": "everyday.casual_outing",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "everyday.casual_outing:04",
+      "text": "Hanging out with my friends today.",
+      "situation": "everyday.casual_outing",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "everyday.casual_outing:05",
+      "text": "Gonna hang out with friends.",
+      "situation": "everyday.casual_outing",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "everyday.casual_outing:06",
+      "text": "Off to meet friends for a casual outing.",
+      "situation": "everyday.casual_outing",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "everyday.casual_outing:07",
+      "text": "A casual outing tomorrow.",
+      "situation": "everyday.casual_outing",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "everyday.casual_outing:08",
+      "text": "Please suggest clothes for hanging out with friends.",
+      "situation": "everyday.casual_outing",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "everyday.casual_outing:09",
+      "text": "For a casual outing with friends, what can I wear?",
+      "situation": "everyday.casual_outing",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "everyday.casual_outing:10",
+      "text": "Got plans to hang out with friends.",
+      "situation": "everyday.casual_outing",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "everyday.casual_outing:11",
+      "text": "A casual outing with a plain cotton v-neck top.",
+      "situation": "everyday.casual_outing",
+      "groups": [
+        {
+          "role": "upper",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "pattern",
+              "operator": "in",
+              "values": [
+                "plain"
+              ]
+            },
+            {
+              "attribute": "material",
+              "operator": "contains_any",
+              "values": [
+                "cotton"
+              ]
+            },
+            {
+              "attribute": "neckline",
+              "operator": "in",
+              "values": [
+                "v-neck"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "everyday.casual_outing:12",
+      "text": "No floral patterns for a casual outing with friends.",
+      "situation": "everyday.casual_outing",
+      "groups": [
+        {
+          "role": "all_selected",
+          "quantifier": "none",
+          "conditions": [
+            {
+              "attribute": "pattern",
+              "operator": "in",
+              "values": [
+                "floral"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.date:01",
+      "text": "I'm going on a date.",
+      "situation": "social.date",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.date:02",
+      "text": "What should I wear on a date?",
+      "situation": "social.date",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.date:03",
+      "text": "Need an outfit for a date.",
+      "situation": "social.date",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.date:04",
+      "text": "Going on a dinner date tonight.",
+      "situation": "social.date",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.date:05",
+      "text": "Gonna go on a date.",
+      "situation": "social.date",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.date:06",
+      "text": "Date night tonight.",
+      "situation": "social.date",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.date:07",
+      "text": "Please help me dress for my date.",
+      "situation": "social.date",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.date:08",
+      "text": "Got a date tomorrow.",
+      "situation": "social.date",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.date:09",
+      "text": "An outfit for a date over dinner, please.",
+      "situation": "social.date",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.date:10",
+      "text": "For my date, what can I wear?",
+      "situation": "social.date",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.date:11",
+      "text": "A date outfit with a plain cotton v-neck top.",
+      "situation": "social.date",
+      "groups": [
+        {
+          "role": "upper",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "pattern",
+              "operator": "in",
+              "values": [
+                "plain"
+              ]
+            },
+            {
+              "attribute": "material",
+              "operator": "contains_any",
+              "values": [
+                "cotton"
+              ]
+            },
+            {
+              "attribute": "neckline",
+              "operator": "in",
+              "values": [
+                "v-neck"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.date:12",
+      "text": "No floral patterns for my date.",
+      "situation": "social.date",
+      "groups": [
+        {
+          "role": "all_selected",
+          "quantifier": "none",
+          "conditions": [
+            {
+              "attribute": "pattern",
+              "operator": "in",
+              "values": [
+                "floral"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.birthday_gathering:01",
+      "text": "Attending a birthday party.",
+      "situation": "social.birthday_gathering",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.birthday_gathering:02",
+      "text": "What should I wear to a birthday party?",
+      "situation": "social.birthday_gathering",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.birthday_gathering:03",
+      "text": "Need something for a birthday gathering.",
+      "situation": "social.birthday_gathering",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.birthday_gathering:04",
+      "text": "I'm going to a birthday party.",
+      "situation": "social.birthday_gathering",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.birthday_gathering:05",
+      "text": "Gonna attend a birthday celebration.",
+      "situation": "social.birthday_gathering",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.birthday_gathering:06",
+      "text": "Got a birthday party tomorrow.",
+      "situation": "social.birthday_gathering",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.birthday_gathering:07",
+      "text": "Please suggest clothes for a birthday gathering.",
+      "situation": "social.birthday_gathering",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.birthday_gathering:08",
+      "text": "Birthday party with friends today.",
+      "situation": "social.birthday_gathering",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.birthday_gathering:09",
+      "text": "For a birthday party, what can I wear?",
+      "situation": "social.birthday_gathering",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.birthday_gathering:10",
+      "text": "An outfit for my friend's birthday party.",
+      "situation": "social.birthday_gathering",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.birthday_gathering:11",
+      "text": "A birthday party outfit with a plain cotton v-neck top.",
+      "situation": "social.birthday_gathering",
+      "groups": [
+        {
+          "role": "upper",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "pattern",
+              "operator": "in",
+              "values": [
+                "plain"
+              ]
+            },
+            {
+              "attribute": "material",
+              "operator": "contains_any",
+              "values": [
+                "cotton"
+              ]
+            },
+            {
+              "attribute": "neckline",
+              "operator": "in",
+              "values": [
+                "v-neck"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.birthday_gathering:12",
+      "text": "A birthday party with no floral patterns.",
+      "situation": "social.birthday_gathering",
+      "groups": [
+        {
+          "role": "all_selected",
+          "quantifier": "none",
+          "conditions": [
+            {
+              "attribute": "pattern",
+              "operator": "in",
+              "values": [
+                "floral"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.house_gathering:01",
+      "text": "Visiting a friend's house.",
+      "situation": "social.house_gathering",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.house_gathering:02",
+      "text": "What should I wear to a friend's house?",
+      "situation": "social.house_gathering",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.house_gathering:03",
+      "text": "Need an outfit for a house gathering.",
+      "situation": "social.house_gathering",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.house_gathering:04",
+      "text": "I'm going to my friend's place.",
+      "situation": "social.house_gathering",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.house_gathering:05",
+      "text": "Gonna visit a friend's house.",
+      "situation": "social.house_gathering",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.house_gathering:06",
+      "text": "Got a gathering at my friend's house.",
+      "situation": "social.house_gathering",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.house_gathering:07",
+      "text": "Please suggest clothes for visiting friends at their house.",
+      "situation": "social.house_gathering",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.house_gathering:08",
+      "text": "A house gathering with friends tonight.",
+      "situation": "social.house_gathering",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.house_gathering:09",
+      "text": "For a visit to my friend's house, what can I wear?",
+      "situation": "social.house_gathering",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.house_gathering:10",
+      "text": "Visiting my friends' place tomorrow.",
+      "situation": "social.house_gathering",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.house_gathering:11",
+      "text": "Visiting a friend's house with a plain cotton v-neck top.",
+      "situation": "social.house_gathering",
+      "groups": [
+        {
+          "role": "upper",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "pattern",
+              "operator": "in",
+              "values": [
+                "plain"
+              ]
+            },
+            {
+              "attribute": "material",
+              "operator": "contains_any",
+              "values": [
+                "cotton"
+              ]
+            },
+            {
+              "attribute": "neckline",
+              "operator": "in",
+              "values": [
+                "v-neck"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.house_gathering:12",
+      "text": "No floral patterns for visiting a friend's house.",
+      "situation": "social.house_gathering",
+      "groups": [
+        {
+          "role": "all_selected",
+          "quantifier": "none",
+          "conditions": [
+            {
+              "attribute": "pattern",
+              "operator": "in",
+              "values": [
+                "floral"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "leisure.cinema_outing:01",
+      "text": "Going to the movies.",
+      "situation": "leisure.cinema_outing",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "leisure.cinema_outing:02",
+      "text": "What should I wear to the cinema?",
+      "situation": "leisure.cinema_outing",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "leisure.cinema_outing:03",
+      "text": "Need an outfit for a cinema outing.",
+      "situation": "leisure.cinema_outing",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "leisure.cinema_outing:04",
+      "text": "I'm going to watch a movie.",
+      "situation": "leisure.cinema_outing",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "leisure.cinema_outing:05",
+      "text": "Gonna catch a film at the cinema.",
+      "situation": "leisure.cinema_outing",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "leisure.cinema_outing:06",
+      "text": "Off to the movies tonight.",
+      "situation": "leisure.cinema_outing",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "leisure.cinema_outing:07",
+      "text": "Please suggest clothes for seeing a film at the cinema.",
+      "situation": "leisure.cinema_outing",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "leisure.cinema_outing:08",
+      "text": "Got a cinema outing planned.",
+      "situation": "leisure.cinema_outing",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "leisure.cinema_outing:09",
+      "text": "For a trip to the cinema, what can I wear?",
+      "situation": "leisure.cinema_outing",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "leisure.cinema_outing:10",
+      "text": "Watching a movie at the cinema tomorrow.",
+      "situation": "leisure.cinema_outing",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "leisure.cinema_outing:11",
+      "text": "Going to the movies with a plain cotton v-neck top.",
+      "situation": "leisure.cinema_outing",
+      "groups": [
+        {
+          "role": "upper",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "pattern",
+              "operator": "in",
+              "values": [
+                "plain"
+              ]
+            },
+            {
+              "attribute": "material",
+              "operator": "contains_any",
+              "values": [
+                "cotton"
+              ]
+            },
+            {
+              "attribute": "neckline",
+              "operator": "in",
+              "values": [
+                "v-neck"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "leisure.cinema_outing:12",
+      "text": "No floral patterns for a cinema outing.",
+      "situation": "leisure.cinema_outing",
+      "groups": [
+        {
+          "role": "all_selected",
+          "quantifier": "none",
+          "conditions": [
+            {
+              "attribute": "pattern",
+              "operator": "in",
+              "values": [
+                "floral"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.cafe_meetup:01",
+      "text": "Having coffee with someone.",
+      "situation": "social.cafe_meetup",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.cafe_meetup:02",
+      "text": "What should I wear for a cafe meetup?",
+      "situation": "social.cafe_meetup",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.cafe_meetup:03",
+      "text": "Need an outfit for coffee with friends.",
+      "situation": "social.cafe_meetup",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.cafe_meetup:04",
+      "text": "I'm meeting someone at a cafe.",
+      "situation": "social.cafe_meetup",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.cafe_meetup:05",
+      "text": "Gonna grab coffee with a friend.",
+      "situation": "social.cafe_meetup",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.cafe_meetup:06",
+      "text": "Coffee with colleagues at a cafe.",
+      "situation": "social.cafe_meetup",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.cafe_meetup:07",
+      "text": "Please suggest clothes for a cafe meetup.",
+      "situation": "social.cafe_meetup",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.cafe_meetup:08",
+      "text": "Got a coffee meetup tomorrow.",
+      "situation": "social.cafe_meetup",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.cafe_meetup:09",
+      "text": "For coffee with friends, what can I wear?",
+      "situation": "social.cafe_meetup",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.cafe_meetup:10",
+      "text": "Meeting my family at a cafe tonight.",
+      "situation": "social.cafe_meetup",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.cafe_meetup:11",
+      "text": "A cafe meetup with a plain cotton v-neck top.",
+      "situation": "social.cafe_meetup",
+      "groups": [
+        {
+          "role": "upper",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "pattern",
+              "operator": "in",
+              "values": [
+                "plain"
+              ]
+            },
+            {
+              "attribute": "material",
+              "operator": "contains_any",
+              "values": [
+                "cotton"
+              ]
+            },
+            {
+              "attribute": "neckline",
+              "operator": "in",
+              "values": [
+                "v-neck"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "social.cafe_meetup:12",
+      "text": "Coffee with friends with no floral patterns.",
+      "situation": "social.cafe_meetup",
+      "groups": [
+        {
+          "role": "all_selected",
+          "quantifier": "none",
+          "conditions": [
+            {
+              "attribute": "pattern",
+              "operator": "in",
+              "values": [
+                "floral"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "leisure.city_sightseeing:01",
+      "text": "I'm sightseeing around the city.",
+      "situation": "leisure.city_sightseeing",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "leisure.city_sightseeing:02",
+      "text": "What should I wear for city sightseeing?",
+      "situation": "leisure.city_sightseeing",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "leisure.city_sightseeing:03",
+      "text": "Need an outfit for sightseeing in the city.",
+      "situation": "leisure.city_sightseeing",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "leisure.city_sightseeing:04",
+      "text": "Going to see the city sights.",
+      "situation": "leisure.city_sightseeing",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "leisure.city_sightseeing:05",
+      "text": "Gonna explore city sights.",
+      "situation": "leisure.city_sightseeing",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "leisure.city_sightseeing:06",
+      "text": "City sightseeing today.",
+      "situation": "leisure.city_sightseeing",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "leisure.city_sightseeing:07",
+      "text": "Please suggest clothes for a city sightseeing trip.",
+      "situation": "leisure.city_sightseeing",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "leisure.city_sightseeing:08",
+      "text": "Got a city sightseeing outing planned.",
+      "situation": "leisure.city_sightseeing",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "leisure.city_sightseeing:09",
+      "text": "For sightseeing around the city, what can I wear?",
+      "situation": "leisure.city_sightseeing",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "leisure.city_sightseeing:10",
+      "text": "Exploring the city sights tomorrow.",
+      "situation": "leisure.city_sightseeing",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "leisure.city_sightseeing:11",
+      "text": "City sightseeing with a plain cotton v-neck top.",
+      "situation": "leisure.city_sightseeing",
+      "groups": [
+        {
+          "role": "upper",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "pattern",
+              "operator": "in",
+              "values": [
+                "plain"
+              ]
+            },
+            {
+              "attribute": "material",
+              "operator": "contains_any",
+              "values": [
+                "cotton"
+              ]
+            },
+            {
+              "attribute": "neckline",
+              "operator": "in",
+              "values": [
+                "v-neck"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "leisure.city_sightseeing:12",
+      "text": "No floral patterns for city sightseeing.",
+      "situation": "leisure.city_sightseeing",
+      "groups": [
+        {
+          "role": "all_selected",
+          "quantifier": "none",
+          "conditions": [
+            {
+              "attribute": "pattern",
+              "operator": "in",
+              "values": [
+                "floral"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "travel.journey:01",
+      "text": "I'm taking a train for a trip.",
+      "situation": "travel.journey",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "travel.journey:02",
+      "text": "What should I wear for a journey?",
+      "situation": "travel.journey",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "travel.journey:03",
+      "text": "Need an outfit for travelling by train.",
+      "situation": "travel.journey",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "travel.journey:04",
+      "text": "Going on a bus journey.",
+      "situation": "travel.journey",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "travel.journey:05",
+      "text": "Gonna take a flight for a trip.",
+      "situation": "travel.journey",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "travel.journey:06",
+      "text": "Train journey tomorrow.",
+      "situation": "travel.journey",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "travel.journey:07",
+      "text": "Please suggest clothes for a travel journey.",
+      "situation": "travel.journey",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "travel.journey:08",
+      "text": "Got a trip by bus planned.",
+      "situation": "travel.journey",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "travel.journey:09",
+      "text": "For a train trip, what can I wear?",
+      "situation": "travel.journey",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "travel.journey:10",
+      "text": "Travelling on a flight today.",
+      "situation": "travel.journey",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "travel.journey:11",
+      "text": "A train journey with a plain cotton v-neck top.",
+      "situation": "travel.journey",
+      "groups": [
+        {
+          "role": "upper",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "pattern",
+              "operator": "in",
+              "values": [
+                "plain"
+              ]
+            },
+            {
+              "attribute": "material",
+              "operator": "contains_any",
+              "values": [
+                "cotton"
+              ]
+            },
+            {
+              "attribute": "neckline",
+              "operator": "in",
+              "values": [
+                "v-neck"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "travel.journey:12",
+      "text": "No floral patterns for a bus journey.",
+      "situation": "travel.journey",
+      "groups": [
+        {
+          "role": "all_selected",
+          "quantifier": "none",
+          "conditions": [
+            {
+              "attribute": "pattern",
+              "operator": "in",
+              "values": [
+                "floral"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": "Supported",
+      "origin": "frozen delivered language specification"
+    },
+    {
+      "id": "academic.group_study:fresh-curly",
+      "text": "I’m doing a group project meeting at university.",
+      "situation": "academic.group_study",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "academic.group_study:fresh-missing",
+      "text": "im doing a group project meeting at university.",
+      "situation": "academic.group_study",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "academic.group_study:fresh-capital",
+      "text": "IM doing a group project meeting at university.",
+      "situation": "academic.group_study",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "academic.group_study:unsupported-modifier",
+      "text": "I'm doing a group project meeting at university. while needing radiation shielding.",
+      "expected": "refused",
+      "origin": "unsupported physical protection is outside approved scope"
+    },
+    {
+      "id": "academic.library_study:fresh-curly",
+      "text": "I’m going to study at the library.",
+      "situation": "academic.library_study",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "academic.library_study:fresh-missing",
+      "text": "im going to study at the library.",
+      "situation": "academic.library_study",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "academic.library_study:fresh-capital",
+      "text": "IM going to study at the library.",
+      "situation": "academic.library_study",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "academic.library_study:unsupported-modifier",
+      "text": "I'm going to study at the library. while needing radiation shielding.",
+      "expected": "refused",
+      "origin": "unsupported physical protection is outside approved scope"
+    },
+    {
+      "id": "academic.presentation:fresh-curly",
+      "text": "I’m presenting at university.",
+      "situation": "academic.presentation",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "academic.presentation:fresh-missing",
+      "text": "im presenting at university.",
+      "situation": "academic.presentation",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "academic.presentation:fresh-capital",
+      "text": "IM presenting at university.",
+      "situation": "academic.presentation",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "academic.presentation:unsupported-modifier",
+      "text": "I'm presenting at university. while needing radiation shielding.",
+      "expected": "refused",
+      "origin": "unsupported physical protection is outside approved scope"
+    },
+    {
+      "id": "ceremony.wedding:fresh-curly",
+      "text": "I’m going to a wedding, what should I wear?",
+      "situation": "ceremony.wedding",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "ceremony.wedding:fresh-missing",
+      "text": "im going to a wedding, what should I wear?",
+      "situation": "ceremony.wedding",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "ceremony.wedding:fresh-capital",
+      "text": "IM going to a wedding, what should I wear?",
+      "situation": "ceremony.wedding",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "ceremony.wedding:unsupported-modifier",
+      "text": "I'm going to a wedding, what should I wear? while needing radiation shielding.",
+      "expected": "refused",
+      "origin": "unsupported physical protection is outside approved scope"
+    },
+    {
+      "id": "everyday.academic_attendance:fresh-curly",
+      "text": "I’m going to class.",
+      "situation": "everyday.academic_attendance",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "everyday.academic_attendance:fresh-missing",
+      "text": "im going to class.",
+      "situation": "everyday.academic_attendance",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "everyday.academic_attendance:fresh-capital",
+      "text": "IM going to class.",
+      "situation": "everyday.academic_attendance",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "everyday.academic_attendance:unsupported-modifier",
+      "text": "I'm going to class. while needing radiation shielding.",
+      "expected": "refused",
+      "origin": "unsupported physical protection is outside approved scope"
+    },
+    {
+      "id": "everyday.casual_outing:fresh-curly",
+      "text": "I’m going out with friends.",
+      "situation": "everyday.casual_outing",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "everyday.casual_outing:fresh-missing",
+      "text": "im going out with friends.",
+      "situation": "everyday.casual_outing",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "everyday.casual_outing:fresh-capital",
+      "text": "IM going out with friends.",
+      "situation": "everyday.casual_outing",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "everyday.casual_outing:unsupported-modifier",
+      "text": "I'm going out with friends. while needing radiation shielding.",
+      "expected": "refused",
+      "origin": "unsupported physical protection is outside approved scope"
+    },
+    {
+      "id": "everyday.shopping:fresh-curly",
+      "text": "I’m going shopping.",
+      "situation": "everyday.shopping",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "everyday.shopping:fresh-missing",
+      "text": "im going shopping.",
+      "situation": "everyday.shopping",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "everyday.shopping:fresh-capital",
+      "text": "IM going shopping.",
+      "situation": "everyday.shopping",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "everyday.shopping:unsupported-modifier",
+      "text": "I'm going shopping. while needing radiation shielding.",
+      "expected": "refused",
+      "origin": "unsupported physical protection is outside approved scope"
+    },
+    {
+      "id": "leisure.cinema_outing:fresh-curly",
+      "text": "I’m going to watch a movie.",
+      "situation": "leisure.cinema_outing",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "leisure.cinema_outing:fresh-missing",
+      "text": "im going to watch a movie.",
+      "situation": "leisure.cinema_outing",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "leisure.cinema_outing:fresh-capital",
+      "text": "IM going to watch a movie.",
+      "situation": "leisure.cinema_outing",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "leisure.cinema_outing:unsupported-modifier",
+      "text": "I'm going to watch a movie. while needing radiation shielding.",
+      "expected": "refused",
+      "origin": "unsupported physical protection is outside approved scope"
+    },
+    {
+      "id": "leisure.city_sightseeing:fresh-curly",
+      "text": "I’m sightseeing around the city.",
+      "situation": "leisure.city_sightseeing",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "leisure.city_sightseeing:fresh-missing",
+      "text": "im sightseeing around the city.",
+      "situation": "leisure.city_sightseeing",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "leisure.city_sightseeing:fresh-capital",
+      "text": "IM sightseeing around the city.",
+      "situation": "leisure.city_sightseeing",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "leisure.city_sightseeing:unsupported-modifier",
+      "text": "I'm sightseeing around the city. while needing radiation shielding.",
+      "expected": "refused",
+      "origin": "unsupported physical protection is outside approved scope"
+    },
+    {
+      "id": "professional.job_interview:fresh-curly",
+      "text": "I’m being interviewed for a job.",
+      "situation": "professional.job_interview",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "professional.job_interview:fresh-missing",
+      "text": "im being interviewed for a job.",
+      "situation": "professional.job_interview",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "professional.job_interview:fresh-capital",
+      "text": "IM being interviewed for a job.",
+      "situation": "professional.job_interview",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "professional.job_interview:unsupported-modifier",
+      "text": "I'm being interviewed for a job. while needing radiation shielding.",
+      "expected": "refused",
+      "origin": "unsupported physical protection is outside approved scope"
+    },
+    {
+      "id": "professional.office_day:fresh-curly",
+      "text": "I’m going to the office tomorrow.",
+      "situation": "professional.office_day",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "professional.office_day:fresh-missing",
+      "text": "im going to the office tomorrow.",
+      "situation": "professional.office_day",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "professional.office_day:fresh-capital",
+      "text": "IM going to the office tomorrow.",
+      "situation": "professional.office_day",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "professional.office_day:unsupported-modifier",
+      "text": "I'm going to the office tomorrow. while needing radiation shielding.",
+      "expected": "refused",
+      "origin": "unsupported physical protection is outside approved scope"
+    },
+    {
+      "id": "professional.workplace_meeting:fresh-curly",
+      "text": "I’m meeting my colleagues at work.",
+      "situation": "professional.workplace_meeting",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "professional.workplace_meeting:fresh-missing",
+      "text": "im meeting my colleagues at work.",
+      "situation": "professional.workplace_meeting",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "professional.workplace_meeting:fresh-capital",
+      "text": "IM meeting my colleagues at work.",
+      "situation": "professional.workplace_meeting",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "professional.workplace_meeting:unsupported-modifier",
+      "text": "I'm meeting my colleagues at work. while needing radiation shielding.",
+      "expected": "refused",
+      "origin": "unsupported physical protection is outside approved scope"
+    },
+    {
+      "id": "social.birthday_gathering:fresh-curly",
+      "text": "I’m going to a birthday party.",
+      "situation": "social.birthday_gathering",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "social.birthday_gathering:fresh-missing",
+      "text": "im going to a birthday party.",
+      "situation": "social.birthday_gathering",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "social.birthday_gathering:fresh-capital",
+      "text": "IM going to a birthday party.",
+      "situation": "social.birthday_gathering",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "social.birthday_gathering:unsupported-modifier",
+      "text": "I'm going to a birthday party. while needing radiation shielding.",
+      "expected": "refused",
+      "origin": "unsupported physical protection is outside approved scope"
+    },
+    {
+      "id": "social.cafe_meetup:fresh-curly",
+      "text": "I’m meeting someone at a cafe.",
+      "situation": "social.cafe_meetup",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "social.cafe_meetup:fresh-missing",
+      "text": "im meeting someone at a cafe.",
+      "situation": "social.cafe_meetup",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "social.cafe_meetup:fresh-capital",
+      "text": "IM meeting someone at a cafe.",
+      "situation": "social.cafe_meetup",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "social.cafe_meetup:unsupported-modifier",
+      "text": "I'm meeting someone at a cafe. while needing radiation shielding.",
+      "expected": "refused",
+      "origin": "unsupported physical protection is outside approved scope"
+    },
+    {
+      "id": "social.date:fresh-curly",
+      "text": "I’m going on a date.",
+      "situation": "social.date",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "social.date:fresh-missing",
+      "text": "im going on a date.",
+      "situation": "social.date",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "social.date:fresh-capital",
+      "text": "IM going on a date.",
+      "situation": "social.date",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "social.date:unsupported-modifier",
+      "text": "I'm going on a date. while needing radiation shielding.",
+      "expected": "refused",
+      "origin": "unsupported physical protection is outside approved scope"
+    },
+    {
+      "id": "social.house_gathering:fresh-curly",
+      "text": "I’m going to my friend's place.",
+      "situation": "social.house_gathering",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "social.house_gathering:fresh-missing",
+      "text": "im going to my friend's place.",
+      "situation": "social.house_gathering",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "social.house_gathering:fresh-capital",
+      "text": "IM going to my friend's place.",
+      "situation": "social.house_gathering",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "social.house_gathering:unsupported-modifier",
+      "text": "I'm going to my friend's place. while needing radiation shielding.",
+      "expected": "refused",
+      "origin": "unsupported physical protection is outside approved scope"
+    },
+    {
+      "id": "social.meal:fresh-curly",
+      "text": "I’m going out to eat.",
+      "situation": "social.meal",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "social.meal:fresh-missing",
+      "text": "im going out to eat.",
+      "situation": "social.meal",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "social.meal:fresh-capital",
+      "text": "IM going out to eat.",
+      "situation": "social.meal",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "social.meal:unsupported-modifier",
+      "text": "I'm going out to eat. while needing radiation shielding.",
+      "expected": "refused",
+      "origin": "unsupported physical protection is outside approved scope"
+    },
+    {
+      "id": "travel.journey:fresh-curly",
+      "text": "I’m taking a train for a trip.",
+      "situation": "travel.journey",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "travel.journey:fresh-missing",
+      "text": "im taking a train for a trip.",
+      "situation": "travel.journey",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "travel.journey:fresh-capital",
+      "text": "IM taking a train for a trip.",
+      "situation": "travel.journey",
+      "groups": [],
+      "expected": "Supported",
+      "origin": "punctuation equivalence frozen before this run"
+    },
+    {
+      "id": "travel.journey:unsupported-modifier",
+      "text": "I'm taking a train for a trip. while needing radiation shielding.",
+      "expected": "refused",
+      "origin": "unsupported physical protection is outside approved scope"
+    },
+    {
+      "id": "user-example-1",
+      "text": "I'm going out to eat.",
+      "situation": "social.meal",
+      "expected": "Supported",
+      "origin": "current user request"
+    },
+    {
+      "id": "user-example-2",
+      "text": "im going to eat",
+      "situation": "social.meal",
+      "expected": "Supported",
+      "origin": "current user request"
+    },
+    {
+      "id": "user-example-3",
+      "text": "im gonna grab some food with friends",
+      "situation": "social.meal",
+      "expected": "Supported",
+      "origin": "current user request"
+    },
+    {
+      "id": "user-example-4",
+      "text": "ive got class tomorrow",
+      "situation": "everyday.academic_attendance",
+      "expected": "Supported",
+      "origin": "current user request"
+    },
+    {
+      "id": "user-example-5",
+      "text": "im going shopping",
+      "situation": "everyday.shopping",
+      "expected": "Supported",
+      "origin": "current user request"
+    },
+    {
+      "id": "user-example-6",
+      "text": "im going on a date",
+      "situation": "social.date",
+      "expected": "Supported",
+      "origin": "current user request"
+    },
+    {
+      "id": "user-example-7",
+      "text": "im attending a wedding as a guest",
+      "situation": "ceremony.wedding",
+      "expected": "Supported",
+      "origin": "current user request"
+    },
+    {
+      "id": "user-example-8",
+      "text": "im giving a university presentation",
+      "situation": "academic.presentation",
+      "expected": "Supported",
+      "origin": "current user request"
+    },
+    {
+      "id": "user-example-9",
+      "text": "im being interviewed for a job; the dress code is smart casual",
+      "situation": "professional.job_interview",
+      "expected": "Supported",
+      "origin": "current user request"
+    },
+    {
+      "id": "fresh-negative-1",
+      "text": "im not going shopping",
+      "expected": "refused",
+      "origin": "current negative/ambiguity control"
+    },
+    {
+      "id": "fresh-negative-2",
+      "text": "im going shopping or on a date",
+      "expected": "refused",
+      "origin": "current negative/ambiguity control"
+    },
+    {
+      "id": "fresh-negative-3",
+      "text": "im going to an interview",
+      "expected": "refused",
+      "origin": "current negative/ambiguity control"
+    },
+    {
+      "id": "fresh-negative-4",
+      "text": "I want a radioactive cotton top.",
+      "expected": "refused",
+      "origin": "current negative/ambiguity control"
+    },
+    {
+      "id": "fresh-negative-5",
+      "text": "I want a blue top without a blue top.",
+      "expected": "refused",
+      "origin": "current negative/ambiguity control"
+    }
+  ],
+  "literal_refusal": {
+    "text": "A top named \"not floral\".",
+    "expected_status": "UnsupportedRequest",
+    "expected_reason": "language_unsupported_requirement"
+  },
+  "literal_controls": [
+    "I want a garment named \"not floral delete another\".",
+    "I want a T-shirt named \"not floral\".",
+    "I want a garment tagged \"not blue\"."
+  ],
+  "protected_semantics": "18 contexts, four structures, B1 operators/evidence, P2, C1/C2, weights, eligibility, immutable history and historical grammar digests unchanged."
+}

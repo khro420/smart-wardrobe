@@ -8,7 +8,7 @@ from app.domain.value_objects.garment_attributes import GarmentAttributes
 from app.application.ports.garment_standardisation_port import GarmentStandardisationInput
 from app.application.garment_processing import automatic_garment_finalization as automatic
 from app.domain.value_objects.saved_attribute_evidence import KEY as SOURCE_KEY, source_record
-from app.infrastructure.ai.mirrored_garment_reconstruction import reconstruct_mirrored_garment_png
+from app.application.ports.workflow_runtime import reconstruct_mirrored_garment_png
 
 from app.application.ports.workflow_runtime import (
     connection, utcnow, media_path_for_owner, store_media_bytes,
@@ -75,6 +75,8 @@ def run_job(job_id: str, user_id: str, profile_id: str | None = None, admission_
             )
             crop_path, _ = media_path_for_owner(crop_media_id, user_id)
             attributes = get_attribute_adapter().extract(str(crop_path)).values
+            from app.application.wardrobe import description_projector as description
+            captured_description = description.capture_suggestions(attributes) if runtime().description_policy is not None else None
             candidate_attributes = {**attributes, **detection.attributes,
                                     "standardisation_notice": standardisation.notice,
                                     "used_fallback": standardisation.used_fallback,
@@ -84,8 +86,11 @@ def run_job(job_id: str, user_id: str, profile_id: str | None = None, admission_
                 candidate_attributes["mirrored_reconstruction"] = mirror_metadata
             # Automatic adapters cannot attest an authenticated owner's style choice.
             from app.application.wardrobe.owner_style_confirmation import KEY as STYLE_CONFIRMATION_KEY
-            for reserved in (STYLE_CONFIRMATION_KEY, SOURCE_KEY, automatic.KEY, 'contextual_suitability_v1', 'appearance_evidence_v1'):
+            for reserved in (STYLE_CONFIRMATION_KEY, SOURCE_KEY, automatic.KEY, 'contextual_suitability_v1', 'appearance_evidence_v1', description.KEY, description.RAW_KEY):
                 candidate_attributes.pop(reserved, None)
+            candidate_attributes.pop('wearer_category_eligibility',None)
+            if captured_description is not None:
+                candidate_attributes[description.RAW_KEY] = captured_description
             if admission_mode == automatic.MODE:
                 # Adapter annotations are not authenticated owner declarations.
                 tags = candidate_attributes.get('custom_tags')
@@ -115,6 +120,11 @@ def run_job(job_id: str, user_id: str, profile_id: str | None = None, admission_
                     tag for tag in candidate_attributes.get("custom_tags", [])
                     if not tag.startswith(("neckline:", "sleeve length:"))
                 ]
+            from app.application.wardrobe import wearer_category_service as categories
+            if categories.policy() is not None:
+                with connection() as eligibility_conn:
+                    category_view=categories.annotations(eligibility_conn,user_id,profile_id,[{'detected_category':detection.category,'attributes_json':json.dumps(candidate_attributes)}])[0]
+                candidate_attributes['wearer_category_eligibility']=category_view['wearer_category_eligibility']
             GarmentAttributes(candidate_attributes).validate_embedding(runtime().embedding_dimension)
             prepared_items.append((
                 item_id,

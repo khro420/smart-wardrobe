@@ -10,6 +10,7 @@ from app.domain.value_objects.garment_attributes import GARMENT_STRUCTURE, Garme
 from app.application.wardrobe.garment_tag_edit import tag_edit_view, tag_revision
 from app.application.wardrobe import contextual_review
 from app.application.wardrobe import owner_style_confirmation
+from app.application.wardrobe import description_projector as description
 from app.application.wardrobe import attribute_evidence_review
 from app.domain.value_objects.general_context_evidence import KEY as APPEARANCE_KEY
 from app.domain.value_objects.contextual_garment_evidence import KEY as CONTEXT_KEY
@@ -89,6 +90,9 @@ def _serialise_garment(row) -> dict:
     data['contextual_edit'] = contextual_review.view(row)
     data['style_confirmation'] = owner_style_confirmation.garment_view(row, data['contextual_edit']['review_current'])
     data['appearance_edit'] = attribute_evidence_review.view(row)
+    description_view = description.view(row, data['user_id'], runtime().description_policy)
+    if description_view is not None:
+        data['description'] = description_view
     return data
 
 
@@ -117,8 +121,12 @@ def _write_representation(conn, garment_id: str, attrs: dict, *, write_style: bo
             additional_json = json.dumps(mirrored, allow_nan=False)
         else:
             additional_json = raw  # Preserve malformed evidence, not a guessed repair.
-    palette = attrs.get("color_palette", [])
+    palette = attrs.get("color_palette") or []
     secondary = palette[1].get("hex") if len(palette) > 1 else None
+    if description.KEY in attrs and 'secondary_colour' in attrs:
+        selected = attrs[description.KEY].get('fields', {}).get('secondary_colour', {}).get('selected')
+        if isinstance(selected, dict) and selected.get('origin') in ('owner_selected', 'owner_reported_label'):
+            secondary = attrs['secondary_colour']
     conn.execute("UPDATE garments SET secondary_colour=?, structural_scores=?, additional_attributes=?, embedding=? WHERE id=?", (
         secondary,
         json.dumps({"garment_role": attrs.get("garment_type"), "layering_index": attrs.get("layering_index")}),
@@ -135,7 +143,7 @@ def _write_representation(conn, garment_id: str, attrs: dict, *, write_style: bo
 def list_garments(
     user_id: str, profile_id: str, query: str = "", category: str | None = None,
     favourite: bool | None = None, sort: str = "updated_desc",
-    colour: str | None = None, style: str | None = None, availability: str = "available",
+    colour: str | None = None, style: str | None = None, availability: str = "available", include_wearer_eligibility: bool = False,
 ) -> list[dict]:
     if availability not in {"available", "unavailable", "archived", "all"}:
         raise HTTPException(422, "Choose a supported availability filter.")
@@ -161,6 +169,11 @@ def list_garments(
     sql += f" ORDER BY {SORT_SQL.get(sort, SORT_SQL['updated_desc'])}"
     with connection() as conn:
         garments = [_serialise_garment(row) for row in conn.execute(sql, parameters).fetchall()]
+        from app.application.wardrobe import verified_subtype_service as subtype
+        if subtype.enabled():garments=[{**g,'verified_subtype':subtype.projection(conn,user_id,g)} for g in garments]
+        if include_wearer_eligibility:
+            from app.application.wardrobe.wearer_category_service import annotations
+            garments=annotations(conn,user_id,profile_id,garments)
     if style and style.strip():
         target = style.strip().casefold()
         def matches(garment):
@@ -176,6 +189,8 @@ def list_garments(
 
 
 def _materialise_candidates(conn, job_id, user_id, profile_id, items, save_mode, outfit_name, automatic_mode=False):
+    from app.application.wardrobe.wearer_category_service import require_categories
+    require_categories(conn,user_id,profile_id,items)
     now, garment_ids = utcnow(), []
     for item in items:
         garment_id = str(uuid.uuid4())
@@ -184,6 +199,11 @@ def _materialise_candidates(conn, job_id, user_id, profile_id, items, save_mode,
         attrs.pop(CONTEXT_KEY, None)
         attrs.pop(APPEARANCE_KEY, None)
         owner_style_confirmation.transfer(item, user_id, attrs)
+        candidate_description = attrs.get(description.KEY)
+        try:
+            description.transfer(attrs, user_id, item['id'], garment_id)
+        except description.DescriptionUpdateError as exc:
+            raise HTTPException(exc.status, str(exc)) from exc
         attrs["requires_review"] = attrs.get("requires_review", True) if automatic_mode else False
         if automatic_mode:
             attrs[automatic.KEY] = automatic.record(user_id, job_id, item['id'], 'saved', garment_id=garment_id)
@@ -195,9 +215,12 @@ def _materialise_candidates(conn, job_id, user_id, profile_id, items, save_mode,
         ))
         _write_representation(conn, garment_id, attrs)
         if automatic_mode:
-            conn.execute("UPDATE processing_items SET review_status='confirmed',attributes_json=? WHERE id=?", (json.dumps(attrs, allow_nan=False), item['id']))
+            stored_item_attrs = {**attrs, description.KEY: candidate_description} if candidate_description is not None else attrs
+            conn.execute("UPDATE processing_items SET review_status='confirmed',attributes_json=? WHERE id=?", (json.dumps(stored_item_attrs, allow_nan=False), item['id']))
         else:
             conn.execute("UPDATE processing_items SET review_status='confirmed' WHERE id=?", (item["id"],))
+        from app.application.wardrobe.verified_subtype_service import transfer
+        transfer(conn,user_id,profile_id,item,garment_id)
         garment_ids.append(garment_id)
     outfit_id = None
     if save_mode == "outfit":
@@ -247,6 +270,7 @@ def confirm_candidates(job_id: str, user_id: str, item_ids: list[str], save_mode
         profile_id = profile_id or job["profile_id"]
         if not profile_id:
             raise HTTPException(409, "This upload is missing its wardrobe profile.")
+        if job['profile_id']!=profile_id:raise HTTPException(409,'The processing job belongs to another wearer.')
         _require_capacity(_quota_on_connection(conn, user_id, profile_id), len(items), "confirmation")
         result = _materialise_candidates(conn, job_id, user_id, profile_id, items, save_mode, outfit_name)
     return result
@@ -262,6 +286,7 @@ def finalize_automatic_candidates(job_id: str, user_id: str, item_ids: list[str]
         profile_id = profile_id or job['profile_id']
         if not profile_id:
             raise HTTPException(409, "This upload is missing its wardrobe profile.")
+        if job['profile_id']!=profile_id:raise HTTPException(409,'The processing job belongs to another wearer.')
         items = conn.execute('SELECT * FROM processing_items WHERE job_id=? ORDER BY created_at,id', (job_id,)).fetchall()
         if item_ids is not None and (len(item_ids) != len(items) or len(set(item_ids)) != len(item_ids) or set(item_ids) != {item['id'] for item in items}):
             raise HTTPException(409, 'Automatic saving requires the original complete batch.')
@@ -276,6 +301,12 @@ def finalize_automatic_candidates(job_id: str, user_id: str, item_ids: list[str]
         if job['status'] != 'review_required':
             raise HTTPException(409, 'This processing job is not ready for automatic saving.')
         reason = next((problem for item, value in zip(items, attrs) if (problem := automatic.readiness(item, value, user_id))), None)
+        if reason is None:
+            from app.application.wardrobe import wearer_category_service as categories
+            try:categories.require_categories(conn,user_id,profile_id,items)
+            except HTTPException as error:
+                if isinstance(error.detail,dict) and error.detail.get('code','').startswith('Wearer'):reason=error.detail['code']
+                else:raise
         if reason is None:
             try:
                 from PIL import Image
@@ -309,7 +340,7 @@ def finalize_automatic_candidates(job_id: str, user_id: str, item_ids: list[str]
 
 
 def update_garment(garment_id: str, user_id: str, profile_id: str, payload: dict, expected_tag_revision: str | None = None) -> dict:
-    if {CONTEXT_KEY, APPEARANCE_KEY, owner_style_confirmation.KEY, SOURCE_KEY, automatic.KEY}.intersection(payload.get('attributes') or {}):
+    if {CONTEXT_KEY, APPEARANCE_KEY, owner_style_confirmation.KEY, SOURCE_KEY, automatic.KEY, description.KEY, description.RAW_KEY, 'wearer_category_eligibility','verified_subtype','verified_subtype_evidence','garment_subtype_events_v1'}.intersection(payload.get('attributes') or {}):
         raise HTTPException(422, 'Use the contextual suitability review action.')
     with connection() as conn:
         # Keep the read/merge/write atomic so an unrelated PATCH cannot restore stale style evidence.
@@ -317,6 +348,18 @@ def update_garment(garment_id: str, user_id: str, profile_id: str, payload: dict
         row = conn.execute("SELECT * FROM garments WHERE id=? AND user_id=? AND status='available'", (garment_id, user_id)).fetchone()
         if not row:
             raise HTTPException(404, "Garment was not found.")
+        from app.application.wardrobe import verified_subtype_service as subtype
+        subtype_update=payload.pop('subtype_update',None)
+        if subtype.enabled() and ('category' in payload or subtype_update is not None):
+            from app.application.wardrobe.wearer_category_service import require_categories
+            prior=subtype.source(conn,user_id,row)
+            if any(e['subtype']=='blouse' or e['unresolved_restriction']=='blouse' for e in prior['events']):require_categories(conn,user_id,profile_id,[row])
+        try:
+            payload, description_plan = description.prepare_update(row, user_id, payload, runtime().description_policy)
+        except description.DescriptionUpdateError as exc:
+            raise HTTPException(exc.status, str(exc)) from exc
+        if description_plan is not None and 'descriptive_tags' in description_plan:
+            expected_tag_revision = tag_revision(row)
         if "custom_tags" in (payload.get("attributes") or {}):
             if expected_tag_revision is None:
                 raise HTTPException(428, "Reload the garment before editing its tags; a tag revision is required.")
@@ -367,6 +410,16 @@ def update_garment(garment_id: str, user_id: str, profile_id: str, payload: dict
             if 'style' not in (payload.get('attributes') or {}) and row['style_tags'] is not None:
                 source_attrs = {**source_attrs, 'style': json.loads(row['style_tags'])}
             data['attributes'][SOURCE_KEY] = source_record(source_attrs, user_id, data['category'], row['preferred_media_id'], utcnow(), origin, contributor)
+        try:
+            description.finish_update(row, user_id, data['attributes'], data['category'], row['preferred_media_id'], description_plan, runtime().description_policy, utcnow(),
+                                      name=data['name'], primary_colour=data['primary_colour'], pattern=data['pattern'])
+        except description.DescriptionUpdateError as exc:
+            raise HTTPException(exc.status, str(exc)) from exc
+        if subtype_update is not None:
+            subtype.review(conn,user_id,profile_id,{**dict(row),'category':data['category'],'attributes_json':json.dumps(data['attributes'])},subtype_update)
+        if 'category' in payload or subtype_update is not None or {'reviewed_category','garment_type','layering_index'}.intersection(payload.get('attributes') or {}):
+            from app.application.wardrobe.wearer_category_service import require_categories
+            require_categories(conn,user_id,profile_id,[{**dict(row),'category':data['category'],'attributes_json':json.dumps(data['attributes'])}])
         conn.execute("UPDATE garments SET name=?, category=?, primary_colour=?, pattern=?, is_favourite=?, attributes_json=?, updated_at=? WHERE id=?", (
             data["name"], data["category"], data["primary_colour"], data["pattern"], int(data["is_favourite"]), json.dumps(data["attributes"]), utcnow(), garment_id
         ))
@@ -432,15 +485,15 @@ def review_contextual_suitability(garment_id: str, user_id: str, profile_id: str
 
 def _garment_dependencies(conn, garment_id: str, user_id: str, profile_id: str) -> dict:
     garment = conn.execute(
-        "SELECT id, name FROM garments WHERE id=? AND user_id=? AND (profile_id=? OR profile_id IS NULL) AND status='available'",
-        (garment_id, user_id, profile_id),
+        "SELECT id, name FROM garments WHERE id=? AND user_id=? AND status='available'",
+        (garment_id, user_id),
     ).fetchone()
     if not garment:
         raise HTTPException(404, "Garment was not found.")
     outfits = [dict(row) for row in conn.execute(
         "SELECT o.id, o.name FROM outfit_items oi JOIN outfits o ON o.id=oi.outfit_id "
-        "WHERE oi.garment_id=? AND o.user_id=? AND o.profile_id=? AND o.status='available' ORDER BY LOWER(o.name)",
-        (garment_id, user_id, profile_id),
+        "WHERE oi.garment_id=? AND o.user_id=? AND o.status='available' ORDER BY LOWER(o.name)",
+        (garment_id, user_id),
     ).fetchall()]
     visualisations = [dict(row) for row in conn.execute(
         "SELECT DISTINCT v.id, v.status FROM visualisation_items vi "
@@ -469,8 +522,8 @@ def archive_garment(garment_id: str, user_id: str, profile_id: str) -> None:
         if not dependencies["can_archive"]:
             raise HTTPException(409, dependencies["policy"])
         conn.execute(
-            "UPDATE garments SET status='archived', deleted_at=?, updated_at=? WHERE id=? AND user_id=? AND (profile_id=? OR profile_id IS NULL) AND status='available'",
-            (utcnow(), utcnow(), garment_id, user_id, profile_id),
+            "UPDATE garments SET status='archived', deleted_at=?, updated_at=? WHERE id=? AND user_id=? AND status='available'",
+            (utcnow(), utcnow(), garment_id, user_id),
         )
 
 
@@ -513,11 +566,13 @@ def list_outfits(
 def _validated_garments(conn, user_id: str, profile_id: str, garment_ids: list[str]):
     placeholders = ",".join("?" for _ in garment_ids)
     garments = conn.execute(
-        f"SELECT id, category, additional_attributes FROM garments WHERE user_id=? AND status='available' AND id IN ({placeholders})",
+        f"SELECT * FROM garments WHERE user_id=? AND status='available' AND id IN ({placeholders})",
         [user_id, *garment_ids],
     ).fetchall()
     if len(garments) != len(garment_ids):
         raise HTTPException(404, "One or more garments are unavailable or do not belong to you.")
+    from app.application.wardrobe.wearer_category_service import require_categories
+    require_categories(conn,user_id,profile_id,garments)
     return {row["id"]: row for row in garments}
 
 
@@ -534,6 +589,7 @@ def create_outfit(user_id: str, profile_id: str, name: str, garment_ids: list[st
     if len(set(garment_ids)) != len(garment_ids):
         raise HTTPException(422, "The same garment cannot appear twice in an outfit.")
     with connection() as conn:
+        conn.execute('BEGIN IMMEDIATE')
         by_id = _validated_garments(conn, user_id, profile_id, garment_ids)
         outfit_id, now = str(uuid.uuid4()), utcnow()
         conn.execute("INSERT INTO outfits (id,user_id,profile_id,name,description,creation_type,status,is_favourite,created_at,updated_at) VALUES (?, ?, NULL, ?, ?, 'manual', 'available', 0, ?, ?)", (outfit_id, user_id, name, description, now, now))
@@ -548,6 +604,8 @@ def update_outfit(outfit_id: str, user_id: str, profile_id: str, payload: dict) 
         outfit = conn.execute("SELECT * FROM outfits WHERE id=? AND user_id=? AND status='available'", (outfit_id, user_id)).fetchone()
         if not outfit:
             raise HTTPException(404, "Outfit was not found.")
+        if 'garment_ids' not in payload:
+            _validated_garments(conn,user_id,profile_id,[r['garment_id'] for r in conn.execute('SELECT garment_id FROM outfit_items WHERE outfit_id=?',(outfit_id,))])
         data = dict(outfit)
         for key in ("name", "description", "is_favourite"):
             if payload.get(key) is not None:
@@ -576,8 +634,8 @@ def update_outfit(outfit_id: str, user_id: str, profile_id: str, payload: dict) 
 
 def _outfit_dependencies(conn, outfit_id: str, user_id: str, profile_id: str) -> dict:
     outfit = conn.execute(
-        "SELECT id, name FROM outfits WHERE id=? AND user_id=? AND profile_id=? AND status='available'",
-        (outfit_id, user_id, profile_id),
+        "SELECT id, name FROM outfits WHERE id=? AND user_id=? AND status='available'",
+        (outfit_id, user_id),
     ).fetchone()
     if not outfit:
         raise HTTPException(404, "Outfit was not found.")
@@ -606,6 +664,6 @@ def archive_outfit(outfit_id: str, user_id: str, profile_id: str) -> None:
         if not dependencies["can_archive"]:
             raise HTTPException(409, dependencies["policy"])
         conn.execute(
-            "UPDATE outfits SET status='archived', updated_at=? WHERE id=? AND user_id=? AND profile_id=? AND status='available'",
-            (utcnow(), outfit_id, user_id, profile_id),
+            "UPDATE outfits SET status='archived', updated_at=? WHERE id=? AND user_id=? AND status='available'",
+            (utcnow(), outfit_id, user_id),
         )

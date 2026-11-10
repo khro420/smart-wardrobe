@@ -84,7 +84,8 @@ def validate_total(score, weights):
         raise ValueError('Invalid compact total.')
     validate_measure(score.request); validate_measure(score.preference)
     if score.compatibility is not None:
-        if type(score.compatibility) is not CompactDecision:raise ValueError('Validated decision certificate required.')
+        from app.domain.value_objects.palette_compatibility import CompactPaletteDecision
+        if type(score.compatibility) not in (CompactDecision,CompactPaletteDecision):raise ValueError('Validated decision certificate required.')
         validate_measure(score.compatibility.raw)
     terms = tuple((w.numerator*v.numerator,w.denominator*v.denominator) for w,v in zip(weights,score.contributions))
     (a,b),(c,d),(e,f) = terms

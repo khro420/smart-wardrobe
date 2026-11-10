@@ -9,6 +9,10 @@ class GarmentDataError(ValueError):
     pass
 
 
+class WardrobeCapacityExceeded(GarmentDataError):
+    """The complete eligible pool exceeds the accepted enumeration population."""
+
+
 class GarmentRetrievalService:
     def __init__(self, query: ConfirmedGarmentQuery):
         self.query = query
@@ -17,7 +21,7 @@ class GarmentRetrievalService:
         if not isinstance(user_id, str) or not user_id.strip():
             raise GarmentDataError("Invalid user context.")
         rows = self.query.get_confirmed_available_garments(user_id)
-        garments, exclusions, seen = [], [], {}
+        garments, exclusions, seen, owned_ids = [], [], {}, set()
         for row in rows:
             if not isinstance(row, ConfirmedGarmentSnapshot):
                 exclusions.append(GarmentExclusion(None, "invalid_snapshot"))
@@ -33,6 +37,9 @@ class GarmentRetrievalService:
             if row.user_id != user_id or row.status != "available":
                 exclusions.append(GarmentExclusion(row.garment_id, "ownership_or_availability_mismatch"))
                 continue
+            owned_ids.add(row.garment_id)
+            if len(owned_ids)>100:
+                raise WardrobeCapacityExceeded('The strict eligible pool exceeds 100 unique garments.')
             structure = GARMENT_STRUCTURE.get(row.category)
             if structure is None:
                 exclusions.append(GarmentExclusion(row.garment_id, "unsupported_category"))

@@ -1,3 +1,4 @@
+from tests.current_contract_fixtures import wearer_id, wearer, history_scope
 """J-18 real authenticated HTTP, write validation, listing and correction evidence."""
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import contextmanager
@@ -132,7 +133,7 @@ def test_supported_preference_options_save_clear_and_owner_isolation(accounts):
     for kind,choices in values.items():
         response=accounts.put('/api/v1/account/preferences/'+kind,headers=headers,json={'preference_value':{'values':choices},'weight':.5})
         assert response.status_code==200
-    rows=SqliteActivePreferenceQuery().get_active_preferences(owner['id'])
+    rows=SqliteActivePreferenceQuery().get_active_preferences(owner['id'],wearer=wearer(owner['id']))
     normalized=PreferenceNormalizer().normalize(owner['id'],rows)
     assert len(normalized.preferences)==4 and not normalized.diagnostics
     assert all(item.importance==Fraction(1,2) for item in normalized.preferences)
@@ -256,7 +257,7 @@ def test_authenticated_api_failure_retains_safe_response_and_actual_logs(release
     client,_=release
     service=assistant_service() if operation=='assistant' else homepage_service()
     method='find_assistant_submission' if operation=='assistant' else 'find_homepage_submission'
-    monkeypatch.setattr(service.repository,method,lambda *args:failure())
+    monkeypatch.setattr(service.repository,method,lambda *args,**kwargs:failure())
     with db.connection() as c:before=[tuple(r) for r in c.execute('SELECT * FROM recommendations')]
     response=client.post('/api/v1/recommendations'+('?pipeline=integrated' if operation=='assistant' else '/homepage'),json={'submission_key':'api-fault',**({'request_text':'PRIVATE_REQUEST medical personal note'} if operation=='assistant' else {})})
     assert response.status_code==503 and response.json()['status']=='PersistenceFailure'

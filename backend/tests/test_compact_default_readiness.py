@@ -1,3 +1,4 @@
+from tests.current_contract_fixtures import wearer_id, wearer, history_scope
 """Actual composition replacement/rollback; synthetic disposable wardrobe only."""
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -84,7 +85,7 @@ def test_actual_composition_with_unset_configuration_uses_compact_deferred(assis
     configure_local_workflow()
     svc = assistant_service()
     assert (svc.execution_engine, svc.scoring_profile) == (COMPACT, DEFERRED)
-    result = svc.recommend('owner', 'defaults', 'Suggest an outfit')
+    result = svc.recommend('owner', 'defaults', 'Suggest an outfit',wearer=wearer('owner'))
     assert result['status'] == 'Selected' and executor(result) == COMPACT
     assert result['score_metadata']['profile_name'] == DEFERRED
 
@@ -96,13 +97,13 @@ def test_inflight_request_keeps_captured_context_across_rollout_and_rollback(ass
     target = COMPACT if start == REFERENCE else REFERENCE
     entered, release, calls = pause_first_rank(monkeypatch)
     with ThreadPoolExecutor(max_workers=1) as pool:
-        pending = pool.submit(old.recommend, 'owner', 'inflight', 'Suggest an outfit')
+        pending = pool.submit(old.recommend, 'owner', 'inflight', 'Suggest an outfit',wearer=wearer('owner'))
         try:
             assert entered.wait(10)
             monkeypatch.setenv(ENVIRONMENT_KEY, target)
             assert old.execution_engine == start  # Environment is not hot reload.
             new = compose(assistant_store, monkeypatch, target, profile)
-            current = new.recommend('owner', 'after-switch', 'Suggest an outfit')
+            current = new.recommend('owner', 'after-switch', 'Suggest an outfit',wearer=wearer('owner'))
             assert current['status'] == 'Selected' and executor(current) == target
         finally:
             release.set()
@@ -115,7 +116,7 @@ def test_inflight_request_keeps_captured_context_across_rollout_and_rollback(ass
                   for table in ('recommendation_metadata', 'nlp_chats', 'recommendation_item_snapshots')}
     rolled_back = compose(assistant_store, monkeypatch, start, profile)
     for initial, key in ((previous, 'inflight'), (current, 'after-switch')):
-        replay = rolled_back.recommend('owner', key, 'Suggest an outfit')
+        replay = rolled_back.recommend('owner', key, 'Suggest an outfit',wearer=wearer('owner'))
         assert replay['replayed'] and replay['id'] == initial['id']
         assert replay['provenance'] == initial['provenance']
         assert replay['score_metadata'] == initial['score_metadata']
@@ -137,7 +138,7 @@ def test_failed_inflight_write_can_retry_on_other_engine_without_partial_rows(as
     entered, release, calls = pause_first_rank(monkeypatch)
     target = COMPACT if start == REFERENCE else REFERENCE
     with ThreadPoolExecutor(max_workers=1) as pool:
-        pending = pool.submit(old.recommend, 'owner', 'retry', 'Suggest an outfit')
+        pending = pool.submit(old.recommend, 'owner', 'retry', 'Suggest an outfit',wearer=wearer('owner'))
         try:
             assert entered.wait(10)
             new = compose(assistant_store, monkeypatch, target, profile)
@@ -145,8 +146,8 @@ def test_failed_inflight_write_can_retry_on_other_engine_without_partial_rows(as
             release.set()
         assert pending.result(timeout=15)['status'] == 'PersistenceFailure'
     assert count(assistant_store) == (0, 0, 0)
-    successful = new.recommend('owner', 'retry', 'Suggest an outfit')
-    replay = old.recommend('owner', 'retry', 'Suggest an outfit')
+    successful = new.recommend('owner', 'retry', 'Suggest an outfit',wearer=wearer('owner'))
+    replay = old.recommend('owner', 'retry', 'Suggest an outfit',wearer=wearer('owner'))
     assert successful['status'] == replay['status'] == 'Selected'
     assert not successful['replayed'] and replay['replayed']
     assert executor(successful) == target and successful['id'] == replay['id']

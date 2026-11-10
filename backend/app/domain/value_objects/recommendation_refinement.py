@@ -107,11 +107,38 @@ class RefinementPlan:
     root_total: Fraction | None = None
     seen: tuple = ()
     compatibility_scope_sha256: str = '0' * 64
+    wearer_profile_id: str | None = None
+    attribute_intent: object | None = None
+    description_collection_sha256: str | None = None
+    attribute_scope_sha256: str | None = None
+    preference_profile: str | None = None
+    attribute_preference_sha256: str | None = None
+    attribute_preference_scope_sha256: str | None = None
+    compatibility_profile: str | None = None
+    palette_collection_sha256: str | None = None
 
     def __post_init__(self):
         from app.domain.value_objects.context_relevance import require_digest
         object.__setattr__(self,'exclusions',canonical_categories(list(self.exclusions)))
         require_digest(self.compatibility_scope_sha256)
+        if self.compatibility_profile is not None:
+            from app.domain.value_objects.palette_compatibility import PROFILE
+            if self.compatibility_profile!=PROFILE or self.wearer_profile_id is None:raise ValueError('Captured C2 wearer required.')
+            require_digest(self.palette_collection_sha256)
+        elif self.palette_collection_sha256 is not None:raise ValueError('C2 source scope requires explicit selection.')
+        if self.wearer_profile_id is not None:canonical_uuid(self.wearer_profile_id)
+        if self.preference_profile is not None:
+            from app.domain.value_objects.attribute_preferences import PROFILE
+            if self.preference_profile!=PROFILE or self.wearer_profile_id is None:raise ValueError('Captured P2 wearer required.')
+            require_digest(self.attribute_preference_sha256);require_digest(self.attribute_preference_scope_sha256)
+        elif self.attribute_preference_sha256 is not None or self.attribute_preference_scope_sha256 is not None:
+            raise ValueError('P2 scope requires an explicit profile.')
+        if self.attribute_intent is not None:
+            from app.domain.value_objects.attribute_selection_evidence import AttributeIntent
+            if type(self.attribute_intent) is not AttributeIntent or self.wearer_profile_id is None:raise ValueError('Captured attribute/wearer intent required.')
+            require_digest(self.description_collection_sha256);require_digest(self.attribute_scope_sha256)
+        elif self.description_collection_sha256 is not None or self.attribute_scope_sha256 is not None:
+            raise ValueError('Attribute scope requires immutable intent.')
         if type(self.ordinal) is not int or not 0 <= self.ordinal <= 9:
             raise ValueError('Invalid refinement ordinal.')
         if type(self.seen) is not tuple or len(self.seen)!=self.ordinal or len(set(self.seen))!=len(self.seen):
@@ -133,8 +160,14 @@ class RefinementPlan:
     @property
     def selection_scope_sha256(self):
         from app.domain.value_objects.context_relevance import ratio
-        return selection_digest(self.compatibility_scope_sha256,self.root_id,self.parent_id,self.ordinal,
+        base=selection_digest(self.compatibility_scope_sha256,self.root_id,self.parent_id,self.ordinal,
                                 self.mode,ratio(self.root_R),digest(self.seen),len(self.seen))
+        return preference_selection_digest(base,self.preference_profile,self.attribute_preference_sha256,self.attribute_preference_scope_sha256) if self.preference_profile else base
+
+
+def preference_selection_digest(base,profile,snapshot,scope):
+    return digest(dict(version='preference-selection-scope-2.0.0',base_selection_scope_sha256=base,
+        preference_profile=profile,attribute_preference_sha256=snapshot,attribute_preference_scope_sha256=scope))
 
 
 def selection_digest(scope,root,parent,ordinal,mode,floor,seen_hash,seen_count):

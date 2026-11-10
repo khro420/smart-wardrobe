@@ -1,0 +1,19 @@
+{
+  "version": "retained-transport-authorities-1.0.0",
+  "source_manifest_sha256": "7efecc48d0781af466a8f41eb9155e583b1a3676f8645f7aa90bd325682388b3",
+  "source_review": "runtime_isolation_correction_20261109",
+  "files": {
+    "backend/tests/fixtures/recommendation_refinement_sources.v1.json": {
+      "original_sha256": "5fe9ae3754b0d0b361fe42a1dda29861b6332afd6b27f72e0728a3b83e4ab246",
+      "relocated_sha256": "19caa642ea192699e55ea2fef561ad82e7e29bbdb3c7bcb213214b5dbd853eec"
+    },
+    "backend/tests/fixtures/phase_a_wearer_sources.v1.json": {
+      "original_sha256": "9fa8ae6e3b438ec6c4af73a4bf8d656282048d223027a336c5990292e3d0950e",
+      "relocated_sha256": "e4e47feba6dd69616b63b382b11ded8b8a6f4fc0bfbe386df01662e963a7550b"
+    },
+    "backend/tests/fixtures/description_sources.v1.json": {
+      "original_sha256": "7d9fea8d9831c33bba9d14f587cae0699f3903f6bd2e144742dc25b6a7207ce3",
+      "relocated_sha256": "473d6dff079c6b0b1e3516f01531c82ed8b255c2bd10a06064c39a55d61b11a6"
+    }
+  }
+}

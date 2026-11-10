@@ -7,9 +7,15 @@ from app.infrastructure.config import DATABASE_PATH
 from app.application.wardrobe.profile_service import current_profile_id
 
 
-def read_active_preference_rows(conn,user_id):
+def read_active_preference_rows(conn,user_id,wearer=None):
     """One SELECT on the caller's already authenticated transaction; never BEGIN."""
-    profile_id=current_profile_id()
+    profile_id=wearer.profile_id if wearer is not None else current_profile_id()
+    if profile_id is None:
+        raise ValueError('Explicit wearer preference scope is required.')
+    if wearer is not None and wearer.account_id!=user_id:
+        raise ValueError('Preference wearer ownership mismatch.')
+    from app.application.wardrobe.profile_service import require_active_profile
+    require_active_profile(conn,user_id,profile_id)
     sql="SELECT id,user_id,preference_type,preference_value_json,weight,source,is_active FROM user_preferences WHERE user_id=? AND is_active=1"
     params=[user_id]
     if profile_id:
@@ -20,7 +26,7 @@ def read_active_preference_rows(conn,user_id):
 
 
 class SqliteActivePreferenceQuery(ActivePreferenceQuery):
-    def get_active_preferences(self,user_id):
+    def get_active_preferences(self,user_id,wearer=None):
         if not isinstance(user_id,str) or not user_id.strip():
             raise ValueError("Authenticated user context required.")
         with closing(sqlite3.connect(DATABASE_PATH.resolve().as_uri()+"?mode=ro",uri=True)) as conn:
@@ -29,4 +35,4 @@ class SqliteActivePreferenceQuery(ActivePreferenceQuery):
             account = conn.execute("SELECT id FROM users WHERE id=? AND account_status='active'",(user_id,)).fetchone()
             if account is None:
                 raise ValueError("Active authenticated account required.")
-            return read_active_preference_rows(conn,user_id)
+            return read_active_preference_rows(conn,user_id,wearer)

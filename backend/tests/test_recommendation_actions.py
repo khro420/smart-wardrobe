@@ -1,3 +1,4 @@
+from tests.current_contract_fixtures import wearer_id, wearer, history_scope
 """Actual SQLite transactions; synthetic garment/media data, no real AI claim."""
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import nullcontext
@@ -22,6 +23,8 @@ from tests.test_recommendation_persistence import store, connect, assistant
 def ready(store, monkeypatch):
     configure_local_workflow()
     path, repo, command = store
+    from dataclasses import replace
+    command=replace(command,wearer=wearer("owner"))
     record = repo.persist(assistant(command))
     monkeypatch.setattr(visual, "runtime", lambda: SimpleNamespace(media=SimpleNamespace(path_for_owner=lambda *_: None), configuration=VTONConfiguration))
     return path, record
@@ -43,7 +46,7 @@ def ready(store, monkeypatch):
 def test_strict_save_and_visualisation_reject_every_invalid_member(ready, mutation):
     path, record = ready
     with connect(path) as conn: conn.execute(mutation)
-    with pytest.raises(HTTPException) as error: service.save_as_outfit(record["id"], "owner", "Must fail")
+    with pytest.raises(HTTPException) as error: service.save_as_outfit(record["id"], "owner", "Must fail",profile_id=wearer_id("owner"))
     assert error.value.status_code == 409
     with connect(path) as conn:
         with pytest.raises(HTTPException) as error: visual.resolve_source(conn, "owner", recommendation_id=record["id"])
@@ -61,23 +64,23 @@ def test_save_is_atomic_idempotent_and_history_immutable(ready):
     path, record = ready
     with connect(path) as conn: before = history(conn)
     with ThreadPoolExecutor(4) as pool:
-        saved = list(pool.map(lambda _: service.save_as_outfit(record["id"], "owner", "Once"), range(8)))
+        saved = list(pool.map(lambda _: service.save_as_outfit(record["id"], "owner", "Once",profile_id=wearer_id("owner")), range(8)))
     assert all(x == saved[0] for x in saved)
-    assert service.saved_outfit_state(record["id"],"owner")["outfit_id"] == saved[0]["id"]
+    assert service.saved_outfit_state(record["id"],"owner",profile_id=wearer_id("owner"))["outfit_id"] == saved[0]["id"]
     with connect(path) as conn:
         assert history(conn) == before
         assert conn.execute("SELECT count(*) FROM outfits").fetchone()[0] == 1
         assert [tuple(r) for r in conn.execute("SELECT garment_id,role,item_order FROM outfit_items")] == [("garment","one_piece",1)]
-    with pytest.raises(HTTPException) as error: service.save_as_outfit(record["id"], "other", None)
+    with pytest.raises(HTTPException) as error: service.save_as_outfit(record["id"], "other", None,profile_id=wearer_id("other"))
     assert error.value.status_code == 404
-    with pytest.raises(HTTPException): service.saved_outfit_state(record["id"], "other")
+    with pytest.raises(HTTPException): service.saved_outfit_state(record["id"], "other",profile_id=wearer_id("other"))
 
 
 def test_item_failure_rolls_back_entire_outfit(ready):
     path, record = ready
     with connect(path) as conn:
         conn.execute("CREATE TRIGGER injected_failure BEFORE INSERT ON outfit_items BEGIN SELECT RAISE(ABORT,'injected item failure'); END")
-    with pytest.raises(sqlite3.IntegrityError): service.save_as_outfit(record["id"], "owner", None)
+    with pytest.raises(sqlite3.IntegrityError): service.save_as_outfit(record["id"], "owner", None,profile_id=wearer_id("owner"))
     with connect(path) as conn:
         assert conn.execute("SELECT count(*) FROM outfits").fetchone()[0] == 0
         assert conn.execute("SELECT status FROM recommendations").fetchone()[0] == "available"
@@ -86,7 +89,7 @@ def test_item_failure_rolls_back_entire_outfit(ready):
 def test_legacy_saved_record_is_not_rewritten_or_duplicated(ready):
     path, record = ready
     with connect(path) as conn: conn.execute("UPDATE recommendations SET status='saved'")
-    with pytest.raises(HTTPException) as error: service.save_as_outfit(record["id"], "owner", None)
+    with pytest.raises(HTTPException) as error: service.save_as_outfit(record["id"], "owner", None,profile_id=wearer_id("owner"))
     assert error.value.status_code == 409
     with connect(path) as conn:
         assert conn.execute("SELECT count(*) FROM outfits").fetchone()[0] == 0
@@ -97,7 +100,7 @@ def test_invalid_second_member_is_not_silently_dropped(ready):
     path, record = ready
     with connect(path) as conn:
         conn.execute("INSERT INTO recommendation_items VALUES(?, 'missing-garment', 'lower', 2, 'now')", (record["id"],))
-    with pytest.raises(HTTPException): service.save_as_outfit(record["id"], "owner", None)
+    with pytest.raises(HTTPException): service.save_as_outfit(record["id"], "owner", None,profile_id=wearer_id("owner"))
     with connect(path) as conn:
         with pytest.raises(HTTPException): visual.resolve_source(conn,"owner",recommendation_id=record["id"])
         assert conn.execute("SELECT count(*) FROM outfits").fetchone()[0] == 0
@@ -107,7 +110,7 @@ def test_visualisation_validation_failure_creates_no_job(ready, monkeypatch):
     path, record = ready
     monkeypatch.setattr(jobs,"require_person",lambda *args: {"media_id":"person-media"})
     with connect(path) as conn: conn.execute("UPDATE garments SET status='archived'")
-    with pytest.raises(HTTPException) as error: jobs.create_visualisation("owner","person",recommendation_id=record["id"])
+    with pytest.raises(HTTPException) as error: jobs.create_visualisation("owner","person",recommendation_id=record["id"],profile_id=wearer_id("owner"))
     assert error.value.status_code == 409
     with connect(path) as conn: assert conn.execute("SELECT count(*) FROM visualisations").fetchone()[0] == 0
 
@@ -120,7 +123,7 @@ def test_corrupt_legacy_duplicate_references_are_rejected_not_dropped(ready):
         conn.execute("ALTER TABLE recommendation_items RENAME TO original_items")
         conn.execute("CREATE TABLE recommendation_items AS SELECT * FROM original_items")
         conn.execute("INSERT INTO recommendation_items SELECT * FROM original_items")
-    with pytest.raises(HTTPException) as error: service.save_as_outfit(record["id"],"owner",None)
+    with pytest.raises(HTTPException) as error: service.save_as_outfit(record["id"],"owner",None,profile_id=wearer_id("owner"))
     assert error.value.status_code == 409
     with connect(path) as conn:
         with pytest.raises(HTTPException) as error: visual.resolve_source(conn,"owner",recommendation_id=record["id"])
@@ -152,10 +155,10 @@ def test_write_lock_prevents_change_between_revalidation_and_insert(ready, monke
         worker = threading.Thread(target=change); worker.start(); worker.join()
         return result
     monkeypatch.setattr(recommendation_actions, "strict_items", checked)
-    service.save_as_outfit(record["id"], "owner", None)
+    service.save_as_outfit(record["id"], "owner", None,profile_id=wearer_id("owner"))
     assert attempts and "locked" in attempts[0]
     with connect(path) as conn: conn.execute("UPDATE garments SET status='archived'")
-    with pytest.raises(HTTPException): service.save_as_outfit(record["id"], "owner", None)
+    with pytest.raises(HTTPException): service.save_as_outfit(record["id"], "owner", None,profile_id=wearer_id("owner"))
 
 
 def test_visualisation_role_ownership_and_order_checks(ready):
@@ -180,7 +183,7 @@ def test_execution_revalidates_queued_recommendation_and_never_calls_inference(r
     original = runtime(); adapter = Mock()
     configure_visualisation(replace(original, gpu_slot=lambda:nullcontext(), adapter=lambda:adapter))
     try:
-        job = jobs.create_visualisation("owner", "person", recommendation_id=record["id"])
+        job = jobs.create_visualisation("owner", "person", recommendation_id=record["id"],profile_id=wearer_id("owner"))
         with connect(path) as conn: conn.execute("UPDATE processing_items SET review_status='pending'")
         jobs.run_visualisation(job,"owner")
         adapter.generate.assert_not_called()

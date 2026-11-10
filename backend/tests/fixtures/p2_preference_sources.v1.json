@@ -1,0 +1,138 @@
+{
+  "version": "p2-preference-delivery-1.0.0",
+  "default_activation": false,
+  "approved_contract_path": "retained://phase_b2_preference_implementation_20261105/approved-contract",
+  "approved_scope_sha256": "3a05553d5e8e494a1ea2274f19bffed4cb46c32b6ccfb442f410c69e9021499a",
+  "files": {
+    "backend/app/api/account_routes.py": "e84a272a461bff7ce318f5641baa439882d693a97dfd1fb58dee5f74be63774b",
+    "backend/app/api/assistant_models.py": "e30b4b630e06dda3f5e8dcf9fd26d529412838e8d8897705c1f68320f3e30e40",
+    "backend/app/api/attribute_preference_models.py": "4b803e2a953e39d060506d3b12fd6095f19d29a2c78843772e81546c0405288c",
+    "backend/app/api/recommendation_routes.py": "5c339edb5aae0bcdce77f77286de5188c12c4a8e5af4babcddbc373b0a452c57",
+    "backend/app/application/account/attribute_preference_service.py": "556732b4e8bb5d1d489bfa18821a8031254432e7b70fe66e7b331af58d47f464",
+    "backend/app/application/ports/attribute_preference_query.py": "01b4503c4e5812572f5b73fe803102258d7a42efc83326ff7abf769ec2760699",
+    "backend/app/application/recommendation/aggregated_decision_scorer.py": "fd9e1733ecb06cea88bb3b07229df4c88d0cb0465f5b7de7927ea543fd04d405",
+    "backend/app/application/recommendation/assistant_execution_selection.py": "6835af9da5371551b0a9536fec8134e1ed92b89a6517343cba12d514b17c702e",
+    "backend/app/application/recommendation/assistant_scoring_selection.py": "ea979d259bf50b5b88a4e72b65e0784a62bcfd4acaeb386f482f104c576eaf14",
+    "backend/app/application/recommendation/attribute_preference_codec.py": "2346101b1f97618fb7f63ac69a389a2bf209f9e102cca008e9c5b231dc552e5a",
+    "backend/app/application/recommendation/attribute_preference_masks.py": "2d6015c1161011074145eaae7f1f3f01bc054d53b1f68e2c4cb2ca4ca86fdd42",
+    "backend/app/application/recommendation/attribute_preference_normalizer.py": "f40d2affa4ad39665f5f71a54088c7ee1eb9fe481b829818cac6605c20f2d375",
+    "backend/app/application/recommendation/attribute_preference_policy.py": "4b4ce0f675905520bd6053a9b961dc16c03ecf8d149ed0fa5d8d4bdd11b15f30",
+    "backend/app/application/recommendation/attribute_preference_preparation.py": "ac9c8045358a5a992e1ab1ad9e0ffe6eabe6dcf88f48e6528a5deb40f3fbb9c4",
+    "backend/app/application/recommendation/attribute_preference_relative_facts.py": "389a0df0310859b0d60c89cef9b6247dc03e39723f3e597f09fe5fcabaa093b4",
+    "backend/app/application/recommendation/attribute_preference_scorer.py": "b5c4cf8081c7298e160f8926da48a7ef05b4f29b071dbf0b3cf40c60025b0b39",
+    "backend/app/application/recommendation/attribute_preference_selection.py": "392f332da33e70851b686d0cea843105a94b84b0b39fc5e297e130a899d8f28c",
+    "backend/app/application/recommendation/attribute_preference_verifier.py": "68559c6eda0f3e0bb604e67dee6b7850d39382b88ee5ee32939eab8502d2f611",
+    "backend/app/application/recommendation/compact_assistant_scorer.py": "89326010db863c5ccdee8d764196c78e383059daad2a75e96de177e474af945a",
+    "backend/app/application/recommendation/compact_exhaustive_scorer.py": "e9ff9b59b0ef84656c4988cd1f9fa189981a4993e0affaa955514ce3257d930d",
+    "backend/app/application/recommendation/config/attribute_preference_policy.v1.json": "c3046bdbbb1dfbfbeef8b9ff4e2e79aab0ecedfdbcfcc3572741efb5e356984c",
+    "backend/app/application/recommendation/context_relevance_verifier.py": "f05340eaa044baf8e50933c16b9ce138708d5107c7843bfba278d58a4534977f",
+    "backend/app/application/recommendation/decision_score_codec.py": "be2c85aaaf3930d0eb54d4e924523a77bbb5264039df2c971b801d3d7fbcf2e4",
+    "backend/app/application/recommendation/outfit_assistant_service.py": "9c7f240c37cbc332d4c65a628704ac321a9d648c44303ddb97a09beefa54f16b",
+    "backend/app/application/recommendation/refinement_lineage_service.py": "4d495aeecae19573ca5b55367b826d04d961c97dc132e121b956c1659542c2e4",
+    "backend/app/application/recommendation/refinement_verifier.py": "7e1b176919b9dabadcc6b233ba1b24a8d0ef63cc695d53dda7252a51c26dc14a",
+    "backend/app/application/recommendation/scoring_display.py": "278fd5d8a302c2d80cfd81cec377a2a0e36e392e0949231e5346ff2df3ba2a42",
+    "backend/app/domain/value_objects/attribute_preference_evidence.py": "7f4cf9d85b6feadabd612fc2c881f9b2e5d60e369fe6342d452cbbb80b35d716",
+    "backend/app/domain/value_objects/attribute_preferences.py": "9a17fdaf9a35ce63e506e48f1f6bf3182833483afa1c7d1cd90bb9122945e063",
+    "backend/app/domain/value_objects/context_relevance.py": "57defd2ded7c5e1259bdaf1d0c284e50ec9481ff66aa4afa1f1528ee18bd8c45",
+    "backend/app/domain/value_objects/recommendation_persistence.py": "b8f3463e267d98dc56c1d904bb865416d1a8aaf59f3a00c0d1272a4239c0d9ed",
+    "backend/app/domain/value_objects/recommendation_refinement.py": "32dc4123dca8bd8a1152f9bf60689e61937db6572a42265d51904f57feb85621",
+    "backend/app/infrastructure/persistence/attribute_preference_query_adapter.py": "46035487466a51aba558c2bea0f32dbc956fa0e6da4bff3b19ac714d379f635a",
+    "backend/app/infrastructure/persistence/recommendation_repository_adapter.py": "fd04f0bf8248ca2d787baf546916f1a269c75176494ee5e54e8cea285519f453",
+    "backend/app/infrastructure/persistence/refinement_lineage_query.py": "949068552d2e3edbbc38744ba2632ea88a20c96f671b703f465191339d02d425",
+    "backend/app/infrastructure/workflow_runtime.py": "bff46eead3ec54d01381061cd5127776c23c2ad83f0f23284ae42a2daceeab82",
+    "backend/tests/fixtures/p2_preference_labels.v1.json": "c51b8994241925cbfe2f37f4fa1a6e885a01c7d141ba8cefd1d58ad287491e2d",
+    "backend/tests/integration_source_guard.py": "efed626ca0b03bcf0bd8291a42e43ecae1c22f98a1bb032006a6158b6a379241",
+    "backend/tests/test_attribute_source_scope.py": "22864d1053160f54ff48e607f3e34fc8dfa3827a55f4e287eb852dbd5444e9cf",
+    "backend/tests/test_durable_logout.py": "94004d6f39054c4c9238e20c9041e065e0b196d6071380371ed2f3aa9f69ae42",
+    "backend/tests/test_p2_preference_bounds.py": "adfe45a879415322c8c13b4e19c7c075c0a926a29423d6401cb798741dbb7521",
+    "backend/tests/test_p2_preference_contracts.py": "d6ec1cb7742dfa516b71c431fc98a90fc233516c09b3ec1cfd5c955a3ec9ef4d",
+    "backend/tests/test_p2_preference_history.py": "6d0d589b964ab535f038728c293a27fc122f254fca434b31c18354382661bf37",
+    "backend/tests/test_p2_preference_integration.py": "9446659f814a5edceb7821c2157ebdc8c26c0d06a7d1d2716b77ef227c79d7eb",
+    "backend/tests/test_p2_preference_masks.py": "b2271de19b07c5b024cdebc8c2bf0b3b7dd80bcdb5d19e39afc8ebdd8e9b6865",
+    "backend/tests/test_p2_preference_math.py": "91d5d96df06a6f9375d4750de40850a208f3dbdb053a5f528c1852b61f8b4b1d",
+    "backend/tests/test_p2_preference_refinement.py": "a6c961bc4660901b72ed8e154863ebcabe6a82ab575a7432faf8bf8525d872ed",
+    "backend/tests/test_p2_preference_selection.py": "cac10b23ee0481e4705b9932c21d9aeb7be9aa243dee4045f6b11b2ecef7b774",
+    "backend/tests/test_p2_preference_source_scope.py": "f57209991843e7b8b4fffcf5dea985f14a81f7b2ffc40770562f6e6711d2c3aa",
+    "backend/tests/test_p2_preference_storage.py": "f67f3f26660ca8851b850ac61ea67403ba1108184fa678ce08346ba8bc750f7d",
+    "backend/tests/test_p2_preference_values.py": "b9097f43cc02d2d8e16882be94d6afc0302f62c5a1d4d245b7054a9a3823193d",
+    "frontend/app/profile/page.tsx": "d5ec620f5639b5e7df8f4d30a8fcfb4b1ad261edba5bbd5758461ae80305a197",
+    "frontend/components/AttributePreferenceEditor.tsx": "b208fc368f1f6535176cca34eaf202811b40e7f14fdcad18dc0f80991319e53f",
+    "frontend/components/OutfitAssistant.tsx": "ad3f5d21062d8c3f2470c9095177f6fd44557e9abc77a1c725e825e04a598c1d",
+    "frontend/components/PreferenceExplanation.tsx": "f2dc9a0683ddf1d8278a73d9967bb9edd4f2b9f7a62f040e33284ebda28f7179",
+    "frontend/components/RecommendationResult.tsx": "44c595c01f7a9b872c4dc86c27d5ce60cd17129867ddfd5a9cce0930271f042b",
+    "frontend/lib/api.ts": "209f14c38319fcf3b372c1cc0a15723de8cd83e10c3a86a945085d54aeda5e7b",
+    "frontend/lib/attribute-preferences.ts": "1a8194dc8dd36ce8b9324534571bcb1644e6727ac8a9f366bcf93270882833ad",
+    "frontend/lib/recommendation-messages.ts": "ceb2a0a02d4eb5015b1fa56a6b60b369ea5a92a3f17089142223af23d7e246ab",
+    "frontend/lib/recommendation-session.ts": "79b90c2fdb38cfe3fef52080c1853e8f45804fe473b0cdf6187bc63ab5d663d0",
+    "frontend/playwright.attribute-preferences.config.ts": "3afa88ac8138f2b52e0bd5790072af92cb46175886c3c33ffe55024094f4dd0b",
+    "frontend/tests/phase5f/attribute-preferences.spec.ts": "1f7bed86bbea6f3f490d2ba3b93fc36c21212499b23af3d8589bf4e1e52b1d76"
+  },
+  "frozen_inputs": {
+    "B2_WEARER_ATTRIBUTE_PREFERENCE_IMPLEMENTATION_CONTRACT.md": "45df918f40beda26116584ba396cc8f12bf1f71310b198b37f5bfb078480027e",
+    "proposed-source-scope.json": "3a05553d5e8e494a1ea2274f19bffed4cb46c32b6ccfb442f410c69e9021499a",
+    "checkpoint-plan.json": "fa9c41dd3d831c73cd3f6cfd46577dd72a7d4e610e6f8ded03584ad4a83fead0",
+    "B2-attribute-value-coverage.json": "8937e661157f600b8711846adeb50ae77ce8de0cf45c60b6f5cb3a6108d4d209",
+    "preference-value-catalog.json": "942b0e3b0730771ff0a9202f12c0f7c3cdbcc1d846c8ff7143df286d467845b7",
+    "independent-acceptance.json": "3f31ccb6615d961d4dc0aa6026e8d5e1de5412db6ff2876770fdac6e71f7b58a",
+    "finite-value-labels.json": "251855812ffb47eb19f1a6dfab99aa808ce7a1bbf17c55e8fcfb07c9da9cec3b",
+    "independent-mechanics-expectations.json": "7ae9b59a8b96543d9c407eac7636339dca649976d3338326116838e784246d82",
+    "legacy-test-exceptions.json": "0a4d8af33b85e5d9f3ae8513b73a37e94a22ccc5f6a1621916d6aaa03e981d29",
+    "regression-plan.json": "458902425593067127d9b346cc877cc3a27d7dcc51322dc26eaf061812545f13",
+    "proof-budget-measurements.json": "051b818169a9c98578b631bcf489c7f90f04dae1c11efeb1c4a13fe5546acf18"
+  },
+  "historical_direct_test_exceptions": {
+    "status": "RETAINED B1 EXCEPTIONS; no new exception requested",
+    "deselected_invocations": 9,
+    "entries": [
+      {
+        "original": "backend/tests/test_forward_style_semantics.py::test_history_unchanged_owner_isolation_and_atomic_rollback",
+        "invocations": 1,
+        "replacement": "backend/tests/test_attribute_refinement.py::test_original_style_history_privacy_and_rollback_assertions_with_captured_wearer",
+        "reason": "Original visualisation fixture omits required captured wearer, also fails untouched A+B0; wrapper invokes original assertions unchanged with synthetic explicit wearer."
+      },
+      {
+        "original": "backend/tests/test_scoring_hot_path_equivalence.py::test_exact_completed_2a_equivalence",
+        "parameters": [
+          "request",
+          "preference",
+          "prepared",
+          "combined"
+        ],
+        "invocations": 4,
+        "replacement": "backend/tests/test_attribute_source_scope.py::test_old_2a_original_values_exact_through_named_metadata_descendant",
+        "reason": "Old whole-object snapshot predates five metadata additions; original values/types/order preserved by named descendant."
+      },
+      {
+        "original": "backend/tests/test_score_validation_equivalence.py::test_independent_completed_2d1_full_assistant_trace",
+        "invocations": 1,
+        "replacement": "backend/tests/test_attribute_source_scope.py::test_old_progress_and_assistant_values_exact_through_named_descendant",
+        "reason": "Original trace values checked unchanged through metadata descendant and full accepted-baseline differential."
+      },
+      {
+        "original": "backend/tests/test_stream_progress_equivalence.py::test_completed_2b_full_trace_and_every_validated_progress",
+        "invocations": 1,
+        "replacement": "backend/tests/test_attribute_source_scope.py::test_old_progress_and_assistant_values_exact_through_named_descendant",
+        "reason": "Every validated progress and original full trace value preserved; accepted-baseline differential."
+      },
+      {
+        "original": "backend/tests/test_scoring_hot_path_equivalence.py::test_large_stream_exact_fingerprint_and_persisted_metadata",
+        "parameters": [
+          false,
+          true
+        ],
+        "invocations": 2,
+        "replacement": "backend/tests/test_attribute_source_scope.py::test_large_stream_exact_approved_baseline_digest_and_original_counts",
+        "reason": "Exact accepted A+B0/current digest, original nontranscript fields and4074 scored/12222events retained for both preference populations."
+      }
+    ],
+    "additional_differential": "backend/tests/test_attribute_source_scope.py::test_full_trace_equals_actual_approved_phase_a_b0_before_b1",
+    "permitted_old_metadata_additions": [
+      "ranking_evidence",
+      "refinement_summary",
+      "appearance_evidence",
+      "contextual_suitability",
+      "saved_attribute_evidence"
+    ],
+    "policy": "Original tests and historical manifests/labels retain bytes. Do not claim nine original passes; new P2 default-off differential must preserve accepted B1 outputs, not add P2 fields to P1 results. Active P2 gets separately versioned exact oracles. No numerical/negative labels repinned."
+  }
+}

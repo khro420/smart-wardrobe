@@ -1,0 +1,429 @@
+{
+  "version": "conversational-member-binding-1.1.0",
+  "status": "Proposed, pending owner approval",
+  "cases": [
+    {
+      "id": "MC01",
+      "text": "i want a blue cotton top with long sleeves",
+      "conditions": [
+        {
+          "role": "upper",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "primary_colour",
+              "operator": "in",
+              "values": [
+                "blue"
+              ]
+            },
+            {
+              "attribute": "material",
+              "operator": "contains_any",
+              "values": [
+                "cotton"
+              ]
+            },
+            {
+              "attribute": "sleeve_length",
+              "operator": "in",
+              "values": [
+                "wrist-length"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "MC02",
+      "text": "i need a long sleeve blue cotton shirt",
+      "conditions": [
+        {
+          "role": "upper",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "sleeve_length",
+              "operator": "in",
+              "values": [
+                "wrist-length"
+              ]
+            },
+            {
+              "attribute": "primary_colour",
+              "operator": "in",
+              "values": [
+                "blue"
+              ]
+            },
+            {
+              "attribute": "material",
+              "operator": "contains_any",
+              "values": [
+                "cotton"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "MC03",
+      "text": "give me a blue top with long sleeves",
+      "conditions": [
+        {
+          "role": "upper",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "primary_colour",
+              "operator": "in",
+              "values": [
+                "blue"
+              ]
+            },
+            {
+              "attribute": "sleeve_length",
+              "operator": "in",
+              "values": [
+                "wrist-length"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "MC04",
+      "text": "something blue and cotton with long sleeves",
+      "conditions": [
+        {
+          "role": "base_upper_body",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "primary_colour",
+              "operator": "in",
+              "values": [
+                "blue"
+              ]
+            },
+            {
+              "attribute": "material",
+              "operator": "contains_any",
+              "values": [
+                "cotton"
+              ]
+            },
+            {
+              "attribute": "sleeve_length",
+              "operator": "in",
+              "values": [
+                "wrist-length"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "MC05",
+      "text": "i want blue jeans and a cotton long-sleeve top",
+      "conditions": [
+        {
+          "role": "lower",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "primary_colour",
+              "operator": "in",
+              "values": [
+                "blue"
+              ]
+            },
+            {
+              "attribute": "category",
+              "operator": "in",
+              "values": [
+                "trousers"
+              ]
+            },
+            {
+              "attribute": "material",
+              "operator": "contains_any",
+              "values": [
+                "denim"
+              ]
+            }
+          ]
+        },
+        {
+          "role": "upper",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "material",
+              "operator": "contains_any",
+              "values": [
+                "cotton"
+              ]
+            },
+            {
+              "attribute": "category",
+              "operator": "in",
+              "values": [
+                "long_sleeve_top"
+              ]
+            },
+            {
+              "attribute": "sleeve_length",
+              "operator": "in",
+              "values": [
+                "wrist-length"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "MC06",
+      "text": "i want a blue top and black trousers",
+      "conditions": [
+        {
+          "role": "upper",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "primary_colour",
+              "operator": "in",
+              "values": [
+                "blue"
+              ]
+            }
+          ]
+        },
+        {
+          "role": "lower",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "primary_colour",
+              "operator": "in",
+              "values": [
+                "black"
+              ]
+            },
+            {
+              "attribute": "category",
+              "operator": "in",
+              "values": [
+                "trousers"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "MC07",
+      "text": "i want a cotton top without short sleeves",
+      "conditions": [
+        {
+          "role": "upper",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "material",
+              "operator": "contains_any",
+              "values": [
+                "cotton"
+              ]
+            }
+          ]
+        },
+        {
+          "role": "upper",
+          "quantifier": "none",
+          "conditions": [
+            {
+              "attribute": "sleeve_length",
+              "operator": "in",
+              "values": [
+                "short"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "MC08",
+      "text": "i want a blue long-sleeve shirt, not a short-sleeve shirt",
+      "conditions": [
+        {
+          "role": "upper",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "primary_colour",
+              "operator": "in",
+              "values": [
+                "blue"
+              ]
+            },
+            {
+              "attribute": "category",
+              "operator": "in",
+              "values": [
+                "long_sleeve_top"
+              ]
+            },
+            {
+              "attribute": "sleeve_length",
+              "operator": "in",
+              "values": [
+                "wrist-length"
+              ]
+            }
+          ]
+        },
+        {
+          "role": "upper",
+          "quantifier": "none",
+          "conditions": [
+            {
+              "attribute": "category",
+              "operator": "in",
+              "values": [
+                "short_sleeve_top"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "MC09",
+      "text": "give me a black top with blue trousers",
+      "conditions": [
+        {
+          "role": "upper",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "primary_colour",
+              "operator": "in",
+              "values": [
+                "black"
+              ]
+            }
+          ]
+        },
+        {
+          "role": "lower",
+          "quantifier": "exists",
+          "conditions": [
+            {
+              "attribute": "primary_colour",
+              "operator": "in",
+              "values": [
+                "blue"
+              ]
+            },
+            {
+              "attribute": "category",
+              "operator": "in",
+              "values": [
+                "trousers"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "MC10",
+      "text": "no floral patterns on my top",
+      "conditions": [
+        {
+          "role": "upper",
+          "quantifier": "none",
+          "conditions": [
+            {
+              "attribute": "pattern",
+              "operator": "in",
+              "values": [
+                "floral"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "rules": [
+    "Only finite licensed noun/descriptor/connective frames are accepted; unknown or unresolved scope refuses without weakening conditions.",
+    "One noun head means one actual member; explicit separate heads mean separate existential groups. Coarse shirt/top stays the accepted upper role; explicit trousers/pants means canonical trousers, shorts means shorts and skirt means skirt.",
+    "Natural explicit long-sleeve wording requires qualified wrist-length evidence; a field-qualified canonical category value remains only a category and never proves a fine attribute. Historical interpretation records retain their original grammar identity.",
+    "Anonymous something plus conjunctive properties binds to one member; role is the intersection of existing default scopes (including base_upper_body for a sleeve claim). Bare something blue retains its existing all_selected existential hard meaning.",
+    "Negative modifiers attach to the expressed role/head. No blue trousers forbids the conjunction category=trousers AND primary_colour=blue; it does not prohibit blue skirts.",
+    "A blue outfit retains all_present across selected members; a blue top remains upper; prefer/preferably remains guidance, never a new score or saved preference write.",
+    "Typed B1 algebra, Known/Unknown/Stale, Deny, exact arithmetic, original taxonomy and frozen historical authorities stay unchanged."
+  ],
+  "additional_controls": {
+    "authority": "Explicit user meanings and existing canonical garment roles/qualified fixture values. Expected labels authored before these control calls; not golden scores.",
+    "controls": [
+      {
+        "id": "long_sleeve_short_top_refusal",
+        "text": "i want a blue cotton top with long sleeves",
+        "role": "upper",
+        "quantifier": "exists",
+        "fixture": "MD20",
+        "expected": "refuse"
+      },
+      {
+        "id": "one_something_excluding_only_complete_witness",
+        "text": "something blue and cotton with long sleeves",
+        "role": "all_selected",
+        "quantifier": "none",
+        "fixture": "MD03",
+        "expected": "refuse"
+      },
+      {
+        "id": "blue_jeans_cannot_be_black",
+        "text": "i want blue jeans and a cotton long-sleeve top",
+        "role": "lower",
+        "quantifier": "exists",
+        "fixture": "MD09",
+        "expected": "refuse"
+      },
+      {
+        "id": "trousers_cannot_be_skirt",
+        "text": "i want a blue top and black trousers",
+        "role": "lower",
+        "quantifier": "exists",
+        "fixture": "MD27",
+        "expected": "refuse"
+      },
+      {
+        "id": "top_sleeve_exclusion_does_not_ban_short_jacket",
+        "text": "i want a cotton top without short sleeves",
+        "role": "outerwear",
+        "quantifier": "exists",
+        "fixture": "MD29",
+        "expected": "select"
+      },
+      {
+        "id": "top_floral_exclusion_does_not_ban_floral_skirt",
+        "text": "no floral patterns on my top",
+        "role": "lower",
+        "quantifier": "exists",
+        "fixture": "MD13",
+        "expected": "select"
+      }
+    ]
+  },
+  "historical_authority": "Preserve original frozen files. Any genuinely revised language expectation gets an explicit versioned descendant test; never repin a score/winner or silently waive an original case."
+}

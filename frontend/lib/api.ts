@@ -1,3 +1,7 @@
+import type { VerifiedSubtypeView, SubtypeUpdate } from "./verified-subtypes";
+import type { WearerCategoryCapability, WearerCategoryAvailability } from "./wearer-category-eligibility";
+import { validAttributeConditions, copyAttributeConditions, type AttributeConditions, type AttributeCapability, type AttributeDisplay } from "./attribute-request";
+import type { AttributePreferenceCapability, AttributePreferenceView, PreferenceSaveAction } from "./attribute-preferences";
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "/api/v1";
 
 export class ApiError extends Error {
@@ -21,11 +25,44 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   if (!response.ok) {
     const detail = await response.json().catch(() => null);
     const quotaError = response.status === 409 && detail?.detail?.code === "WardrobeQuotaExceeded" && typeof detail.detail.message === "string" ? detail.detail : undefined;
-    const outcome = quotaError?.code ?? (typeof detail?.outcome === "string" ? detail.outcome : typeof detail?.status === "string" ? detail.status : undefined);
-    const message = response.status === 401 && path !== "/account/login" ? "Your session has expired. Sign in again to continue." : quotaError ? quotaError.message : typeof detail?.detail === "string" ? detail.detail : Array.isArray(detail?.detail) ? detail.detail.map((item: { msg: string }) => item.msg).join(" ") : response.status >= 500 ? "The wardrobe service is unavailable. Please try again shortly." : "The request could not be completed.";
+    const outcome = quotaError?.code ?? detail?.detail?.code ?? (typeof detail?.outcome === "string" ? detail.outcome : typeof detail?.status === "string" ? detail.status : undefined);
+    const message = response.status === 401 && path !== "/account/login" ? "Your session has expired. Sign in again to continue." : quotaError ? quotaError.message : typeof detail?.detail?.message === "string" ? detail.detail.message : typeof detail?.detail === "string" ? detail.detail : Array.isArray(detail?.detail) ? detail.detail.map((item: { msg: string }) => item.msg).join(" ") : response.status >= 500 ? "The wardrobe service is unavailable. Please try again shortly." : "The request could not be completed.";
     throw new ApiError(message, response.status, outcome, detail);
   }
   return response.status === 204 ? (undefined as T) : response.json();
+}
+
+export type DescriptionOperation = {kind: "set"; value: unknown} | {kind: "clear" | "empty" | "unsure"};
+export type DescriptionUpdate = {contract: "garment-description-update-1.0.0"; expected_revision: string; operations: Record<string, DescriptionOperation>};
+export type DescriptionRecord = {state: string; canonical_values: unknown[]; possible_values: unknown[]; applicability: string; selected: {origin: string; value: unknown; recorded_at: string | null} | null; suggestion: {origin: string; value: unknown} | null; uncertainty_reasons: string[]};
+export type DescriptionView = {contract: string; update_contract: string; editable: boolean; revision: string; evidence: {fields: Record<string, DescriptionRecord>}; source_qualified: Record<string, boolean>};
+export type DescriptionCapability = {contract: string; enabled: boolean; update_contract: string; fields: string[]; max_update_bytes: number; max_review_batch_bytes: number};
+export type DescriptionDraft = Record<string, {kind: "keep" | DescriptionOperation["kind"]; value?: unknown}>;
+export type DescriptionEditorField = {id: string; label: string; kind: "palette" | "boolean" | "tags" | "set" | "colour" | "enum" | "text"; options: string[]; clear: boolean; empty: boolean};
+export const DESCRIPTION_FIELDS: DescriptionEditorField[] = [{"id": "garment_name", "label": "Garment name", "kind": "text", "options": [], "clear": false, "empty": false}, {"id": "category", "label": "Category", "kind": "enum", "options": ["short_sleeve_top", "long_sleeve_top", "short_sleeve_outwear", "long_sleeve_outwear", "vest", "sling", "shorts", "trousers", "skirt", "short_sleeve_dress", "long_sleeve_dress", "vest_dress", "sling_dress"], "clear": false, "empty": false}, {"id": "primary_colour", "label": "Primary colour", "kind": "colour", "options": ["black", "white", "grey", "navy", "blue", "red", "green", "yellow", "orange", "pink", "purple", "brown", "beige", "cream"], "clear": true, "empty": false}, {"id": "secondary_colour", "label": "Secondary colour", "kind": "colour", "options": ["black", "white", "grey", "navy", "blue", "red", "green", "yellow", "orange", "pink", "purple", "brown", "beige", "cream"], "clear": true, "empty": false}, {"id": "colour_palette", "label": "Palette and coverage", "kind": "palette", "options": [], "clear": true, "empty": true}, {"id": "style", "label": "Style", "kind": "set", "options": ["casual", "classic", "formal", "minimal", "smart casual", "sporty", "streetwear", "vintage", "bohemian"], "clear": true, "empty": true}, {"id": "pattern", "label": "Pattern", "kind": "enum", "options": ["plain", "abstract", "cartoon", "letters, numbers", "camouflage", "check", "dot", "fair isle", "floral", "geometric", "paisley", "stripe", "houndstooth", "herringbone", "chevron", "argyle", "leopard", "snakeskin", "cheetah", "peacock", "zebra", "giraffe", "toile de jouy", "plant"], "clear": true, "empty": false}, {"id": "material", "label": "Material", "kind": "set", "options": ["cotton", "denim", "leather", "linen", "silk", "synthetic", "wool"], "clear": true, "empty": true}, {"id": "silhouette", "label": "Visible silhouette", "kind": "enum", "options": ["asymmetrical", "symmetrical", "peplum", "circle", "flare", "fit and flare", "trumpet", "mermaid", "balloon", "bell", "bell bottom", "bootcut", "peg", "pencil", "straight", "a-line", "tent", "baggy", "wide leg", "high low", "curved", "tight", "regular", "loose", "oversized"], "clear": true, "empty": false}, {"id": "neckline", "label": "Neckline", "kind": "enum", "options": ["collarless", "asymmetric", "crew", "round", "v-neck", "surplice", "oval", "u-neck", "sweetheart", "queen anne", "boat", "scoop", "square", "plunging", "keyhole", "halter", "crossover", "choker", "high", "turtle", "cowl", "straight across", "illusion", "off-the-shoulder", "one shoulder"], "clear": true, "empty": false}, {"id": "sleeve_length", "label": "Sleeve length", "kind": "enum", "options": ["sleeveless", "short", "elbow-length", "wrist-length"], "clear": true, "empty": false}, {"id": "colour_temperature", "label": "Colour temperature", "kind": "enum", "options": ["warm", "cool", "neutral"], "clear": true, "empty": false}, {"id": "colour_dominance", "label": "One dominant colour", "kind": "boolean", "options": [], "clear": true, "empty": false}, {"id": "descriptive_tags", "label": "Literal descriptive tags", "kind": "tags", "options": [], "clear": true, "empty": true}];
+
+export function descriptionUpdate(view: DescriptionView, draft: DescriptionDraft, expectedRevision = view.revision): DescriptionUpdate | undefined {
+  const operations: Record<string, DescriptionOperation> = {};
+  for (const field of DESCRIPTION_FIELDS) {
+    const action = draft[field.id];
+    if (!action || action.kind === "keep") continue;
+    if (action.kind !== "set") { operations[field.id] = {kind: action.kind}; continue; }
+    let value = action.value;
+    if (field.kind === "boolean") {
+      if (value !== "true" && value !== "false") throw new Error(`Choose an explicit value for ${field.label}.`);
+      value = value === "true";
+    } else if (field.kind === "tags") {
+      value = typeof value === "string" ? value.split("\n").map(v=>v.trim()).filter(Boolean) : [];
+    } else if (field.kind === "set") {
+      if (!Array.isArray(value)) throw new Error(`Choose recorded values for ${field.label}.`);
+    } else if (field.kind === "palette") {
+      if (!Array.isArray(value)) throw new Error("Enter palette entries or choose an empty palette.");
+    } else if (typeof value !== "string" || !value.trim()) {
+      throw new Error(`Enter an explicit value for ${field.label}.`);
+    } else value = value.trim();
+    operations[field.id] = {kind: "set", value};
+  }
+  return Object.keys(operations).length ? {contract: "garment-description-update-1.0.0", expected_revision: expectedRevision, operations} : undefined;
 }
 
 export type OwnerStyleConfirmation = { contract: "owner-style-confirmation-1.0.0"; expected_revision: string; style: string };
@@ -33,13 +70,19 @@ export type StyleConfirmationView = { revision: string; current: boolean; source
 export type AdmissionMode = "manual_review_v1" | "automatic_structural_v1";
 export type ProcessingAdmission = { mode: AdmissionMode; state: string; reason: string | null; garment_ids: string[] };
 export type SavedAttributeEvidence = { state: "Absent" | "Known" | "Malformed" | "Stale"; origin: string; contributor: string | null; recorded_at: string | null };
-export type ProcessingItem = { style_confirmation?: StyleConfirmationView; id: string; detected_category: string; confidence: number; review_status: "pending" | "accepted" | "rejected" | "confirmed"; crop_media_id: string; preferred_media_id: string; mask_media_id: string | null; vtoff_media_id: string | null; mirror_media_id: string | null; bounding_box: number[] | null; attributes: Record<string, unknown> };
+export type ProcessingItem = { verified_subtype?: VerifiedSubtypeView; wearer_category_eligibility?: WearerCategoryAvailability; description?: DescriptionView; style_confirmation?: StyleConfirmationView; id: string; detected_category: string; confidence: number; review_status: "pending" | "accepted" | "rejected" | "confirmed"; crop_media_id: string; preferred_media_id: string; mask_media_id: string | null; vtoff_media_id: string | null; mirror_media_id: string | null; bounding_box: number[] | null; attributes: Record<string, unknown> };
 export type ProcessingJob = { admission?: ProcessingAdmission; id: string; status: string; error_message?: string | null; progress_percent: number; progress_message?: string | null; items: ProcessingItem[] };
 
-export async function submitWardrobeImage(file: File, admissionMode: AdmissionMode = "manual_review_v1") {
+export async function submitWardrobeImage(file: File, admissionMode: AdmissionMode = "manual_review_v1", wearerProfileId?: string) {
   const form = new FormData(); form.append("file", file);
-  return request<{ id: string; status: string; admission_mode?: AdmissionMode }>(`/processing/jobs?admission_mode=${admissionMode}`, { method: "POST", body: form });
+  return request<{ id: string; status: string; admission_mode?: AdmissionMode }>(`/processing/jobs?admission_mode=${admissionMode}`, { method: "POST", headers: wearerProfileId ? { "X-Wardrobe-Profile-Id": wearerProfileId } : undefined, body: form });
 }
+export const getProcessingCapabilities = () => request<{version: string; admission_modes: AdmissionMode[]; description?: DescriptionCapability}>("/processing/jobs/capabilities");
+export const getAttributePreferenceCapabilities = () => request<AttributePreferenceCapability>("/account/attribute-preference-capabilities", { cache: "no-store" });
+export const getAttributePreferences = (wearerId: string, token: string) => request<AttributePreferenceView>(`/account/wardrobe-profiles/${encodeURIComponent(wearerId)}/attribute-preferences`, { cache: "no-store", headers: { "X-Wardrobe-Profile-Id": wearerId, Authorization: `Bearer ${token}` } });
+export const saveAttributePreferences = (action: PreferenceSaveAction, token: string) => request<AttributePreferenceView>(`/account/wardrobe-profiles/${encodeURIComponent(action.wearer_id)}/attribute-preferences`, { method: "PUT", headers: { "Content-Type": "application/json", "X-Wardrobe-Profile-Id": action.wearer_id, Authorization: `Bearer ${token}` }, body: JSON.stringify(action) });
+export const getHistoricalProcessingJobs = (wearerProfileId?: string) => request<{id: string; status: string; profile_id: string | null; read_only: true}[]>(`/processing/jobs/history?${new URLSearchParams(wearerProfileId ? {wearer_profile_id: wearerProfileId} : {})}`);
+export const getHistoricalProcessingJob = (jobId: string) => request<ProcessingJob>(`/processing/jobs/${encodeURIComponent(jobId)}/history`);
 export const getProcessingJob = (jobId: string) => request<ProcessingJob>(`/processing/jobs/${jobId}`);
 export const reviewProcessingJob = (jobId: string, items: unknown[]) => request<ProcessingJob>(`/processing/jobs/${jobId}/review`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ items }) });
 export const createMirroredReconstruction = (jobId: string, itemId: string, replace = false, mirroredSide: "left" | "right" = "right") => request<ProcessingJob>(`/processing/jobs/${jobId}/items/${itemId}/mirror-reconstruction?replace=${replace}&mirrored_side=${mirroredSide}`, { method: "POST" });
@@ -55,11 +98,11 @@ export type GarmentTagEdit = { version: string; revision: string; editable: bool
 export type ContextualGarmentEdit = { revision: string; styles: string[]; style_state: string; style_options: string[]; review_current: boolean; wedding_choice: "unknown" | "allow" | "deny"; evidence_state: string };
 export type AppearanceReviewAction = { withdraw: true } | { construction_features: { collared_neckline: boolean | null; tailored_cut: boolean | null; structured_shape: boolean | null }; condition_observation: "clean_intact" | "needs_attention" | "unknown" };
 export type AppearanceEdit = { revision: string; current: boolean; state: string; features: [string, boolean | null][]; condition: string | null; reviewed_at: string | null };
-export type Garment = { style_confirmation?: StyleConfirmationView; id: string; status?: string | null; name: string; category: string; primary_colour?: string | null; pattern?: string | null; preferred_media_id: string; is_favourite: boolean; attributes: Record<string, unknown>; tag_edit?: GarmentTagEdit; contextual_edit?: ContextualGarmentEdit; appearance_edit?: AppearanceEdit; style_tags?: unknown; additional_attributes?: Record<string, unknown> | null; created_at?: string; updated_at?: string };
+export type Garment = { verified_subtype?: VerifiedSubtypeView; wearer_category_eligibility?: WearerCategoryAvailability; description?: DescriptionView; style_confirmation?: StyleConfirmationView; id: string; status?: string | null; name: string; category: string; primary_colour?: string | null; pattern?: string | null; preferred_media_id: string; is_favourite: boolean; attributes: Record<string, unknown>; tag_edit?: GarmentTagEdit; contextual_edit?: ContextualGarmentEdit; appearance_edit?: AppearanceEdit; style_tags?: unknown; additional_attributes?: Record<string, unknown> | null; created_at?: string; updated_at?: string };
 export type OutfitItem = { outfit_id: string; garment_id: string; role: string; item_order: number; name: string; category: string; preferred_media_id?: string | null };
 export type Outfit = { id: string; name: string; description?: string | null; creation_type: "image_upload" | "manual" | "recommendation"; is_favourite: boolean; items: OutfitItem[]; created_at?: string; updated_at?: string };
 export type WardrobeSort = "updated_desc" | "updated_asc" | "name_asc" | "name_desc" | "favourites";
-export type GarmentFilters = { query?: string; category?: string; favourite?: boolean; sort?: WardrobeSort; colour?: string; style?: string; availability?: "available" | "unavailable" | "archived" | "all" };
+export type GarmentFilters = { includeWearerEligibility?: boolean; query?: string; category?: string; favourite?: boolean; sort?: WardrobeSort; colour?: string; style?: string; availability?: "available" | "unavailable" | "archived" | "all" };
 export type OutfitFilters = GarmentFilters & { creationType?: Outfit["creation_type"] };
 export type WardrobeDependencies = { resource: { id: string; name: string; type: "garment" | "outfit" }; active_outfits: { id: string; name: string }[]; active_visualisations: { id: string; status: string }[]; can_archive: boolean; policy: string };
 export type RecommendationItem = { recommendation_id: string; garment_id: string; garment_role: string; item_order: number; name: string; category: string; preferred_media_id: string };
@@ -72,6 +115,7 @@ export type Visualisation = { id: string; status: "queued" | "processing" | "com
 
 function wardrobeQuery(filters: GarmentFilters & { creationType?: Outfit["creation_type"] } = {}) {
   const params = new URLSearchParams();
+  if (filters.includeWearerEligibility) params.set("include_wearer_eligibility", "true");
   if (filters.query) params.set("query", filters.query);
   if (filters.category) params.set("category", filters.category);
   if (filters.favourite !== undefined) params.set("favourite", String(filters.favourite));
@@ -86,7 +130,7 @@ function wardrobeQuery(filters: GarmentFilters & { creationType?: Outfit["creati
 
 export const getGarments = (filters: GarmentFilters = {}) => request<Garment[]>(`/wardrobe/garments${wardrobeQuery(filters)}`);
 export const getOutfits = (filters: OutfitFilters = {}) => request<Outfit[]>(`/wardrobe/outfits${wardrobeQuery(filters)}`);
-export type GarmentUpdate = Partial<Pick<Garment, "name" | "category" | "primary_colour" | "pattern" | "is_favourite">> & { style_confirmation?: OwnerStyleConfirmation; attributes?: Record<string, string | string[] | boolean | null> };
+export type GarmentUpdate = Partial<Pick<Garment, "name" | "category" | "primary_colour" | "pattern" | "is_favourite">> & { subtype_update?: SubtypeUpdate; description_update?: DescriptionUpdate; style_confirmation?: OwnerStyleConfirmation; attributes?: Record<string, string | string[] | boolean | null> };
 export const updateGarment = (id: string, payload: GarmentUpdate, tagRevision?: string) => request<Garment>(`/wardrobe/garments/${id}`, { method: "PATCH", headers: { "Content-Type": "application/json", ...(tagRevision ? { "If-Match": tagRevision } : {}) }, body: JSON.stringify(payload) });
 export const reviewContextualSuitability = (id: string, payload: { revision: string; review_style?: boolean; wedding_choice?: "unknown" | "allow" | "deny"; appearance_review?: AppearanceReviewAction }) => request<Garment>(`/wardrobe/garments/${id}/contextual-suitability`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
 export const deleteGarment = (id: string) => request<void>(`/wardrobe/garments/${id}`, { method: "DELETE" });
@@ -109,9 +153,10 @@ export const getVisualisation = (id: string) => request<Visualisation>(`/visuali
 export const cancelVisualisation = (id: string) => request<void>(`/visualisations/${id}/cancel`, { method: "POST" });
 export const mediaUrl = (mediaId: string) => `${API_URL}/media/${mediaId}`;
 export type Profile = { id: string; email: string; display_name: string; account_status: string; created_at: string };
-export type WardrobeProfile = { id: string; name: string; is_default: boolean; created_at: string; updated_at: string };
-export const getWardrobeProfiles = () => request<WardrobeProfile[]>("/account/wardrobe-profiles");
+export type WardrobeProfile = { id: string; name: string; status: "active" | "archived"; is_default: boolean; created_at: string; updated_at: string };
+export const getWardrobeProfiles = (status: "active" | "archived" | "all" = "active") => request<WardrobeProfile[]>(`/account/wardrobe-profiles?status=${status}`);
 export const createWardrobeProfile = (name: string) => request<WardrobeProfile>("/account/wardrobe-profiles", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name }) });
+export const archiveWardrobeProfile = (profileId: string) => request<{ archived_profile_id: string; next_profile_id: string; status: "archived" }>(`/account/wardrobe-profiles/${encodeURIComponent(profileId)}/archive`, { method: "POST" });
 export const deleteWardrobeProfile = (profileId: string) => request<{ deleted_profile_id: string; next_profile_id: string; deleted_media_count: number }>(`/account/wardrobe-profiles/${encodeURIComponent(profileId)}`, { method: "DELETE" });
 export const getSelectedWardrobeProfileId = () => typeof window === "undefined" ? null : window.sessionStorage.getItem("smart_wardrobe_profile_id");
 export const setSelectedWardrobeProfileId = (profileId: string) => window.sessionStorage.setItem("smart_wardrobe_profile_id", profileId);
@@ -131,7 +176,7 @@ export const saveAccessToken = (token: string) => { window.sessionStorage.setIte
 export const clearAccessToken = () => {
   window.sessionStorage.removeItem("smart_wardrobe_access_token");
   window.sessionStorage.removeItem("smart_wardrobe_profile_id");
-  for (const key of Object.keys(window.sessionStorage)) if (key.startsWith("smart_wardrobe_interaction:")) window.sessionStorage.removeItem(key);
+  for (const key of Object.keys(window.sessionStorage)) if (key.startsWith("smart_wardrobe_interaction:") || key.startsWith("smart_wardrobe_wearer_selection:")) window.sessionStorage.removeItem(key);
   const state = { ...window.history.state };
   delete state.wardrobeHomepage;
   window.history.replaceState(state, "");
@@ -167,7 +212,7 @@ export const refinementCategories = ["short_sleeve_top", "long_sleeve_top", "ves
 export type RefinementCategory = typeof refinementCategories[number];
 export type RefinementAction = { version: "assistant-refinement-request-1.0.0" } & (
   { kind: "initial"; excluded_categories: RefinementCategory[] } | { kind: "alternative"; parent_recommendation_id: string });
-export type RefinementDescriptor = { version: "recommendation-refinement-lineage-1.0.0"; root_id: string; parent_id: string | null; ordinal: number; excluded_categories: RefinementCategory[]; root_R: StringRatio; root_total: StringRatio; mode: string; total_vs_root: "same" | "lower"; limit_reached: boolean; next_action: { submission_key: string; refinement: RefinementAction } | null; certificate_universe: string };
+export type RefinementDescriptor = { version: "recommendation-refinement-lineage-1.0.0"; root_id: string; parent_id: string | null; ordinal: number; excluded_categories: RefinementCategory[]; root_R: StringRatio; root_total: StringRatio; mode: string; total_vs_root: "same" | "lower"; limit_reached: boolean; next_action: { submission_key: string; refinement: RefinementAction; preference_profile?: PreferenceProfile; compatibility_profile?: CompatibilityProfile } | null; certificate_universe: string };
 export type RefinementCapability = { version: "recommendation-refinement-capabilities-1.0.0"; available: boolean; categories: RefinementCategory[]; shortcuts: Record<string, RefinementCategory[]>; max_results: number; ordinary_situations: string[]; typed_input_only: boolean };
 export type ContextRelevanceDisplay = { version: "assistant-scoring-display-2.0.0" | "assistant-scoring-display-2.1.0" | "assistant-scoring-display-2.2.0" } & ({ kind: "Unavailable"; reason: string } | {
   refinement?: RefinementDescriptor;
@@ -180,27 +225,72 @@ export type ContextRelevanceDisplay = { version: "assistant-scoring-display-2.0.
   preferences: { id: string; kind: string; weight: StringRatio; suppressed: boolean }[]; preference_denominator: StringRatio;
   selected_members: { garment_id: string; role: string; styles: string[]; source_state: string; origin: string; review_state: string; match: number | null }[];
 });
-export type ScoringDisplay = LegacyScoringDisplay | ContextRelevanceDisplay;
-export type IntegratedRecommendation = { id: string; chat_id: string | null; status: string; request_text?: string; created_at: string; items: HistoricalItem[]; total_score: number | null; compatibility_score: number | null; provenance: Record<string, unknown> | null; score_metadata?: unknown; scoring_display?: ScoringDisplay };
+export type PreferenceProfile = "attribute_preference_decision_v2";
+export type PreferenceUtility = { lower: StringRatio; upper: StringRatio; state: string; observed: number; possible: number };
+export type PreferenceLedger = { configured_denominator: StringRatio; families: { family: string; raw: PreferenceUtility; effective: PreferenceUtility; axes: { axis: string; raw: PreferenceUtility; effective: PreferenceUtility; mask: {rule: string} | null }[] }[] };
+export type PreferenceDisplay = {version: "assistant-scoring-display-3.0.0"} & ({kind: "Unavailable"; reason: string} | {
+  kind: "AttributePreference"; profile_name: PreferenceProfile; policy_version: string; preference_ledger: PreferenceLedger;
+  components: {name: string; state: string; contribution: StringRatio; weight: StringRatio; weighted: StringRatio}[]; total: StringRatio;
+  refinement?: RefinementDescriptor; coverage?: {global_optimum_certified: boolean; unresolved_candidates: number}; objective?: {explanation: string; limitations: string} | null;
+});
+export type CompatibilityProfile = "recorded_palette_compatibility_v1";
+export type PaletteCompatibilityDisplay = {
+  version: "assistant-scoring-display-4.0.0"; kind: "PaletteCompatibility"; profile_name: string; policy_version: string;
+  compatibility_profile: CompatibilityProfile; compatibility_basis: string;
+  palette: {state: string; lower: StringRatio | null; upper: StringRatio | null; contribution: StringRatio; known: number; possible: number; pair_count: number; policy_sha256: string};
+  components: {name: string; state: string; raw_value: StringRatio | null; contribution: StringRatio; weight: StringRatio; weighted: StringRatio; reasons: string[]}[];
+  total: StringRatio; source_limitations: string[]; preference_ledger?: PreferenceLedger; refinement?: RefinementDescriptor;
+  selection_mode?: string; fallback_reason?: string | null; numeric_ties?: number;
+  objective?: {target: string; authority: string; explanation: string; limitations: string} | null;
+  coverage?: {hard_passed: number; point_candidates: number; unresolved_candidates: number; global_optimum_certified: boolean};
+};
+export type ScoringDisplay = LegacyScoringDisplay | ContextRelevanceDisplay | PreferenceDisplay | PaletteCompatibilityDisplay;
+export type IntendedWearer = { version: "intended-wearer-evidence-1.0.0"; account_id: string; profile_id: string; name_at_request: string; selection_origin: string; captured_at: string; request_fingerprint_version: 3 };
+export type GarmentContinuation = { version: "garment-only-continuation-display-1.0.0"; root_id: string; parent_id: string | null; ordinal: number; excluded_categories: RefinementCategory[]; root_R: StringRatio; root_total: StringRatio; mode: string; limit_reached: boolean; next_action: RefinementDescriptor["next_action"] };
+export type IntegratedRecommendation = { garment_continuation?: GarmentContinuation; garment_wording?: {version: "garment-wording-guidance-1.0.0"; message: string}; intended_wearer?: IntendedWearer; wearer_archived?: boolean; wearer_intent_state?: string; wearer_association?: {profile_id: string | null; name: string | null; authority: string}; id: string; chat_id: string | null; status: string; request_text?: string; created_at: string; items: HistoricalItem[]; total_score: number | null; compatibility_score: number | null; provenance: Record<string, unknown> | null; score_metadata?: unknown; scoring_display?: ScoringDisplay; attribute_display?: AttributeDisplay };
 export type ContextSummary = { version: "general-context-explanation-1.0.0" | "general-context-explanation-1.1.0" | "general-context-explanation-1.2.0" | "general-context-explanation-1.3.0" | "general-context-explanation-1.4.0" | "general-context-explanation-2.0.0"; facets?: string[]; secondary_bindings?: string[]; negative_scope?: string | null; bundle_id?: string; evidence_contract?: string; scope_note?: string; role?: string | null; parent_negative?: string; missing_context?: string[]; situation: string; label: string; reason: string; assumptions: string[]; dress_code: string | null; formality: string | null; temporal: string[]; available: boolean; unavailable_conditions: string[]; binding?: string; policy_version?: string; declaration_target?: string; venue?: string | null; companions?: string[]; policy_note?: string | null; limits_note?: string; members?: { garment_id: string; saved_attribute_evidence?: SavedAttributeEvidence; style_verification?: "owner_reviewed_current" | "saved_unreviewed"; appearance_observations?: { features: [string, boolean | null][]; condition: string | null; reviewed_at: string | null }; appearance_current?: boolean; conditions: { field: string; state: string; basis: string; rule: string | null; declaration_target?: { field: string; value: string }; declaration_policy?: string; supporting_declarations?: { field: string; value: string; decision: string }[] }[] }[] };
-export type RecommendationCapabilities = { refinement?: RefinementCapability; homepage_enabled: boolean; assistant_enabled: boolean; context_ranking?: { version: "context-ranking-capabilities-1.0.0" | "context-ranking-capabilities-1.1.0"; bundle_id?: string; profile: string; objectives: { situation: string; target: string; authority: string }[]; independent_appropriateness_validation: string }; context_support?: { version: string; situations: { id: string; label: string; policy_available: boolean; example?: string }[]; limits: string } };
+export type RecommendationCapabilities = { garment_continuation?: {version: "garment-only-continuation-capabilities-1.0.0"; available: boolean; profile: string; max_results: number}; palette_compatibility?: {version: string; enabled: boolean; profile: CompatibilityProfile; default: "c1"; explicit_selection_required: boolean}; attribute_preferences?: {version: string; enabled: boolean; profile: PreferenceProfile; default: "p1"; explicit_selection_required: boolean}; attributes?: AttributeCapability; wearer_identity?: {version: string; request_field: string; single_active_auto: boolean; multi_active_explicit: boolean; archived_history: boolean}; refinement?: RefinementCapability; homepage_enabled: boolean; assistant_enabled: boolean; context_ranking?: { version: "context-ranking-capabilities-1.0.0" | "context-ranking-capabilities-1.1.0"; bundle_id?: string; profile: string; objectives: { situation: string; target: string; authority: string }[]; independent_appropriateness_validation: string }; context_support?: { version: string; situations: { id: string; label: string; policy_available: boolean; example?: string }[]; limits: string } };
 export type RecommendationOutcome = { status: string; outcome?: string; complete: boolean; replayed?: boolean; recommendation?: IntegratedRecommendation; detail?: string; contextual_message?: string; context_reason?: string; context_summary?: ContextSummary };
 export type ChatSummary = { chat_id: string; request_text: string; created_at: string; completed_at: string; recommendation_id: string; recommendation_status: string; read_only: true };
 export type ChatPage = { status: string; items: ChatSummary[]; total: number; limit: number; next_cursor: string | null };
 export type CompletedChat = { chat_id: string; request_text: string; structured_request: Record<string, unknown> | null; interpreted_entities: unknown; recommendation: IntegratedRecommendation; read_only: true };
-export const getRecommendationCapabilities = () => request<RecommendationCapabilities>("/recommendations/capabilities");
-export const createHomepageRecommendation = (submissionKey: string) => request<RecommendationOutcome>("/recommendations/homepage", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ submission_key: submissionKey }) });
-/** @deprecated Generation requires a durable submission key; unkeyed calls reject without a request. */
-export function createRecommendation(requestText: string): Promise<Recommendation>;
-export function createRecommendation(requestText: string, submissionKey: string, refinement?: RefinementAction): Promise<RecommendationOutcome>;
-export async function createRecommendation(requestText: string, submissionKey?: string, refinement?: RefinementAction): Promise<Recommendation | RecommendationOutcome> {
-  if (submissionKey === undefined) throw new ApiError("A durable submission key is required to request an outfit.", 422, "InvalidInput");
-  const capabilities = await getRecommendationCapabilities();
-  if (!capabilities.assistant_enabled) throw new ApiError("Outfit Assistant integration is currently disabled.", 404, "IntegrationDisabled");
-  return request<RecommendationOutcome>("/recommendations?pipeline=integrated", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ request_text: requestText, submission_key: submissionKey, ...(refinement ? { refinement } : {}) }) });
+export type HistorySelection = { view?: "historical" | "legacy_unrecorded"; wearer_profile_id?: string };
+const wearerHeaders = (wearerProfileId?: string) => wearerProfileId ? { "X-Wardrobe-Profile-Id": wearerProfileId } : undefined;
+export const getRecommendationCapabilities = (wearerProfileId?: string) => request<RecommendationCapabilities>("/recommendations/capabilities", { headers: wearerHeaders(wearerProfileId) });
+export async function createHomepageRecommendation(submissionKey: string, wearerProfileId?: string, recovery = false): Promise<RecommendationOutcome> {
+  if (!wearerProfileId) throw new ApiError("Choose the intended wearer first.", 422, "WearerSelectionRequired");
+  if (!recovery) {
+    const capabilities = await getRecommendationCapabilities(wearerProfileId);
+    if (!capabilities.homepage_enabled || capabilities.wearer_identity?.version !== "assistant-wearer-intent-1.0.0") throw new ApiError("Wearer-aware Homepage recommendations are unavailable.", 422, "IntegrationDisabled");
+  }
+  return request<RecommendationOutcome>("/recommendations/homepage", { method: "POST", headers: { "Content-Type": "application/json", ...wearerHeaders(wearerProfileId) }, body: JSON.stringify({ submission_key: submissionKey, wearer_profile_id: wearerProfileId }) });
 }
-export const getChatHistory = (search: string, cursor?: string) => request<ChatPage>(`/chats?${new URLSearchParams({ search, limit: "50", ...(cursor ? { cursor } : {}) })}`);
-export const getCompletedChat = (chatId: string) => request<CompletedChat>(`/chats/${encodeURIComponent(chatId)}`);
+/** @deprecated Generation requires a durable submission key and captured wearer. */
+export function createRecommendation(requestText: string): Promise<Recommendation>;
+export function createRecommendation(requestText: string, submissionKey: string, refinement?: RefinementAction, wearerProfileId?: string, recovery?: boolean, attributes?: AttributeConditions, preferenceProfile?: PreferenceProfile, compatibilityProfile?: CompatibilityProfile): Promise<RecommendationOutcome>;
+export async function createRecommendation(requestText: string, submissionKey?: string, refinement?: RefinementAction, wearerProfileId?: string, recovery = false, attributes?: AttributeConditions, preferenceProfile?: PreferenceProfile, compatibilityProfile?: CompatibilityProfile): Promise<Recommendation | RecommendationOutcome> {
+  if (submissionKey === undefined) throw new ApiError("A durable submission key is required to request an outfit.", 422, "InvalidInput");
+  if (!wearerProfileId) throw new ApiError("Choose the intended wearer first.", 422, "WearerSelectionRequired");
+  if (attributes !== undefined && !validAttributeConditions(attributes)) throw new ApiError("Review the garment requirements before submitting.", 422, "InvalidInput");
+  const capturedAttributes = copyAttributeConditions(attributes);
+  const capturedToken = typeof window !== "undefined" ? window.sessionStorage.getItem("smart_wardrobe_access_token") : null;
+  if (preferenceProfile !== undefined && preferenceProfile !== "attribute_preference_decision_v2") throw new ApiError("This preference mode is unavailable.", 422, "PreferenceUnavailable");
+  if (compatibilityProfile !== undefined && compatibilityProfile !== "recorded_palette_compatibility_v1") throw new ApiError("This colour compatibility mode is unavailable.", 422, "CompatibilityUnavailable");
+  if (!recovery) {
+    const capabilities = await getRecommendationCapabilities(wearerProfileId);
+    if (compatibilityProfile && (capabilities.palette_compatibility?.version !== "palette-compatibility-capabilities-1.0.0" || !capabilities.palette_compatibility.enabled || capabilities.palette_compatibility.profile !== compatibilityProfile)) throw new ApiError("Recorded palette compatibility is unavailable. Start a fresh request to use basic compatibility.", 422, "CompatibilityUnavailable");
+    if (!capabilities.assistant_enabled || capabilities.wearer_identity?.version !== "assistant-wearer-intent-1.0.0") throw new ApiError("Wearer-aware Outfit Assistant is unavailable.", 422, "IntegrationDisabled");
+    if (preferenceProfile && (!capabilities.attribute_preferences?.enabled || capabilities.attribute_preferences.profile !== preferenceProfile)) throw new ApiError("Saved attribute preferences are unavailable. Start a fresh request to use the basic mode.", 422, "PreferenceUnavailable");
+    if (capturedAttributes && (capabilities.attributes?.version !== "attribute-request-capabilities-1.0.0" || !capabilities.attributes.enabled)) throw new ApiError("Detailed garment requirements are unavailable.", 422, "AttributeUnavailable");
+  }
+  if (typeof window !== "undefined" && window.sessionStorage.getItem("smart_wardrobe_access_token") !== capturedToken) throw new ApiError("Your sign-in changed. Start a fresh request.", 401, "SessionChanged");
+  return request<RecommendationOutcome>("/recommendations?pipeline=integrated", { method: "POST", headers: { "Content-Type": "application/json", ...wearerHeaders(wearerProfileId), ...(capturedToken ? { Authorization: `Bearer ${capturedToken}` } : {}) }, body: JSON.stringify({ request_text: requestText, submission_key: submissionKey, wearer_profile_id: wearerProfileId, ...(refinement ? { refinement } : {}), ...(capturedAttributes ? { attribute_conditions: capturedAttributes } : {}), ...(preferenceProfile ? { preference_profile: preferenceProfile } : {}), ...(compatibilityProfile ? { compatibility_profile: compatibilityProfile } : {}) }) });
+}
+export const getChatHistory = (search: string, cursor?: string, selection: HistorySelection = {}) => request<ChatPage>(`/chats?${new URLSearchParams({ search, limit: "50", ...selection, ...(cursor ? { cursor } : {}) })}`);
+export const getCompletedChat = (chatId: string, selection: HistorySelection = {}, wearerProfileId?: string) => {
+  const query = new URLSearchParams(selection).toString();
+  return request<CompletedChat>(`/chats/${encodeURIComponent(chatId)}${query ? "?" + query : ""}`, { headers: wearerHeaders(wearerProfileId) });
+};
 export async function downloadProtectedMedia(mediaId: string, filename: string) {
   const token = getAccessToken();
   if (!token) throw new Error("Sign in before downloading protected media.");
@@ -213,3 +303,13 @@ export async function downloadProtectedMedia(mediaId: string, filename: string) 
   anchor.click();
   URL.revokeObjectURL(url);
 }
+
+
+export type WearerProfileDetails = { version: "wearer-profile-details-1.0.0"; profile_id: string; gender_identity: string | null; revision: string; updated_at: string | null };
+export const getWearerProfileDetails = (id: string) => request<WearerProfileDetails>(`/account/wardrobe-profiles/${encodeURIComponent(id)}/details`, { headers: { "X-Wardrobe-Profile-Id": id } });
+export const saveWearerProfileDetails = (id: string, expectedRevision: string, gender: string | null) => request<WearerProfileDetails>(`/account/wardrobe-profiles/${encodeURIComponent(id)}/details`, { method: "PUT", headers: { "Content-Type": "application/json", "X-Wardrobe-Profile-Id": id }, body: JSON.stringify({ version: "wearer-profile-details-1.0.0", expected_revision: expectedRevision, gender_identity: gender }) });
+
+export const getWearerCategoryEligibility = (id: string) => request<WearerCategoryCapability>(`/account/wardrobe-profiles/${encodeURIComponent(id)}/category-eligibility`, { cache: "no-store", headers: { "X-Wardrobe-Profile-Id": id } });
+
+export const getGarmentSubtype = (id: string) => request<VerifiedSubtypeView>(`/wardrobe/garments/${id}/subtype`);
+export const reviewGarmentSubtype = (id: string, value: SubtypeUpdate) => request<VerifiedSubtypeView>(`/wardrobe/garments/${id}/subtype`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(value) });

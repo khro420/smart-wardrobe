@@ -1,0 +1,39 @@
+{
+  "version": "wearer-category-policy-2.0.0",
+  "allowed": {
+    "male": [
+      "long_sleeve_outwear",
+      "long_sleeve_top",
+      "short_sleeve_outwear",
+      "short_sleeve_top",
+      "shorts",
+      "sling",
+      "trousers",
+      "vest"
+    ],
+    "female": [
+      "long_sleeve_dress",
+      "long_sleeve_outwear",
+      "long_sleeve_top",
+      "short_sleeve_dress",
+      "short_sleeve_outwear",
+      "short_sleeve_top",
+      "shorts",
+      "skirt",
+      "sling",
+      "sling_dress",
+      "trousers",
+      "vest",
+      "vest_dress"
+    ]
+  },
+  "subtype": {
+    "registry_version": "verified-garment-subtypes-1.0.0",
+    "registry_sha256": "7f5277a118ff6a80c8b4c3bff887ba114aec8e2101e64cc280c4f459100de868",
+    "male_denied": [
+      "blouse"
+    ],
+    "male_relevant_unknown": "Unknown",
+    "female_generic_unknown": "Permit"
+  }
+}

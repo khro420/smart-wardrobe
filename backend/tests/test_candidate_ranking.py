@@ -1,3 +1,5 @@
+from tests.current_contract_fixtures import wearer_id
+from app.application.wardrobe.profile_service import profile_scope
 """Stream completion, all tie-breaks, fairness, strict contexts and no writes."""
 from dataclasses import replace
 from fractions import Fraction as F
@@ -151,7 +153,8 @@ def test_actual_query_scoring_has_no_recommendation_or_history_writes():
         with connection() as conn:
             before = tuple(conn.execute(f"SELECT COUNT(*) FROM {table}").fetchone()[0] for table in ("recommendations","recommendation_items","nlp_chats","user_preferences"))
         engine = RequestCandidateEngine(SqliteConfirmedGarmentQuery(),evaluator_factory=SuitabilityRequestEvaluator)
-        result = RecommendationScorer(engine,SqliteActivePreferenceQuery()).rank(owner,StructuredOutfitRequest(occasion="campus",formality="casual"),"compatibility_deferred")
+        with profile_scope(wearer_id(owner)):
+            result = RecommendationScorer(engine,SqliteActivePreferenceQuery()).rank(owner,StructuredOutfitRequest(occasion="campus",formality="casual"),"compatibility_deferred")
         assert result.status == "Selected" and result.winner.verified.candidate.members[0].garment.garment_id == identifier
         assert result.winner.score.preference.contribution == 1
         with connection() as conn:
@@ -159,7 +162,8 @@ def test_actual_query_scoring_has_no_recommendation_or_history_writes():
         assert after == before
         with connection() as conn:
             conn.execute("UPDATE garments SET processing_item_id=NULL WHERE id=?",(identifier,))
-        assert RecommendationScorer(engine,SqliteActivePreferenceQuery()).rank(owner,StructuredOutfitRequest(),"compatibility_deferred").status == "NoEligibleGarments"
+        with profile_scope(wearer_id(owner)):
+            assert RecommendationScorer(engine,SqliteActivePreferenceQuery()).rank(owner,StructuredOutfitRequest(),"compatibility_deferred").status == "NoEligibleGarments"
 
 
 def test_result_cannot_falsely_certify_winner_or_partial_success():

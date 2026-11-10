@@ -18,12 +18,14 @@ def execution_context(session,engine,user_id,request):
 class CompactAssistantScorer:
     implementation='compact-exhaustive-1.0.0'
 
-    def __init__(self,captured_engine,preferences,profile,*,kernel_factory=CompactExhaustiveScorer,context_ranking=False):
+    def __init__(self,captured_engine,preferences,profile,*,kernel_factory=CompactExhaustiveScorer,context_ranking=False,preference_context=None,compatibility_context=None):
         self.engine,self.preferences,self.profile=captured_engine.engine,preferences,profile
         self.kernel_factory=kernel_factory
         self.kernel=None
         self.prepared_context=None
         self.context_ranking=context_ranking
+        self.preference_context=preference_context
+        self.compatibility_context=compatibility_context
         if context_ranking:self.implementation='compact-context-relevance-1.0.0'
 
     def rank(self,user_id,request,profile_name=None,refinement_plan=None):
@@ -36,8 +38,13 @@ class CompactAssistantScorer:
         if self.engine.structural_engine.generator.policy!=StructuralPolicy.load():
             raise ValueError('Compact engine requires the approved structural policy.')
         self.kernel=self.kernel_factory(self.engine.structural_engine.retrieval.query,self.preferences,self.profile,
-            evaluator_type=evaluator_selector(selected_evaluator),**({'context_ranking':True} if self.context_ranking else {}))
-        if refinement_plan is not None:self.implementation='compact-refinement-1.0.0'
+            evaluator_type=evaluator_selector(selected_evaluator),**({'context_ranking':True} if self.context_ranking else {}),
+            **({'preference_context':self.preference_context} if self.preference_context is not None else {}),
+            **({'compatibility_context':self.compatibility_context} if self.compatibility_context is not None else {}),
+            **({'attribute_context':self.engine.attribute_context,'attribute_verifier':self.engine.attribute_verifier} if getattr(self.engine,'attribute_context',None) is not None else {}))
+        if refinement_plan is not None:
+            from app.application.recommendation.garment_only_refinement_selection import is_garment
+            self.implementation='compact-garment-refinement-1.0.0' if is_garment(refinement_plan) else 'compact-refinement-1.0.0'
         result=self.kernel.rank(user_id,request,refinement_plan=refinement_plan) if refinement_plan is not None else self.kernel.rank(user_id,request)
         if result.status=='Selected':
             # Metadata only. Do NOT copy the reconstruction session into the

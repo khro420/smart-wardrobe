@@ -20,7 +20,7 @@ from app.domain.value_objects.compatibility_signature import STRUCTURES
 
 
 class AggregatedDecisionRecommendationScorer(RecommendationScorer):
-    def __init__(self,candidate_engine,preference_query,policy_path=RULES,decision_path=CONFIG,capacity=MAX_PAIR_CAPACITY,cached=True,context_ranking=False):
+    def __init__(self,candidate_engine,preference_query,policy_path=RULES,decision_path=CONFIG,capacity=MAX_PAIR_CAPACITY,cached=True,context_ranking=False,*,preference_context=None,compatibility_context=None):
         super().__init__(candidate_engine,preference_query)
         if type(capacity) is not int or not 0<=capacity<=MAX_PAIR_CAPACITY:
             raise ValueError("Invalid pair-cache capacity.")
@@ -29,8 +29,18 @@ class AggregatedDecisionRecommendationScorer(RecommendationScorer):
         self.policy_path,self.decision_path,self.cached=policy_path,decision_path,cached
         self.capacity=capacity
         self.context_ranking=context_ranking
+        self.preference_context=preference_context
+        self.compatibility_context=compatibility_context
+        self.p2_audit=None
 
     def rank(self,user_id,request,refinement_plan=None):
+        if self.compatibility_context is not None:
+            from app.application.recommendation.palette_compatibility_selection import reference_rank
+            return reference_rank(self.candidate_engine,self.preference_query,user_id,request,self.compatibility_context,preference_context=self.preference_context,context_ranking=self.context_ranking,refinement_plan=refinement_plan,audit=self.p2_audit)
+        if self.preference_context is not None:
+            from app.application.recommendation.attribute_preference_selection import reference_rank as p2_rank
+            return p2_rank(self.candidate_engine,self.preference_query,user_id,request,self.preference_context,
+                           context_ranking=self.context_ranking,refinement_plan=refinement_plan,audit=self.p2_audit)
         if self.context_ranking:
             from app.domain.value_objects.general_context_request import GeneralContextRequest
             actual=self.candidate_engine.engine if hasattr(self.candidate_engine,'engine') else self.candidate_engine
@@ -38,6 +48,8 @@ class AggregatedDecisionRecommendationScorer(RecommendationScorer):
                 return RankingOutcome('ProfileUnavailable')
             from app.application.recommendation.context_relevance_scorer import applies,reference_rank
             if applies(request):return reference_rank(self.candidate_engine,self.preference_query,user_id,request,refinement_plan)
+        from app.application.recommendation.garment_only_refinement_selection import is_garment,reference_rank as garment_rank
+        if is_garment(refinement_plan):return garment_rank(self,user_id,request,refinement_plan)
         if refinement_plan is not None:return RankingOutcome('RefinementUnavailable')
         return self.rank_with_cache_info(user_id,request)[0]
 

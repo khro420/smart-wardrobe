@@ -74,3 +74,26 @@ frontend/.next-build-check/
 
 deliverables
 build_summary_paper.py
+
+# Local integration/evidence dependencies and generated test output.
+.venv/
+*.sqlite
+*.sqlite3
+*.sqlite-wal
+*.sqlite-shm
+*.db
+*.db-wal
+*.db-shm
+retained-verification/
+frontend/.next-*/
+frontend/test-results/
+frontend/playwright-report/
+test-results/
+
+# Retain the canonical experiment directory without tracking generated runs.
+!backend/runs/
+backend/runs/*
+!backend/runs/README.md
+!backend/datasets/
+backend/datasets/*
+!backend/datasets/README.md

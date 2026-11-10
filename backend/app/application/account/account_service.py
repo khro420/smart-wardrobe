@@ -115,6 +115,7 @@ def upsert_preference(user_id: str, preference_type: str, preference_value: dict
     now = utcnow()
     with connection() as conn:
         conn.execute("BEGIN IMMEDIATE")
+        profile_service.require_active_profile(conn,user_id,profile_id)
         if preference_value is None:
             conn.execute("UPDATE user_preferences SET is_active=0, updated_at=? WHERE user_id=? AND profile_id=? AND preference_type=? AND is_active=1", (now, user_id, profile_id, preference_type))
             return {"preference_type": preference_type, "preference_value": {"values": []}, "weight": weight, "is_active": False}
@@ -132,7 +133,7 @@ def upsert_preference(user_id: str, preference_type: str, preference_value: dict
             preference_id = str(uuid.uuid4())
             conn.execute(
                 "INSERT INTO user_preferences (id, user_id, profile_id, preference_type, preference_value_json, weight, source, is_active, created_at, updated_at) "
-                "VALUES (?, ?, ?, ?, ?, 'user_profile', 1, ?, ?)",
+                "VALUES (?, ?, ?, ?, ?, ?, 'user_profile', 1, ?, ?)",
                 (preference_id, user_id, profile_id, preference_type, json.dumps(preference_value), weight, now, now),
             )
         # Project our committed operation under its write lock. A competing clear

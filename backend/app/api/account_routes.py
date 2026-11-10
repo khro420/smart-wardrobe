@@ -1,4 +1,5 @@
-from fastapi import APIRouter, Depends, Response
+from typing import Literal
+from fastapi import APIRouter, Depends, Response, Header, HTTPException
 from pydantic import BaseModel, Field
 
 from app.application.account import account_service
@@ -72,8 +73,8 @@ def upsert_preference(preference_type: str, body: PreferenceUpsert, user_id: str
 
 
 @router.get("/wardrobe-profiles")
-def wardrobe_profiles(user_id: str = Depends(current_user_id)) -> list[dict]:
-    return profile_service.list_profiles(user_id)
+def wardrobe_profiles(status: Literal['active','archived','all'] = 'active', user_id: str = Depends(current_user_id)) -> list[dict]:
+    return profile_service.list_profiles(user_id,status)
 
 
 @router.post("/wardrobe-profiles", status_code=201)
@@ -84,3 +85,62 @@ def create_wardrobe_profile(body: WardrobeProfileCreate, user_id: str = Depends(
 @router.delete("/wardrobe-profiles/{wardrobe_profile_id}")
 def delete_wardrobe_profile(wardrobe_profile_id: str, user_id: str = Depends(current_user_id)) -> dict:
     return profile_service.delete_profile(user_id, wardrobe_profile_id)
+
+
+@router.post("/wardrobe-profiles/{wardrobe_profile_id}/archive")
+def archive_wardrobe_profile(wardrobe_profile_id: str, user_id: str = Depends(current_user_id)) -> dict:
+    return profile_service.archive_profile(user_id,wardrobe_profile_id)
+
+
+def _attribute_preferences_call(operation,*args):
+    from app.domain.value_objects.attribute_preferences import PreferenceError
+    try:return operation(*args)
+    except PreferenceError as exc:raise HTTPException(exc.status,{'code':exc.code,'message':exc.reason}) from exc
+
+
+@router.get('/attribute-preference-capabilities')
+def attribute_preference_capabilities(user_id: str = Depends(current_user_id)) -> dict:
+    from app.application.account.attribute_preference_service import capabilities
+    return capabilities()
+
+
+@router.get('/wardrobe-profiles/{wardrobe_profile_id}/attribute-preferences')
+def attribute_preferences(wardrobe_profile_id: str,user_id: str = Depends(current_user_id),x_wardrobe_profile_id: str | None = Header(default=None)) -> dict:
+    from app.application.account.attribute_preference_service import get
+    return _attribute_preferences_call(get,user_id,wardrobe_profile_id,x_wardrobe_profile_id)
+
+
+from app.api.attribute_preference_models import AttributePreferenceUpdate
+
+
+@router.put('/wardrobe-profiles/{wardrobe_profile_id}/attribute-preferences')
+def update_attribute_preferences(wardrobe_profile_id: str,body: AttributePreferenceUpdate,user_id: str = Depends(current_user_id),x_wardrobe_profile_id: str | None = Header(default=None)) -> dict:
+    from app.application.account.attribute_preference_service import update
+    return _attribute_preferences_call(update,user_id,wardrobe_profile_id,body.model_dump(),x_wardrobe_profile_id)
+
+
+class WardrobeProfileDetailsUpdate(BaseModel):
+    model_config = {"extra": "forbid", "strict": True}
+    version: Literal['wearer-profile-details-1.0.0']
+    expected_revision: str = Field(min_length=32,max_length=64)
+    gender_identity: str | None = Field(max_length=60)
+
+
+@router.get('/wardrobe-profiles/{wardrobe_profile_id}/category-eligibility')
+def wearer_category_eligibility(wardrobe_profile_id: str,user_id: str = Depends(current_user_id),x_wardrobe_profile_id: str | None = Header(default=None)) -> dict:
+    from app.application.wardrobe import wearer_category_service as categories
+    if x_wardrobe_profile_id is not None and x_wardrobe_profile_id!=wardrobe_profile_id:
+        raise HTTPException(409,{'code':'WearerMismatch','message':'Choose the same intended wearer.'})
+    return categories.capabilities(user_id,wardrobe_profile_id)
+
+
+@router.get('/wardrobe-profiles/{wardrobe_profile_id}/details')
+def wardrobe_profile_details(wardrobe_profile_id: str,user_id: str = Depends(current_user_id),x_wardrobe_profile_id: str | None = Header(default=None)) -> dict:
+    from app.application.wardrobe import profile_details_service
+    return profile_details_service.get(user_id,wardrobe_profile_id,x_wardrobe_profile_id)
+
+
+@router.put('/wardrobe-profiles/{wardrobe_profile_id}/details')
+def update_wardrobe_profile_details(wardrobe_profile_id: str,body: WardrobeProfileDetailsUpdate,user_id: str = Depends(current_user_id),x_wardrobe_profile_id: str | None = Header(default=None)) -> dict:
+    from app.application.wardrobe import profile_details_service
+    return profile_details_service.update(user_id,wardrobe_profile_id,body.model_dump(),x_wardrobe_profile_id)

@@ -86,6 +86,8 @@ def test_legacy_conflict_and_cross_user_actions_are_controlled(completed):
 
 
 def test_supported_historical_visualisation_prepare_preserves_source_and_history(completed,monkeypatch):
+    from tests.current_contract_fixtures import historical_visualisation_contract
+    historical_visualisation_contract(monkeypatch)  # Original unsupported-outerwear contract.
     path, record = completed
     with TestClient(app) as client:
         original = runtime()

@@ -1,9 +1,10 @@
 from typing import Literal
+import sqlite3
 
-from fastapi import APIRouter, Depends, Header, Query, Response
+from fastapi import APIRouter, Depends, Header, Query, Response, HTTPException
 
 from app.infrastructure.security import current_user_id
-from app.domain.value_objects.requests import GarmentUpdate, OutfitCreate, OutfitUpdate, ContextualSuitabilityReview
+from app.domain.value_objects.requests import SubtypeUpdate, GarmentUpdate, OutfitCreate, OutfitUpdate, ContextualSuitabilityReview
 from app.application.wardrobe import wardrobe_service as wardrobe
 from app.application.wardrobe.profile_service import active_profile_id
 
@@ -26,10 +27,11 @@ def garments(
     colour: str | None = Query(default=None, max_length=50),
     style: str | None = Query(default=None, max_length=100),
     availability: Literal["available", "unavailable", "archived", "all"] = "available",
+    include_wearer_eligibility: bool = False,
     user_id: str = Depends(current_user_id),
     profile_id: str = Depends(active_profile_id),
 ) -> list[dict]:
-    return wardrobe.list_garments(user_id, profile_id, query.strip(), category, favourite, sort, colour, style, availability)
+    return wardrobe.list_garments(user_id, profile_id, query.strip(), category, favourite, sort, colour, style, availability, include_wearer_eligibility)
 
 
 @router.get("/garments/{garment_id}/dependencies")
@@ -88,3 +90,20 @@ def update_outfit(outfit_id: str, body: OutfitUpdate, user_id: str = Depends(cur
 def archive_outfit(outfit_id: str, user_id: str = Depends(current_user_id), profile_id: str = Depends(active_profile_id)) -> Response:
     wardrobe.archive_outfit(outfit_id, user_id, profile_id)
     return Response(status_code=204)
+
+
+@router.get('/garments/{garment_id}/subtype')
+def garment_subtype(garment_id: str,user_id: str=Depends(current_user_id),profile_id: str=Depends(active_profile_id)):
+    from app.application.wardrobe import verified_subtype_service as subtype
+    from app.application.ports.workflow_runtime import connection
+    try:
+        with connection() as conn:return subtype.current(conn,user_id,profile_id,garment_id)
+    except HTTPException:raise
+    except (ValueError,TypeError,KeyError,sqlite3.Error) as error:raise HTTPException(503,'The garment type record could not be confirmed. No review was saved.') from error
+
+@router.put('/garments/{garment_id}/subtype')
+def review_garment_subtype(garment_id: str,body: SubtypeUpdate,user_id: str=Depends(current_user_id),profile_id: str=Depends(active_profile_id)):
+    from app.application.wardrobe import verified_subtype_service as subtype
+    try:return subtype.update(user_id,profile_id,garment_id,body.model_dump())
+    except HTTPException:raise
+    except (ValueError,TypeError,KeyError,sqlite3.Error) as error:raise HTTPException(503,'The garment type review could not be confirmed as saved. Retry the same action.') from error

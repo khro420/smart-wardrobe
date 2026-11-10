@@ -1,3 +1,4 @@
+from fastapi import HTTPException
 """Independent random Homepage flow: no NLP, preferences, scoring or chats."""
 import json
 import re
@@ -17,21 +18,27 @@ class HomepageRecommendationService:
         self.repository = repository
         self.selector = selector or ReservoirSelector()
 
-    def recommend(self, user_id, submission_key):
+    def recommend(self, user_id, submission_key,*,wearer=None):
         if not isinstance(user_id, str) or not user_id.strip() or not valid_submission_key(submission_key):
             return {"status": "InvalidInput", "complete": False}
         session, stage, timings = None, "lookup", {}
         try:
             start = perf_counter()
-            prior = self.repository.find_homepage_submission(user_id, submission_key)
+            prior = self.repository.find_homepage_submission(user_id,submission_key,wearer_profile_id=wearer.profile_id) if wearer is not None else self.repository.find_homepage_submission(user_id, submission_key)
             timings["lookup_seconds"] = perf_counter() - start
             if prior is not None:
                 return self._success(prior, True, timings)
             stage = "generation"
             start = perf_counter()
-            session = self.engine.generate_homepage_candidates(user_id)
+            from app.application.wardrobe import wearer_category_service as categories
+            scope=categories.capture(user_id,wearer.profile_id if wearer else None)
+            if scope is not None:
+                from app.application.recommendation.recommendation_engine import RecommendationEngine
+                engine=RecommendationEngine(scope,generator=self.engine.generator,evaluator=self.engine.evaluator)
+            else:engine=self.engine
+            session = engine.generate_homepage_candidates(user_id)
             timings["retrieval_setup_seconds"] = perf_counter() - start
-            if session.result.status in ("ProcessingFailure", "Interrupted", "PolicyUnavailable"):
+            if session.result.status in ("ProcessingFailure", "Interrupted", "PolicyUnavailable", "WardrobeCapacityExceeded"):
                 status = session.result.status
                 if status != "PolicyUnavailable":
                     log_failure("homepage", stage, status, reason="controlled_failure")
@@ -43,13 +50,15 @@ class HomepageRecommendationService:
             session = None
             timings["enumeration_selection_seconds"] = perf_counter() - start
             if selection.candidate is None:
+                from app.application.recommendation.subtype_remaining_evidence import could_matter
+                if could_matter(scope,user_id):return {'status':'WearerSubtypeUnresolved','complete':False,'message':'Review the unconfirmed garment types before requesting an outfit for this wearer.'}
                 return {"status": selection.status, "complete": True, "candidate_count": 0, "timings": timings}
             provenance = {
                 "homepage_policy": "phase5b-1.0.0", "structure_policy": self.engine.generator.policy.version,
                 "selection": "uniform_candidate_reservoir_v1", "candidate_count": selection.count,
                 "validity": "approved_structural_policy_only", "compatibility_scoring": "not_applicable",
             }
-            command = RecommendationWrite(user_id, "homepage", submission_key, "{}", selection.candidate, json.dumps(provenance))
+            command = RecommendationWrite(user_id, "homepage", submission_key, "{}", selection.candidate, json.dumps(provenance),wearer=wearer,eligibility=scope.eligibility if scope else None)
             stage = "persistence"
             start = perf_counter()
             result, concurrent_replay = self.repository.persist_homepage(command)
@@ -64,6 +73,8 @@ class HomepageRecommendationService:
         except (KeyboardInterrupt, GeneratorExit) as error:
             log_failure("homepage", stage, "Interrupted", error)
             return {"status": "Interrupted", "complete": False}
+        except HTTPException:
+            raise
         except Exception as error:
             log_failure("homepage", stage, "PersistenceFailure" if stage in ("lookup", "persistence") else "ProcessingFailure", error)
             return {"status": "PersistenceFailure" if stage in ("lookup", "persistence") else "ProcessingFailure", "complete": False}

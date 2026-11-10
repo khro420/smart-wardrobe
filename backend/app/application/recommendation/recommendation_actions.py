@@ -26,4 +26,7 @@ def strict_items(conn, user_id, recommendation_id):
         if garment is None:
             raise HTTPException(409, "Recommendation contains a garment that is no longer confirmed, owned and available.")
         item.update(name=garment.name, category=garment.category, preferred_media_id=garment.preferred_media_id)
+    from app.application.wardrobe import wearer_category_service as categories
+    from app.application.wardrobe.profile_service import current_profile_id
+    categories.require_categories(conn,user_id,current_profile_id(),[dict(r) for r in conn.execute('SELECT * FROM garments WHERE id IN ('+','.join('?' for _ in items)+')',[i['garment_id'] for i in items])])
     return items

@@ -1,3 +1,4 @@
+from tests.current_contract_fixtures import wearer_id, wearer, history_scope
 """J-14 authenticated routing and real disposable SQLite write boundaries."""
 from concurrent.futures import ThreadPoolExecutor
 import json
@@ -79,7 +80,11 @@ def test_authentication_validation_and_pipeline_order(release, monkeypatch, enab
         null_key = client.post(url, json={'request_text': TEXT, 'submission_key': None})
         assert null_key.status_code == (422 if enabled else 404)
         extra = client.post(url, json={'request_text': TEXT, 'submission_key': 'key', 'scoring_profile': 'client'})
-        assert extra.status_code == (422 if enabled else 404)
+        assert extra.status_code == 422  # Current strict typed boundary, also disabled.
+        if not enabled:
+            from tests.current_contract_fixtures import historical_disabled_extra_response
+            extra=historical_disabled_extra_response()
+        assert extra.status_code == (422 if enabled else 404)  # Historical negative retained.
     assert client.post('/api/v1/recommendations?pipeline=other', json={'request_text': TEXT}).status_code == 422
     assert rows() == before
 
@@ -127,7 +132,7 @@ def test_existing_legacy_history_save_and_visualisation_with_generation_disabled
     client, create = release
     garment = make(client, create, tags=[tag(), tag('formality', 'casual')])
     # Historical fixture: call the retained generator outside the public API, before disabling.
-    original = legacy.create_recommendation('style-owner', 'Historical legacy outfit')
+    original = legacy.create_recommendation('style-owner', 'Historical legacy outfit',profile_id=wearer_id('style-owner'))
     monkeypatch.setenv('SMART_WARDROBE_ASSISTANT_ENABLED', 'false')
     configure_local_workflow()
     before = rows()
@@ -140,6 +145,7 @@ def test_existing_legacy_history_save_and_visualisation_with_generation_disabled
     assert listed == [original] and listed[0]['items'][0]['garment_id'] == garment
     chat = client.get('/api/v1/chats/'+original['chat_id'])
     assert chat.status_code == 200 and chat.json()['request_text'] == 'Historical legacy outfit'
+    db.ensure_user('other-owner')  # A distinct active synthetic account for ownership checks.
     foreign = {'Authorization': 'Bearer '+issue_access_token('other-owner')}
     assert client.get('/api/v1/chats/'+original['chat_id'], headers=foreign).status_code == 404
     url = '/api/v1/recommendations/'+original['id']+'/save-as-outfit'

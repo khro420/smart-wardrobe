@@ -1,0 +1,24 @@
+{
+  "contract": "model-vocabulary-registry-1.0.0",
+  "enabled": [],
+  "pending_source_domains": {
+    "fine_training_only": [
+      "three quarter"
+    ],
+    "coarse_pattern": [
+      "solid",
+      "patterned"
+    ],
+    "coarse_sleeve": [
+      "sleeveless",
+      "short",
+      "long"
+    ],
+    "coarse_neckline": [
+      "v-neck",
+      "round-crew",
+      "other"
+    ]
+  },
+  "membership_verified": false
+}

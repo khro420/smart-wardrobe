@@ -1,3 +1,4 @@
+from tests.current_contract_fixtures import wearer_id, wearer, history_scope
 """Saved-outfit integration: actual upload/review/confirm, disposable SQLite.
 
 Synthetic detector and inference fixtures are NOT real-model validation.
@@ -135,7 +136,7 @@ def test_outerwear_member_is_prepared_as_an_upper_layer(saved):
 def test_second_invalid_member_rejected_no_partial_write_or_history_change(saved,condition):
     mutate(saved,condition); before=history(saved)
     with pytest.raises(HTTPException): source.prepare_visualisation(saved['owner'],outfit_id=saved['outfit'])
-    with pytest.raises(HTTPException): jobs.create_visualisation(saved['owner'],saved['person'],outfit_id=saved['outfit'])
+    with pytest.raises(HTTPException): jobs.create_visualisation(saved['owner'],saved['person'],outfit_id=saved['outfit'],profile_id=wearer_id(saved['owner']))
     with db.connection() as c:
         assert c.execute('SELECT count(*) FROM visualisations').fetchone()[0]==0
         assert c.execute('SELECT count(*) FROM visualisation_items').fetchone()[0]==0
@@ -144,7 +145,7 @@ def test_second_invalid_member_rejected_no_partial_write_or_history_change(saved
 
 @pytest.mark.parametrize('condition',INVALID+('media','category','role','order','membership','count'))
 def test_queued_source_revalidated_before_fake_inference(saved,condition,monkeypatch):
-    identifier=jobs.create_visualisation(saved['owner'],saved['person'],outfit_id=saved['outfit'])
+    identifier=jobs.create_visualisation(saved['owner'],saved['person'],outfit_id=saved['outfit'],profile_id=wearer_id(saved['owner']))
     mutate(saved,condition); before=history(saved)
     adapter=Mock(); monkeypatch.setattr(jobs,'get_vton_adapter',lambda:adapter)
     jobs.run_visualisation(identifier,saved['owner'])
@@ -159,7 +160,7 @@ def test_queued_source_revalidated_before_fake_inference(saved,condition,monkeyp
 def test_prepare_then_change_cannot_authorise_create(saved):
     source.prepare_visualisation(saved['owner'],outfit_id=saved['outfit'])
     mutate(saved,'accepted')
-    with pytest.raises(HTTPException): jobs.create_visualisation(saved['owner'],saved['person'],outfit_id=saved['outfit'])
+    with pytest.raises(HTTPException): jobs.create_visualisation(saved['owner'],saved['person'],outfit_id=saved['outfit'],profile_id=wearer_id(saved['owner']))
 
 
 def test_multiple_tops_not_subject_to_recommendation_structure(saved):
@@ -172,7 +173,7 @@ def test_item_insert_failure_rolls_back_entire_request(saved):
     with db.connection() as c:
         c.execute("CREATE TRIGGER fail_second BEFORE INSERT ON visualisation_items WHEN NEW.item_order=2 BEGIN SELECT RAISE(ABORT,'injected second item'); END")
     with pytest.raises(sqlite3.IntegrityError,match='injected second item'):
-        jobs.create_visualisation(saved['owner'],saved['person'],outfit_id=saved['outfit'])
+        jobs.create_visualisation(saved['owner'],saved['person'],outfit_id=saved['outfit'],profile_id=wearer_id(saved['owner']))
     with db.connection() as c:
         assert c.execute('SELECT count(*) FROM visualisations').fetchone()[0]==0
         assert c.execute('SELECT count(*) FROM visualisation_items').fetchone()[0]==0
@@ -193,7 +194,7 @@ def test_write_lock_and_no_transaction_during_gpu_wait_or_inference(saved,monkey
         thread=threading.Thread(target=competing);thread.start();thread.join()
         return result
     if stage=='create': monkeypatch.setattr(jobs,'resolve_source',checked)
-    identifier=jobs.create_visualisation(saved['owner'],saved['person'],outfit_id=saved['outfit'])
+    identifier=jobs.create_visualisation(saved['owner'],saved['person'],outfit_id=saved['outfit'],profile_id=wearer_id(saved['owner']))
     if stage=='claim': monkeypatch.setattr(jobs,'resolve_source',checked)
     rt=runtime(); observations=[]
     def writable(label):
@@ -221,7 +222,7 @@ def test_write_lock_and_no_transaction_during_gpu_wait_or_inference(saved,monkey
 
 
 def test_concurrent_change_during_gpu_wait_is_revalidated(saved,monkeypatch):
-    identifier=jobs.create_visualisation(saved['owner'],saved['person'],outfit_id=saved['outfit'])
+    identifier=jobs.create_visualisation(saved['owner'],saved['person'],outfit_id=saved['outfit'],profile_id=wearer_id(saved['owner']))
     rt=runtime(); adapter=Mock(); changed=threading.Event()
     @contextmanager
     def slot():

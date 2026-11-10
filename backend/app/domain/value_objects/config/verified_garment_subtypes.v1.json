@@ -1,0 +1,100 @@
+{
+  "contract": "verified-garment-subtypes-1.0.0",
+  "status": "Approved exact isolated registry, 8 November 2026",
+  "field": "verified_subtype",
+  "applies_to_parents": [
+    "short_sleeve_top",
+    "long_sleeve_top"
+  ],
+  "exclusive_per_garment": true,
+  "maximum_values": 1,
+  "entries": [
+    {
+      "id": "t_shirt",
+      "label": "T-shirt",
+      "parents": [
+        "short_sleeve_top",
+        "long_sleeve_top"
+      ],
+      "aliases": [
+        "t-shirt",
+        "t shirt",
+        "tee",
+        "tee shirt"
+      ],
+      "definition": "Owner-confirmed T-shirt product identity, with short or long sleeves. The canonical parent supplies sleeve-category structure; the subtype does not imply a particular neckline, fabric, fit or colour.",
+      "qualification_limit": "A generic top, knitted fabric, crew/V neck, filename or a T-shirt name alone is insufficient. Do not infer short sleeves from the subtype."
+    },
+    {
+      "id": "polo_shirt",
+      "label": "Polo shirt",
+      "parents": [
+        "short_sleeve_top",
+        "long_sleeve_top"
+      ],
+      "aliases": [
+        "polo shirt",
+        "polo"
+      ],
+      "definition": "Owner-confirmed polo-shirt product identity, with a collar and short partial front placket. Short and long sleeve parents are both supported.",
+      "qualification_limit": "A collar alone or a drawing with an ambiguous front line is insufficient. Full-front shirt opening is not this declared identity. Bare polo only matches in a garment-request noun position; play polo does not."
+    },
+    {
+      "id": "button_up_shirt",
+      "label": "Button-up shirt",
+      "parents": [
+        "short_sleeve_top",
+        "long_sleeve_top"
+      ],
+      "aliases": [
+        "button-up shirt",
+        "button up shirt"
+      ],
+      "definition": "Owner-confirmed shirt product identity with a full front button opening, rather than a blouse or polo product identity. No neckline, tailoring or material requirement is inferred.",
+      "qualification_limit": "Button front or collar alone does not distinguish a blouse. Button-down is not an alias: it can describe a collar distinction that this registry does not verify."
+    },
+    {
+      "id": "knit_top",
+      "label": "Knit / sweater top",
+      "parents": [
+        "short_sleeve_top",
+        "long_sleeve_top"
+      ],
+      "aliases": [
+        "knit top",
+        "knitted top",
+        "sweater top"
+      ],
+      "definition": "Owner-confirmed sweater-style knit-top product identity, excluding T-shirt, polo, button-up shirt and blouse identities. Construction details remain separate qualified description fields.",
+      "qualification_limit": "Not every knitted textile is a knit_top. Wool, warmth, ribbing or a name alone does not establish this product identity."
+    },
+    {
+      "id": "blouse",
+      "label": "Blouse",
+      "parents": [
+        "short_sleeve_top",
+        "long_sleeve_top"
+      ],
+      "aliases": [
+        "blouse"
+      ],
+      "definition": "Explicit owner-confirmed blouse product identity. It may have a collar, buttons, different sleeve lengths or many fabrics. Its project eligibility treatment is the separately approved wearer policy.",
+      "qualification_limit": "Colour, floral pattern, silk, image appearance, name, filename or broad top category cannot establish blouse. If the owner cannot distinguish the product identity, retain Unspecified rather than infer."
+    }
+  ],
+  "unknown": "Unknown/Unspecified is an evidence state with null value, never a positive subtype identifier or an allowed-type fallback.",
+  "disambiguation": "These five mutually exclusive project product identities require an explicit owner declaration. They are not an exhaustive universal garment taxonomy or a claim of independently verified visual truth. If multiple identities appear plausible, record Unspecified; do not resolve using gender, material, pattern or a ranking result.",
+  "source_requirement": "Authenticated owner review of the actual current garment/processing item, with current category/media, captured registry digest, event/revision and source provenance. Existing B0 qualification/currentness principles apply through a separate immutable channel.",
+  "model_emitters": [],
+  "measured_emitters": [],
+  "automatic_sources": "No supported subtype model mapping currently exists. No model output is promoted. Future emitter/mapping/quality approval is a separate contract; unsupported suggestions stay non-qualifying.",
+  "other_parents": "The other eleven canonical categories have no subtype obligation in registry v1, unless unresolved earlier blouse evidence requires a separately audited correction.",
+  "legacy_bare_shirt": "Exact existing broad upper-category meaning is retained; it does not establish any of these five subtypes.",
+  "excluded_distinctions": [
+    "Oxford construction",
+    "button-down collar",
+    "unregistered garment subtype",
+    "marketing dark shades without existing precise colour evidence",
+    "fashion/gender inference from appearance"
+  ]
+}

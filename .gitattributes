@@ -1,0 +1,14 @@
+# Preserve exact bytes of hash-bound policies, sources and numerical fixtures.
+/backend/app/** -text
+/backend/tests/** -text
+/backend/vendor/** -text
+/backend/models/** -text
+/backend/requirements*.txt -text
+/frontend/**/*.ts -text
+/frontend/**/*.tsx -text
+/frontend/**/*.json -text
+*.zip binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.pdf binary

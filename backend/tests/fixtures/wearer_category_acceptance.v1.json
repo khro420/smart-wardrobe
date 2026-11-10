@@ -1,0 +1,111 @@
+{
+  "version": "wearer-category-admission-acceptance-1.0.0",
+  "status": "Frozen before production implementation",
+  "authority": "Owner category rules, unchanged canonical registry and existing hard/source/ownership/idempotency/score contracts; not observed new winners.",
+  "baseline_counts": {
+    "account_garments": 40,
+    "male_policy_usable": 30,
+    "female_policy_usable": 40,
+    "quota": 100
+  },
+  "matrix": {
+    "male": {
+      "short_sleeve_top": true,
+      "long_sleeve_top": true,
+      "short_sleeve_outwear": true,
+      "long_sleeve_outwear": true,
+      "vest": true,
+      "sling": true,
+      "shorts": true,
+      "trousers": true,
+      "skirt": false,
+      "short_sleeve_dress": false,
+      "long_sleeve_dress": false,
+      "vest_dress": false,
+      "sling_dress": false
+    },
+    "female": {
+      "short_sleeve_top": true,
+      "long_sleeve_top": true,
+      "short_sleeve_outwear": true,
+      "long_sleeve_outwear": true,
+      "vest": true,
+      "sling": true,
+      "shorts": true,
+      "trousers": true,
+      "skirt": true,
+      "short_sleeve_dress": true,
+      "long_sleeve_dress": true,
+      "vest_dress": true,
+      "sling_dress": true
+    }
+  },
+  "checkpoints": {
+    "GC0": "Before edits recheck exact 861-source baseline/approved scope; preserve coherent demo DB/media/config/source backup after owned quiescence; record original40 IDs/all history/preferences/gender revisions.",
+    "GC1": "All13 canonical categories x male/female/unconfigured/custom/unknown policy; male exactly8 permitted/5 prohibited, female13. Registry/hash/version corruption and canonical/structural conflicts fail closed, no names/tags/media inference.",
+    "GC2": "Real restored-copy upload/manual review/confirm/automatic full batches/category edits and typed updates. Male dress/skirt blocked; shirt/trousers permitted; female dress/skirt/trousers permitted. Unknown raw image is processed, unresolved category never available; direct API spoof/foreign/header/job scope bypass refused.",
+    "GC3": "Shared inventory remains original40/account quota100. A usable30/B40 at baseline; excluded10 visible to admin. Existing B dress usable only by B under current policy; shared outfits all-member gate, no member drop or original row deletion.",
+    "GC4": "Homepage and legacy/integrated Assistant, reference/compact, P1/P2,C1/C2,generic and18contexts filter before generation. Required prohibited category gives controlled explicit denial, no substitution/persistence. Preserved numerical component definitions on identical admitted fixtures, no winner repinning.",
+    "GC5": "Concurrent gender/category/archival/source/preference updates rechecked under writer lock; full account cohort including denied/unselected rows retained. No partial admission/outfit/history/receipt; retry and stale root behavior exact, Seen/originalRfloor/ten-result cap unchanged.",
+    "GC6": "Original history/storage bytes and old/disabled-policy assertions remain; new evidence strict reader rejects tampering. Completed authenticated receipt stays original read-only replay after policy change; current reuse/save/visualisation/child generation refuse stale/prohibited scope.",
+    "GC7": "Frozen shirt/top+black-trousers positive/negative/capitalisation/quote/residual/spans and old275/contraction cases. Focused backend tests/TypeScript and owned restored-copy admission browser, then live A/B existing40 policy/NLP/history checks; final source/DB/media authority recheck and exact patch. No broad regression or performance."
+  },
+  "nlp": {
+    "version": "bare-upper-noun-binding-1.1.1",
+    "status": "Frozen expected meaning before production edits",
+    "text": "i want a shirt with black trousers",
+    "observed": "B1 lower black AND category trousers succeeds; remaining text is i want a shirt with followed by same-length spaces; unsupported residual stops structured construction in combined pipeline. Same HTTP422 UnsupportedRequest for both live wearers.",
+    "conditions": [
+      {
+        "role": "upper",
+        "quantifier": "exists",
+        "conditions": [
+          {
+            "attribute": "category",
+            "operator": "in",
+            "values": [
+              "short_sleeve_top",
+              "long_sleeve_top",
+              "vest",
+              "sling"
+            ]
+          }
+        ]
+      },
+      {
+        "role": "lower",
+        "quantifier": "exists",
+        "conditions": [
+          {
+            "attribute": "primary_colour",
+            "operator": "in",
+            "values": [
+              "black"
+            ]
+          },
+          {
+            "attribute": "category",
+            "operator": "in",
+            "values": [
+              "trousers"
+            ]
+          }
+        ]
+      }
+    ],
+    "meaning": "Require one actual existing upper/top and a separate black canonical trousers member. Black attaches only to trousers. No upper colour/material/style/fine sleeve is inferred. Upper group follows the existing canonical top-role scope, including vest/sling; no new shirt taxonomy.",
+    "scope": "Finite bare shirt/top head in licensed coordinated noun frames, source-preserving masks/spans. Do not globally ignore shirt/with words; keep residual unsupported modifiers and quoted literals.",
+    "controls": [
+      "i want a top with black trousers",
+      "i want a shirt and black trousers",
+      "I WANT A SHIRT WITH BLACK TROUSERS",
+      "i want a blue shirt with black trousers",
+      "i want a shirt with waterproof black trousers",
+      "i want a shirt with black skirts",
+      "i want a garment named \"shirt with black trousers\"",
+      "i dont want a shirt with black trousers"
+    ],
+    "guardrails": "Original frozen cases remain authoritative. New grammar version/digest only for corrected finite form, retain every old digest for immutable reads. Ambiguous negative coordination is refused, not converted into positive/negative new meanings. No result/score golden repinning."
+  },
+  "test_data_scope": "Admission writes/browser are rehearsed on owned coherent restored demo copies; live demonstration retains original40 and uses those records. No positive live admission fixtures will be left in the user inventory. Original legacy disabled-policy tests remain on their existing contract, not silently repinned to changed eligibility."
+}

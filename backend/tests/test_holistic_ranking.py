@@ -1,3 +1,6 @@
+from app.shared_contracts.offline_snapshot_codec import legacy_projection
+from tests.current_contract_fixtures import wearer_id, wearer, history_scope
+from app.application.wardrobe.profile_service import profile_scope
 """Explicit experimental ranking/evaluation; synthetic fixtures are not validation."""
 from dataclasses import asdict,replace
 from fractions import Fraction as F
@@ -117,19 +120,21 @@ def test_actual_phase1_eligibility_no_history_or_preference_writes():
         with connection() as conn:
             before = tuple(conn.execute(f"SELECT COUNT(*) FROM {table}").fetchone()[0] for table in tables)
         scorer = HolisticRecommendationScorer(RequestCandidateEngine(SqliteConfirmedGarmentQuery(),evaluator_factory=SuitabilityRequestEvaluator),SqliteActivePreferenceQuery())
-        result = scorer.rank(owner,StructuredOutfitRequest(occasion="campus",formality="casual"),"holistic_experimental")
+        with profile_scope(wearer_id(owner)):
+            result = scorer.rank(owner,StructuredOutfitRequest(occasion="campus",formality="casual"),"holistic_experimental")
         assert result.status == "Selected" and result.winner.score.compatibility.summary.state == "Unknown"
         with connection() as conn:
             assert tuple(conn.execute(f"SELECT COUNT(*) FROM {table}").fetchone()[0] for table in tables) == before
             conn.execute("UPDATE garments SET processing_item_id=NULL WHERE id=?",(identifier,))
-        assert scorer.rank(owner,StructuredOutfitRequest(),"holistic_experimental").status == "NoEligibleGarments"
+        with profile_scope(wearer_id(owner)):
+            assert scorer.rank(owner,StructuredOutfitRequest(),"holistic_experimental").status == "NoEligibleGarments"
 
 
 def fixture_cases(tmp_path,partition="development"):
     rows = [garment("blue-dress","vest_dress"),replace(garment("red-dress","vest_dress"),primary_colour="red")]
     preferences = [pref("colours",["red"],"1")]
     raw = {"schema_version":"1.0.0","version":"synthetic-cases-test-only","kind":"synthetic_fixture","validation_locked":True,"cases":[{
-        "case_id":"synthetic-sensitivity","partition":partition,"source_ids":["synthetic-new-garments"],"user_id":"owner","wardrobe":[asdict(x) for x in rows],"request":{},"preferences":[asdict(x) for x in preferences]}]}
+        "case_id":"synthetic-sensitivity","partition":partition,"source_ids":["synthetic-new-garments"],"user_id":"owner","wardrobe":[legacy_projection(x)["snapshot"] for x in rows],"request":{},"preferences":[asdict(x) for x in preferences]}]}
     path = tmp_path / "cases.json"; path.write_text(json.dumps(raw))
     profiles = json.loads(DEFAULT_HOLISTIC_PROFILES.read_text())
     # Explicit test-only weights, not additional deployed profiles.

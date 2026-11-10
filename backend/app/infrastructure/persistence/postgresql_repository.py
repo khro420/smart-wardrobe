@@ -24,6 +24,10 @@ CREATE TABLE IF NOT EXISTS wardrobe_profiles (
   is_default INTEGER NOT NULL DEFAULT 0, status TEXT NOT NULL DEFAULT 'active',
   created_at TEXT NOT NULL, updated_at TEXT NOT NULL
 );
+CREATE TABLE IF NOT EXISTS wardrobe_profile_details_v1 (
+  profile_id TEXT PRIMARY KEY REFERENCES wardrobe_profiles(id),
+  version TEXT NOT NULL, gender_identity TEXT, revision TEXT NOT NULL, updated_at TEXT NOT NULL
+);
 CREATE TABLE IF NOT EXISTS media_assets (
   id TEXT PRIMARY KEY, user_id TEXT NOT NULL, media_type TEXT NOT NULL,
   storage_key TEXT NOT NULL UNIQUE, content_type TEXT NOT NULL, size_bytes INTEGER NOT NULL,
@@ -131,10 +135,8 @@ def initialise_database() -> None:
                 profile_id = default["id"]
             for table in ("processing_jobs", "user_preferences", "nlp_chats", "recommendations"):
                 conn.execute(f"UPDATE {table} SET profile_id=? WHERE user_id=? AND profile_id IS NULL", (profile_id, user_id))
-            # One account owns one shared wardrobe. Profiles remain wearer
-            # contexts, so legacy profile-scoped items become shared safely.
-            conn.execute("UPDATE garments SET profile_id=NULL WHERE user_id=?", (user_id,))
-            conn.execute("UPDATE outfits SET profile_id=NULL WHERE user_id=?", (user_id,))
+            # Inventory access is account-scoped. Retain legacy uploader/origin
+            # associations; they are provenance, not access restrictions.
             conn.execute("UPDATE person_images SET profile_id=? WHERE user_id=? AND profile_id IS NULL", (profile_id, user_id))
             conn.execute("UPDATE visualisations SET profile_id=? WHERE user_id=? AND profile_id IS NULL", (profile_id, user_id))
         conn.execute("CREATE INDEX IF NOT EXISTS idx_profiles_by_user ON wardrobe_profiles(user_id,status)")

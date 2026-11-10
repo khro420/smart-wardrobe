@@ -1,10 +1,15 @@
 "use client";
+import VerifiedSubtypeFields from "@/components/VerifiedSubtypeFields";
+import { reviewGarmentSubtype } from "@/lib/api";
+import { subtypeSummary } from "@/lib/verified-subtypes";
+import { useWearerCategoryEligibility } from "@/lib/wearer-category-eligibility";
 
 import { FormEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { ChevronDown, ChevronUp, Heart, Pencil, Plus, Search, Trash2, WandSparkles, X } from "lucide-react";
 import Layout from "@/components/Layout";
 import ProtectedImage from "@/components/ProtectedImage";
+import { DESCRIPTION_FIELDS, descriptionUpdate, type DescriptionView, type DescriptionDraft } from "@/lib/api";
 import { reviewContextualSuitability } from "@/lib/api";
 import GarmentSuitabilityFields, { declarationKey, type SuitabilityChoice } from "@/components/GarmentSuitabilityFields";
 import {
@@ -86,8 +91,63 @@ function ContextualReviewControls({ garment, onSaved, onError }: { garment: Garm
   </details>;
 }
 
+
+function DescriptionControls({ view, draft, onChange, id, readOnly = false }: { view: DescriptionView; draft: DescriptionDraft; onChange: (next: DescriptionDraft) => void; id: string; readOnly?: boolean }) {
+  const categoryPolicy = useWearerCategoryEligibility();
+  const display = (value: unknown): string => Array.isArray(value) ? value.map(display).join("; ") : value && typeof value === "object" && "hex" in value ? `${String(value.hex)} (coverage ${"coverage" in value && value.coverage != null ? String(value.coverage) : "unknown"})` : typeof value === "boolean" ? value ? "Yes" : "No" : typeof value === "string" ? value : "No recorded value";
+  const update = (field: string, kind: DescriptionDraft[string]["kind"], value?: unknown) => {
+    const next = {...draft};
+    if (kind === "keep") delete next[field]; else next[field] = {kind, ...(kind === "set" ? {value} : {})};
+    onChange(next);
+  };
+  const initial = (field: typeof DESCRIPTION_FIELDS[number]): unknown => {
+    const values = view.evidence.fields[field.id]?.canonical_values ?? [];
+    if (field.kind === "set" || field.kind === "palette") return values;
+    if (field.kind === "tags") return values.map(String).join("\n");
+    if (field.kind === "boolean") return typeof values[0] === "boolean" ? String(values[0]) : "";
+    return typeof values[0] === "string" ? values[0] : "";
+  };
+  const category = draft.category?.kind === "set" ? draft.category.value : view.evidence.fields.category?.canonical_values[0];
+  return <section className="min-w-0 space-y-3 [overflow-wrap:anywhere]" aria-label="Optional recorded descriptions">
+    <p className="text-sm">{readOnly ? "Stored descriptions are read-only." : "Optional recorded descriptions. Keep leaves a value unchanged."} Suggestions and saved values with unverified sources are separate from your explicit selections. Visible silhouette does not establish physical fit; material does not establish comfort or fibre verification.</p>
+    <div className="grid min-w-0 gap-3 sm:grid-cols-2">{DESCRIPTION_FIELDS.map(field => {
+      const record = view.evidence.fields[field.id]; const action = draft[field.id]; const kind = action?.kind ?? "keep";
+      const inapplicable = (field.id === "neckline" || field.id === "sleeve_length") && typeof category === "string" && ["shorts", "trousers", "skirt"].includes(category);
+      const origin = record?.selected?.origin === "owner_selected" ? "Your recorded selection" : record?.selected?.origin === "owner_reported_label" ? "Reported label" : "Saved value; source unverified";
+      const value = action?.value;
+      const palette = Array.isArray(value) ? value as {hex: string; coverage: string | null}[] : [];
+      return <fieldset key={field.id} disabled={inapplicable} className="min-w-0 space-y-2 rounded-lg border border-slate-300 p-3 disabled:opacity-60">
+        <legend className="text-sm font-semibold">{field.label}</legend>
+        <p className="text-xs">{record?.state ?? "Unavailable"}: {display(record?.canonical_values?.length ? record.canonical_values : null)}. {origin}.</p>
+        {record?.applicability === "unknown" && <p className="text-xs">Applicability is unknown until the garment role is established.</p>}
+        {record?.selected?.value != null && ["Unrecognized", "Unsure", "Unspecified"].includes(record.state) && <p className="text-xs">Original recorded value: {display(record.selected.value)}. It is not treated as a supported positive fact.</p>}
+        {record?.suggestion && <p className="text-xs text-slate-600">Model suggestion: {display(record.suggestion.value)}. Source vocabulary is not verified; this is not your selected value.</p>}
+        {readOnly ? null : inapplicable ? <p className="text-xs">Not applicable to a bottom garment.</p> : <>
+          <label className="block text-xs">Action<select aria-label={`${field.label} action`} value={kind} onChange={event => update(field.id, event.target.value as DescriptionDraft[string]["kind"], initial(field))} className="mt-1 min-h-11 w-full border border-slate-400 bg-white px-2">
+            <option value="keep">Keep current value</option><option value="set">Record a value</option>{field.clear && <option value="clear">Unknown / clear recorded value</option>}{field.empty && <option value="empty">Record an empty set</option>}{field.id === "material" && <option value="unsure">Not sure</option>}
+          </select></label>
+          {kind === "set" && <>
+            {field.kind === "set" ? <label className="block text-xs">Recorded values (multiple allowed)<select multiple aria-label={`${field.label} values`} value={Array.isArray(value) ? value as string[] : []} onChange={event => update(field.id, "set", Array.from(event.target.selectedOptions,option=>option.value))} className="mt-1 min-h-28 w-full border border-slate-400 bg-white p-2">{field.options.map(option=><option key={option} value={option}>{option}</option>)}</select></label>
+            : field.kind === "enum" || field.kind === "boolean" ? <select aria-label={`${field.label} value`} value={typeof value === "string" ? value : ""} onChange={event=>update(field.id,"set",event.target.value)} className="min-h-11 w-full border border-slate-400 bg-white px-2"><option value="">Choose a recorded value</option>{(field.kind === "boolean" ? ["true","false"] : field.options).filter(option => field.id !== "category" || categoryPolicy.permits(option) || option === value).map(option=><option disabled={field.id === "category" && !categoryPolicy.permits(option)} key={option} value={option}>{option === "true" ? "Yes, I observed this" : option === "false" ? "No, I observed this" : option}</option>)}</select>
+            : field.kind === "palette" ? <div className="space-y-2">{palette.map((entry,index)=><div key={index} className="space-y-1 border border-slate-200 p-2"><label className="block text-xs">Exact hex colour<input aria-label={`Palette colour ${index+1}`} maxLength={7} value={entry.hex} onChange={event=>update(field.id,"set",palette.map((p,i)=>i===index ? {...p,hex:event.target.value} : p))} placeholder="#123abc" className="min-h-11 w-full border border-slate-400 px-2" /></label><label className="block text-xs">Recorded coverage 0–1 (blank means unknown)<input aria-label={`Palette coverage ${index+1}`} inputMode="decimal" value={entry.coverage ?? ""} onChange={event=>update(field.id,"set",palette.map((p,i)=>i===index ? {...p,coverage:event.target.value || null} : p))} className="min-h-11 w-full border border-slate-400 px-2" /></label><button type="button" onClick={()=>update(field.id,"set",palette.filter((_,i)=>i!==index))} className="min-h-11 border border-slate-400 px-2">Remove palette entry {index+1}</button></div>)}<button type="button" disabled={palette.length>=5} onClick={()=>update(field.id,"set",[...palette,{hex:"",coverage:null}])} className="min-h-11 border border-slate-400 px-2">Add palette entry</button></div>
+            : field.kind === "tags" ? <label className="block text-xs">One literal tag per line<textarea aria-label="Literal descriptive tags values" value={typeof value === "string" ? value : ""} onChange={event=>update(field.id,"set",event.target.value)} className="mt-1 min-h-24 w-full border border-slate-400 p-2" /><span>Existing suitability restrictions stay in their separate controls.</span></label>
+            : <><input aria-label={`${field.label} value`} list={field.kind === "colour" ? `${id}-${field.id}` : undefined} maxLength={field.id === "garment_name" ? 100 : 50} value={typeof value === "string" ? value : ""} onChange={event=>update(field.id,"set",event.target.value)} placeholder={field.kind === "colour" ? "Named colour or exact #RRGGBB" : "Recorded value"} className="min-h-11 w-full border border-slate-400 px-2" />{field.kind === "colour" && <datalist id={`${id}-${field.id}`}>{field.options.map(option=><option key={option} value={option} />)}</datalist>}</>}
+          </>}
+        </>}
+      </fieldset>;
+    })}</div>
+    {!readOnly && <button type="button" onClick={()=>onChange({})} className="min-h-11 rounded border border-slate-400 px-3">Cancel description changes</button>}
+  </section>;
+}
+
 function GarmentEditor({ garment, onCancel, onSaved, onError }: { garment: Garment; onCancel: () => void; onSaved: () => Promise<void>; onError: (message: string) => void }) {
+  const categoryPolicy = useWearerCategoryEligibility();
   const [name, setName] = useState(garment.name);
+  const typedDescription = garment.description?.editable === true && garment.description.update_contract === "garment-description-update-1.0.0";
+  const [descriptionDraft, setDescriptionDraft] = useState<DescriptionDraft>({});
+  const [descriptionRevision, setDescriptionRevision] = useState(garment.description?.revision ?? "");
+  const [confirmDescriptionStyle, setConfirmDescriptionStyle] = useState(false);
+
   const [category, setCategory] = useState(garment.category);
   const [colour, setColour] = useState(garment.primary_colour ?? "");
   const [pattern, setPattern] = useState(garment.pattern ?? "");
@@ -109,6 +169,18 @@ function GarmentEditor({ garment, onCancel, onSaved, onError }: { garment: Garme
   const submit = async (event: FormEvent) => {
     event.preventDefault();
     const payload: GarmentUpdate = {};
+    if (typedDescription && garment.description) {
+      try {
+        payload.description_update = descriptionUpdate(garment.description,descriptionDraft,descriptionRevision);
+        if (payload.description_update?.operations.descriptive_tags && (Object.keys(suitabilityChoices).length || removedAnnotations.length)) {
+          onError("Save literal tag changes and suitability annotation changes separately."); return;
+        }
+        const selected=payload.description_update?.operations.style;
+        const value=selected?.kind === "set" && Array.isArray(selected.value) && selected.value.length === 1 ? selected.value[0] : undefined;
+        if (confirmDescriptionStyle && typeof value === "string" && garment.style_confirmation) payload.style_confirmation={contract:"owner-style-confirmation-1.0.0",expected_revision:garment.style_confirmation.revision,style:value};
+      } catch (cause) { onError(cause instanceof Error ? cause.message : "Could not prepare description changes."); return; }
+    }
+
     const attributes: NonNullable<GarmentUpdate["attributes"]> = {};
     if (name !== garment.name) payload.name = name.trim();
     if (category !== garment.category) payload.category = category.trim();
@@ -145,14 +217,25 @@ function GarmentEditor({ garment, onCancel, onSaved, onError }: { garment: Garme
       }
     }
     if (Object.keys(attributes).length) payload.attributes = attributes;
+    if (!payload.description_update && !payload.attributes && Object.keys(payload).every(key=>key === "description_update")) { onCancel(); return; }
     setSaving(true);
     try { await updateGarment(garment.id, payload, tagEdit?.revision); await onSaved(); } catch (caught) { onError(caught instanceof Error ? caught.message : "Could not update the garment."); } finally { setSaving(false); }
   };
 
-  return <form onSubmit={submit} className="mt-3 space-y-3 border-t border-zinc-200 pt-3" aria-label={`Edit ${garment.name}`}>
+  return <form onSubmit={submit} className="mt-3 min-w-0 space-y-3 border-t border-zinc-200 pt-3" aria-label={`Edit ${garment.name}`}>
+    <VerifiedSubtypeFields key={garment.verified_subtype?.revision ?? garment.id} view={garment.verified_subtype} category={garment.category} onConfirm={async value => { await reviewGarmentSubtype(garment.id,value); await onSaved(); }} />
+    {!typedDescription && garment.description && <details><summary className="cursor-pointer text-sm font-semibold">Stored descriptions (read-only)</summary><DescriptionControls id={`${garment.id}-stored`} view={garment.description} draft={{}} onChange={()=>undefined} readOnly /></details>}
+    {typedDescription && garment.description ? <fieldset disabled={saving} className="min-w-0 space-y-3">
+      <DescriptionControls id={garment.id} view={garment.description} draft={descriptionDraft} onChange={next=>{
+        if (!Object.keys(descriptionDraft).length) setDescriptionRevision(garment.description!.revision);
+        setDescriptionDraft(next);
+      }} />
+      <label className="flex items-start gap-2 text-sm"><input type="checkbox" checked={confirmDescriptionStyle} onChange={event=>setConfirmDescriptionStyle(event.target.checked)} />Also record the existing optional style confirmation when I explicitly select one supported style.</label>
+      {tagEdit && <GarmentSuitabilityFields view={tagEdit} choices={suitabilityChoices} removed={removedAnnotations} onChoice={(key,choice)=>setSuitabilityChoices(current=>({...current,[key]:choice}))} onRemove={index=>setRemovedAnnotations(current=>[...current,index])} />}
+    </fieldset> : <>
     <div className="grid grid-cols-2 gap-2">
       <label className="col-span-2 text-xs font-bold">Name<input required maxLength={100} value={name} onChange={(event) => setName(event.target.value)} className="mt-1 w-full border-2 border-black p-2 text-sm" /></label>
-      <label className="text-xs font-bold">Category<input required maxLength={50} value={category} onChange={(event) => setCategory(event.target.value)} className="mt-1 w-full border-2 border-black p-2 text-sm" /></label>
+      <label className="text-xs font-bold">Category<select required value={category} onChange={(event) => setCategory(event.target.value)} className="mt-1 w-full border-2 border-black p-2 text-sm">{(categoryPolicy.data?.allowed_categories ?? []).concat(categoryPolicy.data?.allowed_categories.includes(category) ? [] : [category]).map(value => <option key={value} value={value} disabled={!categoryPolicy.permits(value)}>{value.replaceAll("_", " ")}</option>)}</select></label>
       <label className="text-xs font-bold">Primary colour<input list={`primary-colours-${garment.id}`} maxLength={50} value={colour} onChange={(event) => setColour(event.target.value)} className="mt-1 w-full border-2 border-black p-2 text-sm" /></label>
       {tagEdit && <><datalist id={`primary-colours-${garment.id}`}>{tagEdit.colour_names.map(name=><option key={name} value={name} />)}</datalist><p className="col-span-2 text-xs text-zinc-600">Review the primary colour explicitly. Supported names: {tagEdit.colour_names.join(", ")}. Exact anchors also work; other hex values may be unknown. No approximate conversion is performed.</p></>}
       <label className="text-xs font-bold">Pattern<input maxLength={50} value={pattern} onChange={(event) => setPattern(event.target.value)} className="mt-1 w-full border-2 border-black p-2 text-sm" /></label>
@@ -167,6 +250,7 @@ function GarmentEditor({ garment, onCancel, onSaved, onError }: { garment: Garme
       <label className="text-xs font-bold">Colour temperature<select value={temperature} onChange={(event) => setTemperature(event.target.value)} className="mt-1 w-full border-2 border-black bg-white p-2 text-sm"><option value="warm">Warm</option><option value="cool">Cool</option><option value="neutral">Neutral</option></select></label>
       <label className="flex items-center gap-2 self-end border-2 border-black p-2 text-xs font-bold"><input type="checkbox" checked={dominant} onChange={(event) => setDominant(event.target.checked)} />One dominant colour</label>
     </div>
+    </>}
     <div className="flex gap-2"><button disabled={saving} className="bg-black px-3 py-2 text-xs font-bold text-white disabled:opacity-50">{saving ? "Saving…" : "Save changes"}</button><button type="button" onClick={onCancel} className="border-2 border-black px-3 py-2 text-xs font-bold">Cancel</button></div>
   </form>;
 }
@@ -178,7 +262,7 @@ function OutfitEditor({ outfit, garments, onCancel, onSaved, onError }: { outfit
   const [garmentToAdd, setGarmentToAdd] = useState("");
   const [saving, setSaving] = useState(false);
   const byId = useMemo(() => new Map(garments.map((item) => [item.id, item])), [garments]);
-  const unused = garments.filter((item) => !ids.includes(item.id));
+  const unused = garments.filter((item) => !ids.includes(item.id) && item.wearer_category_eligibility?.usable !== false);
   const candidate = unused.find((item) => item.id === garmentToAdd);
   const move = (index: number, offset: number) => setIds((current) => {
     const next = [...current];
@@ -222,7 +306,7 @@ function OutfitGarments({ outfit, garments }: { outfit: Outfit; garments: Garmen
 }
 
 function OutfitBuilder({ garments, selectedIds, onToggle, name, onNameChange, description, onDescriptionChange, onCancel, onSubmit, saving }: { garments: Garment[]; selectedIds: string[]; onToggle: (id: string) => void; name: string; onNameChange: (value: string) => void; description: string; onDescriptionChange: (value: string) => void; onCancel: () => void; onSubmit: (event: FormEvent) => void; saving: boolean }) {
-  const available = garments.filter((garment) => garment.status === "available");
+  const available = garments.filter((garment) => garment.status === "available" && garment.wearer_category_eligibility?.usable !== false);
   return <form onSubmit={onSubmit} aria-busy={saving} className="space-y-4 border-2 border-black bg-zinc-50 p-4">
     <div className="flex items-start justify-between gap-3"><div><h2 className="font-black">Create outfit from your garments</h2><p className="text-sm text-zinc-600">Choose confirmed, available garments, then give the outfit a name.</p></div><button type="button" onClick={onCancel} className="min-h-10 border-2 border-black px-3 text-xs font-bold">Cancel</button></div>
     <fieldset><legend className="text-sm font-bold">Select garments ({selectedIds.length})</legend><div className="mt-2 grid max-h-80 gap-2 overflow-y-auto sm:grid-cols-2 lg:grid-cols-4">{available.map((garment) => <label key={garment.id} className={`flex cursor-pointer gap-2 border-2 p-2 ${selectedIds.includes(garment.id) ? "border-black bg-white" : "border-zinc-300 bg-zinc-100"}`}><input type="checkbox" checked={selectedIds.includes(garment.id)} onChange={() => onToggle(garment.id)} /><div className="h-14 w-14 shrink-0 overflow-hidden bg-zinc-200">{garment.preferred_media_id && <ProtectedImage mediaId={garment.preferred_media_id} alt="" className="h-full w-full object-cover" />}</div><span className="min-w-0 text-xs"><strong className="block truncate">{garment.name}</strong><span className="block truncate text-zinc-600">{garment.category.replaceAll("_", " ")}</span></span></label>)}</div></fieldset>
@@ -232,6 +316,7 @@ function OutfitBuilder({ garments, selectedIds, onToggle, name, onNameChange, de
 }
 
 export default function WardrobePage() {
+  const categoryPolicy = useWearerCategoryEligibility();
   const [tab, setTab] = useState<"garments" | "outfits">("garments");
   const [garments, setGarments] = useState<Garment[]>([]);
   const [allGarments, setAllGarments] = useState<Garment[]>([]);
@@ -279,8 +364,8 @@ export default function WardrobePage() {
     setLoading(true);
     try {
       const [completeGarments, nextGarments, nextOutfits] = await Promise.all([
-        getGarments(),
-        getGarments({ colour: garmentColour, style: garmentStyle, availability: garmentAvailability, query: garmentQuery, category: garmentCategory || undefined, favourite: garmentFavourite ? garmentFavourite === "true" : undefined, sort: garmentSort }),
+        getGarments({includeWearerEligibility: true}),
+        getGarments({ includeWearerEligibility: true, colour: garmentColour, style: garmentStyle, availability: garmentAvailability, query: garmentQuery, category: garmentCategory || undefined, favourite: garmentFavourite ? garmentFavourite === "true" : undefined, sort: garmentSort }),
         getOutfits({ query: outfitQuery, category: outfitCategory || undefined, creationType: outfitType || undefined, favourite: outfitFavourite ? outfitFavourite === "true" : undefined, sort: outfitSort }),
       ]);
       if (sequence !== loadSequence.current) return;
@@ -326,7 +411,7 @@ export default function WardrobePage() {
     } catch (caught) { setError(caught instanceof Error ? caught.message : "Could not check outfit dependencies."); }
   };
 
-  return <Layout><div className="space-y-6">
+  return <Layout><div className="space-y-6"><p data-testid="wearer-category-guidance" role="status">Shared account inventory. {categoryPolicy.text} <Link href="/profile" className="underline">Wearer information</Link></p>
     <div className="flex flex-col justify-between gap-4 border-b-4 border-black pb-5 sm:flex-row sm:items-end"><div><p className="font-mono text-[10px] font-black tracking-widest text-zinc-500">DIGITAL WARDROBE</p><h1 className="text-3xl font-black tracking-tight">Your confirmed items</h1><p className="mt-1 text-sm text-zinc-600">Browse garments and outfits, update their details, or archive them after dependency checks.</p></div><div className="flex flex-wrap gap-2">{quota?.remaining === 0 ? <button type="button" disabled className="bg-zinc-200 px-4 py-3 text-xs font-bold">Add from image (wardrobe full)</button> : <Link href="/extract" className="inline-flex min-h-11 items-center justify-center gap-2 bg-black px-4 py-3 text-xs font-mono font-black uppercase text-white"><Plus className="h-4 w-4" /> Add from image</Link>}<button type="button" onClick={() => { setTab("garments"); setShowOutfitBuilder(true); }} className="inline-flex min-h-11 items-center justify-center gap-2 border-2 border-black px-4 py-3 text-xs font-mono font-black uppercase"><Plus className="h-4 w-4" /> Create outfit</button></div></div>
     <section aria-label="Wardrobe capacity" className="rounded-lg border border-slate-200 p-3 text-sm">
       <p role="status" aria-live="polite">{quota ? wardrobeCapacityText(quota) : "Capacity unavailable"}</p>
@@ -341,7 +426,7 @@ export default function WardrobePage() {
       {showOutfitBuilder && <OutfitBuilder garments={allGarments} selectedIds={selectedIds} onToggle={toggleSelection} name={newOutfitName} onNameChange={setNewOutfitName} description={newOutfitDescription} onDescriptionChange={setNewOutfitDescription} onCancel={() => setShowOutfitBuilder(false)} onSubmit={createManualOutfit} saving={creatingOutfit} />}
       <div className="grid gap-3 border-2 border-black p-3 sm:grid-cols-2 lg:grid-cols-4"><label className="flex min-h-11 items-center gap-2 border-2 border-black px-3"><Search className="h-4 w-4" aria-hidden="true" /><input value={garmentQuery} onChange={(event) => setGarmentQuery(event.target.value)} className="w-full py-2 text-sm outline-none" placeholder="Search garments" aria-label="Search garments" /></label><select value={garmentCategory} onChange={(event) => setGarmentCategory(event.target.value)} className="min-h-11 border-2 border-black bg-white px-3 py-2 text-sm" aria-label="Filter garments by category"><option value="">All categories</option>{categories.map((value) => <option key={value} value={value}>{value.replaceAll("_", " ")}</option>)}</select><label className="text-xs font-bold">Primary colour<input value={garmentColour} maxLength={50} onChange={(event) => setGarmentColour(event.target.value)} placeholder="Exact stored colour" className="mt-1 min-h-11 w-full border-2 border-black px-3 text-sm" /></label><label className="text-xs font-bold">Style filter<input value={garmentStyle} maxLength={100} onChange={(event) => setGarmentStyle(event.target.value)} placeholder="Exact stored style" className="mt-1 min-h-11 w-full border-2 border-black px-3 text-sm" /></label><select aria-label="Filter garments by availability" value={garmentAvailability} onChange={(event) => setGarmentAvailability(event.target.value as typeof garmentAvailability)} className="min-h-11 border-2 border-black bg-white px-3 py-2 text-sm"><option value="available">Available</option><option value="unavailable">Unavailable / other active status</option><option value="archived">Archived</option><option value="all">All stored garments</option></select><select value={garmentFavourite} onChange={(event) => setGarmentFavourite(event.target.value)} className="min-h-11 border-2 border-black bg-white px-3 py-2 text-sm" aria-label="Filter garments by favourite"><option value="">All favourites</option><option value="true">Favourites only</option><option value="false">Not favourites</option></select><select value={garmentSort} onChange={(event) => setGarmentSort(event.target.value as WardrobeSort)} className="min-h-11 border-2 border-black bg-white px-3 py-2 text-sm" aria-label="Sort garments">{SORT_OPTIONS.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></div>
       <div className="flex min-h-10 items-center justify-between gap-3 text-xs text-zinc-500"><span role="status">{loading ? "Updating garments…" : `${garments.length} garment${garments.length === 1 ? "" : "s"} shown`}</span>{garmentFiltersActive && <button type="button" onClick={resetGarmentFilters} className="inline-flex min-h-10 items-center gap-1 px-2 font-bold text-zinc-700 underline"><X className="h-3.5 w-3.5" aria-hidden="true" /> Clear filters</button>}</div>
-      {loading ? <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" role="status" aria-label="Loading garments">{[0, 1, 2].map((item) => <div key={item} className="ui-skeleton aspect-[4/5] rounded-xl" />)}</div> : garments.length ? <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{garments.map((garment) => <article key={garment.id} className="border-2 border-black bg-white p-3" data-garment-id={garment.id}><div className="flex aspect-square items-center justify-center overflow-hidden bg-zinc-100">{garment.preferred_media_id ? <ProtectedImage mediaId={garment.preferred_media_id} alt={garment.name} className="h-full w-full object-cover" /> : <span className="text-xs text-zinc-500">No reviewed image</span>}</div><div className="mt-3 flex items-start justify-between gap-3"><label className="flex flex-1 items-start gap-2"><input type="checkbox" disabled={garment.status !== "available"} checked={selectedIds.includes(garment.id)} onChange={() => toggleSelection(garment.id)} aria-label={`Select ${garment.name} for outfit`} /><span><strong className="block">{garment.name}</strong><span className="block text-xs">{garment.status ?? "Unknown status"}</span><span className="text-xs text-zinc-500">{garment.category.replaceAll("_", " ")}{garment.primary_colour ? ` · ${garment.primary_colour}` : ""}{garment.pattern ? ` · ${garment.pattern}` : ""}</span></span></label><button type="button" disabled={garment.status !== "available"} className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg disabled:opacity-40" onClick={() => void perform(() => updateGarment(garment.id, { is_favourite: !garment.is_favourite }).then(() => undefined), "Favourite updated.")} aria-label={`${garment.is_favourite ? "Remove" : "Add"} ${garment.name} ${garment.is_favourite ? "from" : "to"} favourites`} aria-pressed={garment.is_favourite}><Heart className={`h-5 w-5 ${garment.is_favourite ? "fill-black" : ""}`} /></button></div><div className="mt-3 flex gap-2"><button type="button" disabled={garment.status !== "available"} onClick={() => setEditingGarment(editingGarment === garment.id ? null : garment.id)} className="inline-flex min-h-10 items-center gap-1 border-2 border-black px-3 py-1 text-xs font-bold"><Pencil className="h-3 w-3" aria-hidden="true" /> Edit</button><button type="button" disabled={garment.status !== "available"} onClick={() => void archiveGarment(garment)} className="flex h-10 w-10 items-center justify-center border-2 border-black text-rose-700" aria-label={`Archive ${garment.name}`}><Trash2 className="h-4 w-4" /></button></div>{garment.status === "available" && editingGarment !== garment.id && <ContextualReviewControls key={`${garment.id}:${garment.contextual_edit?.revision}`} garment={garment} onSaved={load} onError={setError} />}{garment.status === "available" && editingGarment === garment.id && <GarmentEditor garment={garment} onCancel={() => setEditingGarment(null)} onError={setError} onSaved={async () => { setEditingGarment(null); setNotice("Garment updated."); await load(); }} />}</article>)}</div> : <p className="border-2 border-dashed border-zinc-400 p-8 text-center text-sm text-zinc-500">No matching garments. Adjust the filters or add a wardrobe image.</p>}
+      {loading ? <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" role="status" aria-label="Loading garments">{[0, 1, 2].map((item) => <div key={item} className="ui-skeleton aspect-[4/5] rounded-xl" />)}</div> : garments.length ? <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{garments.map((garment) => <article key={garment.id} className="min-w-0 border-2 border-black bg-white p-3 [overflow-wrap:anywhere]" data-garment-id={garment.id}><p className="text-sm">Garment type: {subtypeSummary(garment.verified_subtype)}</p><div className="flex aspect-square items-center justify-center overflow-hidden bg-zinc-100">{garment.preferred_media_id ? <ProtectedImage mediaId={garment.preferred_media_id} alt={garment.name} className="h-full w-full object-cover" /> : <span className="text-xs text-zinc-500">No reviewed image</span>}</div><div className="mt-3 flex items-start justify-between gap-3"><label className="flex flex-1 items-start gap-2"><input type="checkbox" disabled={categoryPolicy.blocked || garment.wearer_category_eligibility?.usable === false || garment.status !== "available"} checked={selectedIds.includes(garment.id)} onChange={() => toggleSelection(garment.id)} aria-label={`Select ${garment.name} for outfit`} /><span><strong className="block">{garment.name}</strong>{garment.wearer_category_eligibility && <span data-testid="garment-wearer-availability" className="block text-xs">{garment.wearer_category_eligibility.usable ? "Usable for selected wearer" : "Shared item; not usable for selected wearer"}</span>}<span className="block text-xs">{garment.status ?? "Unknown status"}</span><span className="text-xs text-zinc-500">{garment.category.replaceAll("_", " ")}{garment.primary_colour ? ` · ${garment.primary_colour}` : ""}{garment.pattern ? ` · ${garment.pattern}` : ""}</span></span></label><button type="button" disabled={garment.status !== "available"} className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg disabled:opacity-40" onClick={() => void perform(() => updateGarment(garment.id, { is_favourite: !garment.is_favourite }).then(() => undefined), "Favourite updated.")} aria-label={`${garment.is_favourite ? "Remove" : "Add"} ${garment.name} ${garment.is_favourite ? "from" : "to"} favourites`} aria-pressed={garment.is_favourite}><Heart className={`h-5 w-5 ${garment.is_favourite ? "fill-black" : ""}`} /></button></div><div className="mt-3 flex gap-2"><button type="button" disabled={garment.status !== "available"} onClick={() => setEditingGarment(editingGarment === garment.id ? null : garment.id)} className="inline-flex min-h-10 items-center gap-1 border-2 border-black px-3 py-1 text-xs font-bold"><Pencil className="h-3 w-3" aria-hidden="true" /> Edit</button><button type="button" disabled={garment.status !== "available"} onClick={() => void archiveGarment(garment)} className="flex h-10 w-10 items-center justify-center border-2 border-black text-rose-700" aria-label={`Archive ${garment.name}`}><Trash2 className="h-4 w-4" /></button></div>{garment.status === "available" && editingGarment !== garment.id && <ContextualReviewControls key={`${garment.id}:${garment.contextual_edit?.revision}`} garment={garment} onSaved={load} onError={setError} />}{garment.status === "available" && editingGarment === garment.id && <GarmentEditor garment={garment} onCancel={() => setEditingGarment(null)} onError={setError} onSaved={async () => { setEditingGarment(null); setNotice("Garment updated."); await load(); }} />}</article>)}</div> : <p className="border-2 border-dashed border-zinc-400 p-8 text-center text-sm text-zinc-500">No matching garments. Adjust the filters or add a wardrobe image.</p>}
       <form onSubmit={createManualOutfit} aria-busy={creatingOutfit} className="grid gap-3 border-2 border-black bg-zinc-50 p-4 sm:grid-cols-2 sm:items-end"><label className="text-sm font-bold">Create an outfit from {selectedIds.length} selected garment(s)<input required maxLength={100} disabled={creatingOutfit} value={newOutfitName} onChange={(event) => setNewOutfitName(event.target.value)} className="mt-1 min-h-11 w-full border-2 border-black bg-white p-2" placeholder="Outfit name" /></label><label className="text-sm font-bold">Description (optional)<input maxLength={500} disabled={creatingOutfit} value={newOutfitDescription} onChange={(event) => setNewOutfitDescription(event.target.value)} className="mt-1 min-h-11 w-full border-2 border-black bg-white p-2" placeholder="When or how you wear it" /></label><button type="submit" disabled={!selectedIds.length || !newOutfitName.trim() || creatingOutfit} className="min-h-11 bg-black px-4 py-3 text-xs font-mono font-black uppercase text-white disabled:opacity-40 sm:col-span-2">{creatingOutfit ? "Saving outfit…" : "Save outfit"}</button></form>
     </>}
 

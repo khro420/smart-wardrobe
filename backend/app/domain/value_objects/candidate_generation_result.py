@@ -36,7 +36,7 @@ class CandidateGenerationResult:
     validity: str = "STRUCTURAL_ONLY"
 
     def __post_init__(self):
-        if self.status not in {"Pending", "Running", "StructuralCandidates", "NoEligibleGarments", "InsufficientStructure", "NoStructuralCandidates", "ProcessingFailure", "Interrupted", "PolicyUnavailable"}:
+        if self.status not in {"Pending", "Running", "StructuralCandidates", "NoEligibleGarments", "InsufficientStructure", "NoStructuralCandidates", "ProcessingFailure", "Interrupted", "PolicyUnavailable", "WardrobeCapacityExceeded"}:
             raise ValueError("Invalid generation status.")
         if not isinstance(self.complete, bool) or isinstance(self.candidate_count, bool) or not isinstance(self.candidate_count, int) or self.candidate_count < 0:
             raise ValueError("Invalid completion metadata.")

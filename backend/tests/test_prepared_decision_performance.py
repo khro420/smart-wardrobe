@@ -1,3 +1,4 @@
+from tests.current_contract_fixtures import wearer_id, wearer, history_scope
 """Differential against untouched 3C-2 plus independent exact arithmetic checks."""
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import replace,FrozenInstanceError
@@ -176,7 +177,7 @@ def test_disposable_persistence_and_completed_history_restore_identical_decision
     reference_test.test_disposable_real_repository_preserves_raw_null_and_exact_replay(store,kind)
     with connect(store[0]) as conn:
         row=conn.execute("SELECT chat_id,id FROM recommendations WHERE recommendation_type='assistant'").fetchone()
-    history=SqliteChatHistoryQuery(store[0]).get("owner",row["chat_id"])
+    history=SqliteChatHistoryQuery(store[0]).get("owner",row["chat_id"],**history_scope("owner",row["chat_id"]))
     record=store[1].get("owner",row["id"])
     assert history["read_only"] and history["recommendation"]["score_metadata"]==record["score_metadata"]
     score=score_from_json(json.dumps(record["score_metadata"]))

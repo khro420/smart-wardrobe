@@ -41,7 +41,8 @@ def read_ratio(value):
 
 def bounded_json(value):
     text=json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False)
-    limit=294912 if type(value) is dict and value.get('version')=='context-relevance-evidence-1.2.0' else MAX_PROOF_BYTES
+    version=value.get('version') if type(value) is dict else None
+    limit=307200 if version in ('context-relevance-evidence-1.3.0','context-relevance-evidence-2.0.0') else 294912 if version=='context-relevance-evidence-1.2.0' else MAX_PROOF_BYTES
     if len(text.encode('utf-8'))>limit:
         raise RelativeEncodingLimit('New-profile encoding exceeds 256 KiB.')
     return text
@@ -56,10 +57,11 @@ def _unique(items):
 
 
 def read_proof(text):
-    if type(text) is not str or len(text.encode('utf-8'))>294912:
+    if type(text) is not str or len(text.encode('utf-8'))>307200:
         raise RelativeEncodingLimit('Invalid or oversized ranking proof.')
     value=json.loads(text,object_pairs_hook=_unique,parse_constant=lambda v:(_ for _ in ()).throw(ValueError(v)))
-    limit=294912 if type(value) is dict and value.get('version')=='context-relevance-evidence-1.2.0' else MAX_PROOF_BYTES
+    version=value.get('version') if type(value) is dict else None
+    limit=307200 if version in ('context-relevance-evidence-1.3.0','context-relevance-evidence-2.0.0') else 294912 if version=='context-relevance-evidence-1.2.0' else MAX_PROOF_BYTES
     if len(text.encode('utf-8'))>limit:raise RelativeEncodingLimit('Oversized archived ranking proof.')
     return value
 

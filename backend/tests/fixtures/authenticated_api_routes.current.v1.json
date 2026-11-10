@@ -1,0 +1,1937 @@
+{
+  "version": "authenticated-api-routes-current-1.0.0",
+  "certified_implementation_inputs": 918,
+  "authenticated_dependencies": 53,
+  "logout_exception": {
+    "module": "app.api.account_routes",
+    "endpoint": "logout",
+    "dependency": "app.infrastructure.security.logout_bearer",
+    "unauthenticated": 401,
+    "first_and_repeated_revoked_logout": 204
+  },
+  "routes": [
+    {
+      "module": "app.api.account_routes",
+      "name": "profile",
+      "path": "/account/profile",
+      "methods": [
+        "GET"
+      ],
+      "id": "account_routes.profile",
+      "json": null,
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {}
+    },
+    {
+      "module": "app.api.account_routes",
+      "name": "update_profile",
+      "path": "/account/profile",
+      "methods": [
+        "PATCH"
+      ],
+      "id": "account_routes.update_profile",
+      "json": {
+        "display_name": "Auth contract"
+      },
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {}
+    },
+    {
+      "module": "app.api.account_routes",
+      "name": "preferences",
+      "path": "/account/preferences",
+      "methods": [
+        "GET"
+      ],
+      "id": "account_routes.preferences",
+      "json": null,
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {}
+    },
+    {
+      "module": "app.api.account_routes",
+      "name": "preference_options",
+      "path": "/account/preference-options",
+      "methods": [
+        "GET"
+      ],
+      "id": "account_routes.preference_options",
+      "json": null,
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {}
+    },
+    {
+      "module": "app.api.account_routes",
+      "name": "upsert_preference",
+      "path": "/account/preferences/{preference_type}",
+      "methods": [
+        "PUT"
+      ],
+      "id": "account_routes.upsert_preference",
+      "json": {
+        "preference_value": {},
+        "weight": 0
+      },
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {
+        "preference_type": "style"
+      }
+    },
+    {
+      "module": "app.api.account_routes",
+      "name": "wardrobe_profiles",
+      "path": "/account/wardrobe-profiles",
+      "methods": [
+        "GET"
+      ],
+      "id": "account_routes.wardrobe_profiles",
+      "json": null,
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {}
+    },
+    {
+      "module": "app.api.account_routes",
+      "name": "create_wardrobe_profile",
+      "path": "/account/wardrobe-profiles",
+      "methods": [
+        "POST"
+      ],
+      "id": "account_routes.create_wardrobe_profile",
+      "json": {
+        "name": "Auth test"
+      },
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {}
+    },
+    {
+      "module": "app.api.account_routes",
+      "name": "delete_wardrobe_profile",
+      "path": "/account/wardrobe-profiles/{wardrobe_profile_id}",
+      "methods": [
+        "DELETE"
+      ],
+      "id": "account_routes.delete_wardrobe_profile",
+      "json": null,
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {
+        "wardrobe_profile_id": "99cc52e8-473e-4192-b6d9-a6fa3227d45c"
+      }
+    },
+    {
+      "module": "app.api.account_routes",
+      "name": "archive_wardrobe_profile",
+      "path": "/account/wardrobe-profiles/{wardrobe_profile_id}/archive",
+      "methods": [
+        "POST"
+      ],
+      "id": "account_routes.archive_wardrobe_profile",
+      "json": null,
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {
+        "wardrobe_profile_id": "99cc52e8-473e-4192-b6d9-a6fa3227d45c"
+      }
+    },
+    {
+      "module": "app.api.account_routes",
+      "name": "attribute_preference_capabilities",
+      "path": "/account/attribute-preference-capabilities",
+      "methods": [
+        "GET"
+      ],
+      "id": "account_routes.attribute_preference_capabilities",
+      "json": null,
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {}
+    },
+    {
+      "module": "app.api.account_routes",
+      "name": "attribute_preferences",
+      "path": "/account/wardrobe-profiles/{wardrobe_profile_id}/attribute-preferences",
+      "methods": [
+        "GET"
+      ],
+      "id": "account_routes.attribute_preferences",
+      "json": null,
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {
+        "wardrobe_profile_id": "99cc52e8-473e-4192-b6d9-a6fa3227d45c"
+      }
+    },
+    {
+      "module": "app.api.account_routes",
+      "name": "update_attribute_preferences",
+      "path": "/account/wardrobe-profiles/{wardrobe_profile_id}/attribute-preferences",
+      "methods": [
+        "PUT"
+      ],
+      "id": "account_routes.update_attribute_preferences",
+      "json": {
+        "contract": "attribute-preferences-update-1.0.0",
+        "wearer_id": "99cc52e8-473e-4192-b6d9-a6fa3227d45c",
+        "expected_revision": "0000000000000000000000000000000000000000000000000000000000000000",
+        "action_id": "11111111-1111-4111-8111-111111111111",
+        "families": {}
+      },
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {
+        "wardrobe_profile_id": "99cc52e8-473e-4192-b6d9-a6fa3227d45c"
+      }
+    },
+    {
+      "module": "app.api.account_routes",
+      "name": "wearer_category_eligibility",
+      "path": "/account/wardrobe-profiles/{wardrobe_profile_id}/category-eligibility",
+      "methods": [
+        "GET"
+      ],
+      "id": "account_routes.wearer_category_eligibility",
+      "json": null,
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {
+        "wardrobe_profile_id": "99cc52e8-473e-4192-b6d9-a6fa3227d45c"
+      }
+    },
+    {
+      "module": "app.api.account_routes",
+      "name": "wardrobe_profile_details",
+      "path": "/account/wardrobe-profiles/{wardrobe_profile_id}/details",
+      "methods": [
+        "GET"
+      ],
+      "id": "account_routes.wardrobe_profile_details",
+      "json": null,
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {
+        "wardrobe_profile_id": "99cc52e8-473e-4192-b6d9-a6fa3227d45c"
+      }
+    },
+    {
+      "module": "app.api.account_routes",
+      "name": "update_wardrobe_profile_details",
+      "path": "/account/wardrobe-profiles/{wardrobe_profile_id}/details",
+      "methods": [
+        "PUT"
+      ],
+      "id": "account_routes.update_wardrobe_profile_details",
+      "json": {
+        "version": "wearer-profile-details-1.0.0",
+        "expected_revision": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gender_identity": "male"
+      },
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {
+        "wardrobe_profile_id": "99cc52e8-473e-4192-b6d9-a6fa3227d45c"
+      }
+    },
+    {
+      "module": "app.api.wardrobe_routes",
+      "name": "quota",
+      "path": "/wardrobe/quota",
+      "methods": [
+        "GET"
+      ],
+      "id": "wardrobe_routes.quota",
+      "json": null,
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {}
+    },
+    {
+      "module": "app.api.wardrobe_routes",
+      "name": "garments",
+      "path": "/wardrobe/garments",
+      "methods": [
+        "GET"
+      ],
+      "id": "wardrobe_routes.garments",
+      "json": null,
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {}
+    },
+    {
+      "module": "app.api.wardrobe_routes",
+      "name": "garment_dependencies",
+      "path": "/wardrobe/garments/{garment_id}/dependencies",
+      "methods": [
+        "GET"
+      ],
+      "id": "wardrobe_routes.garment_dependencies",
+      "json": null,
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {
+        "garment_id": "11111111-1111-4111-8111-111111111111"
+      }
+    },
+    {
+      "module": "app.api.wardrobe_routes",
+      "name": "update_garment",
+      "path": "/wardrobe/garments/{garment_id}",
+      "methods": [
+        "PATCH"
+      ],
+      "id": "wardrobe_routes.update_garment",
+      "json": {
+        "name": "Auth test"
+      },
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {
+        "garment_id": "11111111-1111-4111-8111-111111111111"
+      }
+    },
+    {
+      "module": "app.api.wardrobe_routes",
+      "name": "archive_garment",
+      "path": "/wardrobe/garments/{garment_id}",
+      "methods": [
+        "DELETE"
+      ],
+      "id": "wardrobe_routes.archive_garment",
+      "json": null,
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {
+        "garment_id": "11111111-1111-4111-8111-111111111111"
+      }
+    },
+    {
+      "module": "app.api.wardrobe_routes",
+      "name": "contextual_suitability",
+      "path": "/wardrobe/garments/{garment_id}/contextual-suitability",
+      "methods": [
+        "POST"
+      ],
+      "id": "wardrobe_routes.contextual_suitability",
+      "json": {
+        "revision": "0000000000000000000000000000000000000000000000000000000000000000",
+        "review_style": true
+      },
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {
+        "garment_id": "11111111-1111-4111-8111-111111111111"
+      }
+    },
+    {
+      "module": "app.api.wardrobe_routes",
+      "name": "outfits",
+      "path": "/wardrobe/outfits",
+      "methods": [
+        "GET"
+      ],
+      "id": "wardrobe_routes.outfits",
+      "json": null,
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {}
+    },
+    {
+      "module": "app.api.wardrobe_routes",
+      "name": "outfit_dependencies",
+      "path": "/wardrobe/outfits/{outfit_id}/dependencies",
+      "methods": [
+        "GET"
+      ],
+      "id": "wardrobe_routes.outfit_dependencies",
+      "json": null,
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {
+        "outfit_id": "11111111-1111-4111-8111-111111111111"
+      }
+    },
+    {
+      "module": "app.api.wardrobe_routes",
+      "name": "create_outfit",
+      "path": "/wardrobe/outfits",
+      "methods": [
+        "POST"
+      ],
+      "id": "wardrobe_routes.create_outfit",
+      "json": {
+        "name": "Auth test",
+        "garment_ids": [
+          "11111111-1111-4111-8111-111111111111"
+        ]
+      },
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {}
+    },
+    {
+      "module": "app.api.wardrobe_routes",
+      "name": "update_outfit",
+      "path": "/wardrobe/outfits/{outfit_id}",
+      "methods": [
+        "PATCH"
+      ],
+      "id": "wardrobe_routes.update_outfit",
+      "json": {
+        "name": "Auth test"
+      },
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {
+        "outfit_id": "11111111-1111-4111-8111-111111111111"
+      }
+    },
+    {
+      "module": "app.api.wardrobe_routes",
+      "name": "archive_outfit",
+      "path": "/wardrobe/outfits/{outfit_id}",
+      "methods": [
+        "DELETE"
+      ],
+      "id": "wardrobe_routes.archive_outfit",
+      "json": null,
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {
+        "outfit_id": "11111111-1111-4111-8111-111111111111"
+      }
+    },
+    {
+      "module": "app.api.wardrobe_routes",
+      "name": "garment_subtype",
+      "path": "/wardrobe/garments/{garment_id}/subtype",
+      "methods": [
+        "GET"
+      ],
+      "id": "wardrobe_routes.garment_subtype",
+      "json": null,
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {
+        "garment_id": "11111111-1111-4111-8111-111111111111"
+      }
+    },
+    {
+      "module": "app.api.wardrobe_routes",
+      "name": "review_garment_subtype",
+      "path": "/wardrobe/garments/{garment_id}/subtype",
+      "methods": [
+        "PUT"
+      ],
+      "id": "wardrobe_routes.review_garment_subtype",
+      "json": {
+        "action_id": "11111111-1111-4111-8111-111111111111",
+        "expected_revision": null,
+        "state": "Unspecified",
+        "value": null,
+        "review_basis": "owner_review",
+        "reason": "Disposable authentication contract"
+      },
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {
+        "garment_id": "11111111-1111-4111-8111-111111111111"
+      }
+    },
+    {
+      "module": "app.api.garment_processing_routes",
+      "name": "submit_image",
+      "path": "/processing/jobs",
+      "methods": [
+        "POST"
+      ],
+      "id": "garment_processing_routes.submit_image",
+      "json": null,
+      "multipart": true,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {}
+    },
+    {
+      "module": "app.api.garment_processing_routes",
+      "name": "processing_capabilities",
+      "path": "/processing/jobs/capabilities",
+      "methods": [
+        "GET"
+      ],
+      "id": "garment_processing_routes.processing_capabilities",
+      "json": null,
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {}
+    },
+    {
+      "module": "app.api.garment_processing_routes",
+      "name": "job_history",
+      "path": "/processing/jobs/history",
+      "methods": [
+        "GET"
+      ],
+      "id": "garment_processing_routes.job_history",
+      "json": null,
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {}
+    },
+    {
+      "module": "app.api.garment_processing_routes",
+      "name": "historical_job",
+      "path": "/processing/jobs/{job_id}/history",
+      "methods": [
+        "GET"
+      ],
+      "id": "garment_processing_routes.historical_job",
+      "json": null,
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {
+        "job_id": "11111111-1111-4111-8111-111111111111"
+      }
+    },
+    {
+      "module": "app.api.garment_processing_routes",
+      "name": "get_job",
+      "path": "/processing/jobs/{job_id}",
+      "methods": [
+        "GET"
+      ],
+      "id": "garment_processing_routes.get_job",
+      "json": null,
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {
+        "job_id": "11111111-1111-4111-8111-111111111111"
+      }
+    },
+    {
+      "module": "app.api.garment_processing_routes",
+      "name": "review",
+      "path": "/processing/jobs/{job_id}/review",
+      "methods": [
+        "POST"
+      ],
+      "id": "garment_processing_routes.review",
+      "json": {
+        "items": [
+          {
+            "item_id": "11111111-1111-4111-8111-111111111111",
+            "decision": "rejected"
+          }
+        ]
+      },
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {
+        "job_id": "11111111-1111-4111-8111-111111111111"
+      }
+    },
+    {
+      "module": "app.api.garment_processing_routes",
+      "name": "create_mirror_reconstruction",
+      "path": "/processing/jobs/{job_id}/items/{item_id}/mirror-reconstruction",
+      "methods": [
+        "POST"
+      ],
+      "id": "garment_processing_routes.create_mirror_reconstruction",
+      "json": null,
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {
+        "job_id": "11111111-1111-4111-8111-111111111111",
+        "item_id": "11111111-1111-4111-8111-111111111111"
+      }
+    },
+    {
+      "module": "app.api.garment_processing_routes",
+      "name": "confirm",
+      "path": "/processing/jobs/{job_id}/confirm",
+      "methods": [
+        "POST"
+      ],
+      "id": "garment_processing_routes.confirm",
+      "json": {
+        "save_mode": "garments",
+        "item_ids": [
+          "11111111-1111-4111-8111-111111111111"
+        ]
+      },
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {
+        "job_id": "11111111-1111-4111-8111-111111111111"
+      }
+    },
+    {
+      "module": "app.api.garment_processing_routes",
+      "name": "cancel",
+      "path": "/processing/jobs/{job_id}/cancel",
+      "methods": [
+        "POST"
+      ],
+      "id": "garment_processing_routes.cancel",
+      "json": null,
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {
+        "job_id": "11111111-1111-4111-8111-111111111111"
+      }
+    },
+    {
+      "module": "app.api.recommendation_routes",
+      "name": "capabilities",
+      "path": "/recommendations/capabilities",
+      "methods": [
+        "GET"
+      ],
+      "id": "recommendation_routes.capabilities",
+      "json": null,
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {}
+    },
+    {
+      "module": "app.api.recommendation_routes",
+      "name": "homepage",
+      "path": "/recommendations/homepage",
+      "methods": [
+        "POST"
+      ],
+      "id": "recommendation_routes.homepage",
+      "json": {
+        "wearer_profile_id": "99cc52e8-473e-4192-b6d9-a6fa3227d45c",
+        "submission_key": "auth-contract"
+      },
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {}
+    },
+    {
+      "module": "app.api.recommendation_routes",
+      "name": "list_all",
+      "path": "/recommendations",
+      "methods": [
+        "GET"
+      ],
+      "id": "recommendation_routes.list_all",
+      "json": null,
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {}
+    },
+    {
+      "module": "app.api.recommendation_routes",
+      "name": "create",
+      "path": "/recommendations",
+      "methods": [
+        "POST"
+      ],
+      "id": "recommendation_routes.create",
+      "json": {
+        "wearer_profile_id": "99cc52e8-473e-4192-b6d9-a6fa3227d45c",
+        "request_text": "Going shopping.",
+        "submission_key": "auth-contract"
+      },
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {}
+    },
+    {
+      "module": "app.api.recommendation_routes",
+      "name": "save_as_outfit",
+      "path": "/recommendations/{recommendation_id}/save-as-outfit",
+      "methods": [
+        "POST"
+      ],
+      "id": "recommendation_routes.save_as_outfit",
+      "json": {
+        "name": "Auth test"
+      },
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {
+        "recommendation_id": "11111111-1111-4111-8111-111111111111"
+      }
+    },
+    {
+      "module": "app.api.recommendation_routes",
+      "name": "saved_outfit",
+      "path": "/recommendations/{recommendation_id}/saved-outfit",
+      "methods": [
+        "GET"
+      ],
+      "id": "recommendation_routes.saved_outfit",
+      "json": null,
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {
+        "recommendation_id": "11111111-1111-4111-8111-111111111111"
+      }
+    },
+    {
+      "module": "app.api.visualisation_routes",
+      "name": "person_images",
+      "path": "/visualisations/person-images",
+      "methods": [
+        "GET"
+      ],
+      "id": "visualisation_routes.person_images",
+      "json": null,
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {}
+    },
+    {
+      "module": "app.api.visualisation_routes",
+      "name": "prepare",
+      "path": "/visualisations/prepare",
+      "methods": [
+        "POST"
+      ],
+      "id": "visualisation_routes.prepare",
+      "json": {
+        "recommendation_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {}
+    },
+    {
+      "module": "app.api.visualisation_routes",
+      "name": "create",
+      "path": "/visualisations",
+      "methods": [
+        "POST"
+      ],
+      "id": "visualisation_routes.create",
+      "json": {
+        "person_image_id": "11111111-1111-4111-8111-111111111111",
+        "recommendation_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {}
+    },
+    {
+      "module": "app.api.visualisation_routes",
+      "name": "get",
+      "path": "/visualisations/{visualisation_id}",
+      "methods": [
+        "GET"
+      ],
+      "id": "visualisation_routes.get",
+      "json": null,
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {
+        "visualisation_id": "11111111-1111-4111-8111-111111111111"
+      }
+    },
+    {
+      "module": "app.api.visualisation_routes",
+      "name": "cancel",
+      "path": "/visualisations/{visualisation_id}/cancel",
+      "methods": [
+        "POST"
+      ],
+      "id": "visualisation_routes.cancel",
+      "json": null,
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {
+        "visualisation_id": "11111111-1111-4111-8111-111111111111"
+      }
+    },
+    {
+      "module": "app.api.chat_history_routes",
+      "name": "search",
+      "path": "/chats",
+      "methods": [
+        "GET"
+      ],
+      "id": "chat_history_routes.search",
+      "json": null,
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {}
+    },
+    {
+      "module": "app.api.chat_history_routes",
+      "name": "get",
+      "path": "/chats/{chat_id}",
+      "methods": [
+        "GET"
+      ],
+      "id": "chat_history_routes.get",
+      "json": null,
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {
+        "chat_id": "11111111-1111-4111-8111-111111111111"
+      }
+    },
+    {
+      "module": "app.api.media_routes",
+      "name": "get_media",
+      "path": "/media/{media_id}",
+      "methods": [
+        "GET"
+      ],
+      "id": "media_routes.get_media",
+      "json": null,
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {
+        "media_id": "11111111-1111-4111-8111-111111111111"
+      }
+    },
+    {
+      "module": "app.api.media_routes",
+      "name": "upload_person_image",
+      "path": "/media/person-images",
+      "methods": [
+        "POST"
+      ],
+      "id": "media_routes.upload_person_image",
+      "json": null,
+      "multipart": true,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {}
+    },
+    {
+      "module": "app.api.media_routes",
+      "name": "remove_person_image",
+      "path": "/media/person-images/{person_image_id}",
+      "methods": [
+        "DELETE"
+      ],
+      "id": "media_routes.remove_person_image",
+      "json": null,
+      "multipart": false,
+      "authentication": "app.infrastructure.security.current_user_id",
+      "unauthenticated_status": 401,
+      "revoked_status": 401,
+      "path_values": {
+        "person_image_id": "11111111-1111-4111-8111-111111111111"
+      }
+    }
+  ],
+  "capability_contract": {
+    "version": "current-capability-contract-1.0.0",
+    "active": {
+      "homepage_enabled": true,
+      "assistant_enabled": true,
+      "wearer_category_policy": {
+        "version": "wearer-category-capabilities-2.0.0",
+        "enabled": true,
+        "profile": "gender_category_subtype_v2"
+      },
+      "wearer_identity": {
+        "version": "assistant-wearer-intent-1.0.0",
+        "request_field": "wearer_profile_id",
+        "single_active_auto": true,
+        "multi_active_explicit": true,
+        "archived_history": true
+      },
+      "language_understanding": {
+        "version": "conversational-language-capabilities-1.0.0",
+        "enabled": true,
+        "profile": "conversational_language_v1",
+        "supplement_sha256": "0c75ee730750d147c0ba5a20285688e07732c8e6dad4ca0b9bb4f429c4e91cf8",
+        "interpreter_sha256": "1c58c4890365c5643550818359a4b0a8339e2dd124965446b08e19857c451cab",
+        "examples": [
+          "I'm going out to eat.",
+          "Going to the movies.",
+          "Need an outfit for uni.",
+          "I want a cotton shirt."
+        ],
+        "soft_requests": "Use saved preference settings; no request-local score.",
+        "alternative_requests": "Use the bound Suggest another outfit action; supported ordinary contexts or enabled pure garment requirements."
+      },
+      "attributes": {
+        "version": "attribute-request-capabilities-1.0.0",
+        "enabled": true,
+        "request_version": "attribute-conditions-2.0.0",
+        "grammar_version": "conversational-attribute-grammar-1.1.3",
+        "grammar_sha256": "1c58c4890365c5643550818359a4b0a8339e2dd124965446b08e19857c451cab",
+        "policy_version": "attribute-evidence-policy-2.0.0",
+        "policy_sha256": "772eb60118c333c87c58ec4d88ac39d6829b2d1df62db3ee3c37ac9f79cbefac",
+        "fields": [
+          {
+            "attribute": "garment_name",
+            "operators": [
+              "exact_text"
+            ],
+            "values": [],
+            "dynamic_domain": true,
+            "source_requirements": "Current bounded exact NFC strict-snapshot name; recorded name only, never parsed for hidden attributes.",
+            "default_role": "all_selected",
+            "default_quantifier": "exists"
+          },
+          {
+            "attribute": "category",
+            "operators": [
+              "in"
+            ],
+            "values": [
+              "short_sleeve_top",
+              "long_sleeve_top",
+              "short_sleeve_outwear",
+              "long_sleeve_outwear",
+              "vest",
+              "sling",
+              "shorts",
+              "trousers",
+              "skirt",
+              "short_sleeve_dress",
+              "long_sleeve_dress",
+              "vest_dress",
+              "sling_dress"
+            ],
+            "dynamic_domain": false,
+            "source_requirements": "Existing exact canonical strict category/role rules; category does not prove fine sleeve/neckline.",
+            "default_role": "all_selected",
+            "default_quantifier": "exists"
+          },
+          {
+            "attribute": "style",
+            "operators": [
+              "contains_any",
+              "contains_all"
+            ],
+            "values": [
+              "casual",
+              "classic",
+              "formal",
+              "minimal",
+              "smart casual",
+              "sporty",
+              "streetwear",
+              "vintage",
+              "bohemian"
+            ],
+            "dynamic_domain": false,
+            "source_requirements": "Original saved-style/source/currentness gate for legacy singleton requests; new recorded set operations accept current explicit B0 selection. Ordinary context singleton gate stays authoritative.",
+            "default_role": "base",
+            "default_quantifier": "exists"
+          },
+          {
+            "attribute": "primary_colour",
+            "operators": [
+              "in",
+              "exact_hex"
+            ],
+            "values": [
+              "black",
+              "white",
+              "grey",
+              "navy",
+              "blue",
+              "red",
+              "green",
+              "yellow",
+              "orange",
+              "pink",
+              "purple",
+              "brown",
+              "beige",
+              "cream",
+              "#808080",
+              "#ffc0cb",
+              "#000080",
+              "#ffff00",
+              "#800080",
+              "#ffffff",
+              "#000000",
+              "#ffa500",
+              "#f5f5dc",
+              "#ff0000",
+              "#a52a2a",
+              "#008000",
+              "#0000ff"
+            ],
+            "dynamic_domain": true,
+            "source_requirements": "Existing named primary operations retain original mapper; NEW exact hex needs current explicit selected B0 channel. No fallback-black measurement certification.",
+            "default_role": "all_selected",
+            "default_quantifier": "exists"
+          },
+          {
+            "attribute": "secondary_colour",
+            "operators": [
+              "in",
+              "exact_hex"
+            ],
+            "values": [
+              "black",
+              "white",
+              "grey",
+              "navy",
+              "blue",
+              "red",
+              "green",
+              "yellow",
+              "orange",
+              "pink",
+              "purple",
+              "brown",
+              "beige",
+              "cream",
+              "#808080",
+              "#ffc0cb",
+              "#000080",
+              "#ffff00",
+              "#800080",
+              "#ffffff",
+              "#000000",
+              "#ffa500",
+              "#f5f5dc",
+              "#ff0000",
+              "#a52a2a",
+              "#008000",
+              "#0000ff"
+            ],
+            "dynamic_domain": true,
+            "source_requirements": "Explicit current selected secondary; exact anchors may yield named family; never borrow primary or stale palette[1].",
+            "default_role": "all_selected",
+            "default_quantifier": "exists"
+          },
+          {
+            "attribute": "palette_colour",
+            "operators": [
+              "contains_any",
+              "contains_all",
+              "exact_hex"
+            ],
+            "values": [
+              "black",
+              "white",
+              "grey",
+              "navy",
+              "blue",
+              "red",
+              "green",
+              "yellow",
+              "orange",
+              "pink",
+              "purple",
+              "brown",
+              "beige",
+              "#808080",
+              "#ffc0cb",
+              "#000080",
+              "#ffff00",
+              "#800080",
+              "#ffffff",
+              "#000000",
+              "#ffa500",
+              "#f5f5dc",
+              "#ff0000",
+              "#a52a2a",
+              "#008000",
+              "#0000ff"
+            ],
+            "dynamic_domain": true,
+            "source_requirements": "Current explicit palette selection; exact identity or pinned exact hex anchor family. Cream has no registered anchor and is blocked for palette family matching.",
+            "default_role": "all_selected",
+            "default_quantifier": "exists"
+          },
+          {
+            "attribute": "palette_coverage",
+            "operators": [
+              "coverage_ge"
+            ],
+            "values": [],
+            "dynamic_domain": true,
+            "source_requirements": "Current selected palette exact recorded fraction; unknown mass bounded; no textile/whole-outfit coverage claim.",
+            "default_role": "all_selected",
+            "default_quantifier": "exists"
+          },
+          {
+            "attribute": "pattern",
+            "operators": [
+              "in"
+            ],
+            "values": [
+              "plain",
+              "abstract",
+              "cartoon",
+              "letters, numbers",
+              "camouflage",
+              "check",
+              "dot",
+              "fair isle",
+              "floral",
+              "geometric",
+              "paisley",
+              "stripe",
+              "houndstooth",
+              "herringbone",
+              "chevron",
+              "argyle",
+              "leopard",
+              "snakeskin",
+              "cheetah",
+              "peacock",
+              "zebra",
+              "giraffe",
+              "toile de jouy",
+              "plant"
+            ],
+            "dynamic_domain": false,
+            "source_requirements": "Current explicit B0 owner selection; unregistered predicted labels remain unqualified even with matching spelling.",
+            "default_role": "all_selected",
+            "default_quantifier": "exists"
+          },
+          {
+            "attribute": "silhouette",
+            "operators": [
+              "in"
+            ],
+            "values": [
+              "asymmetrical",
+              "symmetrical",
+              "peplum",
+              "circle",
+              "flare",
+              "fit and flare",
+              "trumpet",
+              "mermaid",
+              "balloon",
+              "bell",
+              "bell bottom",
+              "bootcut",
+              "peg",
+              "pencil",
+              "straight",
+              "a-line",
+              "tent",
+              "baggy",
+              "wide leg",
+              "high low",
+              "curved",
+              "tight",
+              "regular",
+              "loose",
+              "oversized"
+            ],
+            "dynamic_domain": false,
+            "source_requirements": "Current explicit B0 owner observation; no physical fit/size claim or detector-null fallback promotion.",
+            "default_role": "base",
+            "default_quantifier": "exists"
+          },
+          {
+            "attribute": "neckline",
+            "operators": [
+              "in"
+            ],
+            "values": [
+              "collarless",
+              "asymmetric",
+              "crew",
+              "round",
+              "v-neck",
+              "surplice",
+              "oval",
+              "u-neck",
+              "sweetheart",
+              "queen anne",
+              "boat",
+              "scoop",
+              "square",
+              "plunging",
+              "keyhole",
+              "halter",
+              "crossover",
+              "choker",
+              "high",
+              "turtle",
+              "cowl",
+              "straight across",
+              "illusion",
+              "off-the-shoulder",
+              "one shoulder"
+            ],
+            "dynamic_domain": false,
+            "source_requirements": "Current explicit B0 owner observation on applicable upper-body role; no reserved tag parsing.",
+            "default_role": "base_upper_body",
+            "default_quantifier": "exists"
+          },
+          {
+            "attribute": "sleeve_length",
+            "operators": [
+              "in"
+            ],
+            "values": [
+              "sleeveless",
+              "short",
+              "elbow-length",
+              "wrist-length"
+            ],
+            "dynamic_domain": false,
+            "source_requirements": "Current selected fine length consistent with category; no long=>wrist-length or vest=>sleeveless inference.",
+            "default_role": "base_upper_body",
+            "default_quantifier": "exists"
+          },
+          {
+            "attribute": "material",
+            "operators": [
+              "contains_any",
+              "contains_all"
+            ],
+            "values": [
+              "cotton",
+              "denim",
+              "leather",
+              "linen",
+              "silk",
+              "synthetic",
+              "wool"
+            ],
+            "dynamic_domain": false,
+            "source_requirements": "Current B0 owner-selected/reported label membership; no inferred fibre percentage/purity. Unsure blocks both polarities.",
+            "default_role": "all_selected",
+            "default_quantifier": "exists"
+          },
+          {
+            "attribute": "colour_temperature",
+            "operators": [
+              "in"
+            ],
+            "values": [
+              "warm",
+              "cool",
+              "neutral"
+            ],
+            "dynamic_domain": false,
+            "source_requirements": "Explicit current owner observation; neutral fallback without source not accepted.",
+            "default_role": "all_selected",
+            "default_quantifier": "exists"
+          },
+          {
+            "attribute": "colour_dominance",
+            "operators": [
+              "bool_eq"
+            ],
+            "values": [
+              true,
+              false
+            ],
+            "dynamic_domain": false,
+            "source_requirements": "Explicit true/false current owner observation; absent is never false.",
+            "default_role": "all_selected",
+            "default_quantifier": "exists"
+          },
+          {
+            "attribute": "descriptive_tag",
+            "operators": [
+              "contains_any",
+              "contains_all",
+              "exact_text"
+            ],
+            "values": [],
+            "dynamic_domain": true,
+            "source_requirements": "Current explicitly selected literal tag set, reserved namespaces and legacy field tags excluded from new literal request channel.",
+            "default_role": "all_selected",
+            "default_quantifier": "exists"
+          },
+          {
+            "attribute": "condition",
+            "operators": [
+              "in"
+            ],
+            "values": [
+              "clean_intact",
+              "needs_attention"
+            ],
+            "dynamic_domain": false,
+            "source_requirements": "Original Known AppearanceEvidence.current(snapshot), dated owner observation clean_intact/needs_attention. Unknown is unresolved.",
+            "default_role": "all_selected",
+            "default_quantifier": "exists"
+          },
+          {
+            "attribute": "construction_collared",
+            "operators": [
+              "bool_eq"
+            ],
+            "values": [
+              true,
+              false
+            ],
+            "dynamic_domain": false,
+            "source_requirements": "Original current reviewed collared_neckline boolean; no mapping from neckline categories.",
+            "default_role": "all_selected",
+            "default_quantifier": "exists"
+          },
+          {
+            "attribute": "construction_structured",
+            "operators": [
+              "bool_eq"
+            ],
+            "values": [
+              true,
+              false
+            ],
+            "dynamic_domain": false,
+            "source_requirements": "Original current reviewed structured_shape boolean; no inference from style.",
+            "default_role": "all_selected",
+            "default_quantifier": "exists"
+          },
+          {
+            "attribute": "construction_tailored",
+            "operators": [
+              "bool_eq"
+            ],
+            "values": [
+              true,
+              false
+            ],
+            "dynamic_domain": false,
+            "source_requirements": "Original current reviewed tailored_cut boolean; no inference from silhouette.",
+            "default_role": "all_selected",
+            "default_quantifier": "exists"
+          },
+          {
+            "attribute": "verified_subtype",
+            "operators": [
+              "in"
+            ],
+            "values": [
+              "t_shirt",
+              "polo_shirt",
+              "button_up_shirt",
+              "knit_top",
+              "blouse"
+            ],
+            "dynamic_domain": false,
+            "source_requirements": "Owner-confirmed garment type",
+            "default_role": "upper",
+            "default_quantifier": "exists"
+          }
+        ],
+        "roles": [
+          "all_selected",
+          "base",
+          "base_upper_body",
+          "upper",
+          "lower",
+          "one_piece",
+          "outerwear"
+        ],
+        "quantifiers": [
+          "exists",
+          "all_present",
+          "none"
+        ],
+        "bounds": {
+          "groups": 8,
+          "conditions": 16,
+          "values_per_condition": 20,
+          "values_total": 64,
+          "typed_bytes": 32768,
+          "intent_bytes": 65536,
+          "request_codepoints": 500
+        },
+        "blocked_sources": [
+          "Unverified model suggestions",
+          "Unregistered automatic measurement provenance",
+          "Cream palette family without an exact anchor"
+        ],
+        "verified_subtypes": {
+          "contract": "verified-garment-subtypes-1.0.0",
+          "status": "Approved exact isolated registry, 8 November 2026",
+          "field": "verified_subtype",
+          "applies_to_parents": [
+            "short_sleeve_top",
+            "long_sleeve_top"
+          ],
+          "exclusive_per_garment": true,
+          "maximum_values": 1,
+          "entries": [
+            {
+              "id": "t_shirt",
+              "label": "T-shirt",
+              "parents": [
+                "short_sleeve_top",
+                "long_sleeve_top"
+              ],
+              "aliases": [
+                "t-shirt",
+                "t shirt",
+                "tee",
+                "tee shirt"
+              ],
+              "definition": "Owner-confirmed T-shirt product identity, with short or long sleeves. The canonical parent supplies sleeve-category structure; the subtype does not imply a particular neckline, fabric, fit or colour.",
+              "qualification_limit": "A generic top, knitted fabric, crew/V neck, filename or a T-shirt name alone is insufficient. Do not infer short sleeves from the subtype."
+            },
+            {
+              "id": "polo_shirt",
+              "label": "Polo shirt",
+              "parents": [
+                "short_sleeve_top",
+                "long_sleeve_top"
+              ],
+              "aliases": [
+                "polo shirt",
+                "polo"
+              ],
+              "definition": "Owner-confirmed polo-shirt product identity, with a collar and short partial front placket. Short and long sleeve parents are both supported.",
+              "qualification_limit": "A collar alone or a drawing with an ambiguous front line is insufficient. Full-front shirt opening is not this declared identity. Bare polo only matches in a garment-request noun position; play polo does not."
+            },
+            {
+              "id": "button_up_shirt",
+              "label": "Button-up shirt",
+              "parents": [
+                "short_sleeve_top",
+                "long_sleeve_top"
+              ],
+              "aliases": [
+                "button-up shirt",
+                "button up shirt"
+              ],
+              "definition": "Owner-confirmed shirt product identity with a full front button opening, rather than a blouse or polo product identity. No neckline, tailoring or material requirement is inferred.",
+              "qualification_limit": "Button front or collar alone does not distinguish a blouse. Button-down is not an alias: it can describe a collar distinction that this registry does not verify."
+            },
+            {
+              "id": "knit_top",
+              "label": "Knit / sweater top",
+              "parents": [
+                "short_sleeve_top",
+                "long_sleeve_top"
+              ],
+              "aliases": [
+                "knit top",
+                "knitted top",
+                "sweater top"
+              ],
+              "definition": "Owner-confirmed sweater-style knit-top product identity, excluding T-shirt, polo, button-up shirt and blouse identities. Construction details remain separate qualified description fields.",
+              "qualification_limit": "Not every knitted textile is a knit_top. Wool, warmth, ribbing or a name alone does not establish this product identity."
+            },
+            {
+              "id": "blouse",
+              "label": "Blouse",
+              "parents": [
+                "short_sleeve_top",
+                "long_sleeve_top"
+              ],
+              "aliases": [
+                "blouse"
+              ],
+              "definition": "Explicit owner-confirmed blouse product identity. It may have a collar, buttons, different sleeve lengths or many fabrics. Its project eligibility treatment is the separately approved wearer policy.",
+              "qualification_limit": "Colour, floral pattern, silk, image appearance, name, filename or broad top category cannot establish blouse. If the owner cannot distinguish the product identity, retain Unspecified rather than infer."
+            }
+          ],
+          "unknown": "Unknown/Unspecified is an evidence state with null value, never a positive subtype identifier or an allowed-type fallback.",
+          "disambiguation": "These five mutually exclusive project product identities require an explicit owner declaration. They are not an exhaustive universal garment taxonomy or a claim of independently verified visual truth. If multiple identities appear plausible, record Unspecified; do not resolve using gender, material, pattern or a ranking result.",
+          "source_requirement": "Authenticated owner review of the actual current garment/processing item, with current category/media, captured registry digest, event/revision and source provenance. Existing B0 qualification/currentness principles apply through a separate immutable channel.",
+          "model_emitters": [],
+          "measured_emitters": [],
+          "automatic_sources": "No supported subtype model mapping currently exists. No model output is promoted. Future emitter/mapping/quality approval is a separate contract; unsupported suggestions stay non-qualifying.",
+          "other_parents": "The other eleven canonical categories have no subtype obligation in registry v1, unless unresolved earlier blouse evidence requires a separately audited correction.",
+          "legacy_bare_shirt": "Exact existing broad upper-category meaning is retained; it does not establish any of these five subtypes.",
+          "excluded_distinctions": [
+            "Oxford construction",
+            "button-down collar",
+            "unregistered garment subtype",
+            "marketing dark shades without existing precise colour evidence",
+            "fashion/gender inference from appearance"
+          ]
+        },
+        "supported_request_versions": [
+          "attribute-conditions-1.0.0",
+          "attribute-conditions-2.0.0"
+        ],
+        "base_grammar_sha256": "491455b531f5ec0b58d2791b89cb7adda41525d6e97f975d2d5c2de958a7c8a0",
+        "language_supplement_sha256": "0c75ee730750d147c0ba5a20285688e07732c8e6dad4ca0b9bb4f429c4e91cf8"
+      },
+      "attribute_preferences": {
+        "version": "attribute-preference-request-capabilities-1.0.0",
+        "enabled": true,
+        "profile": "attribute_preference_decision_v2",
+        "default": "p1",
+        "explicit_selection_required": true
+      },
+      "palette_compatibility": {
+        "version": "palette-compatibility-capabilities-1.0.0",
+        "enabled": true,
+        "profile": "recorded_palette_compatibility_v1",
+        "policy": "recorded-palette-compatibility-1.0.0",
+        "policy_sha256": "2ecaecea5736252bfbb5f18c6e556f8abbbc03ffb66c8ff6a262b50e9dbb071f",
+        "default": "c1",
+        "explicit_selection_required": true,
+        "independent_appropriateness_validation": "OPEN",
+        "source": "qualified_recorded_owner_palette",
+        "maximum_entries": 5
+      },
+      "context_support": {
+        "version": "context-registry-2.0.0",
+        "situations": [
+          {
+            "id": "ceremony.wedding",
+            "label": "Wedding",
+            "policy_available": true,
+            "example": "Suggest an outfit for wedding"
+          },
+          {
+            "id": "professional.job_interview",
+            "label": "Job interview",
+            "policy_available": true,
+            "example": "Suggest an outfit for job interview"
+          },
+          {
+            "id": "social.date",
+            "label": "Date",
+            "policy_available": true,
+            "example": "Suggest an outfit for date"
+          },
+          {
+            "id": "leisure.beach_visit",
+            "label": "Beach visit",
+            "policy_available": false
+          },
+          {
+            "id": "academic.presentation",
+            "label": "University presentation",
+            "policy_available": true,
+            "example": "Suggest an outfit for university presentation"
+          },
+          {
+            "id": "ceremony.graduation",
+            "label": "Graduation",
+            "policy_available": false
+          },
+          {
+            "id": "outdoor.hiking",
+            "label": "Hiking",
+            "policy_available": false
+          },
+          {
+            "id": "social.meal",
+            "label": "Dinner",
+            "policy_available": true,
+            "example": "Suggest an outfit for dinner"
+          },
+          {
+            "id": "travel.journey",
+            "label": "Travel",
+            "policy_available": true,
+            "example": "Suggest an outfit for ordinary travel day"
+          },
+          {
+            "id": "interview.unspecified",
+            "label": "Interview (domain unspecified)",
+            "policy_available": false
+          },
+          {
+            "id": "presentation.unspecified",
+            "label": "Presentation (domain unspecified)",
+            "policy_available": false
+          },
+          {
+            "id": "everyday.academic_attendance",
+            "label": "Ordinary academic attendance",
+            "policy_available": true,
+            "example": "Suggest an outfit for campus"
+          },
+          {
+            "id": "everyday.shopping",
+            "label": "Ordinary shopping",
+            "policy_available": true,
+            "example": "Suggest an outfit for shopping"
+          },
+          {
+            "id": "everyday.casual_outing",
+            "label": "Ordinary casual outing",
+            "policy_available": true,
+            "example": "Suggest an outfit for casual outing"
+          },
+          {
+            "id": "academic.library_study",
+            "label": "Library study",
+            "policy_available": true,
+            "example": "Suggest an outfit for study at the library"
+          },
+          {
+            "id": "academic.group_study",
+            "label": "Group study",
+            "policy_available": true,
+            "example": "Suggest an outfit for group project meeting at university"
+          },
+          {
+            "id": "professional.office_day",
+            "label": "Office day",
+            "policy_available": true,
+            "example": "Suggest an outfit for office workday"
+          },
+          {
+            "id": "professional.workplace_meeting",
+            "label": "Workplace meeting",
+            "policy_available": true,
+            "example": "Suggest an outfit for workplace meeting"
+          },
+          {
+            "id": "social.birthday_gathering",
+            "label": "Birthday gathering",
+            "policy_available": true,
+            "example": "Suggest an outfit for birthday party"
+          },
+          {
+            "id": "social.house_gathering",
+            "label": "House gathering",
+            "policy_available": true,
+            "example": "Suggest an outfit for casual gathering at a friend's house"
+          },
+          {
+            "id": "leisure.cinema_outing",
+            "label": "Cinema outing",
+            "policy_available": true,
+            "example": "Suggest an outfit for watch a movie"
+          },
+          {
+            "id": "social.cafe_meetup",
+            "label": "Cafe meetup",
+            "policy_available": true,
+            "example": "Suggest an outfit for cafe meetup"
+          },
+          {
+            "id": "leisure.city_sightseeing",
+            "label": "City sightseeing",
+            "policy_available": true,
+            "example": "Suggest an outfit for city sightseeing"
+          }
+        ],
+        "limits": "Ordinary contexts use provisional saved labels without a review requirement. Prototype appearance goals are unvalidated and do not establish dress-code compliance, comfort, weather protection, equipment or safety. Wedding/presentation/interview evidence remains strict. Unsupported modifiers are not ignored.",
+        "bundle_id": "context_18_v1"
+      },
+      "context_ranking": {
+        "version": "context-ranking-capabilities-1.1.0",
+        "profile": "context_relevance_decision_v1",
+        "policy_version": "context-relevance-policy-1.1.0",
+        "catalogue_version": "context-relevance-objectives-1.1.0",
+        "policy_sha256": "0b3396fb639fb63f3a7ec5a7f0a506555dcc2077f9ad19e39322328488969c72",
+        "catalogue_sha256": "4839be5f166aff25cb223b4af09bc8e0346d8a9a5e74fa949bd169862feeeaa9",
+        "objectives": [
+          {
+            "situation": "everyday.shopping",
+            "target": "casual",
+            "authority": "prototype_convention"
+          },
+          {
+            "situation": "everyday.academic_attendance",
+            "target": "casual",
+            "authority": "prototype_convention"
+          },
+          {
+            "situation": "everyday.casual_outing",
+            "target": "casual",
+            "authority": "prototype_convention"
+          },
+          {
+            "situation": "social.date",
+            "target": "smart casual",
+            "authority": "prototype_convention"
+          },
+          {
+            "situation": "social.meal",
+            "target": "smart casual",
+            "authority": "prototype_convention"
+          },
+          {
+            "situation": "academic.library_study",
+            "target": "casual",
+            "authority": "prototype_convention"
+          },
+          {
+            "situation": "academic.group_study",
+            "target": "casual",
+            "authority": "prototype_convention"
+          },
+          {
+            "situation": "professional.office_day",
+            "target": "smart casual",
+            "authority": "prototype_convention"
+          },
+          {
+            "situation": "professional.workplace_meeting",
+            "target": "smart casual",
+            "authority": "prototype_convention"
+          },
+          {
+            "situation": "social.birthday_gathering",
+            "target": "casual",
+            "authority": "prototype_convention"
+          },
+          {
+            "situation": "social.house_gathering",
+            "target": "casual",
+            "authority": "prototype_convention"
+          },
+          {
+            "situation": "leisure.cinema_outing",
+            "target": "casual",
+            "authority": "prototype_convention"
+          },
+          {
+            "situation": "social.cafe_meetup",
+            "target": "casual",
+            "authority": "prototype_convention"
+          },
+          {
+            "situation": "leisure.city_sightseeing",
+            "target": "casual",
+            "authority": "prototype_convention"
+          },
+          {
+            "situation": "travel.journey",
+            "target": "casual",
+            "authority": "prototype_convention"
+          }
+        ],
+        "source_quality": "provisional_recorded_labels",
+        "independent_appropriateness_validation": "OPEN",
+        "bundle_id": "context_18_v1"
+      },
+      "refinement": {
+        "version": "recommendation-refinement-capabilities-1.0.0",
+        "available": true,
+        "profile": "optional_refinement_v1",
+        "ordinary_situations": [
+          "academic.group_study",
+          "academic.library_study",
+          "everyday.academic_attendance",
+          "everyday.casual_outing",
+          "everyday.shopping",
+          "leisure.cinema_outing",
+          "leisure.city_sightseeing",
+          "professional.office_day",
+          "professional.workplace_meeting",
+          "social.birthday_gathering",
+          "social.cafe_meetup",
+          "social.date",
+          "social.house_gathering",
+          "social.meal",
+          "travel.journey"
+        ],
+        "categories": [
+          "long_sleeve_dress",
+          "long_sleeve_outwear",
+          "long_sleeve_top",
+          "short_sleeve_dress",
+          "short_sleeve_outwear",
+          "short_sleeve_top",
+          "shorts",
+          "skirt",
+          "sling",
+          "sling_dress",
+          "trousers",
+          "vest",
+          "vest_dress"
+        ],
+        "shortcuts": {
+          "Dresses": [
+            "long_sleeve_dress",
+            "short_sleeve_dress",
+            "sling_dress",
+            "vest_dress"
+          ],
+          "Shorts": [
+            "shorts"
+          ],
+          "Trousers": [
+            "trousers"
+          ],
+          "Outerwear": [
+            "long_sleeve_outwear",
+            "short_sleeve_outwear"
+          ]
+        },
+        "max_results": 10,
+        "typed_input_only": true
+      },
+      "garment_continuation": {
+        "version": "garment-only-continuation-capabilities-1.0.0",
+        "available": true,
+        "profile": "garment_only_refinement_v1",
+        "max_results": 10
+      }
+    },
+    "inactive": {
+      "homepage_enabled": false,
+      "assistant_enabled": false,
+      "wearer_category_policy": {
+        "version": "wearer-category-capabilities-1.0.0",
+        "enabled": false,
+        "profile": "gender_category_v1"
+      },
+      "wearer_identity": {
+        "version": "assistant-wearer-intent-1.0.0",
+        "request_field": "wearer_profile_id",
+        "single_active_auto": true,
+        "multi_active_explicit": true,
+        "archived_history": true
+      },
+      "attributes": {
+        "version": "attribute-request-capabilities-1.0.0",
+        "enabled": false,
+        "request_version": "attribute-conditions-1.0.0",
+        "grammar_version": null,
+        "grammar_sha256": null,
+        "policy_version": null,
+        "policy_sha256": null,
+        "fields": [],
+        "roles": [],
+        "quantifiers": [],
+        "bounds": {},
+        "blocked_sources": []
+      },
+      "attribute_preferences": {
+        "version": "attribute-preference-request-capabilities-1.0.0",
+        "enabled": false,
+        "profile": "attribute_preference_decision_v2",
+        "default": "p1",
+        "explicit_selection_required": true
+      },
+      "palette_compatibility": {
+        "version": "palette-compatibility-capabilities-1.0.0",
+        "enabled": false,
+        "profile": "recorded_palette_compatibility_v1",
+        "default": "c1",
+        "explicit_selection_required": true
+      },
+      "garment_continuation": {
+        "version": "garment-only-continuation-capabilities-1.0.0",
+        "available": false,
+        "profile": "garment_only_refinement_v1",
+        "max_results": 10
+      }
+    },
+    "active_authority": {
+      "path": "retained://consolidated_regression_corrections_20261108/LIVE_CAPABILITIES.json",
+      "sha256": "3974a83eece649b0a9cc0d3ed79b08100b074773b590957416613e00fa1989d4"
+    },
+    "meaning": "Closed keys and values of the approved current profile; no change to historical six-key expectations or numerical oracles."
+  },
+  "ownership_contract": {
+    "global_or_account_scoped": "No cross-owner object reference is accepted; lists expose only current account and capabilities contain no owner records.",
+    "shared_garments": "Same-account wearers share inventory; a different account profile is refused.",
+    "profile_paths": "Foreign owner profile or conflicting path/header denied.",
+    "history": "Current captured wearer required; foreign owner and other wearer denied.",
+    "expected_denials": {
+      "foreign_profile_header": 404,
+      "foreign_object": 404,
+      "conflicting_category_profile_header": 409
+    }
+  }
+}

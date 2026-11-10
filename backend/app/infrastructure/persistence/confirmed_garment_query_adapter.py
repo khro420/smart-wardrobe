@@ -157,6 +157,37 @@ class SqliteConfirmedGarmentQuery(ConfirmedGarmentQuery):
             ).fetchall()
         return tuple(_snapshot(row) for row in rows)
 
+    def get_confirmed_garment_subtypes(self,user_id):
+        from app.application.wardrobe.verified_subtype_service import store
+        from app.domain.value_objects.verified_garment_subtype import project,encode
+        from app.shared_contracts.confirmed_garment_subtype import ConfirmedGarmentSubtype
+        with self._connection() as conn:
+            rows=conn.execute("SELECT g.* FROM garments g JOIN processing_items p ON p.id=g.processing_item_id JOIN processing_jobs j ON j.id=p.job_id WHERE g.user_id=? AND g.status='available' AND p.review_status='confirmed' AND j.user_id=g.user_id AND j.status='completed' ORDER BY g.is_favourite DESC,g.updated_at DESC,g.id ASC",(user_id,)).fetchall()
+            if len(rows)>100:raise ValueError('SubtypeCapacityExceeded')
+            events=store().collection(conn,user_id)
+            return tuple(ConfirmedGarmentSubtype(row['id'],encode(project(row,user_id,events.get(row['id'],[])))) for row in rows)
+
+    def get_confirmed_garment_descriptions(self, user_id, policy):
+        """One captured strict collection, paired with a separate immutable format."""
+        from app.application.wardrobe.description_policy import DescriptionPolicy
+        from app.application.wardrobe.description_projector import project
+        from app.shared_contracts.confirmed_garment_description import ConfirmedGarmentDescription
+        if not isinstance(policy, DescriptionPolicy):
+            raise ValueError('DescriptionUnavailable')
+        with self._connection() as conn:
+            rows = conn.execute(
+                "SELECT g.* FROM garments g "
+                "JOIN processing_items p ON p.id=g.processing_item_id "
+                "JOIN processing_jobs j ON j.id=p.job_id "
+                "WHERE g.user_id=? AND g.status='available' "
+                "AND p.review_status='confirmed' AND j.user_id=g.user_id AND j.status='completed' "
+                "ORDER BY g.is_favourite DESC, g.updated_at DESC, g.id ASC",
+                (user_id,),
+            ).fetchall()
+        if len(rows) > 100:
+            raise ValueError('DescriptionCapacityExceeded')
+        return tuple(ConfirmedGarmentDescription(_snapshot(row), project(row, user_id, policy)) for row in rows)
+
 
 @lru_cache(maxsize=1)
 def get_confirmed_garment_query() -> ConfirmedGarmentQuery:

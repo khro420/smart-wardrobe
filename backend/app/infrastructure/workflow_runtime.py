@@ -1,3 +1,4 @@
+from app.infrastructure.ai.mirrored_garment_reconstruction import reconstruct_mirrored_garment_png
 """Concrete bindings used only by the FastAPI composition root."""
 from app.application.ports.workflow_runtime import WorkflowRuntime, configure_workflow
 from app.infrastructure.ai.garment_segmentation_adapter import get_garment_adapter
@@ -33,11 +34,31 @@ class ProtectedMediaAdapter:
 
 def configure_local_workflow():
     import os
+    from app.application.wardrobe.wearer_category_service import configure as configure_categories, ENVIRONMENT_KEY as CATEGORY_KEY
+    category_policy=configure_categories(os.getenv(CATEGORY_KEY,'disabled'))
+    from app.application.wardrobe.description_policy import select_policy, ENVIRONMENT_KEY as DESCRIPTION_KEY
+    description_policy = select_policy(os.getenv(DESCRIPTION_KEY, 'disabled'))
+    from app.application.recommendation.attribute_execution_selection import AttributeExecutionSelection,ENVIRONMENT_KEY as ATTRIBUTE_KEY
+    attributes=AttributeExecutionSelection(os.getenv(ATTRIBUTE_KEY,'disabled'))
+    language_profile=os.getenv('SMART_WARDROBE_ASSISTANT_LANGUAGE_PROFILE','disabled')
+    if language_profile not in ('disabled','conversational_language_v1') or language_profile!='disabled' and not attributes.enabled:
+        raise ValueError('Invalid conversational language profile/dependencies.')
+    if attributes.enabled and os.getenv('SMART_WARDROBE_ASSISTANT_ENABLED','false').lower()!='true':
+        raise ValueError('Attribute requests require the integrated Assistant.')
     from app.application.recommendation.assistant_execution_selection import AssistantExecutionSelection, ENVIRONMENT_KEY as EXECUTION_KEY, DEFAULT_ENGINE
     from app.application.recommendation.assistant_scoring_selection import AssistantScoringSelection, ENVIRONMENT_KEY as SCORING_KEY, DEFERRED
     # Reject invalid server settings at startup, including disabled integration.
     execution = AssistantExecutionSelection(os.getenv(EXECUTION_KEY,DEFAULT_ENGINE))
     scoring = AssistantScoringSelection(os.getenv(SCORING_KEY,DEFERRED))
+    from app.application.recommendation.attribute_preference_policy import configure as configure_preferences, ENVIRONMENT_KEY as PREFERENCE_KEY
+    from app.application.recommendation.assistant_scoring_selection import DECISION
+    preference_policy=configure_preferences(os.getenv(PREFERENCE_KEY,'disabled'),dependencies=(
+        attributes.enabled and description_policy is not None and scoring.profile==DECISION
+        and os.getenv('SMART_WARDROBE_ASSISTANT_CONTEXT_BUNDLE')=='context_18_v1'
+        and os.getenv('SMART_WARDROBE_ASSISTANT_CONTEXT_PROFILE')=='general_context_v1'
+        and os.getenv('SMART_WARDROBE_ASSISTANT_CONTEXT_RANKING_PROFILE')=='context_relevance_decision_v1'))
+    from app.application.recommendation.palette_compatibility_policy import configure as configure_palette,ENVIRONMENT_KEY as PALETTE_KEY
+    palette_policy=configure_palette(os.getenv(PALETTE_KEY,'disabled'),dependencies=(attributes.enabled and description_policy is not None and scoring.profile==DECISION and os.getenv('SMART_WARDROBE_ASSISTANT_CONTEXT_BUNDLE')=='context_18_v1' and os.getenv('SMART_WARDROBE_ASSISTANT_CONTEXT_PROFILE')=='general_context_v1' and os.getenv('SMART_WARDROBE_ASSISTANT_CONTEXT_RANKING_PROFILE')=='context_relevance_decision_v1'))
     from app.application.recommendation.contextual_selection import contextual_selection
     contextual = contextual_selection()
     context_ranking=os.getenv('SMART_WARDROBE_ASSISTANT_CONTEXT_RANKING_PROFILE','disabled')
@@ -90,11 +111,38 @@ def configure_local_workflow():
         if contextual is not None:
             # Both opt-in profiles supply paired interpretation and fresh evaluator construction.
             interpreter, evaluator = contextual
-        configure_assistant_service(OutfitAssistantService(interpreter,RequestCandidateEngine(get_confirmed_garment_query(),evaluator_factory=evaluator),SqliteActivePreferenceQuery(),SqliteRecommendationRepository(),scoring_profile=scoring.profile,execution_engine=execution.engine,context_ranking_profile=context_ranking,refinement_profile=refinement))
+        attribute_pipeline=None
+        repository=SqliteRecommendationRepository()
+        if attributes.enabled:
+            from app.application.recommendation.attribute_request_pipeline import AttributeRequestPipeline
+            attribute_pipeline=AttributeRequestPipeline(interpreter,description_policy)
+            if language_profile!='disabled':
+                from app.application.recommendation.conversational_request_pipeline import select_language
+                interpreter,attribute_pipeline=select_language(language_profile,description_policy,interpreter)
+            repository=SqliteRecommendationRepository(description_policy=description_policy)
+        from app.infrastructure.persistence.attribute_preference_query_adapter import SqliteAttributePreferenceQuery
+        preference_query=SqliteAttributePreferenceQuery(repository.database_path,preference_policy) if preference_policy is not None else None
+        repository.preference_policy=preference_policy
+        repository.compatibility_policy=palette_policy
+        repository.attribute_preference_query=preference_query
+        configure_assistant_service(OutfitAssistantService(interpreter,RequestCandidateEngine(get_confirmed_garment_query(),evaluator_factory=evaluator),SqliteActivePreferenceQuery(),repository,scoring_profile=scoring.profile,execution_engine=execution.engine,context_ranking_profile=context_ranking,refinement_profile=refinement,attribute_pipeline=attribute_pipeline,preference_policy=preference_policy,attribute_preference_query=preference_query,compatibility_policy=palette_policy,garment_refinement_profile=os.getenv('SMART_WARDROBE_GARMENT_ONLY_REFINEMENT_PROFILE','disabled')))
+    subtype_profile=os.getenv('SMART_WARDROBE_VERIFIED_SUBTYPE_PROFILE','disabled')
+    subtype_store=None
+    if subtype_profile not in ('disabled','verified_subtype_v1'):raise ValueError('Unknown verified subtype profile.')
+    subtype_category=os.getenv(CATEGORY_KEY,'disabled')=='gender_category_subtype_v2'
+    if (subtype_profile!='disabled')!=subtype_category:raise ValueError('Inconsistent subtype eligibility profiles.')
+    if subtype_category:
+        if not (attributes.enabled and description_policy is not None and language_profile=='conversational_language_v1'):raise ValueError('Verified subtype dependencies unavailable.')
+        from app.infrastructure.persistence.garment_subtype_repository import SqliteGarmentSubtypeStore
+        from app.domain.value_objects.verified_garment_subtype import registry
+        registry();subtype_store=SqliteGarmentSubtypeStore()
+        with postgresql_repository.connection() as subtype_conn:subtype_store.initialize(subtype_conn)
     configure_workflow(WorkflowRuntime(
         database=LocalWorkflowRepository(), media=ProtectedMediaAdapter(),
         segmentation=get_garment_adapter, standardisation=get_standardisation_adapter,
         attributes=get_attribute_adapter, confirmed_writer=WardrobeWriter(),
+        mirror=reconstruct_mirrored_garment_png,
+        description_policy=description_policy, category_policy=category_policy, subtype_store=subtype_store,
     ))
     configure_visualisation(VisualisationRuntime(
         repository=LocalWorkflowRepository(),

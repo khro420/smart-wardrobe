@@ -44,6 +44,19 @@ def score_from_json(text):
                       parse_constant=lambda x: (_ for _ in ()).throw(ValueError(x)))
     if not isinstance(data, dict) or set(data) != {"request_match", "compatibility", "preference", "total", "profile_name", "policy_version", "weights"}:
         raise ValueError("Versioned recommendation score metadata required.")
+    from app.domain.value_objects.palette_compatibility import PROFILES
+    if data['profile_name'] in PROFILES.values():
+        from app.application.recommendation.palette_compatibility_codec import score_from_data
+        if len(text.encode('utf-8'))>262144:raise ValueError('C2 score exceeds unchanged limit.')
+        return score_from_data(data)
+    from app.domain.value_objects.attribute_preferences import PROFILE as P2,DECISION as P2_POLICY
+    if data['profile_name']==P2:
+        from dataclasses import replace
+        from app.domain.value_objects.context_relevance import read_ratio
+        if len(text.encode('utf-8'))>262144 or data['policy_version']!=P2_POLICY:raise ValueError('Invalid P2 score version or budget.')
+        numeric=_ratios(data,lambda value:{'numerator':read_ratio(value).numerator,'denominator':read_ratio(value).denominator})
+        baseline=CompatibilityDecisionPolicy.load();numeric.update(profile_name=baseline.name,policy_version=baseline.version)
+        return replace(score_from_json(json.dumps(numeric)),profile_name=P2,policy_version=P2_POLICY)
     if data['profile_name']=='context_relevance_decision_v1':
         from dataclasses import replace
         from app.domain.value_objects.context_relevance import read_ratio,bounded_json
@@ -77,8 +90,25 @@ def score_from_json(text):
 
 
 def score_to_json(score):
+    from app.domain.value_objects.palette_compatibility import PROFILES
+    if isinstance(score,RecommendationScore) and score.profile_name in PROFILES.values():
+        from app.application.recommendation.palette_compatibility_codec import score_to_json as palette_json
+        return palette_json(score)
     if not isinstance(score, RecommendationScore) or not isinstance(score.compatibility, DecisionCompatibilityComponent):
         raise ValueError("Explicit decision score required.")
+    from app.domain.value_objects.attribute_preferences import PROFILE as P2,DECISION as P2_POLICY
+    if score.profile_name==P2:
+        from dataclasses import replace
+        from app.domain.value_objects.context_relevance import ratio
+        if score.policy_version!=P2_POLICY:raise ValueError('Unknown P2 scoring version.')
+        baseline=CompatibilityDecisionPolicy.load()
+        old=json.loads(score_to_json(replace(score,profile_name=baseline.name,policy_version=baseline.version)))
+        old.update(profile_name=P2,policy_version=P2_POLICY)
+        data=_ratios(old,lambda value:ratio(F(value['numerator'],value['denominator'])))
+        text=json.dumps(data,sort_keys=True,separators=(',',':'),allow_nan=False)
+        if len(text.encode('utf-8'))>262144:raise ValueError('P2 score metadata exceeds unchanged256KiB.')
+        if score_from_json(text)!=score:raise ValueError('P2 exact score replay mismatch.')
+        return text
     if score.profile_name=='context_relevance_decision_v1':
         from dataclasses import replace
         from app.domain.value_objects.context_relevance import ratio,bounded_json

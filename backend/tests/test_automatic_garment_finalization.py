@@ -118,9 +118,9 @@ def test_completed_job_is_required_even_for_a_forged_confirmed_link(automatic_ap
 def test_cancellation_wins_and_new_namespaces_are_protected(automatic_api,monkeypatch):
     client,_=automatic_api
     original=processing.runtime().confirmed_writer.save_automatically_processed_candidates
-    def cancel_first(job,user,item_ids=None):
+    def cancel_first(job,user,item_ids=None,profile_id=None):
         from app.application.garment_processing.processing_job_service import cancel_job
-        cancel_job(job,user)
+        cancel_job(job,user,profile_id)
         return original(job,user,item_ids)
     monkeypatch.setattr(processing.runtime().confirmed_writer,'save_automatically_processed_candidates',cancel_first)
     job=upload(client);assert job['status']=='cancelled' and garments(client)==[]

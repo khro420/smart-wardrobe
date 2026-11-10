@@ -7,7 +7,10 @@ library (Figure 4.8). The SQL session is the local repository's transaction port
 from contextlib import AbstractContextManager
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Callable, Protocol
+from typing import Any, Callable, Protocol, TYPE_CHECKING, Literal
+
+if TYPE_CHECKING:
+    from app.application.wardrobe.description_policy import DescriptionPolicy
 
 from app.application.ports.garment_attribute_port import GarmentAttributePort
 from app.application.ports.garment_segmentation_port import GarmentSegmentationPort
@@ -26,6 +29,17 @@ class ProtectedMediaPort(Protocol):
     async def store_image(self, upload: Any, user_id: str, media_type: str) -> str: ...
 
 
+class MirrorResult(Protocol):
+    png_bytes: bytes
+    seam_side: str
+    source_size: tuple[int,int]
+    edge_coverage: dict[str,float]
+
+
+class MirrorProvider(Protocol):
+    def __call__(self,payload: bytes,mirrored_side: Literal["left","right"]="right") -> MirrorResult | None: ...
+
+
 @dataclass(frozen=True)
 class WorkflowRuntime:
     database: DatabasePort
@@ -35,6 +49,10 @@ class WorkflowRuntime:
     attributes: Callable[[], GarmentAttributePort]
     confirmed_writer: ConfirmedGarmentWriter
     embedding_dimension: int = 768
+    description_policy: 'DescriptionPolicy | None' = None
+    mirror: MirrorProvider | None = None
+    category_policy: str | None = None
+    subtype_store: object | None = None
 
 
 _runtime: WorkflowRuntime | None = None
@@ -77,3 +95,9 @@ def get_standardisation_adapter():
 
 def get_attribute_adapter():
     return runtime().attributes()
+
+
+def reconstruct_mirrored_garment_png(payload: bytes,mirrored_side: Literal["left","right"]="right") -> MirrorResult | None:
+    provider=runtime().mirror
+    if provider is None:raise RuntimeError("The mirror presentation provider has not been configured.")
+    return provider(payload,mirrored_side)

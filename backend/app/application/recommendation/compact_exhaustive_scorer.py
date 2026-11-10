@@ -3,6 +3,7 @@ from app.application.recommendation.general_context_evaluator import GeneralCont
 from dataclasses import asdict
 from time import perf_counter
 from threading import Lock
+import json
 from app.application.recommendation.compact_candidate_stream import groups,enumerate_indexes,key,materialize
 from app.application.recommendation.structural_policy import StructuralPolicy
 from app.application.recommendation.compact_mandatory_verifier import CompactMandatoryFacts,CompactEligibilityVerifier,state_of,PASS,FAIL
@@ -31,6 +32,7 @@ from app.domain.value_objects.compact_recommendation import Measure
 from app.shared_contracts.confirmed_garment_query import ConfirmedGarmentQuery
 from app.domain.value_objects.context_relevance import RelativeEncodingLimit
 from app.domain.value_objects.recommendation_refinement import RefinementError
+from app.application.recommendation.garment_only_refinement_selection import is_garment
 
 DEFERRED='compatibility_deferred'
 EXPERIMENTAL='experimental_compatibility_decision_v1'
@@ -56,13 +58,18 @@ def numeric_key(score):
 
 class CompactExhaustiveScorer:
     def __init__(self,query,preference_query,profile=EXPERIMENTAL,*,evaluator_type=RequestConstraintEvaluator,
-                 audit=None,checkpoint=None,stream_factory=enumerate_indexes,pair_capacity=19900,aggregation_capacity=256,diagnostics=False,context_ranking=False):
+                 audit=None,checkpoint=None,stream_factory=enumerate_indexes,pair_capacity=19900,aggregation_capacity=256,diagnostics=False,context_ranking=False,attribute_context=None,attribute_verifier=None,preference_context=None,compatibility_context=None):
         self.query,self.preference_query,self.profile=query,preference_query,profile
         self.evaluator_type,self.audit,self.checkpoint,self.stream_factory=evaluator_type,audit,checkpoint,stream_factory
         self.pair_capacity,self.aggregation_capacity=pair_capacity,aggregation_capacity
         self.instrument=diagnostics; self.timings={}; self.cache_statistics={};self.public_session=None
         self._lock=Lock()
         self.context_ranking=context_ranking
+        if (attribute_context is None)!=(attribute_verifier is None):raise ValueError('Both attribute admission and verifier required.')
+        self.attribute_context,self.attribute_verifier=attribute_context,attribute_verifier
+        self.attribute_ledger=None
+        self.preference_context=preference_context
+        self.compatibility_context=compatibility_context
 
     def _event(self,stage,*args):
         if self.checkpoint is not None:self.checkpoint(stage,*args)
@@ -70,6 +77,9 @@ class CompactExhaustiveScorer:
     def rank(self,user_id,request,refinement_plan=None):
         if not self._lock.acquire(blocking=False):return RankingOutcome('InvalidScoringInput')
         self.timings={};self.cache_statistics={};self.public_session=None
+        if self.attribute_context is not None:
+            from app.application.recommendation.attribute_condition_evaluator import AttributeLedger
+            self.attribute_ledger=AttributeLedger()
         experimental=self.profile==EXPERIMENTAL
         seen=scored=examined=failed=unknown=0; best=None; stream=None; diagnostics=()
         tracker=None;ranking_evidence=None;filtered=None
@@ -82,15 +92,18 @@ class CompactExhaustiveScorer:
                 extra=(('accepted_examined',str(seen)),('numerically_scored',str(scored)),('compatibility_unknown',str(compat_unknown)),('compatibility_not_applicable',str(not_applicable)))
                 extra=(*extra,*counts,*tuple(('decision_basis:'+name,str(n)) for name,n in basis.items()),('atomic_known',str(atomic_known)),('atomic_possible',str(atomic_possible)))
             else:extra=()
-            count=tracker.points if tracker is not None and tracker.relative else scored
+            count=tracker.points if tracker is not None and (tracker.relative or is_garment(refinement_plan)) else scored
             summary=None
             if refinement_plan is not None and filtered is not None and tracker is not None:
                 from app.application.recommendation.refinement_selector import outcome_summary
                 summary=outcome_summary(refinement_plan,filtered,tracker,failed,unknown,status)
+            if self.attribute_ledger is not None:
+                extra=(*extra,('attribute_coverage',json.dumps(self.attribute_ledger.snapshot(),sort_keys=True,separators=(',',':'))),('attribute_unseen_unknown',str(self.attribute_ledger.unseen_unknown)))
             return RankingOutcome(status,winner,complete,count,(*diagnostics,*extra),ranking_evidence,summary)
         try:
             start=perf_counter()
             if self.profile not in (DEFERRED,EXPERIMENTAL):return finish('ProfileUnavailable')
+            if (self.preference_context is not None or self.compatibility_context is not None) and not experimental:return finish('ProfileUnavailable')
             try:
                 raw_policy=RuleBasedCompatibilityPolicy.load() if experimental else None
                 profile=CompatibilityDecisionPolicy.load() if experimental else ScoringProfile.load(DEFERRED)
@@ -118,16 +131,38 @@ class CompactExhaustiveScorer:
             expected_count=(len(slots['upper'])*len(slots['lower'])+len(slots['one_piece']))*(1+len(slots['outerwear']))
             composition_order={roles:n for n,roles in enumerate(StructuralPolicy.load().compositions)}
             membership={role:frozenset(items) for role,items in slots.items()};previous_position=None
-            preferences=PreferenceNormalizer().normalize(user_id,self.preference_query.get_active_preferences(user_id))
+            captured_rows=tuple(self.preference_query.get_active_preferences(user_id))
+            if self.preference_context is not None:
+                if user_id!=self.preference_context.account_id or captured_rows!=self.preference_context.snapshot.legacy_rows():raise InvalidPreferenceData('P2 preference capture mismatch.')
+                if any(g.garment_id not in self.preference_context.by_id or self.preference_context.by_id[g.garment_id].snapshot!=g for g in garments):raise InvalidScoringInput('P2 strict collection mismatch.')
+                self.preference_context.bind_request(request)
+                preferences=self.preference_context.composed.legacy
+            else:preferences=PreferenceNormalizer().normalize(user_id,captured_rows)
             diagnostics=(*diagnostics,*preferences.diagnostics)
             primary=CompactMandatoryFacts(garments,request,self.evaluator_type)
             independent=CompactEligibilityVerifier(user_id,garments,request,self.evaluator_type)
             facts=CompactScoringFacts(garments,request,preferences,raw_policy,profile.weights,experimental,self.pair_capacity,self.aggregation_capacity)
+            if self.compatibility_context is not None:
+                from app.application.recommendation.palette_compatibility_selection import PaletteFacts
+                if self.compatibility_context.user!=user_id:raise InvalidScoringInput('C2 owner mismatch.')
+                facts=PaletteFacts(facts,self.compatibility_context,garments)
+            if self.preference_context is not None:
+                from app.application.recommendation.attribute_preference_relative_facts import P2CompactFacts
+                facts=P2CompactFacts(facts,self.preference_context,garments)
             if self.context_ranking:
                 from app.application.recommendation.context_relevance_scorer import applies,PreparedRelativeFacts,RelativeTracker
                 if not experimental:return finish('ProfileUnavailable')
                 if getattr(request,'context',None) is not None and request.context.bundle_id!=getattr(self.evaluator_type,'bundle_id','legacy_8_v1'):return finish('ProfileUnavailable')
-                if applies(request):tracker=RelativeTracker(PreparedRelativeFacts(garments,request,preferences),refinement_plan)
+                if applies(request):
+                    if self.preference_context is None:tracker=RelativeTracker(PreparedRelativeFacts(garments,request,preferences),refinement_plan)
+                    else:
+                        from app.application.recommendation.attribute_preference_relative_facts import P2RelativeTracker,P2RelativeFacts
+                        tracker=P2RelativeTracker(P2RelativeFacts(garments,request,preferences,self.preference_context,facts),refinement_plan)
+            if self.compatibility_context is not None and tracker is not None:
+                from app.application.recommendation.palette_compatibility_selection import PaletteTracker,PaletteP2Tracker
+                tracker=(PaletteTracker if self.preference_context is None else PaletteP2Tracker)(tracker.facts,refinement_plan)
+            from app.application.recommendation.garment_only_refinement_selection import GarmentTracker
+            if is_garment(refinement_plan):tracker=GarmentTracker(garments,refinement_plan)
             if refinement_plan is not None and tracker is None:return finish('RefinementUnavailable')
             self.timings['preparation']=perf_counter()-start
             # Reconstructor is used only for audit or the completed winning item.
@@ -150,16 +185,24 @@ class CompactExhaustiveScorer:
                 if compact is None:return candidate,evaluation,None
                 verified=gate.verify(EvaluatedCandidate(candidate,evaluation))
                 r,p=public_r.score(verified),public_p.score(verified,preferences)
-                c=public_decision.apply(public_c.score(verified),structures[roles]) if experimental else ComponentScore(ScoreEvidence('compatibility',None,'Unavailable'))
+                c=(self.compatibility_context.public(verified) if self.compatibility_context is not None else public_decision.apply(public_c.score(verified),structures[roles])) if experimental else ComponentScore(ScoreEvidence('compatibility',None,'Unavailable'))
                 public=RecommendationScore(r,c,p,sum(w*x.contribution for w,x in zip(profile.weights,(r,c,p))),profile.name,profile.version,profile.weights)
                 if relative_point:
                     public=tracker.facts.public(verified,public)
                     r,p=public.request_match,public.preference
+                elif self.preference_context is not None:
+                    from app.application.recommendation.attribute_preference_relative_facts import public_score
+                    p=self.preference_context.public(verified).score
+                    public=public_score(public,p)
+                if self.compatibility_context is not None:
+                    from app.application.recommendation.palette_compatibility_selection import profile_score
+                    public=profile_score(public,p2=self.preference_context is not None)
                 if public.total!=compact.total:raise InvalidScoringInput('Public exact total mismatch.')
                 if (measure(r.summary),measure(p.summary))!=(compact.request,compact.preference) or tuple(map(measure,r.details))!=compact.request_details or tuple(map(measure,p.details))!=compact.preference_details:
                     raise InvalidScoringInput('Public R/P reconstruction mismatch.')
                 if experimental:
                     decision=c.decision; cc=compact.compatibility
+                    if self.compatibility_context is not None and tuple(b for _,b in decision.atoms)!=cc.intervals:raise InvalidScoringInput('Public C2 interval mismatch.')
                     if (measure(c.summary),tuple(map(measure,c.details[:2])),tuple(x.value for x in c.details if x.name.startswith(('colour:','style:'))),decision.basis,decision.value,decision.lower,decision.upper,decision.known_sum,decision.known_count,decision.pair_count)!=(cc.raw,(cc.colours,cc.styles),cc.atoms,cc.basis,cc.value,cc.lower,cc.upper,cc.known_sum,cc.known,cc.pairs):
                         raise InvalidScoringInput('Public compatibility reconstruction mismatch.')
                 return candidate,evaluation,ScoredCandidate(verified,public)
@@ -177,9 +220,21 @@ class CompactExhaustiveScorer:
                 previous_position=position
                 tick=perf_counter() if self.instrument else 0
                 conditions=primary.evaluate(roles,indexes); state=state_of(conditions);examined+=1
+                attribute_state=None
+                if self.attribute_context is not None:
+                    members=tuple((role,garments[i].garment_id) for role,i in zip(roles,indexes))
+                    attribute_state=self.attribute_context.evaluate_members(members)
+                    base=tuple((role,gid) for role,gid in members if role!='outerwear')
+                    ignored=refinement_plan is not None and base in refinement_plan.seen
+                    if attribute_state=='Unknown' and not ignored and refinement_plan is not None and refinement_plan.ordinal and tracker is not None:
+                        bounds=tracker.facts.bounds(roles,indexes)
+                        ignored=bounds is not None and bounds[1]<refinement_plan.root_R
+                    combined=self.attribute_ledger.observe({1:'Pass',0:'Fail',-1:'Unknown'}[state],attribute_state,seen=ignored)
+                    state={'Pass':1,'Fail':0,'Unknown':-1}[combined]
                 if self.instrument:self.timings['mandatory']=self.timings.get('mandatory',0)+perf_counter()-tick
                 compact=None
                 if state==PASS:
+                    if self.attribute_verifier is not None:self.attribute_verifier.verify_members(members)
                     tick=perf_counter() if self.instrument else 0
                     independent.verify(roles,indexes,conditions)
                     if self.instrument:self.timings['independent']=self.timings.get('independent',0)+perf_counter()-tick
@@ -205,9 +260,10 @@ class CompactExhaustiveScorer:
                 elif state==FAIL:failed+=1
                 else:unknown+=1
                 if self.audit is not None:
-                    candidate,evaluation,public=reconstruct(roles,indexes,conditions,compact,tracker is not None and compact is not None)
+                    candidate,evaluation,public=reconstruct(roles,indexes,conditions,compact,tracker is not None and compact is not None and (not is_garment(refinement_plan)))
                     self.audit({'key':candidate.key,'candidate_id':candidate.candidate_id,'evaluation':asdict(evaluation),
                         'verified':state==PASS,'score':asdict(public.score) if public else None,
+                        **({'attribute_state':attribute_state} if attribute_state is not None else {}),
                         **({'relative_bounds':relative_info} if tracker is not None and state==PASS else {})})
             self._event('before_close',examined,scored)
             close=getattr(stream,'close',None)
@@ -225,6 +281,8 @@ class CompactExhaustiveScorer:
                 if refinement_plan is not None and tracker is not None:
                     status=tracker.empty_refinement_status or status
                     if not garments and filtered.excluded_garments:status='InsufficientStructure'
+                    if status=='RefinementExhausted' and self.attribute_ledger is not None and self.attribute_ledger.unseen_unknown:
+                        status='RefinementInsufficientEvidence'
                 return finish(status,complete=status!='RefinementUnavailable')
             tick=perf_counter()
             _,_,winner=reconstruct(best[1],best[2],best[3],best[4],tracker is not None and tracker.relative)
@@ -242,7 +300,11 @@ class CompactExhaustiveScorer:
         except InvalidPreferenceData:return finish('InvalidPreferenceData')
         except InvalidScoringInput:return finish('InvalidScoringInput')
         except (KeyboardInterrupt,GeneratorExit):return finish('Interrupted')
-        except Exception:return finish('ProcessingFailure')
+        except Exception as error:
+            if is_garment(refinement_plan):
+                from app.application.recommendation.failure_diagnostics import log_failure
+                log_failure('assistant','ranking','ProcessingFailure',error)
+            return finish('ProcessingFailure')
         finally:
             if stream is not None:
                 try:

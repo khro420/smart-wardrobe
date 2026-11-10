@@ -1,0 +1,88 @@
+{
+  "version": "description-sources-1.0.0",
+  "default_activation": false,
+  "approved_scope_path": "retained://phase_b0_attribute_implementation_20261031/approved-contract/proposed-source-scope.json",
+  "frozen_labels_path": "retained://phase_b0_attribute_implementation_20261031/approved-contract/independent-acceptance.json",
+  "baseline_source_path": "retained://phase_b0_attribute_contract_20261031/phase-a-baseline",
+  "replacements": {
+    "backend/app/application/garment_processing/garment_processing_orchestrator.py": {
+      "before": "46705a5904c27d19a941617bedbdefb51cccf2f7f2e51aebeff70b887067ca2b",
+      "after": "846fd8ddda4d52ecebfe2219f5a7107bbc7e28723d7acdc9e17a625303fdad11"
+    },
+    "backend/app/application/garment_processing/review_service.py": {
+      "before": "38f927a8f3a3156f9b167d02e6029bfe61c5d2fe5f9e075f829fd55c1f7a84c2",
+      "after": "2eb534f66cf5dbb083cb06fb63845e37d0e1f3b5711b717a12b40c9619bf2bb2"
+    },
+    "backend/app/application/garment_processing/processing_job_service.py": {
+      "before": "ef1db39a99c4a03a0d3fae316f92afc88dced3a66d078329ab5ea94f7f4471e7",
+      "after": "3a89052d179cc39a230e6824528cccc10459a0f94f60a363fbb800a7f85e1a60"
+    },
+    "backend/app/application/wardrobe/wardrobe_service.py": {
+      "before": "d9d98da8950813ceea0ababc61da2e23d4137a280872b0ac658bfdf68a375c7b",
+      "after": "1879766a42f89eaef7dd3030c747273b94484c24f7ee1ccd84162449c945d9c9"
+    },
+    "backend/app/domain/value_objects/requests.py": {
+      "before": "b9e19eb344f52afbe0bc67967e00b89d03e3d11ced4123d0693c8eec8b2f49bd",
+      "after": "c8b3412185b1bb8b8ab7024283daaa84511ae88341acd729a4e809076588b27e"
+    },
+    "backend/app/infrastructure/persistence/confirmed_garment_query_adapter.py": {
+      "before": "89c27663518667a44f1f65991dea5366f6c19d33b39ab1ec42f93e051f58dfee",
+      "after": "7214dc239a0a97caace2cb241140a65bc8fff6188c27ee4cbc03badbc794475e"
+    },
+    "backend/app/application/ports/workflow_runtime.py": {
+      "before": "100059f9aaa352d991ae66e80483f4ee755031ee416c2215ac43046bd96d7c32",
+      "after": "72cd159840b18df75ba557ef299f2528780882e8b94fbd93866c0048e1ca3659"
+    },
+    "backend/app/infrastructure/workflow_runtime.py": {
+      "before": "c7f034a08ef0507876d498918de085ed685e5b69efcf757c9ca6c760e4a73023",
+      "after": "f6aadf89dbf32d2a10d50424b2b45c75c9255c68c7e87bd8a6f6a4f6ff827c4e"
+    },
+    "backend/app/api/garment_processing_routes.py": {
+      "before": "985a8d28f3c3be8de89f71ec411042564c840c5f14a1c04bb3e1d7ade10a9be7",
+      "after": "d9b94a064252c35906f69fde723ecd93a1a12549cd5cbad0e6a07051d1a8b742"
+    },
+    "frontend/lib/api.ts": {
+      "before": "4fb4ee268d7333c0af84a3eaf5230904c49e37c963c0e56e4bb99739d1ef0389",
+      "after": "e279e11ee24b6c84c5f047effba594f0621d4752c974c0e5ddf6024018dc2357"
+    },
+    "frontend/app/extract/results/page.tsx": {
+      "before": "04a1661c769038a77ff23aced131a74b95ee65f48cbf17bd86f1f8874fd1bd06",
+      "after": "b8e59f731db4e8c2f9304e4713f7f2d6301e9d090123374d2201f7a6d6fbfc0c"
+    },
+    "frontend/app/wardrobe/page.tsx": {
+      "before": "620017bd7f5c4b6e5202f645ab1028a94a050e398e83a104a05171a588cbc514",
+      "after": "5405c536c903dec06bfa780cb28c61198376d096669f766885b20108371e06a7"
+    },
+    "backend/tests/test_owner_style_confirmation.py": {
+      "before": "0625c06f2131861654e3ee0b19a77c2928aadd88434912f6787de9c1d60ebd95",
+      "after": "5874bea4fe5d4dbd825cf340e58280aebac5df8b85ae92dbe1580669332a9bcd"
+    },
+    "backend/tests/integration_source_guard.py": {
+      "before": "c395803bf83bb0ade792fefbcbb807c70da526919e9b2d0c34391caecfc0cf74",
+      "after": "b2c0f50b1a979682d4f2058d63c9be3d9536bce4ddc308ae705755aa670737c8"
+    },
+    "backend/tests/test_phase_a_source_scope.py": {
+      "before": "bbb08e88ae60deca23c8583555545cb2df89b161ec82af3f477006c51cc4b5b4",
+      "after": "ad0c018bf731a4af0657307c5ae9d8a78c4890de27ae327eb7653e5b54ab1c55"
+    }
+  },
+  "additions": {
+    "backend/app/domain/value_objects/garment_description_evidence.py": "aad1465c64278eecec09250566cea2d2b582b0c2ec207e6d3fb5e5bf99498c3b",
+    "backend/app/shared_contracts/confirmed_garment_description.py": "57d1ce913d7d93bcbfd967983d5f11d0d077685514597c7b798bb79e35c54072",
+    "backend/app/application/wardrobe/description_normalizer.py": "da94ee7ef9f58815f398ad1ed177691188d2d43f52deff0603400e8639efeab7",
+    "backend/app/application/wardrobe/description_projector.py": "422029ea24eb40356fdf32704e8c11523453be2914ed9777db97df37fe699d9c",
+    "backend/app/application/wardrobe/description_policy.py": "6d9f7c4a46d0a97f85b87164526cfd910d142e9a525faaf9d4589602b57dee3b",
+    "backend/app/application/wardrobe/config/garment_description_vocabulary.v1.json": "d97fedeb9417260443318a583e7fdb875e4d4386ae8611b3ee38877a44aef815",
+    "backend/app/application/wardrobe/config/model_vocabulary_registry.v1.json": "0036a2feaae9de18803d1da980136e53b3b487601d72ed25d0cb4acc6619e883",
+    "backend/app/application/wardrobe/config/description_evidence_policy.v1.json": "4c96997255aa22a1e0d82e7e77e721224a4390da0518c411fe70e2ccffbc1385",
+    "backend/tests/test_description_normalization.py": "922dca5e8beceedda544e6997fa48711fdf33bdc383c7ba6cbfff1e7cf9f64a2",
+    "backend/tests/test_description_projection.py": "79ad93d0e565d16dff06f0c705c0dfd0e008bbfa9b570fc1dcb399c22eb60505",
+    "backend/tests/test_description_persistence.py": "781c8abd9289a743fcae45b685137b5bcf1683395aa6637ecf2bf774667e9ef1",
+    "backend/tests/test_description_integration.py": "f922cdb1607391ad8d52fbcb44212fda10d3fe3d15258be9eedc528bfd72b85f",
+    "backend/tests/test_description_source_scope.py": "0038c4d02b1815302daa4e58d7bad1868634edca8af623bfd0d002499bb683ab",
+    "backend/tests/fixtures/description_labels.v1.json": "feea8a9b73663af6e4a03f17ce15c7527a3aaebb362b0498b298a47ada784640",
+    "frontend/tests/phase5f/description-evidence.spec.ts": "c2c31f5ef3a0d6189dad808744a4831b64178deefd58c7f7c55d67d82137c097",
+    "frontend/playwright.description-evidence.config.ts": "e38a00ff2dac088bfc561f8ea531e9195d2544e1c7331bf30c6f37ba8efad400"
+  },
+  "checkpoint": "final-pending-image-source-freeze"
+}

@@ -1,0 +1,39 @@
+{
+  "contract": "p2-performance-delivery-1.0.0",
+  "default_activation": false,
+  "approval_path": "retained://phase_b2_performance_optimization_20261106/approval.json",
+  "scope_sha256": "5ea641229c15d0a9e8e58702def74501f3e8162f2eab8b04a4b15d72b85efb45",
+  "baseline_manifest_sha256": "345be482a09d927fd4586080a8becb0ab3b89591a2a1c2a28dd12e2833ce5b86",
+  "files": {
+    "backend/app/application/recommendation/attribute_preference_preparation.py": {
+      "before": "ac9c8045358a5a992e1ab1ad9e0ffe6eabe6dcf88f48e6528a5deb40f3fbb9c4",
+      "after": "16cdd23144b4c1fc719f860a8bd3e4528d0a45ea86502ee24ef88d16c215a759"
+    },
+    "backend/app/application/recommendation/attribute_preference_relative_facts.py": {
+      "before": "389a0df0310859b0d60c89cef9b6247dc03e39723f3e597f09fe5fcabaa093b4",
+      "after": "4f4f6eb5dc69174f5a9056426963f5054829863ca73c2e0b8a8c67dc48b9744c"
+    },
+    "backend/tests/integration_source_guard.py": {
+      "before": "efed626ca0b03bcf0bd8291a42e43ecae1c22f98a1bb032006a6158b6a379241",
+      "after": "79fba933d2445263b90426f061c8d6aed0696670842b6794132be154e00f03e6"
+    },
+    "backend/tests/test_p2_performance_boundaries.py": {
+      "before": null,
+      "after": "d59de659d7359c0a9d6deaec0651be1934cd76973217a408349a1561c1ec9430"
+    },
+    "backend/tests/test_p2_performance_equivalence.py": {
+      "before": null,
+      "after": "ff8d6dfa1b8317a541dddc99d65971aaed33c98f517d140e751f105e5f672503"
+    },
+    "backend/tests/test_p2_performance_response.py": {
+      "before": null,
+      "after": "bf6c178c5ba47173cc704e9efc8e50e65db24c4291f7efadd18ed916f4d633ed"
+    },
+    "backend/tests/test_p2_preference_source_scope.py": {
+      "before": "f57209991843e7b8b4fffcf5dea985f14a81f7b2ffc40770562f6e6711d2c3aa",
+      "after": "e4c4bbd47cc56e5436c8a4618a64ed982476deb87b4b9867be8276463556741d"
+    }
+  },
+  "historical_labels_unchanged": true,
+  "no_additional_exceptions": true
+}

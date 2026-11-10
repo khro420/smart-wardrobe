@@ -1,3 +1,4 @@
+from tests.current_contract_fixtures import wearer_id, wearer, history_scope
 """J12: real startup composition and authenticated routes, never profile injection."""
 from fractions import Fraction as F
 import json
@@ -58,7 +59,7 @@ def test_fixed_release_exact_oracle_four_structures_and_replay(release,case):
         assert client.patch('/api/v1/wardrobe/garments/'+gid,json={'primary_colour':colour,'attributes':{'style':styles}}).status_code==200
     with db.connection() as c:
         for index,p in enumerate(case.get('preferences',[])):
-            c.execute('INSERT INTO user_preferences VALUES(?,?,?,?,1,?,1,?,?)',(str(index),'style-owner',p['type'],json.dumps({'values':p['values']}),'synthetic','now','now'))
+            c.execute('INSERT INTO user_preferences (id,user_id,profile_id,preference_type,preference_value_json,weight,source,is_active,created_at,updated_at) VALUES(?,?,?,?,?,1,?,1,?,?)',(str(index),'style-owner',wearer_id('style-owner'),p['type'],json.dumps({'values':p['values']}),'synthetic','now','now'))
     expected=expected_winner(independent(case,ids),'experimental_compatibility_decision_v1')
     key=uuid.uuid4().hex
     response,result=submit(client,case['text'],key)

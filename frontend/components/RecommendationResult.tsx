@@ -1,8 +1,14 @@
 "use client";
+import { capturedSubtypeSummaries } from "@/lib/verified-subtypes";
+import { useWearerCategoryEligibility } from "@/lib/wearer-category-eligibility";
+import GarmentContinuationExplanation from "./GarmentContinuationExplanation";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import ProtectedImage from "@/components/ProtectedImage";
 import CompatibilityExplanation from "./CompatibilityExplanation";
+import AttributeRequirements from "./AttributeRequirements";
+import PreferenceExplanation from "./PreferenceExplanation";
+import PaletteCompatibilityExplanation from "./PaletteCompatibilityExplanation";
 import { relativeCoverageMessage } from "@/lib/recommendation-messages";
 import { getRecommendationSavedOutfit, saveRecommendationAsOutfit, type ContextSummary, type IntegratedRecommendation } from "@/lib/api";
 
@@ -115,7 +121,8 @@ export default function RecommendationResult(props: Props) {
 }
 
 function RecommendationResultContent({ recommendation, historical = false, historicalActions = false, onSaved }: Props) {
-  const actionsEnabled = !historical || historicalActions;
+  const categoryPolicy = useWearerCategoryEligibility();
+  const actionsEnabled = !categoryPolicy.blocked && recommendation.items.every(item => categoryPolicy.permitsItem(item.garment_id,item.category)) && !recommendation.wearer_archived && (!historical || historicalActions);
   const [saved, setSaved] = useState(!historicalActions && recommendation.status === "saved");
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
@@ -163,6 +170,7 @@ function RecommendationResultContent({ recommendation, historical = false, histo
     finally { saveLock.current = false; if (mounted.current) setSaving(false); }
   };
   return <article className="min-w-0 space-y-4 rounded-2xl border border-slate-200 bg-white p-5" data-testid="recommendation-result">
+    {recommendation.intended_wearer ? <p className="text-sm font-semibold">For {recommendation.intended_wearer.name_at_request}{recommendation.wearer_archived ? " — Archived · read-only" : ""}</p> : <p className="text-sm text-slate-600">Legacy: original intended wearer and name were not recorded.{recommendation.wearer_association?.profile_id ? ` Stored association: ${recommendation.wearer_association.name ?? recommendation.wearer_association.profile_id}.` : ""}</p>}
     <h3 className="text-lg font-semibold">{historical ? "Saved recommendation · read-only" : "Your outfit recommendation"}</h3>
     {historical && <p className="text-sm text-slate-600">This is the original result. Current availability does not establish that it still matches the original request.</p>}
     {!eligible && <p role="status" className="text-sm text-amber-800">One or more recorded garments are no longer eligible in your current wardrobe.</p>}
@@ -171,10 +179,14 @@ function RecommendationResultContent({ recommendation, historical = false, histo
       <p className="mt-3 font-semibold [overflow-wrap:anywhere]">{item.name ?? "Historical garment details unavailable"}</p><p className="text-sm text-slate-600">{item.item_order}. {item.garment_role.replaceAll("_", " ")}{item.category ? ` · ${item.category.replaceAll("_", " ")}` : ""}</p>
       {!item.currently_eligible && <p className="text-sm text-amber-800">Unavailable for current use</p>}
     </div>)}</div>
-    {(recommendation.scoring_display?.version === "assistant-scoring-display-2.0.0" || recommendation.scoring_display?.version === "assistant-scoring-display-2.1.0" || recommendation.scoring_display?.version === "assistant-scoring-display-2.2.0") ? <RelativeRankingDetails recommendation={recommendation} /> : <RankingScore metadata={recommendation.score_metadata} />}
+    {recommendation.scoring_display?.version === "assistant-scoring-display-4.0.0" ? <PaletteCompatibilityExplanation display={recommendation.scoring_display} /> : recommendation.scoring_display?.version === "assistant-scoring-display-3.0.0" ? <PreferenceExplanation display={recommendation.scoring_display} /> : (recommendation.scoring_display?.version === "assistant-scoring-display-2.0.0" || recommendation.scoring_display?.version === "assistant-scoring-display-2.1.0" || recommendation.scoring_display?.version === "assistant-scoring-display-2.2.0") ? <RelativeRankingDetails recommendation={recommendation} /> : <RankingScore metadata={recommendation.score_metadata} />}
+    <GarmentContinuationExplanation recommendation={recommendation} />
     <WeddingExplanation recommendation={recommendation} />
     <GeneralContextExplanation recommendation={recommendation} />
-    {recommendation.scoring_display?.version !== "assistant-scoring-display-2.0.0" && recommendation.scoring_display?.version !== "assistant-scoring-display-2.1.0" && recommendation.scoring_display?.version !== "assistant-scoring-display-2.2.0" && <CompatibilityExplanation recommendation={recommendation} />}
+    <AttributeRequirements value={recommendation.attribute_display} />
+    {capturedSubtypeSummaries(recommendation.provenance).some(source => recommendation.items.some(item => item.garment_id === source.garment_id)) && <section aria-label="Captured garment types" className="space-y-1 text-sm"><h3 className="font-semibold">Captured garment types</h3><ul>{capturedSubtypeSummaries(recommendation.provenance).filter(source => recommendation.items.some(item => item.garment_id === source.garment_id)).map(source => <li key={source.garment_id}>{recommendation.items.find(item => item.garment_id === source.garment_id)?.name}: {source.label}</li>)}</ul></section>}
+    {!!recommendation.provenance?.wearer_category_eligibility && <p className="text-sm">Garment eligibility was checked for the captured wearer. Current-use restrictions apply separately to saved actions.</p>}
+    {recommendation.scoring_display?.version !== "assistant-scoring-display-4.0.0" && recommendation.scoring_display?.version !== "assistant-scoring-display-3.0.0" && recommendation.scoring_display?.version !== "assistant-scoring-display-2.0.0" && recommendation.scoring_display?.version !== "assistant-scoring-display-2.1.0" && recommendation.scoring_display?.version !== "assistant-scoring-display-2.2.0" && <CompatibilityExplanation recommendation={recommendation} />}
     {actionsEnabled && savedStatus === "loading" && <p role="status" className="text-sm text-slate-600">Checking saved outfit status…</p>}
     {actionsEnabled && feedback && <p role="status" className="text-sm text-emerald-800">{feedback}</p>}
     {historicalActions && recommendation.status === "saved" && !saved && savedStatus === "ready" && <p className="text-sm text-slate-600">This older recommendation was marked saved. Its original outfit may only be available through your wardrobe.</p>}

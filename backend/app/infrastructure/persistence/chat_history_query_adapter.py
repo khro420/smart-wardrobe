@@ -43,6 +43,17 @@ class SqliteChatHistoryQuery:
             conn.rollback()
             conn.close()
 
+    def _scope(self,conn,user_id,profile_id,view):
+        from app.application.wardrobe.profile_service import require_active_profile,historical_profile
+        if view=='legacy_unrecorded':
+            if profile_id is not None:raise ValueError('Legacy history cannot assert a wearer.')
+            return ELIGIBLE.replace('c.profile_id=? AND r.profile_id=c.profile_id','c.profile_id IS NULL AND r.profile_id IS NULL'),[user_id]
+        if not profile_id:raise LookupError('Completed chat not found.')
+        if view=='historical':historical_profile(conn,user_id,profile_id)
+        elif view=='active':require_active_profile(conn,user_id,profile_id)
+        else:raise ValueError('Unsupported history view.')
+        return ELIGIBLE,[user_id,profile_id]
+
     def _binding(self,user_id,profile_id,search):
         return hashlib.sha256(json.dumps([user_id,profile_id,search],ensure_ascii=True).encode()).hexdigest()
 
@@ -64,13 +75,14 @@ class SqliteChatHistoryQuery:
         except Exception:
             raise ValueError('Invalid history cursor.') from None
 
-    def search(self,user_id,search='',limit=50,cursor=None,profile_id=None):
-        if not profile_id: raise LookupError('Completed chat not found.')
-        binding = self._binding(user_id,profile_id,search)
+    def search(self,user_id,search='',limit=50,cursor=None,profile_id=None,view='active'):
+        binding = self._binding(user_id,[view,profile_id],search)
         position = self._decode_cursor(cursor,binding) if cursor else None
         escaped = search.casefold().replace('!','!!').replace('%','!%').replace('_','!_')
-        sql,params = ELIGIBLE+" AND history_casefold(c.request_text) LIKE ? ESCAPE '!'",[user_id,profile_id,'%'+escaped+'%']
         with self._connection(user_id) as conn:
+            sql,params=self._scope(conn,user_id,profile_id,view)
+            sql+=" AND history_casefold(c.request_text) LIKE ? ESCAPE '!'"
+            params.append('%'+escaped+'%')
             if position:
                 date,identifier = position['anchor']
                 sql += ' AND (c.created_at<? OR (c.created_at=? AND c.id>=?))'
@@ -89,15 +101,15 @@ class SqliteChatHistoryQuery:
                     'after':[page[-1]['created_at'],page[-1]['chat_id']]})
             return {'status':'CompletedChats' if items else 'NoResults','items':items,'total':total,'limit':limit,'next_cursor':next_cursor,'read_only':True}
 
-    def get(self,user_id,chat_id,profile_id=None):
-        if not profile_id: raise LookupError('Completed chat not found.')
+    def get(self,user_id,chat_id,profile_id=None,view='active'):
         with self._connection(user_id) as conn:
-            row = conn.execute('SELECT c.*,r.id AS recommendation_id '+ELIGIBLE+' AND c.id=?',(user_id,profile_id,chat_id)).fetchone()
+            sql,params=self._scope(conn,user_id,profile_id,view)
+            row = conn.execute('SELECT c.*,r.id AS recommendation_id '+sql+' AND c.id=?',(*params,chat_id)).fetchone()
             if row is None: raise LookupError('Completed chat not found.')
             # Protected helper reuse is internal to persistence, never a writer
             # call: the supplied connection is query_only and mode=ro.
             try:
-                recommendation = self.reader._read(conn,user_id,row['recommendation_id'])
+                recommendation = self.reader._read(conn,user_id,row['recommendation_id'],account_history=True)
             except (ValueError,TypeError):
                 raise RuntimeError('Stored history evidence could not be restored.') from None
             for item in recommendation['items']:

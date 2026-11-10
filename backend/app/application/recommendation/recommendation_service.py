@@ -31,7 +31,9 @@ def _role_for(category: str, order: int) -> str:
 
 def _recommended_garments(user_id: str) -> list[dict]:
     """Pick a compact outfit from confirmed, currently available wardrobe items."""
-    rows = confirmed_garment_query().get_confirmed_available_garments(user_id)
+    from app.application.wardrobe import wearer_category_service as categories
+    scope=categories.capture(user_id,None)
+    rows = (scope or confirmed_garment_query()).get_confirmed_available_garments(user_id)
     picked: list[dict] = []
     used_roles: set[str] = set()
     for row in rows:
@@ -61,6 +63,17 @@ def _preference_score(user_id: str, profile_id: str) -> float:
 
 
 def create_recommendation(user_id: str, request_text: str, profile_id: str) -> dict:
+    from app.application.wardrobe import wearer_category_service as categories
+    if categories.policy() is not None:
+        # New-use policy requires the strict, source-bound request engine. The
+        # disabled historical strategy retains its original numerical contract.
+        from app.application.ports.assistant_runtime import assistant_service
+        from app.application.recommendation.wearer_identity import resolve_wearer
+        service=assistant_service()
+        if service is None:raise HTTPException(503,'The strict recommendation service is unavailable.')
+        result=service.recommend(user_id,uuid.uuid4().hex,request_text,wearer=resolve_wearer(user_id,profile_id,None))
+        if result['status']!='Selected':raise HTTPException(409,{'code':result['status'],'message':result.get('reason','No complete eligible outfit was selected.')})
+        return result['recommendation']
     garments = _recommended_garments(user_id)
     if not garments:
         raise HTTPException(422, "Add and confirm at least one available garment before requesting a recommendation.")
@@ -68,6 +81,9 @@ def create_recommendation(user_id: str, request_text: str, profile_id: str) -> d
     preference_score = _preference_score(user_id, profile_id)
     entities = {"keywords": [word.lower() for word in request_text.split() if word.strip()][:12]}
     with connection() as conn:
+        conn.execute('BEGIN IMMEDIATE')
+        from app.application.wardrobe.wearer_category_service import require_categories
+        require_categories(conn,user_id,profile_id,[dict(r) for r in conn.execute('SELECT * FROM garments WHERE user_id=? AND id IN ('+','.join('?' for _ in garments)+')',[user_id,*[g['id'] for g in garments]])])
         conn.execute(
             "INSERT INTO nlp_chats (id, user_id, profile_id, request_text, interpreted_intent, extracted_entities_json, status, created_at, completed_at) "
             "VALUES (?, ?, ?, ?, 'outfit_recommendation', ?, 'completed', ?, ?)",
@@ -148,6 +164,8 @@ def save_as_outfit(recommendation_id: str, user_id: str, name: str | None, profi
     with connection() as conn:
         conn.execute("BEGIN IMMEDIATE")
         try:
+            from app.application.wardrobe.profile_service import require_active_profile
+            require_active_profile(conn,user_id,profile_id)
             source = conn.execute("SELECT 1 FROM recommendations WHERE id=? AND user_id=? AND profile_id=?", (recommendation_id, user_id, profile_id)).fetchone()
             if not source: raise HTTPException(404, "Recommendation was not found.")
             items = strict_items(conn, user_id, recommendation_id)

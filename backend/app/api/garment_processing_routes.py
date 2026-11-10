@@ -14,11 +14,34 @@ router = APIRouter(prefix="/processing/jobs", tags=["garment processing"])
 @router.post("", status_code=202)
 async def submit_image(file: UploadFile, background_tasks: BackgroundTasks, user_id: str = Depends(current_user_id), profile_id: str = Depends(active_profile_id),
                        admission_mode: Literal['manual_review_v1', 'automatic_structural_v1'] = Query('manual_review_v1')) -> dict:
+    from app.application.wardrobe.wearer_category_service import require_profile
+    require_profile(user_id,profile_id)
     check_upload_capacity(user_id, profile_id)
     media_id = await upload_validator.validate_and_store_wardrobe_image(file, user_id)
     job_id = processing_job_service.create_job(media_id, user_id, profile_id)
     background_tasks.add_task(processing.run_job, job_id, user_id, profile_id, admission_mode)
     return {"id": job_id, "status": "queued", "admission_mode": admission_mode}
+
+
+@router.get("/capabilities")
+def processing_capabilities(user_id: str = Depends(current_user_id)) -> dict:
+    from app.application.ports.workflow_runtime import runtime
+    from app.domain.value_objects.garment_description_evidence import FIELDS, UPDATE_CONTRACT
+    enabled = runtime().description_policy is not None
+    return {'version':'processing-admission-capabilities-1.0.0','admission_modes':['manual_review_v1','automatic_structural_v1'],
+            'description': {'contract':'garment-description-capabilities-1.0.0','enabled':enabled,
+                            'update_contract':UPDATE_CONTRACT,'fields':list(FIELDS) if enabled else [],
+                            'max_update_bytes':32768,'max_review_batch_bytes':262144}}
+
+
+@router.get("/history")
+def job_history(wearer_profile_id: str | None = None, limit: int = Query(50,ge=1,le=100), offset: int = Query(0,ge=0,le=10000), user_id: str = Depends(current_user_id)) -> list[dict]:
+    return processing_job_service.list_historical_jobs(user_id,wearer_profile_id,limit,offset)
+
+
+@router.get("/{job_id}/history")
+def historical_job(job_id: str, user_id: str = Depends(current_user_id)) -> dict:
+    return processing_job_service.historical_job(job_id,user_id)
 
 
 @router.get("/{job_id}")

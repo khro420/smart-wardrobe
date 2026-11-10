@@ -1,0 +1,1721 @@
+{
+  "version": "attribute-request-grammar-1.0.0",
+  "entries": [
+    {
+      "attribute": "category",
+      "value": "short_sleeve_top",
+      "expression": "short sleeve top garment",
+      "negative_expression": "no short sleeve top garment",
+      "phase": "B1a",
+      "status": "Planned"
+    },
+    {
+      "attribute": "category",
+      "value": "long_sleeve_top",
+      "expression": "long sleeve top garment",
+      "negative_expression": "no long sleeve top garment",
+      "phase": "B1a",
+      "status": "Planned"
+    },
+    {
+      "attribute": "category",
+      "value": "short_sleeve_outwear",
+      "expression": "short sleeve outwear garment",
+      "negative_expression": "no short sleeve outwear garment",
+      "phase": "B1a",
+      "status": "Planned"
+    },
+    {
+      "attribute": "category",
+      "value": "long_sleeve_outwear",
+      "expression": "long sleeve outwear garment",
+      "negative_expression": "no long sleeve outwear garment",
+      "phase": "B1a",
+      "status": "Planned"
+    },
+    {
+      "attribute": "category",
+      "value": "vest",
+      "expression": "vest garment",
+      "negative_expression": "no vest garment",
+      "phase": "B1a",
+      "status": "Planned"
+    },
+    {
+      "attribute": "category",
+      "value": "sling",
+      "expression": "sling garment",
+      "negative_expression": "no sling garment",
+      "phase": "B1a",
+      "status": "Planned"
+    },
+    {
+      "attribute": "category",
+      "value": "shorts",
+      "expression": "shorts garment",
+      "negative_expression": "no shorts garment",
+      "phase": "B1a",
+      "status": "Planned"
+    },
+    {
+      "attribute": "category",
+      "value": "trousers",
+      "expression": "trousers garment",
+      "negative_expression": "no trousers garment",
+      "phase": "B1a",
+      "status": "Planned"
+    },
+    {
+      "attribute": "category",
+      "value": "skirt",
+      "expression": "skirt garment",
+      "negative_expression": "no skirt garment",
+      "phase": "B1a",
+      "status": "Planned"
+    },
+    {
+      "attribute": "category",
+      "value": "short_sleeve_dress",
+      "expression": "short sleeve dress garment",
+      "negative_expression": "no short sleeve dress garment",
+      "phase": "B1a",
+      "status": "Planned"
+    },
+    {
+      "attribute": "category",
+      "value": "long_sleeve_dress",
+      "expression": "long sleeve dress garment",
+      "negative_expression": "no long sleeve dress garment",
+      "phase": "B1a",
+      "status": "Planned"
+    },
+    {
+      "attribute": "category",
+      "value": "vest_dress",
+      "expression": "vest dress garment",
+      "negative_expression": "no vest dress garment",
+      "phase": "B1a",
+      "status": "Planned"
+    },
+    {
+      "attribute": "category",
+      "value": "sling_dress",
+      "expression": "sling dress garment",
+      "negative_expression": "no sling dress garment",
+      "phase": "B1a",
+      "status": "Planned"
+    },
+    {
+      "attribute": "primary_colour",
+      "value": "black",
+      "expression": "black as the main colour",
+      "negative_expression": "no black as the main colour",
+      "phase": "B1a",
+      "status": "Planned"
+    },
+    {
+      "attribute": "primary_colour",
+      "value": "white",
+      "expression": "white as the main colour",
+      "negative_expression": "no white as the main colour",
+      "phase": "B1a",
+      "status": "Planned"
+    },
+    {
+      "attribute": "primary_colour",
+      "value": "grey",
+      "expression": "grey as the main colour",
+      "negative_expression": "no grey as the main colour",
+      "phase": "B1a",
+      "status": "Planned"
+    },
+    {
+      "attribute": "primary_colour",
+      "value": "navy",
+      "expression": "navy as the main colour",
+      "negative_expression": "no navy as the main colour",
+      "phase": "B1a",
+      "status": "Planned"
+    },
+    {
+      "attribute": "primary_colour",
+      "value": "blue",
+      "expression": "blue as the main colour",
+      "negative_expression": "no blue as the main colour",
+      "phase": "B1a",
+      "status": "Planned"
+    },
+    {
+      "attribute": "primary_colour",
+      "value": "red",
+      "expression": "red as the main colour",
+      "negative_expression": "no red as the main colour",
+      "phase": "B1a",
+      "status": "Planned"
+    },
+    {
+      "attribute": "primary_colour",
+      "value": "green",
+      "expression": "green as the main colour",
+      "negative_expression": "no green as the main colour",
+      "phase": "B1a",
+      "status": "Planned"
+    },
+    {
+      "attribute": "primary_colour",
+      "value": "yellow",
+      "expression": "yellow as the main colour",
+      "negative_expression": "no yellow as the main colour",
+      "phase": "B1a",
+      "status": "Planned"
+    },
+    {
+      "attribute": "primary_colour",
+      "value": "orange",
+      "expression": "orange as the main colour",
+      "negative_expression": "no orange as the main colour",
+      "phase": "B1a",
+      "status": "Planned"
+    },
+    {
+      "attribute": "primary_colour",
+      "value": "pink",
+      "expression": "pink as the main colour",
+      "negative_expression": "no pink as the main colour",
+      "phase": "B1a",
+      "status": "Planned"
+    },
+    {
+      "attribute": "primary_colour",
+      "value": "purple",
+      "expression": "purple as the main colour",
+      "negative_expression": "no purple as the main colour",
+      "phase": "B1a",
+      "status": "Planned"
+    },
+    {
+      "attribute": "primary_colour",
+      "value": "brown",
+      "expression": "brown as the main colour",
+      "negative_expression": "no brown as the main colour",
+      "phase": "B1a",
+      "status": "Planned"
+    },
+    {
+      "attribute": "primary_colour",
+      "value": "beige",
+      "expression": "beige as the main colour",
+      "negative_expression": "no beige as the main colour",
+      "phase": "B1a",
+      "status": "Planned"
+    },
+    {
+      "attribute": "primary_colour",
+      "value": "cream",
+      "expression": "cream as the main colour",
+      "negative_expression": "no cream as the main colour",
+      "phase": "B1a",
+      "status": "Planned"
+    },
+    {
+      "attribute": "secondary_colour",
+      "value": "black",
+      "expression": "black as the secondary colour",
+      "negative_expression": "no black as the secondary colour",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "secondary_colour",
+      "value": "white",
+      "expression": "white as the secondary colour",
+      "negative_expression": "no white as the secondary colour",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "secondary_colour",
+      "value": "grey",
+      "expression": "grey as the secondary colour",
+      "negative_expression": "no grey as the secondary colour",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "secondary_colour",
+      "value": "navy",
+      "expression": "navy as the secondary colour",
+      "negative_expression": "no navy as the secondary colour",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "secondary_colour",
+      "value": "blue",
+      "expression": "blue as the secondary colour",
+      "negative_expression": "no blue as the secondary colour",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "secondary_colour",
+      "value": "red",
+      "expression": "red as the secondary colour",
+      "negative_expression": "no red as the secondary colour",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "secondary_colour",
+      "value": "green",
+      "expression": "green as the secondary colour",
+      "negative_expression": "no green as the secondary colour",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "secondary_colour",
+      "value": "yellow",
+      "expression": "yellow as the secondary colour",
+      "negative_expression": "no yellow as the secondary colour",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "secondary_colour",
+      "value": "orange",
+      "expression": "orange as the secondary colour",
+      "negative_expression": "no orange as the secondary colour",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "secondary_colour",
+      "value": "pink",
+      "expression": "pink as the secondary colour",
+      "negative_expression": "no pink as the secondary colour",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "secondary_colour",
+      "value": "purple",
+      "expression": "purple as the secondary colour",
+      "negative_expression": "no purple as the secondary colour",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "secondary_colour",
+      "value": "brown",
+      "expression": "brown as the secondary colour",
+      "negative_expression": "no brown as the secondary colour",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "secondary_colour",
+      "value": "beige",
+      "expression": "beige as the secondary colour",
+      "negative_expression": "no beige as the secondary colour",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "secondary_colour",
+      "value": "cream",
+      "expression": "cream as the secondary colour",
+      "negative_expression": "no cream as the secondary colour",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "style",
+      "value": "casual",
+      "expression": "casual style",
+      "negative_expression": "no casual style",
+      "phase": "B1a",
+      "status": "Planned"
+    },
+    {
+      "attribute": "style",
+      "value": "classic",
+      "expression": "classic style",
+      "negative_expression": "no classic style",
+      "phase": "B1a",
+      "status": "Planned"
+    },
+    {
+      "attribute": "style",
+      "value": "formal",
+      "expression": "formal style",
+      "negative_expression": "no formal style",
+      "phase": "B1a",
+      "status": "Planned"
+    },
+    {
+      "attribute": "style",
+      "value": "minimal",
+      "expression": "minimal style",
+      "negative_expression": "no minimal style",
+      "phase": "B1a",
+      "status": "Planned"
+    },
+    {
+      "attribute": "style",
+      "value": "smart casual",
+      "expression": "smart casual style",
+      "negative_expression": "no smart casual style",
+      "phase": "B1a",
+      "status": "Planned"
+    },
+    {
+      "attribute": "style",
+      "value": "sporty",
+      "expression": "sporty style",
+      "negative_expression": "no sporty style",
+      "phase": "B1a",
+      "status": "Planned"
+    },
+    {
+      "attribute": "style",
+      "value": "streetwear",
+      "expression": "streetwear style",
+      "negative_expression": "no streetwear style",
+      "phase": "B1a",
+      "status": "Planned"
+    },
+    {
+      "attribute": "style",
+      "value": "vintage",
+      "expression": "vintage style",
+      "negative_expression": "no vintage style",
+      "phase": "B1a",
+      "status": "Planned"
+    },
+    {
+      "attribute": "style",
+      "value": "bohemian",
+      "expression": "bohemian style",
+      "negative_expression": "no bohemian style",
+      "phase": "B1a",
+      "status": "Planned"
+    },
+    {
+      "attribute": "pattern",
+      "value": "plain",
+      "expression": "plain pattern",
+      "negative_expression": "no plain pattern",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "pattern",
+      "value": "abstract",
+      "expression": "abstract pattern",
+      "negative_expression": "no abstract pattern",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "pattern",
+      "value": "cartoon",
+      "expression": "cartoon pattern",
+      "negative_expression": "no cartoon pattern",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "pattern",
+      "value": "letters, numbers",
+      "expression": "letters, numbers pattern",
+      "negative_expression": "no letters, numbers pattern",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "pattern",
+      "value": "camouflage",
+      "expression": "camouflage pattern",
+      "negative_expression": "no camouflage pattern",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "pattern",
+      "value": "check",
+      "expression": "check pattern",
+      "negative_expression": "no check pattern",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "pattern",
+      "value": "dot",
+      "expression": "dot pattern",
+      "negative_expression": "no dot pattern",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "pattern",
+      "value": "fair isle",
+      "expression": "fair isle pattern",
+      "negative_expression": "no fair isle pattern",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "pattern",
+      "value": "floral",
+      "expression": "floral pattern",
+      "negative_expression": "no floral pattern",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "pattern",
+      "value": "geometric",
+      "expression": "geometric pattern",
+      "negative_expression": "no geometric pattern",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "pattern",
+      "value": "paisley",
+      "expression": "paisley pattern",
+      "negative_expression": "no paisley pattern",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "pattern",
+      "value": "stripe",
+      "expression": "stripe pattern",
+      "negative_expression": "no stripe pattern",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "pattern",
+      "value": "houndstooth",
+      "expression": "houndstooth pattern",
+      "negative_expression": "no houndstooth pattern",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "pattern",
+      "value": "herringbone",
+      "expression": "herringbone pattern",
+      "negative_expression": "no herringbone pattern",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "pattern",
+      "value": "chevron",
+      "expression": "chevron pattern",
+      "negative_expression": "no chevron pattern",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "pattern",
+      "value": "argyle",
+      "expression": "argyle pattern",
+      "negative_expression": "no argyle pattern",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "pattern",
+      "value": "leopard",
+      "expression": "leopard pattern",
+      "negative_expression": "no leopard pattern",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "pattern",
+      "value": "snakeskin",
+      "expression": "snakeskin pattern",
+      "negative_expression": "no snakeskin pattern",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "pattern",
+      "value": "cheetah",
+      "expression": "cheetah pattern",
+      "negative_expression": "no cheetah pattern",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "pattern",
+      "value": "peacock",
+      "expression": "peacock pattern",
+      "negative_expression": "no peacock pattern",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "pattern",
+      "value": "zebra",
+      "expression": "zebra pattern",
+      "negative_expression": "no zebra pattern",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "pattern",
+      "value": "giraffe",
+      "expression": "giraffe pattern",
+      "negative_expression": "no giraffe pattern",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "pattern",
+      "value": "toile de jouy",
+      "expression": "toile de jouy pattern",
+      "negative_expression": "no toile de jouy pattern",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "pattern",
+      "value": "plant",
+      "expression": "plant pattern",
+      "negative_expression": "no plant pattern",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "material",
+      "value": "cotton",
+      "expression": "cotton material",
+      "negative_expression": "no cotton material",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "material",
+      "value": "denim",
+      "expression": "denim material",
+      "negative_expression": "no denim material",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "material",
+      "value": "leather",
+      "expression": "leather material",
+      "negative_expression": "no leather material",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "material",
+      "value": "linen",
+      "expression": "linen material",
+      "negative_expression": "no linen material",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "material",
+      "value": "silk",
+      "expression": "silk material",
+      "negative_expression": "no silk material",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "material",
+      "value": "synthetic",
+      "expression": "synthetic material",
+      "negative_expression": "no synthetic material",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "material",
+      "value": "wool",
+      "expression": "wool material",
+      "negative_expression": "no wool material",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "silhouette",
+      "value": "asymmetrical",
+      "expression": "asymmetrical silhouette",
+      "negative_expression": "no asymmetrical silhouette",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "silhouette",
+      "value": "symmetrical",
+      "expression": "symmetrical silhouette",
+      "negative_expression": "no symmetrical silhouette",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "silhouette",
+      "value": "peplum",
+      "expression": "peplum silhouette",
+      "negative_expression": "no peplum silhouette",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "silhouette",
+      "value": "circle",
+      "expression": "circle silhouette",
+      "negative_expression": "no circle silhouette",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "silhouette",
+      "value": "flare",
+      "expression": "flare silhouette",
+      "negative_expression": "no flare silhouette",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "silhouette",
+      "value": "fit and flare",
+      "expression": "fit and flare silhouette",
+      "negative_expression": "no fit and flare silhouette",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "silhouette",
+      "value": "trumpet",
+      "expression": "trumpet silhouette",
+      "negative_expression": "no trumpet silhouette",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "silhouette",
+      "value": "mermaid",
+      "expression": "mermaid silhouette",
+      "negative_expression": "no mermaid silhouette",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "silhouette",
+      "value": "balloon",
+      "expression": "balloon silhouette",
+      "negative_expression": "no balloon silhouette",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "silhouette",
+      "value": "bell",
+      "expression": "bell silhouette",
+      "negative_expression": "no bell silhouette",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "silhouette",
+      "value": "bell bottom",
+      "expression": "bell bottom silhouette",
+      "negative_expression": "no bell bottom silhouette",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "silhouette",
+      "value": "bootcut",
+      "expression": "bootcut silhouette",
+      "negative_expression": "no bootcut silhouette",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "silhouette",
+      "value": "peg",
+      "expression": "peg silhouette",
+      "negative_expression": "no peg silhouette",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "silhouette",
+      "value": "pencil",
+      "expression": "pencil silhouette",
+      "negative_expression": "no pencil silhouette",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "silhouette",
+      "value": "straight",
+      "expression": "straight silhouette",
+      "negative_expression": "no straight silhouette",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "silhouette",
+      "value": "a-line",
+      "expression": "a-line silhouette",
+      "negative_expression": "no a-line silhouette",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "silhouette",
+      "value": "tent",
+      "expression": "tent silhouette",
+      "negative_expression": "no tent silhouette",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "silhouette",
+      "value": "baggy",
+      "expression": "baggy silhouette",
+      "negative_expression": "no baggy silhouette",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "silhouette",
+      "value": "wide leg",
+      "expression": "wide leg silhouette",
+      "negative_expression": "no wide leg silhouette",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "silhouette",
+      "value": "high low",
+      "expression": "high low silhouette",
+      "negative_expression": "no high low silhouette",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "silhouette",
+      "value": "curved",
+      "expression": "curved silhouette",
+      "negative_expression": "no curved silhouette",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "silhouette",
+      "value": "tight",
+      "expression": "tight silhouette",
+      "negative_expression": "no tight silhouette",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "silhouette",
+      "value": "regular",
+      "expression": "regular silhouette",
+      "negative_expression": "no regular silhouette",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "silhouette",
+      "value": "loose",
+      "expression": "loose silhouette",
+      "negative_expression": "no loose silhouette",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "silhouette",
+      "value": "oversized",
+      "expression": "oversized silhouette",
+      "negative_expression": "no oversized silhouette",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "neckline",
+      "value": "collarless",
+      "expression": "collarless neckline",
+      "negative_expression": "no collarless neckline",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "neckline",
+      "value": "asymmetric",
+      "expression": "asymmetric neckline",
+      "negative_expression": "no asymmetric neckline",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "neckline",
+      "value": "crew",
+      "expression": "crew neckline",
+      "negative_expression": "no crew neckline",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "neckline",
+      "value": "round",
+      "expression": "round neckline",
+      "negative_expression": "no round neckline",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "neckline",
+      "value": "v-neck",
+      "expression": "v-neck neckline",
+      "negative_expression": "no v-neck neckline",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "neckline",
+      "value": "surplice",
+      "expression": "surplice neckline",
+      "negative_expression": "no surplice neckline",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "neckline",
+      "value": "oval",
+      "expression": "oval neckline",
+      "negative_expression": "no oval neckline",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "neckline",
+      "value": "u-neck",
+      "expression": "u-neck neckline",
+      "negative_expression": "no u-neck neckline",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "neckline",
+      "value": "sweetheart",
+      "expression": "sweetheart neckline",
+      "negative_expression": "no sweetheart neckline",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "neckline",
+      "value": "queen anne",
+      "expression": "queen anne neckline",
+      "negative_expression": "no queen anne neckline",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "neckline",
+      "value": "boat",
+      "expression": "boat neckline",
+      "negative_expression": "no boat neckline",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "neckline",
+      "value": "scoop",
+      "expression": "scoop neckline",
+      "negative_expression": "no scoop neckline",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "neckline",
+      "value": "square",
+      "expression": "square neckline",
+      "negative_expression": "no square neckline",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "neckline",
+      "value": "plunging",
+      "expression": "plunging neckline",
+      "negative_expression": "no plunging neckline",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "neckline",
+      "value": "keyhole",
+      "expression": "keyhole neckline",
+      "negative_expression": "no keyhole neckline",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "neckline",
+      "value": "halter",
+      "expression": "halter neckline",
+      "negative_expression": "no halter neckline",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "neckline",
+      "value": "crossover",
+      "expression": "crossover neckline",
+      "negative_expression": "no crossover neckline",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "neckline",
+      "value": "choker",
+      "expression": "choker neckline",
+      "negative_expression": "no choker neckline",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "neckline",
+      "value": "high",
+      "expression": "high neckline",
+      "negative_expression": "no high neckline",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "neckline",
+      "value": "turtle",
+      "expression": "turtle neckline",
+      "negative_expression": "no turtle neckline",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "neckline",
+      "value": "cowl",
+      "expression": "cowl neckline",
+      "negative_expression": "no cowl neckline",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "neckline",
+      "value": "straight across",
+      "expression": "straight across neckline",
+      "negative_expression": "no straight across neckline",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "neckline",
+      "value": "illusion",
+      "expression": "illusion neckline",
+      "negative_expression": "no illusion neckline",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "neckline",
+      "value": "off-the-shoulder",
+      "expression": "off-the-shoulder neckline",
+      "negative_expression": "no off-the-shoulder neckline",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "neckline",
+      "value": "one shoulder",
+      "expression": "one shoulder neckline",
+      "negative_expression": "no one shoulder neckline",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "sleeve_length",
+      "value": "sleeveless",
+      "expression": "sleeveless sleeves",
+      "negative_expression": "no sleeveless sleeves",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "sleeve_length",
+      "value": "short",
+      "expression": "short sleeves",
+      "negative_expression": "no short sleeves",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "sleeve_length",
+      "value": "elbow-length",
+      "expression": "elbow-length sleeves",
+      "negative_expression": "no elbow-length sleeves",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "sleeve_length",
+      "value": "wrist-length",
+      "expression": "wrist-length sleeves",
+      "negative_expression": "no wrist-length sleeves",
+      "phase": "B1b",
+      "status": "Planned"
+    },
+    {
+      "attribute": "colour_temperature",
+      "value": "warm",
+      "expression": "warm colour temperature",
+      "negative_expression": "no warm colour temperature",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "colour_temperature",
+      "value": "cool",
+      "expression": "cool colour temperature",
+      "negative_expression": "no cool colour temperature",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "colour_temperature",
+      "value": "neutral",
+      "expression": "neutral colour temperature",
+      "negative_expression": "no neutral colour temperature",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "palette_colour",
+      "value": "black",
+      "expression": "black in the colour palette",
+      "negative_expression": "no black in the colour palette",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "palette_colour",
+      "value": "white",
+      "expression": "white in the colour palette",
+      "negative_expression": "no white in the colour palette",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "palette_colour",
+      "value": "grey",
+      "expression": "grey in the colour palette",
+      "negative_expression": "no grey in the colour palette",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "palette_colour",
+      "value": "navy",
+      "expression": "navy in the colour palette",
+      "negative_expression": "no navy in the colour palette",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "palette_colour",
+      "value": "blue",
+      "expression": "blue in the colour palette",
+      "negative_expression": "no blue in the colour palette",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "palette_colour",
+      "value": "red",
+      "expression": "red in the colour palette",
+      "negative_expression": "no red in the colour palette",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "palette_colour",
+      "value": "green",
+      "expression": "green in the colour palette",
+      "negative_expression": "no green in the colour palette",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "palette_colour",
+      "value": "yellow",
+      "expression": "yellow in the colour palette",
+      "negative_expression": "no yellow in the colour palette",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "palette_colour",
+      "value": "orange",
+      "expression": "orange in the colour palette",
+      "negative_expression": "no orange in the colour palette",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "palette_colour",
+      "value": "pink",
+      "expression": "pink in the colour palette",
+      "negative_expression": "no pink in the colour palette",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "palette_colour",
+      "value": "purple",
+      "expression": "purple in the colour palette",
+      "negative_expression": "no purple in the colour palette",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "palette_colour",
+      "value": "brown",
+      "expression": "brown in the colour palette",
+      "negative_expression": "no brown in the colour palette",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "palette_colour",
+      "value": "beige",
+      "expression": "beige in the colour palette",
+      "negative_expression": "no beige in the colour palette",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "palette_colour",
+      "value": "cream",
+      "expression": "cream in the colour palette",
+      "negative_expression": "no cream in the colour palette",
+      "phase": "B1c",
+      "status": "Blocked"
+    },
+    {
+      "attribute": "colour_dominance",
+      "value": true,
+      "expression": "dominant colour observation is true",
+      "negative_expression": "no dominant colour observation is true",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "colour_dominance",
+      "value": false,
+      "expression": "dominant colour observation is false",
+      "negative_expression": "no dominant colour observation is false",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "construction_collared",
+      "value": true,
+      "expression": "reviewed collared observation is true",
+      "negative_expression": "no reviewed collared observation is true",
+      "phase": "B1d",
+      "status": "Planned"
+    },
+    {
+      "attribute": "construction_collared",
+      "value": false,
+      "expression": "reviewed collared observation is false",
+      "negative_expression": "no reviewed collared observation is false",
+      "phase": "B1d",
+      "status": "Planned"
+    },
+    {
+      "attribute": "construction_structured",
+      "value": true,
+      "expression": "reviewed structured observation is true",
+      "negative_expression": "no reviewed structured observation is true",
+      "phase": "B1d",
+      "status": "Planned"
+    },
+    {
+      "attribute": "construction_structured",
+      "value": false,
+      "expression": "reviewed structured observation is false",
+      "negative_expression": "no reviewed structured observation is false",
+      "phase": "B1d",
+      "status": "Planned"
+    },
+    {
+      "attribute": "construction_tailored",
+      "value": true,
+      "expression": "reviewed tailored observation is true",
+      "negative_expression": "no reviewed tailored observation is true",
+      "phase": "B1d",
+      "status": "Planned"
+    },
+    {
+      "attribute": "construction_tailored",
+      "value": false,
+      "expression": "reviewed tailored observation is false",
+      "negative_expression": "no reviewed tailored observation is false",
+      "phase": "B1d",
+      "status": "Planned"
+    },
+    {
+      "attribute": "condition",
+      "value": "clean_intact",
+      "expression": "reviewed condition is clean intact",
+      "negative_expression": "no reviewed condition is clean intact",
+      "phase": "B1d",
+      "status": "Planned"
+    },
+    {
+      "attribute": "condition",
+      "value": "needs_attention",
+      "expression": "reviewed condition is needs attention",
+      "negative_expression": "no reviewed condition is needs attention",
+      "phase": "B1d",
+      "status": "Planned"
+    },
+    {
+      "attribute": "primary_colour",
+      "value": "#808080",
+      "expression": "exact main colour #808080",
+      "negative_expression": "no exact main colour #808080",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "primary_colour",
+      "value": "#ffc0cb",
+      "expression": "exact main colour #ffc0cb",
+      "negative_expression": "no exact main colour #ffc0cb",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "primary_colour",
+      "value": "#000080",
+      "expression": "exact main colour #000080",
+      "negative_expression": "no exact main colour #000080",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "primary_colour",
+      "value": "#ffff00",
+      "expression": "exact main colour #ffff00",
+      "negative_expression": "no exact main colour #ffff00",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "primary_colour",
+      "value": "#800080",
+      "expression": "exact main colour #800080",
+      "negative_expression": "no exact main colour #800080",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "primary_colour",
+      "value": "#ffffff",
+      "expression": "exact main colour #ffffff",
+      "negative_expression": "no exact main colour #ffffff",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "primary_colour",
+      "value": "#000000",
+      "expression": "exact main colour #000000",
+      "negative_expression": "no exact main colour #000000",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "primary_colour",
+      "value": "#ffa500",
+      "expression": "exact main colour #ffa500",
+      "negative_expression": "no exact main colour #ffa500",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "primary_colour",
+      "value": "#f5f5dc",
+      "expression": "exact main colour #f5f5dc",
+      "negative_expression": "no exact main colour #f5f5dc",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "primary_colour",
+      "value": "#ff0000",
+      "expression": "exact main colour #ff0000",
+      "negative_expression": "no exact main colour #ff0000",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "primary_colour",
+      "value": "#a52a2a",
+      "expression": "exact main colour #a52a2a",
+      "negative_expression": "no exact main colour #a52a2a",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "primary_colour",
+      "value": "#008000",
+      "expression": "exact main colour #008000",
+      "negative_expression": "no exact main colour #008000",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "primary_colour",
+      "value": "#0000ff",
+      "expression": "exact main colour #0000ff",
+      "negative_expression": "no exact main colour #0000ff",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "secondary_colour",
+      "value": "#808080",
+      "expression": "exact secondary colour #808080",
+      "negative_expression": "no exact secondary colour #808080",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "secondary_colour",
+      "value": "#ffc0cb",
+      "expression": "exact secondary colour #ffc0cb",
+      "negative_expression": "no exact secondary colour #ffc0cb",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "secondary_colour",
+      "value": "#000080",
+      "expression": "exact secondary colour #000080",
+      "negative_expression": "no exact secondary colour #000080",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "secondary_colour",
+      "value": "#ffff00",
+      "expression": "exact secondary colour #ffff00",
+      "negative_expression": "no exact secondary colour #ffff00",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "secondary_colour",
+      "value": "#800080",
+      "expression": "exact secondary colour #800080",
+      "negative_expression": "no exact secondary colour #800080",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "secondary_colour",
+      "value": "#ffffff",
+      "expression": "exact secondary colour #ffffff",
+      "negative_expression": "no exact secondary colour #ffffff",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "secondary_colour",
+      "value": "#000000",
+      "expression": "exact secondary colour #000000",
+      "negative_expression": "no exact secondary colour #000000",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "secondary_colour",
+      "value": "#ffa500",
+      "expression": "exact secondary colour #ffa500",
+      "negative_expression": "no exact secondary colour #ffa500",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "secondary_colour",
+      "value": "#f5f5dc",
+      "expression": "exact secondary colour #f5f5dc",
+      "negative_expression": "no exact secondary colour #f5f5dc",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "secondary_colour",
+      "value": "#ff0000",
+      "expression": "exact secondary colour #ff0000",
+      "negative_expression": "no exact secondary colour #ff0000",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "secondary_colour",
+      "value": "#a52a2a",
+      "expression": "exact secondary colour #a52a2a",
+      "negative_expression": "no exact secondary colour #a52a2a",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "secondary_colour",
+      "value": "#008000",
+      "expression": "exact secondary colour #008000",
+      "negative_expression": "no exact secondary colour #008000",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "secondary_colour",
+      "value": "#0000ff",
+      "expression": "exact secondary colour #0000ff",
+      "negative_expression": "no exact secondary colour #0000ff",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "palette_colour",
+      "value": "#808080",
+      "expression": "exact palette colour #808080",
+      "negative_expression": "no exact palette colour #808080",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "palette_colour",
+      "value": "#ffc0cb",
+      "expression": "exact palette colour #ffc0cb",
+      "negative_expression": "no exact palette colour #ffc0cb",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "palette_colour",
+      "value": "#000080",
+      "expression": "exact palette colour #000080",
+      "negative_expression": "no exact palette colour #000080",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "palette_colour",
+      "value": "#ffff00",
+      "expression": "exact palette colour #ffff00",
+      "negative_expression": "no exact palette colour #ffff00",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "palette_colour",
+      "value": "#800080",
+      "expression": "exact palette colour #800080",
+      "negative_expression": "no exact palette colour #800080",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "palette_colour",
+      "value": "#ffffff",
+      "expression": "exact palette colour #ffffff",
+      "negative_expression": "no exact palette colour #ffffff",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "palette_colour",
+      "value": "#000000",
+      "expression": "exact palette colour #000000",
+      "negative_expression": "no exact palette colour #000000",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "palette_colour",
+      "value": "#ffa500",
+      "expression": "exact palette colour #ffa500",
+      "negative_expression": "no exact palette colour #ffa500",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "palette_colour",
+      "value": "#f5f5dc",
+      "expression": "exact palette colour #f5f5dc",
+      "negative_expression": "no exact palette colour #f5f5dc",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "palette_colour",
+      "value": "#ff0000",
+      "expression": "exact palette colour #ff0000",
+      "negative_expression": "no exact palette colour #ff0000",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "palette_colour",
+      "value": "#a52a2a",
+      "expression": "exact palette colour #a52a2a",
+      "negative_expression": "no exact palette colour #a52a2a",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "palette_colour",
+      "value": "#008000",
+      "expression": "exact palette colour #008000",
+      "negative_expression": "no exact palette colour #008000",
+      "phase": "B1c",
+      "status": "Planned"
+    },
+    {
+      "attribute": "palette_colour",
+      "value": "#0000ff",
+      "expression": "exact palette colour #0000ff",
+      "negative_expression": "no exact palette colour #0000ff",
+      "phase": "B1c",
+      "status": "Planned"
+    }
+  ],
+  "dynamic": [
+    {
+      "attribute": "garment_name",
+      "expression": "garment named \"<exact NFC name>\"",
+      "phase": "B1a"
+    },
+    {
+      "attribute": "primary_colour",
+      "expression": "exact main colour #123abc",
+      "phase": "B1c"
+    },
+    {
+      "attribute": "secondary_colour",
+      "expression": "exact secondary colour #123abc",
+      "phase": "B1c"
+    },
+    {
+      "attribute": "palette_colour",
+      "expression": "exact palette colour #123abc",
+      "phase": "B1c"
+    },
+    {
+      "attribute": "palette_coverage",
+      "expression": "palette blue coverage at least 0.500000",
+      "phase": "B1c"
+    },
+    {
+      "attribute": "descriptive_tag",
+      "expression": "garment tagged \"<literal>\"",
+      "phase": "B1d"
+    }
+  ],
+  "frames": [
+    "I want <bound attributes> <noun>.",
+    "Suggest <attribute> outfit for <existing context>.",
+    "No <attribute> patterns.",
+    "Recommend something with <attribute> silhouette.",
+    "I am going on <context> and want <bound attributes> <noun>.",
+    "<field> is <canonical value>.",
+    "every <role> must have <attribute>",
+    "no <role> with <bound conjunction>",
+    "both <set value> and <set value> <field>"
+  ],
+  "role_nouns": {
+    "top": "upper",
+    "shirt": "upper",
+    "trousers": "lower",
+    "pants": "lower",
+    "skirt": "lower",
+    "dress": "one_piece",
+    "outerwear": "outerwear",
+    "garment": "all_selected",
+    "something": "base"
+  },
+  "category_aliases": {
+    "short_sleeve_top": [
+      "short-sleeve top",
+      "short-sleeve shirt"
+    ],
+    "long_sleeve_top": [
+      "long-sleeve top",
+      "long-sleeve shirt"
+    ],
+    "short_sleeve_outwear": [
+      "short-sleeve outerwear"
+    ],
+    "long_sleeve_outwear": [
+      "long-sleeve outerwear"
+    ],
+    "trousers": [
+      "trousers",
+      "pants"
+    ]
+  },
+  "blocked_values": [
+    [
+      "material",
+      "not sure"
+    ],
+    [
+      "condition",
+      "unknown"
+    ],
+    [
+      "sleeve_length",
+      "three quarter"
+    ],
+    [
+      "sleeve_length",
+      "long"
+    ],
+    [
+      "neckline",
+      "round-crew"
+    ],
+    [
+      "neckline",
+      "other"
+    ],
+    [
+      "pattern",
+      "patterned"
+    ],
+    [
+      "pattern",
+      "solid"
+    ]
+  ]
+}

@@ -51,6 +51,10 @@ def resolve_source(conn, user_id, outfit_id=None, recommendation_id=None):
             garment.garment_id
             for garment in transaction_garment_query(conn).get_confirmed_available_garments(user_id)
         }
+        from app.application.wardrobe.wearer_category_service import require_categories
+        from app.application.wardrobe.profile_service import current_profile_id
+        selected=[dict(r) for r in conn.execute('SELECT * FROM garments WHERE user_id=? AND id IN ('+','.join('?' for _ in members)+')',[user_id,*[m['garment_id'] for m in members]])]
+        require_categories(conn,user_id,current_profile_id(),selected)
         if any(member["garment_id"] not in eligible for member in members):
             raise HTTPException(
                 409,

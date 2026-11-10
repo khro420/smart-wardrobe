@@ -5,12 +5,13 @@ from typing import Literal
 from fastapi import HTTPException
 from app.application.ports.workflow_runtime import connection, media_path_for_owner, runtime, utcnow
 from app.application.wardrobe import owner_style_confirmation as style_confirmation
+from app.application.wardrobe import description_projector as description
 
 from app.domain.value_objects.garment_attributes import GARMENT_STRUCTURE
 from app.application.garment_processing.processing_job_service import get_job
 from app.application.garment_processing import automatic_garment_finalization as automatic
 from app.domain.value_objects.saved_attribute_evidence import KEY as SOURCE_KEY, source_record
-from app.infrastructure.ai.mirrored_garment_reconstruction import reconstruct_mirrored_garment_png
+from app.application.ports.workflow_runtime import reconstruct_mirrored_garment_png
 
 
 def confirm_reviewed_candidates(job_id: str, user_id: str, profile_id: str, item_ids: list[str], save_mode: str, outfit_name: str | None, admission_mode: str = automatic.MANUAL) -> dict:
@@ -75,13 +76,28 @@ def review_job(job_id: str, user_id: str, profile_id: str, updates: list[dict]) 
             raise HTTPException(404, "Processing job was not found.")
         if job["status"] != "review_required":
             raise HTTPException(409, "Only review-required jobs can be updated.")
+        from app.domain.value_objects.garment_description_evidence import encode
+        typed_actions = [u['description_update'] for u in updates if u.get('description_update') is not None]
+        if typed_actions and len(encode(typed_actions)) > 262144:
+            raise HTTPException(422, 'Typed review batch exceeds encoding limit.')
         for update in updates:
             item = conn.execute("SELECT * FROM processing_items WHERE id=? AND job_id=?", (update["item_id"], job_id)).fetchone()
             if not item:
                 raise HTTPException(404, "Processing candidate was not found.")
+            from app.application.wardrobe import verified_subtype_service as subtype
+            subtype_update=update.pop('subtype_update',None)
+            if subtype.enabled() and ('category' in update or 'preferred_media' in update):
+                prior=subtype.source(conn,user_id,item)
+                if any(e['subtype']=='blouse' for e in prior['events']):
+                    from app.application.wardrobe.wearer_category_service import require_categories
+                    require_categories(conn,user_id,profile_id,[item])
             attrs = json.loads(item["attributes_json"])
-            if {style_confirmation.KEY, SOURCE_KEY, automatic.KEY}.intersection(update.get('attributes') or {}):
+            if {style_confirmation.KEY, SOURCE_KEY, automatic.KEY, description.KEY, description.RAW_KEY, 'wearer_category_eligibility','verified_subtype','verified_subtype_evidence','garment_subtype_events_v1'}.intersection(update.get('attributes') or {}):
                 raise HTTPException(422, 'Style confirmation metadata is server-owned.')
+            try:
+                update, description_plan = description.prepare_update(item, user_id, update, runtime().description_policy, candidate=True)
+            except description.DescriptionUpdateError as exc:
+                raise HTTPException(exc.status, str(exc)) from exc
             attrs.update(update.get("attributes") or {})
             if update.get("name"):
                 attrs["name"] = update["name"]
@@ -125,6 +141,17 @@ def review_job(job_id: str, user_id: str, profile_id: str, updates: list[dict]) 
                 if 'style' in (update.get('attributes') or {}):
                     origin, contributor = 'owner_supplied', 'authenticated_candidate_correction'
                 attrs[SOURCE_KEY] = source_record(attrs, user_id, attrs.get('reviewed_category') or item['detected_category'], preferred_id, utcnow(), origin, contributor)
+            try:
+                description.finish_update(item, user_id, attrs, attrs.get('reviewed_category') or item['detected_category'], preferred_id, description_plan, runtime().description_policy, utcnow(), candidate=True,
+                                          name=attrs.get('name'), primary_colour=attrs.get('primary_colour'), pattern=attrs.get('pattern'))
+            except description.DescriptionUpdateError as exc:
+                raise HTTPException(exc.status, str(exc)) from exc
+            from app.application.wardrobe import wearer_category_service as categories
+            attrs.pop('wearer_category_eligibility',None)
+            if subtype_update is not None:
+                subtype.review(conn,user_id,profile_id,{**dict(item),'attributes_json':json.dumps(attrs),'preferred_media_id':preferred_id},subtype_update)
+            if update['decision']=='accepted' or 'category' in update:
+                categories.require_categories(conn,user_id,profile_id,[{**dict(item),'attributes_json':json.dumps(attrs),'preferred_media_id':preferred_id}])
             conn.execute("UPDATE processing_items SET review_status=?, attributes_json=?, preferred_media_id=? WHERE id=?", (
                 update["decision"], json.dumps(attrs, allow_nan=False), preferred_id, item["id"]
             ))

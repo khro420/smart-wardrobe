@@ -72,7 +72,7 @@ class GeneralContextInterpreter:
         self.vocabulary = self.legacy.vocabulary
         self.bundle_id=bundle_id
         if bundle_id!='legacy_8_v1':
-            from app.application.recommendation.context_bundle import ContextBundle, APP
+            from app.shared_contracts.context_bundle import ContextBundle, APP
             bundle=ContextBundle.load(bundle_id)
             self.situations,self.taxonomy_hash=load_taxonomy(APP/'application/recommendation/config/situation_taxonomy.v2.json',approved_version='situation-taxonomy-'+bundle.record['registry_version'].removeprefix('context-registry-'))
             self.grammar=bundle.read('application/nlp/config/context_grammar.v2.json')

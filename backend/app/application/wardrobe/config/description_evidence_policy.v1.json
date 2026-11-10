@@ -1,0 +1,80 @@
+{
+  "contract": "garment-description-policy-1.0.0",
+  "fields": [
+    "garment_name",
+    "category",
+    "primary_colour",
+    "secondary_colour",
+    "colour_palette",
+    "style",
+    "pattern",
+    "material",
+    "silhouette",
+    "neckline",
+    "sleeve_length",
+    "colour_temperature",
+    "colour_dominance",
+    "descriptive_tags"
+  ],
+  "states": [
+    "Known",
+    "KnownEmpty",
+    "Absent",
+    "Unspecified",
+    "Unsure",
+    "Unrecognized",
+    "Malformed",
+    "Conflicting",
+    "Stale",
+    "Inapplicable"
+  ],
+  "origins": [
+    "owner_selected",
+    "owner_reported_label",
+    "model_suggestion",
+    "measured_image",
+    "legacy_selected_unverified",
+    "derived_category"
+  ],
+  "bounds": {
+    "stored_sidecar_bytes": 32768,
+    "projected_garment_bytes": 32768,
+    "new_projection_100_bytes": 3276800,
+    "single_typed_update_bytes": 32768,
+    "typed_review_batch_bytes": 262144,
+    "review_items": 100,
+    "resource_bytes_each": 65536,
+    "field_operations": 14,
+    "collection_values": 20,
+    "palette_entries": 5,
+    "literal_tags": 20,
+    "literal_tag_codepoints": 100,
+    "head_fields": 16,
+    "head_label_codepoints": 100,
+    "unresolved_reason_codes_per_field": 8,
+    "raw_reference_locations_per_field": 4
+  },
+  "dependencies": {
+    "media_or_category_change": [
+      "visual style source under its original rules",
+      "pattern",
+      "silhouette",
+      "neckline",
+      "sleeve_length",
+      "primary_colour",
+      "secondary_colour",
+      "colour_palette",
+      "colour_temperature",
+      "colour_dominance"
+    ],
+    "primary_colour_change": [
+      "secondary_colour",
+      "colour_palette",
+      "colour_temperature",
+      "colour_dominance"
+    ],
+    "name_change": [],
+    "material_or_literal_tag_change": "No unrelated visual assertion refreshed or made current."
+  },
+  "max_palette_precision": 6
+}

@@ -1,7 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 import { createHomepageRecommendation, type RecommendationOutcome } from "@/lib/api";
-import { homepageFlowKey, singleFlight } from "@/lib/recommendation-session";
+import { captureWearer } from "@/lib/wearer-selection";
+import { homepageFlowKey, singleFlight, sessionOwner } from "@/lib/recommendation-session";
 import { errorMessage, outcomeMessage } from "@/lib/recommendation-messages";
 import RecommendationResult from "./RecommendationResult";
 
@@ -16,8 +17,12 @@ export default function HomepageRecommendation({ onSaved }: { onSaved?: () => Pr
       await Promise.resolve();
       if (!active) return;
       setResult(undefined); setError("");
-      const key = homepageFlowKey();
-      return singleFlight(`home:${key}`,() => createHomepageRecommendation(key));
+      const wearer = await captureWearer();
+      if (!active) return;
+      const previous = window.history.state?.wardrobeHomepage;
+      const recovery = previous?.owner === sessionOwner(wearer.id);
+      const key = homepageFlowKey(wearer.id);
+      return singleFlight(`home:${key}`,() => createHomepageRecommendation(key, wearer.id, recovery), wearer.id);
     };
     load().then(value => { if (active) setResult(value); }).catch(cause => { if (active) setError(errorMessage(cause)); });
     return () => { active = false; };

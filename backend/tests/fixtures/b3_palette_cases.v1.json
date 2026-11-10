@@ -1,0 +1,13 @@
+{
+  "contract": "b3-palette-mechanical-examples-1.0.0",
+  "authority": "Owner-approved recorded-fraction convention; independently written arithmetic examples, not human fashion judgments",
+  "cases": [
+    {"id":"complete_blue_red","palette":[{"hex":"#0000ff","coverage":"1"}],"colour_lower":"0","colour_upper":"0","compatibility":"1/2"},
+    {"id":"half_blue_half_black_red","palette":[{"hex":"#0000ff","coverage":"0.5"},{"hex":"#000000","coverage":"0.5"}],"colour_lower":"1/2","colour_upper":"1/2","compatibility":"3/4"},
+    {"id":"half_blue_unresolved_red","palette":[{"hex":"#0000ff","coverage":"0.5"}],"colour_lower":"0","colour_upper":"1/2","compatibility":"5/8"},
+    {"id":"unclassified_shade_red","palette":[{"hex":"#010203","coverage":"1"}],"colour_lower":"0","colour_upper":"1","compatibility":"3/4"},
+    {"id":"empty_recorded_palette_red","palette":[],"colour_lower":"0","colour_upper":"1","compatibility":"3/4"}
+  ],
+  "other_member_palette":[{"hex":"#ff0000","coverage":"1"}],
+  "style_atom":"1"
+}

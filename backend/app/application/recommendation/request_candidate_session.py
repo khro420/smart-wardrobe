@@ -8,12 +8,19 @@ class RequestProcessingError(RuntimeError):
 
 
 class RequestCandidateSession:
-    def __init__(self, structural_session, request, evaluator, result=None):
+    def __init__(self, structural_session, request, evaluator, result=None, *, attribute_context=None, attribute_verifier=None,attribute_seen=(),attribute_counter_guard=None):
         self.structural_session = structural_session
         self.request = request
         self.evaluator = evaluator
         self._result = result or RequestGenerationResult()
         self._terminal = self._result.status not in ("Pending","Running")
+        self.attribute_context,self.attribute_verifier=attribute_context,attribute_verifier
+        self.attribute_seen=frozenset(attribute_seen)
+        self.attribute_counter_guard=attribute_counter_guard
+        self.attribute_ledger=None
+        if attribute_context is not None:
+            from app.application.recommendation.attribute_condition_evaluator import AttributeLedger
+            self.attribute_ledger=AttributeLedger()
 
     @property
     def result(self):
@@ -45,7 +52,14 @@ class RequestCandidateSession:
                     self._terminal = True
                     raise StopIteration
                 decision = self.evaluator.evaluate(candidate,self.request)
-                field = {"Pass":"passed","Fail":"failed","Unknown":"unknown"}[decision.state]
+                state=decision.state
+                if self.attribute_context is not None:
+                    base=tuple((m.role,m.garment.garment_id) for m in candidate.members if m.role!='outerwear')
+                    attribute_state=self.attribute_context.evaluate(candidate)
+                    ignored=self.attribute_counter_guard.ignores(candidate.key) if attribute_state=='Unknown' and self.attribute_counter_guard is not None else base in self.attribute_seen
+                    state=self.attribute_ledger.observe(state,attribute_state,seen=ignored)
+                    if state=='Pass':self.attribute_verifier.verify(candidate)
+                field = {"Pass":"passed","Fail":"failed","Unknown":"unknown"}[state]
                 previous = self._result
                 if type(previous) is RequestGenerationResult:
                     # Preserve every counter and diagnostic; validate every step.
@@ -60,7 +74,7 @@ class RequestCandidateSession:
                     )
                 else:
                     self._result = replace(previous,status="Running",examined=previous.examined+1,**{field:getattr(previous,field)+1})
-                if decision.state == "Pass":
+                if state == "Pass":
                     return EvaluatedCandidate(candidate,decision)
         except StopIteration:
             raise

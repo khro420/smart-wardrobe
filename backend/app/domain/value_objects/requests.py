@@ -48,7 +48,47 @@ class OwnerStyleConfirmation(BaseModel):
     style: str = Field(min_length=1, max_length=100)
 
 
+class DescriptionOperation(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    kind: Literal['set', 'clear', 'empty', 'unsure']
+    value: object = None
+
+    @model_validator(mode='after')
+    def exact_operation(self):
+        if ('value' in self.model_fields_set) != (self.kind == 'set'):
+            raise ValueError('Only set operations must contain a value.')
+        return self
+
+
+class DescriptionUpdate(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    contract: Literal['garment-description-update-1.0.0']
+    expected_revision: str = Field(strict=True, pattern=r'^[0-9a-f]{64}$')
+    operations: dict[str, DescriptionOperation] = Field(min_length=1, max_length=14)
+
+    @model_validator(mode='after')
+    def bounded_description(self):
+        from app.domain.value_objects.garment_description_evidence import FIELDS, encode
+        if not set(self.operations) <= set(FIELDS):
+            raise ValueError('Unknown description field.')
+        if len(encode(self.model_dump(exclude_unset=True))) > 32768:
+            raise ValueError('Description update exceeds encoding limit.')
+        return self
+
+
+class SubtypeUpdate(BaseModel):
+    model_config = ConfigDict(extra='forbid', strict=True)
+    action_id: str
+    expected_revision: str | None
+    state: Literal['Known','Unspecified','Inapplicable']
+    value: str | None
+    review_basis: Literal['owner_review','synthetic_fixture_declaration']
+    reason: str = Field(min_length=1,max_length=500)
+
+
 class ReviewItem(BaseModel):
+    subtype_update: SubtypeUpdate | None = None
+    description_update: DescriptionUpdate | None = None
     style_confirmation: OwnerStyleConfirmation | None = None
     item_id: str
     decision: Literal["accepted", "rejected"]
@@ -95,6 +135,10 @@ class ReviewRequest(BaseModel):
     def unique_items(self):
         if len({item.item_id for item in self.items}) != len(self.items):
             raise ValueError("Review each candidate only once per request.")
+        from app.domain.value_objects.garment_description_evidence import encode
+        actions = [item.description_update.model_dump(exclude_unset=True) for item in self.items if item.description_update is not None]
+        if actions and len(encode(actions)) > 262144:
+            raise ValueError('Typed review batch exceeds encoding limit.')
         return self
 
 
@@ -118,6 +162,8 @@ class ConfirmRequest(BaseModel):
 
 
 class GarmentUpdate(BaseModel):
+    subtype_update: SubtypeUpdate | None = None
+    description_update: DescriptionUpdate | None = None
     style_confirmation: OwnerStyleConfirmation | None = None
     name: str | None = Field(default=None, max_length=100)
     category: str | None = Field(default=None, max_length=50)

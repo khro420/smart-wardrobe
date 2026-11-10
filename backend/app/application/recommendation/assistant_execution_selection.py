@@ -24,10 +24,11 @@ class AssistantExecutionSelection:
         value={'version':self.version,'engine':self.engine,'implementation':implementation}
         return {**value,'hash':digest(value)}
 
-    def scorer(self,scoring,candidates,preferences,reference_factory):
+    def scorer(self,scoring,candidates,preferences,reference_factory,*,preference_context=None,compatibility_context=None):
         if self.engine==REFERENCE:
-            return scoring.scorer(candidates,preferences,reference_factory)
-        return CompactAssistantScorer(candidates,preferences,scoring.profile,context_ranking=scoring.context_ranking!='disabled')
+            return scoring.scorer(candidates,preferences,reference_factory,**({'preference_context':preference_context} if preference_context is not None else {}),**({'compatibility_context':compatibility_context} if compatibility_context is not None else {}))
+        return CompactAssistantScorer(candidates,preferences,scoring.profile,context_ranking=scoring.context_ranking!='disabled',
+                                      **({'preference_context':preference_context} if preference_context is not None else {}),**({'compatibility_context':compatibility_context} if compatibility_context is not None else {}))
 
     def context(self,scorer,candidates,engine,user_id,request,ranked):
         context=scorer.prepared_context if self.engine==COMPACT else execution_context(candidates.session,engine,user_id,request)

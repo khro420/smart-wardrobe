@@ -15,7 +15,7 @@ def test_capabilities_and_disabled_integrated_submission_are_read_only(store,mon
         headers = {'Authorization':'Bearer '+issue_access_token('owner')}
         assert client.get('/api/v1/recommendations/capabilities').status_code == 401
         result = client.get('/api/v1/recommendations/capabilities',headers=headers)
-        assert result.json() == {'homepage_enabled':False,'assistant_enabled':False}
+        assert {k:result.json()[k] for k in ('homepage_enabled','assistant_enabled')} == {'homepage_enabled':False,'assistant_enabled':False}
         blocked = client.post('/api/v1/recommendations?pipeline=integrated',headers=headers,json={'request_text':'Suggest an outfit','submission_key':'key'})
         assert blocked.status_code == 404 and blocked.json()['outcome'] == 'IntegrationDisabled'
         with connect(store[0]) as c:
@@ -24,13 +24,15 @@ def test_capabilities_and_disabled_integrated_submission_are_read_only(store,mon
 
 
 def test_capabilities_reflect_composed_services_without_invoking_them(store):
-    assistant,homepage = Mock(),Mock()
+    from types import SimpleNamespace
+    assistant=SimpleNamespace(recommend=Mock(),interpreter=SimpleNamespace(bundle_id='legacy_8_v1'),attribute_pipeline=None,preference_policy=None,compatibility_policy=None,context_ranking_profile='disabled',refinement_profile='disabled')
+    homepage=SimpleNamespace(recommend=Mock())
     with TestClient(app) as client:
         app.dependency_overrides[assistant_service] = lambda:assistant
         app.dependency_overrides[homepage_service] = lambda:homepage
         try:
             response = client.get('/api/v1/recommendations/capabilities',headers={'Authorization':'Bearer '+issue_access_token('owner')})
-            assert response.json() == {'homepage_enabled':True,'assistant_enabled':True}
+            assert {k:response.json()[k] for k in ('homepage_enabled','assistant_enabled')} == {'homepage_enabled':True,'assistant_enabled':True}
             assistant.recommend.assert_not_called()
             homepage.recommend.assert_not_called()
         finally:

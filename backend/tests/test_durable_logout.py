@@ -255,7 +255,7 @@ def test_all_protected_dependencies_are_authoritative():
     review_route = next(route for route in wardrobe_routes.router.routes
                        if route.endpoint is wardrobe_routes.contextual_suitability)
     assert any(child.call is security.current_user_id for child in review_route.dependant.dependencies)
-    assert protected == 36
+    assert protected == 48
 
 
 @pytest.mark.parametrize('operation', ['lookup', 'logout'])
