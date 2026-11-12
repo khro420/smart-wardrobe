@@ -14,7 +14,11 @@ TAXONOMY = Path(__file__).parents[1]/'recommendation/config/situation_taxonomy.v
 
 
 def read_json(path):
-    raw = path.read_bytes()
+    # Context bundles pin LF-normalised resource bytes.  Git may materialise
+    # those JSON files with CRLF on Windows, so emit the same digest that the
+    # bundle verifier uses rather than creating a frame that cannot be
+    # subsequently certified as part of its own bundle.
+    raw = path.read_bytes().replace(b'\r\n', b'\n')
     if len(raw) > 65536:
         raise ValueError('Configuration exceeds its bounded schema size.')
     def pairs(items):

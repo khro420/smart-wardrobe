@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from functools import lru_cache
 import hashlib
+import logging
 import math
 import os
 from pathlib import Path
@@ -26,6 +27,7 @@ EMBEDDING_MODEL_REPOSITORY = "google/siglip-base-patch16-512"
 EMBEDDING_MODEL_REVISION = "753a949581523b60257d93e18391e8c27f72eb22"
 EMBEDDING_MODEL_SHA256 = "4ef724068f6b603c8f15937d9b93b36bbda92677e747b599dd950b6b74721ca7"
 EMBEDDING_PREPROCESSING_VERSION = "rgb-white-alpha-pad-512-bicubic-siglip-v1"
+LOGGER = logging.getLogger(__name__)
 
 
 def _prepare_image(path: str | Path) -> Image.Image:
@@ -170,4 +172,16 @@ def get_attribute_adapter() -> GarmentAttributePort:
         return DevelopmentAttributeAdapter()
     if EMBEDDING_ENABLED == "auto" and not (EMBEDDING_MODEL_DIR / "model.safetensors").is_file():
         return DevelopmentAttributeAdapter()
+    # A CPU-only torch build can coexist with an NVIDIA driver.  Attribute
+    # embeddings are optional processing enrichment; do not discard a valid
+    # segmentation crop merely because the configured accelerator is absent.
+    if EMBEDDING_DEVICE == "cuda":
+        try:
+            import torch
+            cuda_available = torch.cuda.is_available()
+        except Exception:
+            cuda_available = False
+        if not cuda_available:
+            LOGGER.warning("CUDA embedding is unavailable; continuing without visual embeddings.")
+            return DevelopmentAttributeAdapter()
     return SiglipEmbeddingAdapter()

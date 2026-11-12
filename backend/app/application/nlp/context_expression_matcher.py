@@ -65,7 +65,7 @@ def interpret_expanded(parser,original):
             values=tuple(dict.fromkeys(value for _,value in observations))
             slots[name]=ContextSlot('Known' if len(values)==1 or name in ('facets','soft_preferences','goals') else 'Conflicting',values,tuple(SourceSpan(m.start(),m.end(),original[m.start():m.end()]) for m,_ in observations))
             for m,_ in observations:consume(m)
-        prefix=re.match(r"\s*(?:please\s+)?(?:(?:i'm|im|i am)\s+(?:going(?:\s+(?:out\s+for|to|on))?|attending|meeting|having|studying|working|visiting|watching|seeing|taking|sightseeing|hanging\s+out|presenting|being(?=\s+interviewed)|conducting|interviewing|in the audience)|i\s+(?:have|want|will|need\s+to\s+go)|what\s+(?:should|can)\s+i\s+wear)\b",text)
+        prefix=re.match(r"\s*(?:please\s+)?(?:(?:i'm|im|i am)\s+(?:going(?:\s+(?:out\s+for|to|on))?|attending|meeting|having|studying|working|visiting|watching|seeing|taking|sightseeing|hanging\s+out|presenting|being(?=\s+interviewed)|conducting|interviewing|in the audience)|i\s+(?:have|want|will|need\s+to\s+go|need(?:\s+an)?\s+outfit)|what\s+(?:should|can)\s+i\s+wear)\b",text)
         if prefix:consume(prefix)
         elif not parser.legacy.classifier.classify(text):raise UnsupportedMeaning('unsupported_intent')
         if re.search(r'\b(?:buy|delete|archive|password|instructions|explain|define|translate)\b',text):raise UnsupportedMeaning('unsupported_intent')

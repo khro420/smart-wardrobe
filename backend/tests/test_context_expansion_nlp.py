@@ -54,6 +54,10 @@ def test_legacy_default_remains_eight_contexts():
     assert parser.interpret("I'm going to study at the library.").status=='UnsupportedRequest'
 
 
+def test_expanded_taxonomy_digest_matches_the_pinned_bundle_on_windows_checkouts(parser):
+    assert parser.taxonomy_hash == ARCHIVES[ACTIVE_WAVE]['taxonomy_sha256']
+
+
 @pytest.mark.parametrize('text',["I'm meeting someone at a café.","I'm visiting my friend’s house."])
 def test_unicode_spans_are_original(text,parser):
     if ACTIVE_WAVE=='A':pytest.skip('Wave B')
@@ -71,6 +75,7 @@ def test_unicode_spans_are_original(text,parser):
     ("I'm meeting friends for dinner.",'social.meal','smart casual'),
     ("I'm meeting friends.",'everyday.casual_outing','casual'),
     ("I'm meeting friends for a dinner.",'social.meal','smart casual'),
+    ('I need an outfit for a casual outing.','everyday.casual_outing','casual'),
 ])
 def test_activation_correction_preserves_original_requests(text,sid,target,parser):
     from app.application.recommendation.context_relevance_policy import ContextRelevancePolicy

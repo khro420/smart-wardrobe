@@ -8,7 +8,8 @@ from PIL import Image
 
 from app.domain.value_objects.garment_attributes import GarmentAttributes
 from app.infrastructure.ai.attribute_embedding_adapter import (
-    EMBEDDING_DIMENSION, EMBEDDING_PREPROCESSING_VERSION, _prepare_image,
+    EMBEDDING_DIMENSION, EMBEDDING_PREPROCESSING_VERSION, DevelopmentAttributeAdapter,
+    _prepare_image, get_attribute_adapter,
 )
 from app.infrastructure.persistence.vector_repository import VectorRepository
 
@@ -34,6 +35,16 @@ class VisualEmbeddingTests(unittest.TestCase):
         for invalid in ([0.0], [0.0] * (EMBEDDING_DIMENSION - 1) + [float("nan")], [False] * EMBEDDING_DIMENSION):
             with self.assertRaises(ValueError): repository.validate(invalid)
         GarmentAttributes({"embedding": valid}).validate_embedding(EMBEDDING_DIMENSION)
+
+    def test_cuda_configuration_without_cuda_uses_non_failing_attribute_fallback(self):
+        from types import SimpleNamespace
+        from unittest.mock import patch
+        get_attribute_adapter.cache_clear()
+        with patch("app.infrastructure.ai.attribute_embedding_adapter.EMBEDDING_DEVICE", "cuda"), \
+             patch("app.infrastructure.ai.attribute_embedding_adapter.EMBEDDING_ENABLED", "true"), \
+             patch.dict("sys.modules", {"torch": SimpleNamespace(cuda=SimpleNamespace(is_available=lambda: False))}):
+            self.assertIsInstance(get_attribute_adapter(), DevelopmentAttributeAdapter)
+        get_attribute_adapter.cache_clear()
 
 
 if __name__ == "__main__":

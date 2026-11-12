@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { UploadCloud } from "lucide-react";
 import { captureWearer } from "@/lib/wearer-selection";
 import Layout from "@/components/Layout";
-import { submitWardrobeImage, getProcessingCapabilities, getWardrobeQuota, wardrobeCapacityText, type WardrobeQuota } from "@/lib/api";
+import { submitWardrobeImage, getWardrobeQuota, wardrobeCapacityText, type WardrobeQuota } from "@/lib/api";
 
 export default function ExtractLandingPage() {
   const categoryPolicy = useWearerCategoryEligibility();
@@ -36,13 +36,11 @@ export default function ExtractLandingPage() {
     setSubmitting(true); setMessage("Validating and preparing your image…");
     try {
       const wearer = await captureWearer();
-      const capability = await getProcessingCapabilities();
-      if (capability.version !== "processing-admission-capabilities-1.0.0" || !capability.admission_modes.includes("automatic_structural_v1")) throw new Error("Automatic Add is unavailable on this backend. Your image was not submitted.");
-      const job = await submitWardrobeImage(file, "automatic_structural_v1", wearer.id); router.push(`/extract/results?job=${job.id}`); }
+      const job = await submitWardrobeImage(file, "manual_review_v1", wearer.id); router.push(`/extract/results?job=${job.id}`); }
     catch (error) { setMessage(error instanceof Error ? error.message : "Upload failed. Please try another image."); setSubmitting(false); void refreshQuota(); }
   };
   return <Layout><p data-testid="wearer-category-guidance" role="status">{categoryPolicy.text} A category is checked once processing identifies it. Prohibited candidates stay available for correction or cancellation. <Link href="/profile" className="underline">Wearer information</Link></p><div className="w-full space-y-8 border-4 border-black bg-white p-6 shadow-[6px_6px_0_#000] md:p-8">
-    <div className="border-b-4 border-black pb-4 text-center"><h1 className="text-2xl font-mono font-black">Add garments from an image</h1><p className="mt-2 text-xs font-mono text-zinc-500">Eligible garments are added automatically. Optional review lets you correct names, categories, colours and attributes.</p></div>
+    <div className="border-b-4 border-black pb-4 text-center"><h1 className="text-2xl font-mono font-black">Add garments from an image</h1><p className="mt-2 text-xs font-mono text-zinc-500">Review and accept each candidate before saving it to your wardrobe.</p></div>
     <section aria-label="Wardrobe capacity" className="rounded-lg border border-slate-200 p-3 text-sm">
       <p role="status" aria-live="polite">{quota ? wardrobeCapacityText(quota) : "Capacity unavailable"}</p>
       <p className="text-xs text-slate-600">Non-archived entries include unavailable items. Pending uploads do not reserve spaces. Archiving a garment releases its space.</p>
