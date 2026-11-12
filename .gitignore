@@ -102,3 +102,7 @@ backend/datasets/*
 !backend/vendor/CatVTON/densepose/data/**
 !backend/vendor/CatVTON/detectron2/data/
 !backend/vendor/CatVTON/detectron2/data/**
+
+# Retain nested Detectron2 source datasets
+!backend/vendor/CatVTON/detectron2/data/datasets/
+!backend/vendor/CatVTON/detectron2/data/datasets/**

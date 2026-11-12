@@ -12,3 +12,5 @@ densepose_
 playground.py
 output
 model/cloth_masker_segformer.py
+!detectron2/data/datasets/
+!detectron2/data/datasets/**
