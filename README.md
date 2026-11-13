@@ -51,7 +51,12 @@ The homepage's Outfit Assistant persists the NLP request, recommendation, and re
 
 Create an account at `http://localhost:3000/auth`, then sign in. Passwords are salted and hashed; browser requests use signed, short-lived bearer tokens. The `X-User-Id` development identity exists only when `SMART_WARDROBE_ALLOW_DEV_IDENTITY=true` (the automated-test setting), never by default.
 
-Copy `backend/.env.example` to `backend/.env` and replace `SMART_WARDROBE_TOKEN_SECRET` before any shared or public deployment.
+Copy `backend/.env.example` to `backend/.env` and replace
+`SMART_WARDROBE_TOKEN_SECRET` before any shared or public deployment. Copy
+`frontend/.env.example` to `frontend/.env` when the browser needs a non-default
+API endpoint. The shared backend template explicitly enables the assistant,
+attribute, VTOFF, and VTON features; install their model assets before starting
+the backend.
 
 ## AI and data deployments
 

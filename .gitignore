@@ -106,3 +106,15 @@ backend/datasets/*
 # Retain nested Detectron2 source datasets
 !backend/vendor/CatVTON/detectron2/data/datasets/
 !backend/vendor/CatVTON/detectron2/data/datasets/**
+
+# Collaboration-critical inference assets. These are the small, project-trained
+# checkpoints and reproducibility metadata needed for a teammate to run the
+# enabled subsystems. Keep the multi-GB third-party model packages, datasets,
+# caches, and generated runs above out of Git.
+!backend/models/cv/
+!backend/models/cv/*.pt
+!backend/models/vton/
+!backend/models/vton/manifest.json
+!backend/runs/fashionpedia_attribute_heads/
+backend/runs/fashionpedia_attribute_heads/*
+!backend/runs/fashionpedia_attribute_heads/step2000.pt
