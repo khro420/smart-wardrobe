@@ -118,3 +118,9 @@ backend/datasets/*
 !backend/runs/fashionpedia_attribute_heads/
 backend/runs/fashionpedia_attribute_heads/*
 !backend/runs/fashionpedia_attribute_heads/step2000.pt
+
+# Share the sanitized seeded development database for teammate testing. Do not
+# add the local database, private media, backups, logs, or other runtime state.
+!storage/
+storage/*
+!storage/smart_wardrobe.seed.db

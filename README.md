@@ -58,6 +58,11 @@ API endpoint. The shared backend template explicitly enables the assistant,
 attribute, VTOFF, and VTON features; install their model assets before starting
 the backend.
 
+For teammate testing with prepopulated records, copy
+`storage/smart_wardrobe.seed.db` to `storage/smart_wardrobe.db`. Sign in as
+`khorhs2004@gmail.com` with password `admin123`. The seed intentionally omits
+private media files, so upload new images when testing image-backed workflows.
+
 ## AI and data deployments
 
 When weights are unavailable, the application uses a clearly marked development fallback that makes one review-required candidate; it is not presented as a segmentation prediction. Set `SMART_WARDROBE_AI_MODE=development` to force it. With `backend/models/cv/best.pt`, the YOLO pipeline under `backend/app/infrastructure/ai/cv/` is used. Its retained tight segmentation crop is kept separate from the deterministic, transparent 512 x 512 garment standardisation so the user can compare and choose the representation saved to the wardrobe.
