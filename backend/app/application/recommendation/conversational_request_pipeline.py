@@ -26,7 +26,7 @@ class ConversationalRequestPipeline(AttributeRequestPipeline):
         return {'version':'conversational-language-capabilities-1.0.0','enabled':True,'profile':PROFILE,'supplement_sha256':RESOURCE_SHA256,'interpreter_sha256':self.interpreter.hash,'examples':["I'm going out to eat.",'Going to the movies.','Need an outfit for uni.','I want a cotton shirt.'],'soft_requests':'Use saved preference settings; no request-local score.','alternative_requests':'Use the bound Suggest another outfit action; supported ordinary contexts or enabled pure garment requirements.'}
     def capabilities(self):
         value=super().capabilities()
-        value['grammar_version']='conversational-attribute-grammar-1.1.3'
+        value['grammar_version']='conversational-attribute-grammar-1.1.4'
         from app.application.nlp.verified_subtype_interpreter import active
         if active():
             from app.domain.value_objects.verified_garment_subtype import registry,VALUES

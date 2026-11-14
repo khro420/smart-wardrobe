@@ -9,7 +9,7 @@ from app.domain.value_objects.general_context_request import ContextSlot,SourceS
 from app.domain.value_objects.structured_outfit_request import StructuredOutfitRequest
 
 PROFILE='conversational_language_v1'
-RESOURCE_SHA256='0c75ee730750d147c0ba5a20285688e07732c8e6dad4ca0b9bb4f429c4e91cf8'
+RESOURCE_SHA256='62a623057c7fbb6209c7aff0c4a8de9581986878341c4204263cb088e8261c55'
 RESOURCE=Path(__file__).with_name('config')/'conversational_language.v1.json'
 
 def load_language(path=RESOURCE):
@@ -48,7 +48,11 @@ def outside_literals(text):
 def guard(original):
     text=outside_literals(matching(original))
     if re.search(r'[.!?]\s*(?:ignore|forget|change)\b',text):raise UnsupportedMeaning('language_conflicting_request')
-    if re.search(r'\b(?:buy|purchase|delete|remove|archive|sell|translate|explain|define|manufactur\w*|ignore|instructions|password|forecast|teleport)\b',text):raise UnsupportedMeaning('unsupported_intent')
+    # "Heading to the mall to buy ..." is a bounded shopping-context phrase;
+    # it does not authorize purchase actions and is interpreted only as context.
+    shopping_buy = re.search(r'\b(?:heading|going|off)\s+to\s+(?:the\s+)?mall\s+to\s+(?:buy|shop)\b', text)
+    if re.search(r'\b(?:buy|purchase|delete|remove|archive|sell|translate|explain|define|manufactur\w*|ignore|instructions|password|forecast|teleport)\b',text) and not shopping_buy:
+        raise UnsupportedMeaning('unsupported_intent')
     if re.search(r'\b(?:prefer|preferably)\b',text):raise UnsupportedMeaning('soft_preference_requires_settings')
     if re.search(r'\b(?:another|same clothes)\b',text):raise UnsupportedMeaning('alternative_requires_parent')
     if re.search(r'\boffice\s+party\b',text):raise UnsupportedMeaning('language_ambiguous_activity')

@@ -47,7 +47,8 @@ def create_visualisation(
             raise HTTPException(422,"Choose a wearer for this visualisation.")
         require_active_profile(conn,user_id,profile_id)
         queued = conn.execute(
-            "SELECT COUNT(*) FROM visualisations WHERE status='queued'"
+            "SELECT (SELECT COUNT(*) FROM visualisations WHERE status='queued') + "
+            "(SELECT COUNT(*) FROM group_visualisations WHERE status='queued')"
         ).fetchone()[0]
         if queued >= runtime().queue_limit:
             raise HTTPException(429, "The try-on queue is full. Please try again shortly.")

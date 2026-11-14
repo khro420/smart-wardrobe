@@ -104,7 +104,7 @@ class AttributeRequestPipeline:
         from app.domain.value_objects.attribute_selection_evidence import decode
         registry=decode(self.grammar.payload,65536)
         return {'version':'attribute-request-capabilities-1.0.0','enabled':True,'request_version':'attribute-conditions-1.0.0',
-          'grammar_version':registry['version'],'grammar_sha256':self.grammar.sha256,'policy_version':'attribute-evidence-policy-1.0.0',
+          'grammar_version':registry['version'],'grammar_sha256':self.grammar.sha256,'policy_version':self.policy.snapshot()['version'],
           'policy_sha256':self.policy.sha256,'fields':[{'attribute':field,'operators':[op for op,fields in OPERATORS.items() if field in fields],
             'values':[e['value'] for e in registry['entries'] if e['attribute']==field and e['status']=='Planned'],
             'dynamic_domain':field in ('garment_name','descriptive_tag','palette_coverage','primary_colour','secondary_colour','palette_colour'),
@@ -112,4 +112,4 @@ class AttributeRequestPipeline:
             'default_quantifier':'exists'} for field,value in self.policy.snapshot()['fields'].items()],
           'roles':list(ROLES),'quantifiers':['exists','all_present','none'],
           'bounds':{'groups':8,'conditions':16,'values_per_condition':20,'values_total':64,'typed_bytes':32768,'intent_bytes':65536,'request_codepoints':500},
-          'blocked_sources':['Unverified model suggestions','Unregistered automatic measurement provenance','Cream palette family without an exact anchor']}
+          'blocked_sources':['Unverified model suggestions','Automatic evidence outside the qualified primary-colour mapper','Cream palette family without an exact anchor']}

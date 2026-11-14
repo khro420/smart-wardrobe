@@ -83,6 +83,15 @@ def interpret_expanded(parser,original):
         old=slots.get('venue');slot('venue',venues)
         if old and venues and old.value not in slots['venue'].values:slots['venue']=ContextSlot('Conflicting',(*old.values,*slots['venue'].values),(*old.spans,*slots['venue'].spans))
         roles=[(m,m.group(1)) for m in re.finditer(r'\bas (?:a|an|the) ('+'|'.join(map(re.escape,grammar['roles']))+r')\b',text)]
+        # Interview roles have a deliberately small set of additional natural
+        # phrasings.  Keep these closed to the existing specialist roles so
+        # unrecognised conditions still reach the normal residual-token guard.
+        if situation.identifier in ('professional.job_interview','interview.unspecified'):
+            for pattern,role in (
+                (r'\bas candidate\b','candidate'),(r'\bas interviewer\b','interviewer'),
+                (r"\bwhere\s+(?:i\s+am|i'm)\s+(?:the\s+)?candidate\b",'candidate'),
+                (r"\bwhere\s+(?:i\s+am|i'm)\s+(?:the\s+)?interviewer\b",'interviewer'),
+            ):roles.extend((m,role) for m in re.finditer(pattern,text))
         if situation.identifier in ('professional.job_interview','interview.unspecified','academic.presentation','presentation.unspecified'):
             for pattern,role in ((r'\bbeing interviewed\b','candidate'),(r'\bconducting\b','interviewer'),(r'\bpresenting\b','presenter'),(r'\bin the audience\b','attendee')):roles.extend((m,role) for m in re.finditer(pattern,text))
         slot('role',roles)

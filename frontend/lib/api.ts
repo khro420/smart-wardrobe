@@ -143,6 +143,17 @@ export const getRecommendations = () => request<Recommendation[]>("/recommendati
 export const saveRecommendationAsOutfit = (id: string, name?: string) => request<SavedRecommendationOutfit>(`/recommendations/${id}/save-as-outfit`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name }) });
 export const getRecommendationSavedOutfit = (id: string) => request<{ saved: boolean; outfit_id: string | null }>(`/recommendations/${id}/saved-outfit`);
 export const getPersonImages = () => request<PersonImage[]>("/visualisations/person-images");
+export type GroupDetection = { id: string; width: number; height: number; people: { index: number; box: [number, number, number, number]; confidence: number }[] };
+export type GroupResult = { id: string; status: "draft" | "queued" | "processing" | "completed" | "failed" | "cancelled"; progress_message: string | null; error_message: string | null; output_media_id: string | null };
+export const detectGroup = (personImageId: string) => request<GroupDetection>("/visualisations/groups/detect", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ person_image_id: personImageId }) });
+export const createGroup = (id: string, assignments: { person_index: number; outfit_id: string }[]) => request<{ id: string; status: string }>(`/visualisations/groups/${id}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ assignments }) });
+export const getGroup = (id: string) => request<GroupResult>(`/visualisations/groups/${id}`, { cache: "no-store" });
+export const cancelGroup = (id: string) => request<void>(`/visualisations/groups/${id}/cancel`, { method: "POST" });
+export type ActivityJob = { kind: "processing" | "single" | "group"; id: string; status: string; progress_message: string | null; error_message: string | null; progress_percent: number | null; created_at: string; updated_at: string };
+export type TryOnHistoryItem = { kind: "single" | "group"; id: string; output_media_id: string; created_at: string; finished_at: string; output_kind: string };
+export const getActivity = () => request<{ jobs: ActivityJob[]; queue_order: "not_guaranteed" }>("/activity", { cache: "no-store" });
+export const getTryOnHistory = (offset = 0) => request<TryOnHistoryItem[]>(`/visualisations/history?limit=50&offset=${offset}`, { cache: "no-store" });
+export const removeTryOnHistory = (kind: TryOnHistoryItem["kind"], id: string) => request<void>(`/visualisations/history/${kind}/${encodeURIComponent(id)}`, { method: "DELETE" });
 export async function uploadPersonImage(file: File) { const form = new FormData(); form.append("file", file); return request<PersonImage>("/media/person-images", { method: "POST", body: form }); }
 export const deletePersonImage = (id: string) => request<void>(`/media/person-images/${encodeURIComponent(id)}`, { method: "DELETE" });
 export type VisualisationSource = { outfitId: string; recommendationId?: never } | { recommendationId: string; outfitId?: never };

@@ -80,6 +80,12 @@ def archive_person_image(person_image_id: str, user_id: str, profile_id: str) ->
         ).fetchone()
         if active_visualisation:
             raise HTTPException(409, "This personal image is being used for a visualisation. Wait for it to finish or cancel it first.")
+        active_group = conn.execute(
+            "SELECT id FROM group_visualisations WHERE person_image_id=? AND user_id=? "
+            "AND status IN ('queued', 'processing') LIMIT 1", (person_image_id, user_id)
+        ).fetchone()
+        if active_group:
+            raise HTTPException(409, "This image is being used for a group visualisation. Wait for it to finish or cancel it first.")
         conn.execute(
             "UPDATE person_images SET status='archived' WHERE id=? AND user_id=? AND profile_id=?",
             (person_image_id, user_id, profile_id),

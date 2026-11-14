@@ -3,9 +3,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Home, Shirt, PlusCircle, User, ShieldCheck, LogOut, History } from "lucide-react";
+import { Menu, X, Home, Shirt, PlusCircle, User, ShieldCheck, LogOut, History, WandSparkles, ListTodo } from "lucide-react";
 import Image from "next/image";
-import { ApiError, clearAccessToken, getAccessToken, getWardrobeProfiles, logout, type WardrobeProfile } from "@/lib/api";
+import { ApiError, clearAccessToken, getAccessToken, getActivity, getWardrobeProfiles, logout, type WardrobeProfile } from "@/lib/api";
 import { selectedWearer, rememberWearer } from "@/lib/wearer-selection";
 import { leaveHomepageFlow } from "@/lib/recommendation-session";
 
@@ -13,12 +13,15 @@ const navItems = [
   { href: "/", label: "Home", icon: Home },
   { href: "/assistant", label: "Outfit Assistant", icon: Shirt },
   { href: "/wardrobe", label: "My wardrobe", icon: Shirt },
+  { href: "/try-on/group", label: "Virtual try-on", icon: WandSparkles },
+  { href: "/activity", label: "Current processes", icon: ListTodo },
+  { href: "/try-on/history", label: "Try-on history", icon: History },
   { href: "/extract", label: "Add an outfit", icon: PlusCircle },
   { href: "/history", label: "Recommendation history", icon: History },
   { href: "/profile", label: "Profile", icon: User },
 ];
 
-function SidebarContent({ pathname, onNavigate, profiles, selectedProfileId, onProfileChange, mobile = false }: { pathname: string; onNavigate: () => void; profiles: WardrobeProfile[]; selectedProfileId: string | null; onProfileChange: (profileId: string) => void; mobile?: boolean }) {
+function SidebarContent({ pathname, onNavigate, profiles, selectedProfileId, onProfileChange, activityCount, mobile = false }: { pathname: string; onNavigate: () => void; profiles: WardrobeProfile[]; selectedProfileId: string | null; onProfileChange: (profileId: string) => void; activityCount: number; mobile?: boolean }) {
   return <>
     <div className="flex h-[88px] items-center justify-between px-6">
       <Link href="/" onClick={onNavigate} className="flex items-center">
@@ -30,8 +33,8 @@ function SidebarContent({ pathname, onNavigate, profiles, selectedProfileId, onP
       <p className="mb-3 px-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-400">Your space</p>
       {navItems.map((item) => {
         const Icon = item.icon;
-        const isActive = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
-        return <Link key={item.href} href={item.href} onClick={onNavigate} aria-current={isActive ? "page" : undefined} className={`flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium transition-colors ${isActive ? "bg-[#f5eaf1] text-[#6d335b]" : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"}`}><Icon className="h-[18px] w-[18px]" strokeWidth={isActive ? 2.4 : 2} aria-hidden="true" /><span>{item.label}</span></Link>;
+        const isActive = item.href === "/" ? pathname === "/" : item.href === "/try-on/group" ? pathname.startsWith("/try-on") && !pathname.startsWith("/try-on/history") : pathname.startsWith(item.href);
+        return <Link key={item.href} href={item.href} onClick={onNavigate} aria-current={isActive ? "page" : undefined} className={`flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium transition-colors ${isActive ? "bg-[#f5eaf1] text-[#6d335b]" : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"}`}><Icon className="h-[18px] w-[18px]" strokeWidth={isActive ? 2.4 : 2} aria-hidden="true" /><span>{item.label}</span>{item.href === "/activity" && activityCount > 0 && <span className="ml-auto rounded-full bg-[#6d335b] px-2 py-0.5 text-xs text-white" aria-label={`${activityCount} active or review-ready processes`}>{activityCount}</span>}</Link>;
       })}
     </nav>
     <div className="mx-4 rounded-2xl border border-[#ead7e2] bg-[#fdf8fb] p-3">
@@ -61,6 +64,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const [logoutError, setLogoutError] = useState(false);
   const [wardrobeProfiles, setWardrobeProfiles] = useState<WardrobeProfile[]>([]);
   const [selectedProfileId, setSelectedProfileId] = useState<string | null>(null);
+  const [activityCount, setActivityCount] = useState(0);
   const logoutPending = useRef(false);
   const signOut = async () => {
     if (logoutPending.current) return;
@@ -88,6 +92,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   };
 
   useEffect(() => { if (pathname !== "/") leaveHomepageFlow(); }, [pathname]);
+
+  useEffect(() => {
+    if (pathname === "/auth" || !getAccessToken()) return;
+    let active = true;
+    const refresh = () => { void getActivity().then(({ jobs }) => { if (active) setActivityCount(jobs.filter((job) => ["queued", "processing", "review_required"].includes(job.status)).length); }).catch(() => { if (active) setActivityCount(0); }); };
+    refresh();
+    const timer = window.setInterval(refresh, 10000);
+    return () => { active = false; window.clearInterval(timer); };
+  }, [pathname]);
 
   useEffect(() => {
     if (pathname === "/auth" || !getAccessToken()) return;
@@ -144,8 +157,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </div>
       </header>
 
-      <aside className="fixed inset-y-0 left-0 z-50 hidden w-[272px] flex-col border-r border-slate-200 bg-white lg:flex"><SidebarContent pathname={pathname} onNavigate={closeSidebar} profiles={wardrobeProfiles} selectedProfileId={selectedProfileId} onProfileChange={changeProfile} /></aside>
-      {isSidebarOpen && <aside id="primary-navigation" className="fixed inset-y-0 left-0 z-50 flex w-[272px] flex-col border-r border-slate-200 bg-white shadow-xl lg:hidden"><SidebarContent pathname={pathname} onNavigate={closeSidebar} profiles={wardrobeProfiles} selectedProfileId={selectedProfileId} onProfileChange={changeProfile} mobile /></aside>}
+      <aside className="fixed inset-y-0 left-0 z-50 hidden w-[272px] flex-col border-r border-slate-200 bg-white lg:flex"><SidebarContent pathname={pathname} onNavigate={closeSidebar} profiles={wardrobeProfiles} selectedProfileId={selectedProfileId} onProfileChange={changeProfile} activityCount={activityCount} /></aside>
+      {isSidebarOpen && <aside id="primary-navigation" className="fixed inset-y-0 left-0 z-50 flex w-[272px] flex-col border-r border-slate-200 bg-white shadow-xl lg:hidden"><SidebarContent pathname={pathname} onNavigate={closeSidebar} profiles={wardrobeProfiles} selectedProfileId={selectedProfileId} onProfileChange={changeProfile} activityCount={activityCount} mobile /></aside>}
 
       {isSidebarOpen && <button type="button" onClick={closeSidebar} className="fixed inset-0 z-40 bg-slate-900/30 lg:hidden" aria-label="Close navigation menu" />}
       <main id="main-content" tabIndex={-1} className="min-h-screen scroll-mt-24 px-4 pb-12 pt-[96px] sm:px-6 lg:ml-[272px] lg:px-10 lg:pt-[112px]"><div className="mx-auto w-full max-w-[1440px]">{logoutError && <p role="alert" className="mb-4 rounded-xl bg-red-50 p-3 text-sm text-red-800">Could not sign out. Your session was kept. Use Retry sign out to try again.</p>}{children}</div></main>

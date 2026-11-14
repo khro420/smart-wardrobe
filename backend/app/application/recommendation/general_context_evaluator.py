@@ -159,17 +159,14 @@ class GeneralContextEvaluator:
         def saved_source(garment):
             if self.plan(request).binding.evidence_contract != 'saved_singleton_style_provisional_v1':
                 return {}
-            review = garment.contextual_suitability
             style = self.mapper.classify(garment).style
-            reviewed = (review.review_state == 'Known' and style.state == 'Known' and len(style.values) == 1
-                        and review.reviewed_styles == style.values and review.reviewed_category == garment.category)
             return {'saved_attribute_evidence': asdict(garment.saved_attribute_evidence),
-                    'style_verification': 'owner_reviewed_current' if reviewed else 'saved_unreviewed'}
+                    'style_verification': 'saved_attribute' if style.state == 'Known' else 'unknown'}
         return {**self.summary(request), 'members': [
             {'garment_id': m.garment.garment_id, 'review': asdict(m.garment.contextual_suitability),
              **saved_source(m.garment),
              **({'appearance_observations':asdict(m.garment.appearance_evidence), 'appearance_current':m.garment.appearance_evidence.current(m.garment)}
-                 if self.plan(request).binding.appearance_required else {}),
+                 if self.plan(request).binding.evidence_contract == 'owner_appearance_observations_v1' else {}),
              'observed_styles': asdict(self.mapper.classify(m.garment).style), 'conditions': [
                 condition(m.garment, field)
                 for field in ('occasion', 'formality') if getattr(request, field) is not None]}

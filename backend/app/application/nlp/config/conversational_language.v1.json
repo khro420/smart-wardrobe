@@ -1,5 +1,5 @@
 {
-  "version": "conversational-language-1.1.3",
+  "version": "conversational-language-1.1.4",
   "profile": "conversational_language_v1",
   "base_bundle": "context_18_v1",
   "contexts": {
@@ -51,7 +51,8 @@
     ],
     "everyday.shopping": [
       "shopping(?:\\s+trip)?",
-      "(?:to\\s+)?the\\s+shops"
+      "(?:to\\s+)?the\\s+shops",
+      "(?:heading|going|off)\\s+to\\s+(?:the\\s+)?mall(?:\\s+to\\s+(?:buy|shop)(?:\\s+[^.!?]{0,80})?)?"
     ],
     "everyday.casual_outing": [
       "casual\\s+outing",
@@ -120,6 +121,11 @@
       "pattern": "loose[\\s-]+fitting",
       "field": "silhouette",
       "value": "loose"
+    },
+    {
+      "pattern": "striped",
+      "field": "pattern",
+      "value": "stripe"
     }
   ],
   "scope": "Finite lexical supplement only. No new suitability, scoring, evidence or context authority.",

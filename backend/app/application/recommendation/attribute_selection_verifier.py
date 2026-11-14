@@ -114,7 +114,11 @@ def build_selection(intent,collection,prepared,independent,candidate,coverage,ba
     for member in candidate.members:
         g=member.garment
         selected.append({'role':member.role,'garment_id':g.garment_id,'description':documents[g.garment_id].to_dict(),
-            'appearance_evidence':asdict(g.appearance_evidence)})
+            'appearance_evidence':asdict(g.appearance_evidence),
+            # The immutable replay snapshot must retain the extractor palette:
+            # automatic primary-family qualification is intentionally not
+            # recoverable from an exact hex alone.
+            'colour_palette':[{'hex':entry.hex_value.lower(),'coverage':entry.coverage} for entry in (g.colour_palette or ())]})
         identities.append({'garment_id':g.garment_id,'name':g.name,'category':g.category,'primary_colour':g.primary_colour,
             'preferred_media_id':g.preferred_media_id,'updated_at':g.updated_at})
     value={'version':EVIDENCE_VERSION,'intent':intent.to_dict(),'wearer_profile_id':wearer.profile_id,
@@ -141,7 +145,7 @@ def validate_selection(value,user_id,wearer_profile_id,base_scope,items=None):
     from app.domain.value_objects.garment_description_evidence import GarmentDescriptionEvidence
     from app.domain.value_objects.general_context_evidence import AppearanceEvidence
     from app.domain.value_objects.garment_attributes import GARMENT_STRUCTURE
-    from app.shared_contracts.confirmed_garment_snapshot import ConfirmedGarmentSnapshot
+    from app.shared_contracts.confirmed_garment_snapshot import ConfirmedGarmentSnapshot,GarmentPaletteEntry
     from app.shared_contracts.confirmed_garment_description import ConfirmedGarmentDescription
     from app.domain.value_objects.outfit_candidate import OutfitCandidate,CandidateMember
     from app.application.recommendation.attribute_evidence_policy import AttributeEvidencePolicy
@@ -151,7 +155,7 @@ def validate_selection(value,user_id,wearer_profile_id,base_scope,items=None):
     intent=AttributeIntent.from_dict(data['intent'])
     policy=AttributeEvidencePolicy(encode(data['policy_snapshot']))
     # Explicit archived language descendant; never load active companion code here.
-    registered_grammars=(GRAMMAR_SHA256,'1e2bfbccbaa0dc2e83284b4bb18cacd970b601b254b229b613af6a71b03ebb53','701080a9b339b9e785b958d56621f3524a303de3f2734e9744152f9f8989659a','9236cec2dbf017be05a69fa753aa42f57d924a8a7c42f56d85aa220b7b83f144','5745bf5b3fed2d5c3c758bf4fa7bf1bd39ffd6b4f7564f9119296af5599c3de4','14dcf620aa3ec7cc5f7568aa4b627409a55ab490c1239132f0473fe6222a1a13','adad8be0efa2de5b258fb498f70eaa08b169c03e6d4d40d404c851a151f56189','2e167f42a16407e5341f736562257aa2a5cfb77a2f2d9702bce5e202cdf33670','232e17d866a7f93128ff7dca8cabd08c30a9f5dce779a0434501406e13dd0763','2cc305e8f17a045dfd418ce6bde6caae028b3e03e694c3571074f0610676a974','d37a98f21a6f1286ffc7fb65adf8a821b68a1cccaf2b929c5f8fe0581ba6e50c','f0bd9fd429400e18f67258fa7e0484475ec83ce58ba9b4f53376255340c5dd33','4fdf75bd573dfc920579bfb2bd88378e4f32068db75df17448400c975b542f26','8afc724b747a82e6dc1f8f598b0c856a6032412f1f3b945deb4200de8944acff','3b66c3bd83bf918e41a1353af6aa64d4c894bd30da3de6d1875b05b75e522ccf','4255c59e23969055e1570e37a5e08467a7a36fba5f095faa2843b2c8364067ee','4e0ea721015a4b28d6434f49ddf13655f0c030d1f4e9a79f5ce53ffab190ef97','03b41d02401e3e28c028cf907da6141f63d368e98d65d4cfbe963b5b8fe0c110','50d4fc4e43c314b942c2a1b8c743b0e4c19cf6905d1eee7d57e8d2857fcd0cc6','1c58c4890365c5643550818359a4b0a8339e2dd124965446b08e19857c451cab')
+    registered_grammars=(GRAMMAR_SHA256,'1e2bfbccbaa0dc2e83284b4bb18cacd970b601b254b229b613af6a71b03ebb53','701080a9b339b9e785b958d56621f3524a303de3f2734e9744152f9f8989659a','9236cec2dbf017be05a69fa753aa42f57d924a8a7c42f56d85aa220b7b83f144','5745bf5b3fed2d5c3c758bf4fa7bf1bd39ffd6b4f7564f9119296af5599c3de4','14dcf620aa3ec7cc5f7568aa4b627409a55ab490c1239132f0473fe6222a1a13','adad8be0efa2de5b258fb498f70eaa08b169c03e6d4d40d404c851a151f56189','2e167f42a16407e5341f736562257aa2a5cfb77a2f2d9702bce5e202cdf33670','232e17d866a7f93128ff7dca8cabd08c30a9f5dce779a0434501406e13dd0763','2cc305e8f17a045dfd418ce6bde6caae028b3e03e694c3571074f0610676a974','d37a98f21a6f1286ffc7fb65adf8a821b68a1cccaf2b929c5f8fe0581ba6e50c','f0bd9fd429400e18f67258fa7e0484475ec83ce58ba9b4f53376255340c5dd33','4fdf75bd573dfc920579bfb2bd88378e4f32068db75df17448400c975b542f26','8afc724b747a82e6dc1f8f598b0c856a6032412f1f3b945deb4200de8944acff','3b66c3bd83bf918e41a1353af6aa64d4c894bd30da3de6d1875b05b75e522ccf','4255c59e23969055e1570e37a5e08467a7a36fba5f095faa2843b2c8364067ee','4e0ea721015a4b28d6434f49ddf13655f0c030d1f4e9a79f5ce53ffab190ef97','03b41d02401e3e28c028cf907da6141f63d368e98d65d4cfbe963b5b8fe0c110','50d4fc4e43c314b942c2a1b8c743b0e4c19cf6905d1eee7d57e8d2857fcd0cc6','1c58c4890365c5643550818359a4b0a8339e2dd124965446b08e19857c451cab','fff5928634a4fa8c8b7e42b69d61cac88549510bb6d0cc4a50f55e11da9a0ada')
     if intent.to_dict()['grammar_sha256'] not in registered_grammars or intent.to_dict()['policy_sha256']!=policy.sha256:
         raise ValueError('Unregistered archived attribute contract identity.')
     if data['wearer_profile_id']!=wearer_profile_id or data['attribute_scope_sha256']!=scope_digest(user_id,wearer_profile_id,base_scope,intent,data['description_collection_sha256'],data.get('subtype_collection_sha256')):
@@ -173,8 +177,19 @@ def validate_selection(value,user_id,wearer_profile_id,base_scope,items=None):
         raw={**raw,'features':tuple(tuple(pair) for pair in raw['features'])}
         appearance=AppearanceEvidence(**raw)
         role,layer=GARMENT_STRUCTURE[identity['category']]
+        palette=selected.get('colour_palette')
+        if palette is None and policy.snapshot().get('automatic_primary_colour_families'):
+            # Old archives have no automatic-colour selection because that
+            # policy did not exist.  A new archive missing the palette is a
+            # corrupt/incomplete proof, never a reason to guess from its hex.
+            if any(c['attribute']=='primary_colour' for group in intent.conditions.to_dict()['groups'] for c in group['conditions']):
+                raise ValueError('Archived automatic colour palette evidence missing.')
+        captured_palette=None if palette is None else tuple(GarmentPaletteEntry(entry['hex'],entry['coverage']) for entry in palette)
         g=ConfirmedGarmentSnapshot(gid,user_id,'available',identity['category'],identity['name'],identity['preferred_media_id'],False,
             identity['updated_at'],role,layer,primary_colour=identity['primary_colour'],appearance_evidence=appearance)
+        if captured_palette is not None:
+            from dataclasses import replace
+            g=replace(g,colour_palette=captured_palette)
         collection.append(ConfirmedGarmentDescription(g,description))
         members.append(CandidateMember(g,selected['role'],position))
     candidate=OutfitCandidate(tuple(members))

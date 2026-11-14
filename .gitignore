@@ -124,3 +124,5 @@ backend/runs/fashionpedia_attribute_heads/*
 !storage/
 storage/*
 !storage/smart_wardrobe.seed.db
+!storage/demo-media/
+!storage/demo-media/**

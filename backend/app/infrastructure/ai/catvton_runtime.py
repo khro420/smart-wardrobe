@@ -144,11 +144,23 @@ class CatVTONRuntime:
         garment_payloads: tuple[bytes, ...],
         progress_callback=None,
     ) -> GeneratedVisualisation:
+        result, _ = self._generate(plan, person_payload, garment_payloads, progress_callback)
+        return result
+
+    def generate_for_person(self, plan, person_payload, garment_payloads, allowed_mask, progress_callback=None):
+        """Generate and return the exact edit mask for safe group compositing."""
+        return self._generate(plan, person_payload, garment_payloads, progress_callback, allowed_mask)
+
+    def _generate(self, plan, person_payload, garment_payloads, progress_callback=None, allowed_mask=None):
+        from PIL import Image, ImageChops
         self._load()
         import torch
         if len(garment_payloads) != len(plan.render_steps):
             raise VTONFailure("unprocessable")
         size = (plan.configuration.width, plan.configuration.height)
+        if allowed_mask is not None and (allowed_mask.size != size or allowed_mask.getbbox() is None):
+            raise VTONFailure("unprocessable")
+        applied_mask = Image.new("L", size)
         person = prepare_person(person_payload, size)
         started = time.perf_counter()
         try:
@@ -162,8 +174,12 @@ class CatVTONRuntime:
                     progress_callback(index, len(garment_payloads), "applying")
                 garment = prepare_garment(garment_payload, size)
                 mask = self._masker(result, mode)["mask"]
+                mask = mask.convert("L")
+                if allowed_mask is not None:
+                    mask = ImageChops.darker(mask, allowed_mask.convert("L"))
                 if mask.size != result.size or mask.getbbox() is None:
                     raise VTONFailure("unprocessable")
+                applied_mask = ImageChops.lighter(applied_mask, mask)
                 generator = torch.Generator(device=self.device_name).manual_seed(
                     (plan.configuration.seed + index) % 2**32
                 )
@@ -205,4 +221,4 @@ class CatVTONRuntime:
                 "source_revision": CATVTON_SOURCE_REVISION,
                 "model_revision": CATVTON_MODEL_REVISION,
             },
-        )
+        ), applied_mask

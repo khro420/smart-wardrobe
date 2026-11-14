@@ -94,6 +94,7 @@ class AttributeExtractor:
                 "color_palette": clean_palette,
                 "color_temperature": color_data.get("color_temperature", "neutral"),
                 "is_dominant": color_data.get("is_dominant", False),
+                "colour_detection": color_data.get("colour_detection"),
             },
             "manual": {
                 "fit": manual_defaults["fit"],

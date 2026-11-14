@@ -58,10 +58,28 @@ API endpoint. The shared backend template explicitly enables the assistant,
 attribute, VTOFF, and VTON features; install their model assets before starting
 the backend.
 
-For teammate testing with prepopulated records, copy
-`storage/smart_wardrobe.seed.db` to `storage/smart_wardrobe.db`. Sign in as
-`khorhs2004@gmail.com` with password `admin123`. The seed intentionally omits
-private media files, so upload new images when testing image-backed workflows.
+For teammate testing, the repository contains a **public demo** derived from the
+current wardrobe: available garments, outfits, and their garment images. It
+excludes other accounts, personal photos, chats and try-on history. It is not a
+copy of the live database. With the backend stopped, from `backend/` run:
+
+```powershell
+python scripts/install_demo_seed.py
+```
+
+The installer checks the image bundle and refuses to overwrite an existing
+`storage/smart_wardrobe.db`. If you want to replace an older local demo, back up
+and move that database and any `-wal`/`-shm` files aside first, then run the installer. Sign in with the
+public demo credentials `demo@example.test` / `admin123`. Never reuse this
+password for a real account. This is a one-time local snapshot; it does not
+sync subsequent changes between teammates.
+
+If garment processing fails on another computer, run
+`python scripts/diagnose_processing_setup.py` from `backend/` and check the
+backend terminal traceback. Optional visual embeddings and VTOFF fall back to
+the detected crop when their model assets or accelerator are unavailable;
+the fallback is labelled and does not mean those AI models ran. Share only the
+diagnostic output and traceback, not `.env` files or private images.
 
 ## AI and data deployments
 
