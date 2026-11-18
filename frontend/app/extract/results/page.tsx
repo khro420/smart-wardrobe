@@ -6,6 +6,7 @@ import { FormEvent, Suspense, useCallback, useEffect, useRef, useState } from "r
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import Layout from "@/components/Layout";
+import GarmentColourPicker, { GarmentColourPreview } from "@/components/GarmentColourPicker";
 import ProtectedImage from "@/components/ProtectedImage";
 import { DESCRIPTION_FIELDS, descriptionUpdate, type DescriptionView, type DescriptionDraft } from "@/lib/api";
 import { getHistoricalProcessingJob, getHistoricalProcessingJobs, getWardrobeQuota, wardrobeCapacityText, type WardrobeQuota, cancelProcessingJob, confirmProcessingJob, createMirroredReconstruction, getProcessingJob, reviewProcessingJob, type ProcessingItem, type ProcessingJob } from "@/lib/api";
@@ -21,7 +22,7 @@ const styles = ["casual", "classic", "formal", "minimal", "smart casual", "sport
 const materials = ["cotton", "denim", "leather", "linen", "silk", "synthetic", "wool", "not sure"];
 
 
-function DescriptionControls({ view, draft, onChange, id, readOnly = false }: { view: DescriptionView; draft: DescriptionDraft; onChange: (next: DescriptionDraft) => void; id: string; readOnly?: boolean }) {
+function DescriptionControls({ view, draft, onChange, id, imageMediaId, readOnly = false }: { view: DescriptionView; draft: DescriptionDraft; onChange: (next: DescriptionDraft) => void; id: string; imageMediaId?: string | null; readOnly?: boolean }) {
   const categoryPolicy = useWearerCategoryEligibility();
   const display = (value: unknown): string => Array.isArray(value) ? value.map(display).join("; ") : value && typeof value === "object" && "hex" in value ? `${String(value.hex)} (coverage ${"coverage" in value && value.coverage != null ? String(value.coverage) : "unknown"})` : typeof value === "boolean" ? value ? "Yes" : "No" : typeof value === "string" ? value : "No recorded value";
   const update = (field: string, kind: DescriptionDraft[string]["kind"], value?: unknown) => {
@@ -30,38 +31,41 @@ function DescriptionControls({ view, draft, onChange, id, readOnly = false }: { 
     onChange(next);
   };
   const initial = (field: typeof DESCRIPTION_FIELDS[number]): unknown => {
-    const values = view.evidence.fields[field.id]?.canonical_values ?? [];
+    const record = view.evidence.fields[field.id];
+    const suggested = typeof record?.suggestion?.value === "string" ? record.suggestion.value.replace(/ \((pattern|length|fit|neck|neckline)\)$/, "") : "";
+    const values = record?.canonical_values?.length ? record.canonical_values : suggested ? [suggested] : [];
     if (field.kind === "set" || field.kind === "palette") return values;
     if (field.kind === "tags") return values.map(String).join("\n");
     if (field.kind === "boolean") return typeof values[0] === "boolean" ? String(values[0]) : "";
     return typeof values[0] === "string" ? values[0] : "";
   };
   const category = draft.category?.kind === "set" ? draft.category.value : view.evidence.fields.category?.canonical_values[0];
-  return <section className="min-w-0 space-y-3 [overflow-wrap:anywhere]" aria-label="Optional recorded descriptions">
-    <p className="text-sm">{readOnly ? "Stored descriptions are read-only." : "Optional recorded descriptions. Keep leaves a value unchanged."} Suggestions and saved values with unverified sources are separate from your explicit selections. Visible silhouette does not establish physical fit; material does not establish comfort or fibre verification.</p>
+  return <section data-description-editor={id} className="min-w-0 space-y-3 [overflow-wrap:anywhere]" aria-label="Optional recorded descriptions">
+    <div className="space-y-1 text-sm"><p>{readOnly ? "Stored descriptions are read-only." : "Review the details that matter. Values stay as they are unless you choose Change, Use suggestion, or Mark unknown."}</p><details className="text-xs text-slate-600"><summary className="cursor-pointer">About image suggestions</summary><p className="mt-1">Suggestions are visual estimates, not confirmed facts. Visible silhouette does not establish physical fit, and material does not establish comfort or fibre verification.</p></details></div>
     <div className="grid min-w-0 gap-3 sm:grid-cols-2">{DESCRIPTION_FIELDS.map(field => {
       const record = view.evidence.fields[field.id]; const action = draft[field.id]; const kind = action?.kind ?? "keep";
       const inapplicable = (field.id === "neckline" || field.id === "sleeve_length") && typeof category === "string" && ["shorts", "trousers", "skirt"].includes(category);
-      const origin = record?.selected?.origin === "owner_selected" ? "Your recorded selection" : record?.selected?.origin === "owner_reported_label" ? "Reported label" : "Saved value; source unverified";
-      const value = action?.value;
+      const value = kind === "set" ? action?.value : initial(field);
+      const selections = Array.isArray(value) ? value.filter((entry): entry is string => typeof entry === "string") : [];
       const palette = Array.isArray(value) ? value as {hex: string; coverage: string | null}[] : [];
       return <fieldset key={field.id} disabled={inapplicable} className="min-w-0 space-y-2 rounded-lg border border-slate-300 p-3 disabled:opacity-60">
         <legend className="text-sm font-semibold">{field.label}</legend>
-        <p className="text-xs">{record?.state ?? "Unavailable"}: {display(record?.canonical_values?.length ? record.canonical_values : null)}. {origin}.</p>
+        {readOnly && <div className="rounded-md bg-slate-50 px-3 py-2"><p className="text-[11px] font-medium uppercase tracking-wide text-slate-500">Recorded value</p><p className="mt-0.5 text-sm font-semibold text-slate-900">{display(record?.canonical_values?.length ? record.canonical_values : initial(field))}</p></div>}
+        {field.kind === "colour" && <GarmentColourPreview label="Current selected colour" value={typeof record?.canonical_values?.[0] === "string" ? record.canonical_values[0] : ""} />}
         {record?.applicability === "unknown" && <p className="text-xs">Applicability is unknown until the garment role is established.</p>}
         {record?.selected?.value != null && ["Unrecognized", "Unsure", "Unspecified"].includes(record.state) && <p className="text-xs">Original recorded value: {display(record.selected.value)}. It is not treated as a supported positive fact.</p>}
-        {record?.suggestion && <p className="text-xs text-slate-600">Model suggestion: {display(record.suggestion.value)}. Source vocabulary is not verified; this is not your selected value.</p>}
+        {record?.suggestion && <p className="text-xs text-slate-600">Image suggestion is selected by default; choose another value below if needed.</p>}
         {readOnly ? null : inapplicable ? <p className="text-xs">Not applicable to a bottom garment.</p> : <>
-          <label className="block text-xs">Action<select aria-label={`${field.label} action`} value={kind} onChange={event => update(field.id, event.target.value as DescriptionDraft[string]["kind"], initial(field))} className="mt-1 min-h-11 w-full border border-slate-400 bg-white px-2">
-            <option value="keep">Keep current value</option><option value="set">Record a value</option>{field.clear && <option value="clear">Unknown / clear recorded value</option>}{field.empty && <option value="empty">Record an empty set</option>}{field.id === "material" && <option value="unsure">Not sure</option>}
-          </select></label>
-          {kind === "set" && <>
-            {field.kind === "set" ? <label className="block text-xs">Recorded values (multiple allowed)<select multiple aria-label={`${field.label} values`} value={Array.isArray(value) ? value as string[] : []} onChange={event => update(field.id, "set", Array.from(event.target.selectedOptions,option=>option.value))} className="mt-1 min-h-28 w-full border border-slate-400 bg-white p-2">{field.options.map(option=><option key={option} value={option}>{option}</option>)}</select></label>
+          {field.clear && <button type="button" onClick={()=>update(field.id,kind === "clear" ? "keep" : "clear")} className="text-xs font-medium text-slate-600 underline">{kind === "clear" ? "Restore recorded value" : "I can’t tell — save as unknown"}</button>}
+          {kind === "clear" && <p className="text-xs text-amber-800">This detail will be saved as unknown.</p>}
+          <>
+            {field.kind === "set" ? <div className="space-y-2">{[...selections, ""].map((selected,index)=><select key={`${selected}-${index}`} aria-label={`${field.label} value ${index + 1}`} value={selected} onChange={event=>{ const next=[...selections]; if (event.target.value) { next[index]=event.target.value; } else { next.splice(index,1); } update(field.id,"set",Array.from(new Set(next.filter(Boolean)))); }} className="min-h-11 w-full rounded-md border border-slate-300 bg-white px-3 text-sm"><option value="">Choose another value</option>{field.options.filter(option=>option === selected || !selections.includes(option)).map(option=><option key={option} value={option}>{option}</option>)}</select>)}</div>
             : field.kind === "enum" || field.kind === "boolean" ? <select aria-label={`${field.label} value`} value={typeof value === "string" ? value : ""} onChange={event=>update(field.id,"set",event.target.value)} className="min-h-11 w-full border border-slate-400 bg-white px-2"><option value="">Choose a recorded value</option>{(field.kind === "boolean" ? ["true","false"] : field.options).filter(option => field.id !== "category" || categoryPolicy.permits(option) || option === value).map(option=><option disabled={field.id === "category" && !categoryPolicy.permits(option)} key={option} value={option}>{option === "true" ? "Yes, I observed this" : option === "false" ? "No, I observed this" : option}</option>)}</select>
             : field.kind === "palette" ? <div className="space-y-2">{palette.map((entry,index)=><div key={index} className="space-y-1 border border-slate-200 p-2"><label className="block text-xs">Exact hex colour<input aria-label={`Palette colour ${index+1}`} maxLength={7} value={entry.hex} onChange={event=>update(field.id,"set",palette.map((p,i)=>i===index ? {...p,hex:event.target.value} : p))} placeholder="#123abc" className="min-h-11 w-full border border-slate-400 px-2" /></label><label className="block text-xs">Recorded coverage 0–1 (blank means unknown)<input aria-label={`Palette coverage ${index+1}`} inputMode="decimal" value={entry.coverage ?? ""} onChange={event=>update(field.id,"set",palette.map((p,i)=>i===index ? {...p,coverage:event.target.value || null} : p))} className="min-h-11 w-full border border-slate-400 px-2" /></label><button type="button" onClick={()=>update(field.id,"set",palette.filter((_,i)=>i!==index))} className="min-h-11 border border-slate-400 px-2">Remove palette entry {index+1}</button></div>)}<button type="button" disabled={palette.length>=5} onClick={()=>update(field.id,"set",[...palette,{hex:"",coverage:null}])} className="min-h-11 border border-slate-400 px-2">Add palette entry</button></div>
             : field.kind === "tags" ? <label className="block text-xs">One literal tag per line<textarea aria-label="Literal descriptive tags values" value={typeof value === "string" ? value : ""} onChange={event=>update(field.id,"set",event.target.value)} className="mt-1 min-h-24 w-full border border-slate-400 p-2" /><span>Existing suitability restrictions stay in their separate controls.</span></label>
-            : <><input aria-label={`${field.label} value`} list={field.kind === "colour" ? `${id}-${field.id}` : undefined} maxLength={field.id === "garment_name" ? 100 : 50} value={typeof value === "string" ? value : ""} onChange={event=>update(field.id,"set",event.target.value)} placeholder={field.kind === "colour" ? "Named colour or exact #RRGGBB" : "Recorded value"} className="min-h-11 w-full border border-slate-400 px-2" />{field.kind === "colour" && <datalist id={`${id}-${field.id}`}>{field.options.map(option=><option key={option} value={option} />)}</datalist>}</>}
-          </>}
+            : field.kind === "colour" ? <GarmentColourPicker label={field.label} value={typeof value === "string" ? value : ""} mediaId={imageMediaId} onChange={next => update(field.id, "set", next)} />
+            : <input aria-label={`${field.label} value`} maxLength={field.id === "garment_name" ? 100 : 50} value={typeof value === "string" ? value : ""} onChange={event=>update(field.id,"set",event.target.value)} placeholder="Recorded value" className="min-h-11 w-full border border-slate-400 px-2" />}
+          </>
         </>}
       </fieldset>;
     })}</div>
@@ -165,7 +169,7 @@ function CandidateReview({ item, disabled, onReview, onCreateMirror, onDirty, au
         <details className="rounded-lg border border-slate-200 p-3">
           <summary className="cursor-pointer text-sm font-semibold">Edit details and review image</summary>
           {typedDescription && item.description ? <div className="mt-4 space-y-3">
-            <DescriptionControls id={item.id} view={item.description} draft={descriptionDraft} onChange={next=>{
+            <DescriptionControls id={item.id} imageMediaId={item.crop_media_id} view={item.description} draft={descriptionDraft} onChange={next=>{
               if (!Object.keys(descriptionDraft).length) setDescriptionRevision(item.description!.revision);
               setDescriptionDraft(next);
               const currentMedia = item.mirror_media_id && item.preferred_media_id === item.mirror_media_id ? "mirror" : item.vtoff_media_id && item.preferred_media_id === item.vtoff_media_id ? "vtoff" : "crop";

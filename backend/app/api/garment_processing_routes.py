@@ -19,7 +19,9 @@ async def submit_image(file: UploadFile, background_tasks: BackgroundTasks, user
     check_upload_capacity(user_id, profile_id)
     media_id = await upload_validator.validate_and_store_wardrobe_image(file, user_id)
     job_id = processing_job_service.create_job(media_id, user_id, profile_id)
-    background_tasks.add_task(processing.run_job, job_id, user_id, profile_id, admission_mode)
+    from app.application.garment_processing import isolated_worker
+    worker = isolated_worker.launch if isolated_worker.enabled() else processing.run_job
+    background_tasks.add_task(worker, job_id, user_id, profile_id, admission_mode)
     return {"id": job_id, "status": "queued", "admission_mode": admission_mode}
 
 
