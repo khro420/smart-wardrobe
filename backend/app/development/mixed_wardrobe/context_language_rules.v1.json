@@ -1,0 +1,282 @@
+{
+  "version": "bounded-context-paraphrases-1.0.0",
+  "scope": "Existing18 situations only; complete residual request is parsed by the frozen Phase2O contract. No policy or new situation.",
+  "rules": [
+    {
+      "id": "friends_meal",
+      "situation": "social.meal",
+      "pattern": "(?:(?:i'm|i am|im) )?(?:catching up|meeting up) with (?:my )?(?:friends|mates|pals|frnds) (?:for|over) (?P<meal>dinner|lunch|supper)",
+      "canonical": "I'm meeting friends for \\g<meal>"
+    },
+    {
+      "id": "friends_coffee",
+      "situation": "social.cafe_meetup",
+      "pattern": "(?:(?:i'm|i am|im) )?(?:catching up|meeting up) with (?:a |my )?friend (?:over|for) coffee",
+      "canonical": "I'm having coffee with friends"
+    },
+    {
+      "id": "coffee_catchup",
+      "situation": "social.cafe_meetup",
+      "pattern": "a coffee catch-up with (?:a |my )?friend",
+      "canonical": "coffee with friends"
+    },
+    {
+      "id": "friends_outing",
+      "situation": "everyday.casual_outing",
+      "pattern": "(?:(?:i'm|i am|im) )?(?:catching up|meeting up|hanging out|chilling) with (?:my )?(?:friends|mates|pals|frnds)",
+      "canonical": "I'm going out with friends"
+    },
+    {
+      "id": "friends_plans",
+      "situation": "everyday.casual_outing",
+      "pattern": "(?:(?:i'm|i am|im) )?going to (?:hang out|meet up|catch up|chill) with (?:my )?(?:friends|mates|pals|frnds)",
+      "canonical": "I'm going out with friends"
+    },
+    {
+      "id": "friends_get_together",
+      "situation": "everyday.casual_outing",
+      "pattern": "a get-together with (?:my )?(?:friends|mates|pals|frnds)",
+      "canonical": "a casual outing with friends"
+    },
+    {
+      "id": "shopping_basic_purchase_purpose",
+      "situation": "everyday.shopping",
+      "pattern": "(?:(?:i'm|i am|im) )?(?:going|heading) to (?:the )?(?:shops|mall) to buy (?:groceries|clothes|books)",
+      "canonical": "I'm going shopping"
+    },
+    {
+      "id": "mall_shopping_purpose",
+      "situation": "everyday.shopping",
+      "pattern": "(?:(?:i'm|i am|im) )?(?:going|heading) to (?:the )?mall to (?:pick up|get|shop for) (?:a few|some) (?:things|items)",
+      "canonical": "I'm going shopping"
+    },
+    {
+      "id": "shopping_errands",
+      "situation": "everyday.shopping",
+      "pattern": "(?:(?:i'm|i am|im) )?(?:running|doing) (?:some )?shopping errands",
+      "canonical": "I'm going shopping"
+    },
+    {
+      "id": "mall_shopping_trip",
+      "situation": "everyday.shopping",
+      "pattern": "a trip to (?:the )?mall to (?:shop|buy (?:some|a few) things)",
+      "canonical": "a shopping trip"
+    },
+    {
+      "id": "shops_purpose",
+      "situation": "everyday.shopping",
+      "pattern": "(?:(?:i'm|i am|im) )?(?:going|heading) (?:to the shops|out) to (?:do some shopping|shop)",
+      "canonical": "I'm going shopping"
+    },
+    {
+      "id": "lecture_attendance",
+      "situation": "everyday.academic_attendance",
+      "pattern": "(?:(?:i'm|i am|im) )?(?:attending|going to|heading to|sitting in on) (?:a |my )?lectures?",
+      "canonical": "I'm going to class"
+    },
+    {
+      "id": "campus_classes",
+      "situation": "everyday.academic_attendance",
+      "pattern": "(?:(?:i'm|i am|im) )?(?:on my way|heading) to (?:uni|university|campus) for (?:a |my )?(?:classes|class|lectures|lecture)",
+      "canonical": "I'm going to class at university"
+    },
+    {
+      "id": "ordinary_campus_day",
+      "situation": "everyday.academic_attendance",
+      "pattern": "a (?:normal|regular|ordinary) day (?:of classes|on campus)",
+      "canonical": "a campus day"
+    },
+    {
+      "id": "library_revision",
+      "situation": "academic.library_study",
+      "pattern": "(?:(?:i'm|i am|im) )?(?:revising|doing revision|preparing for exams) (?:in|at) (?:the )?library",
+      "canonical": "I'm studying at the library"
+    },
+    {
+      "id": "library_purpose",
+      "situation": "academic.library_study",
+      "pattern": "(?:(?:i'm|i am|im) )?(?:going|heading) to (?:the )?library to (?:revise|study|do some reading)",
+      "canonical": "I'm studying at the library"
+    },
+    {
+      "id": "classmate_revision",
+      "situation": "academic.group_study",
+      "pattern": "(?:(?:i'm|i am|im) )?(?:revising|working on (?:a |our )?class project) with (?:my )?classmates",
+      "canonical": "I'm studying with classmates"
+    },
+    {
+      "id": "classmate_study_meetup",
+      "situation": "academic.group_study",
+      "pattern": "(?:(?:i'm|i am|im) )?(?:having|going to) (?:a )?study meetup with (?:my )?classmates",
+      "canonical": "I'm meeting classmates for a study session"
+    },
+    {
+      "id": "class_project_study",
+      "situation": "academic.group_study",
+      "pattern": "(?:a |our )?class project study session",
+      "canonical": "a group study session"
+    },
+    {
+      "id": "office_workday",
+      "situation": "professional.office_day",
+      "pattern": "(?:(?:i'm|i am|im) )?(?:working|spending the day) (?:from|in|at) (?:my|the) office",
+      "canonical": "I'm going to the office"
+    },
+    {
+      "id": "office_work_purpose",
+      "situation": "professional.office_day",
+      "pattern": "(?:(?:i'm|i am|im) )?going in to work at (?:the|my) office",
+      "canonical": "I'm going to the office"
+    },
+    {
+      "id": "ordinary_office_workday",
+      "situation": "professional.office_day",
+      "pattern": "an? (?:ordinary|normal|regular) workday at (?:the|my) office",
+      "canonical": "an office day"
+    },
+    {
+      "id": "staff_business_meeting",
+      "situation": "professional.workplace_meeting",
+      "pattern": "(?:(?:i'm|i am|im) )?(?:attending|having|heading to|going to) (?:a |the )?(?:staff|business) meeting",
+      "canonical": "I'm going to a work meeting"
+    },
+    {
+      "id": "coworkers_at_work",
+      "situation": "professional.workplace_meeting",
+      "pattern": "(?:(?:i'm|i am|im) )?(?:meeting|catching up with) (?:my |our )?(?:coworkers|co-workers) (?:at work|at the office)",
+      "canonical": "I'm meeting colleagues at work"
+    },
+    {
+      "id": "interview_candidate",
+      "situation": "professional.job_interview",
+      "pattern": "(?:(?:i'm|i am|im) )?being interviewed for (?:a |the )?(?:job|position|role)",
+      "canonical": "I'm going to a job interview as the candidate"
+    },
+    {
+      "id": "interview_interviewer",
+      "situation": "professional.job_interview",
+      "pattern": "(?:(?:i'm|i am|im) )?(?:interviewing|conducting interviews with) (?:job applicants|job candidates)",
+      "canonical": "I'm going to a job interview as the interviewer"
+    },
+    {
+      "id": "university_talk_presenter",
+      "situation": "academic.presentation",
+      "pattern": "(?:(?:i'm|i am|im) )?(?:giving|delivering) (?:a |my )?(?:talk|presentation) at (?:uni|university)",
+      "canonical": "I'm attending a university presentation as a presenter"
+    },
+    {
+      "id": "university_seminar_presenter",
+      "situation": "academic.presentation",
+      "pattern": "(?:(?:i'm|i am|im) )?presenting at (?:a )?(?:uni|university) seminar",
+      "canonical": "I'm attending a university presentation as a presenter"
+    },
+    {
+      "id": "university_talk_attendee",
+      "situation": "academic.presentation",
+      "pattern": "(?:(?:i'm|i am|im) )?(?:listening to|watching|attending) (?:a )?(?:talk|seminar presentation) at (?:uni|university)",
+      "canonical": "I'm attending a university presentation as an attendee"
+    },
+    {
+      "id": "university_seminar_attendee",
+      "situation": "academic.presentation",
+      "pattern": "(?:(?:i'm|i am|im) )?attending (?:a )?(?:uni|university) seminar presentation",
+      "canonical": "I'm attending a university presentation as an attendee"
+    },
+    {
+      "id": "meal_outing",
+      "situation": "social.meal",
+      "pattern": "(?:(?:i'm|i am|im) )?(?:going out|heading out) (?:for|to have) (?P<meal>dinner|lunch|supper)",
+      "canonical": "I'm going out to eat for \\g<meal>"
+    },
+    {
+      "id": "family_meal",
+      "situation": "social.meal",
+      "pattern": "(?:(?:i'm|i am|im) )?having (?P<meal>dinner|lunch|supper) with (?:my )?family",
+      "canonical": "I need an outfit for \\g<meal> with family"
+    },
+    {
+      "id": "romantic_date",
+      "situation": "social.date",
+      "pattern": "(?:(?:i'm|i am|im) )?(?:going|heading) out on (?:a )?romantic date",
+      "canonical": "I'm going on a date"
+    },
+    {
+      "id": "romantic_dinner",
+      "situation": "social.date",
+      "pattern": "a romantic dinner",
+      "canonical": "a dinner date"
+    },
+    {
+      "id": "birthday_with_friends",
+      "situation": "social.birthday_gathering",
+      "pattern": "(?:(?:i'm|i am|im) )?(?:celebrating|going to celebrate) (?:my |a friend\\x27s |my friend\\x27s )?birthday with friends",
+      "canonical": "I'm attending a birthday celebration with friends"
+    },
+    {
+      "id": "birthday_get_together",
+      "situation": "social.birthday_gathering",
+      "pattern": "(?:a|my) friend\\x27s birthday get-together",
+      "canonical": "a birthday gathering"
+    },
+    {
+      "id": "bday_gathering",
+      "situation": "social.birthday_gathering",
+      "pattern": "bday (?P<kind>party|gathering|celebration)",
+      "canonical": "birthday \\g<kind>"
+    },
+    {
+      "id": "friend_house_visit",
+      "situation": "social.house_gathering",
+      "pattern": "(?:(?:i'm|i am|im) )?(?:going round|heading over|dropping by) to (?:my |a )?friend\\x27s (?:place|house)",
+      "canonical": "I'm visiting my friend's house"
+    },
+    {
+      "id": "friend_house_get_together",
+      "situation": "social.house_gathering",
+      "pattern": "a casual get-together at (?:my |a )?friend\\x27s (?:place|house)",
+      "canonical": "a casual gathering at my friend's house"
+    },
+    {
+      "id": "cinema_plan",
+      "situation": "leisure.cinema_outing",
+      "pattern": "(?:(?:i'm|i am|im) )?(?:off|heading) to (?:the )?(?:cinema|movies)(?: to (?:catch|see) (?:a )?film)?",
+      "canonical": "I'm going to watch a film at the cinema"
+    },
+    {
+      "id": "film_screening",
+      "situation": "leisure.cinema_outing",
+      "pattern": "a film screening at (?:the )?cinema",
+      "canonical": "a cinema outing"
+    },
+    {
+      "id": "city_landmarks",
+      "situation": "leisure.city_sightseeing",
+      "pattern": "(?:(?:i'm|i am|im) )?(?:going|heading out) to (?:look around|tour|explore) (?:the )?city (?:sights|landmarks)",
+      "canonical": "I'm sightseeing around the city"
+    },
+    {
+      "id": "sights_walk",
+      "situation": "leisure.city_sightseeing",
+      "pattern": "a walk around (?:the )?city to see the sights",
+      "canonical": "a city sightseeing trip"
+    },
+    {
+      "id": "boarding_for_trip",
+      "situation": "travel.journey",
+      "pattern": "(?:(?:i'm|i am|im) )?(?:catching|boarding) (?:a |the )?(?P<transport>train|bus|flight) for (?:a |my )?trip",
+      "canonical": "I'm taking a \\g<transport> for a trip"
+    },
+    {
+      "id": "transport_journey",
+      "situation": "travel.journey",
+      "pattern": "a journey on (?:the |a )?(?P<transport>train|bus)",
+      "canonical": "a \\g<transport> journey"
+    },
+    {
+      "id": "family_wedding",
+      "situation": "ceremony.wedding",
+      "pattern": "my (?:cousin|sister|brother)\\x27s wedding",
+      "canonical": "a wedding"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+const fs=require('node:fs'),path=require('node:path'),Module=require('node:module');
+const assert=require('node:assert/strict'),ts=require('typescript'),React=require('react');
+const {renderToStaticMarkup}=require('react-dom/server');
+const filename=path.resolve(__dirname,'../components/FashionCompatibilityExplanation.tsx');
+const output=ts.transpileModule(fs.readFileSync(filename,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX}});
+const loaded=new Module(filename,module);loaded.filename=filename;loaded.paths=Module._nodeModulePaths(path.dirname(filename));loaded._compile(output.outputText,filename);
+const render=value=>renderToStaticMarkup(React.createElement(loaded.exports.default,{value}));
+assert.equal(render(undefined),'');
+const base={profile:'fashion_compatibility_v2',compatibility:{value:null,state:'Unknown'},context:{channel:'existing_request_R',targets:['casual']},factors:[{name:'pattern',state:'Unknown',value:null,effective_weight:'4/17',total_contribution:'0',observed:0,possible:1}]};
+const html=render(base);assert.ok(html.includes('Pattern balance: Unknown'));assert.ok(html.includes('not counted again'));assert.ok(html.includes('not a validated fashion-quality'));
+assert.equal(render(JSON.parse(JSON.stringify(base))),html);
+assert.ok(render({...base,context:{channel:'compatibility_style',targets:['smart casual']}}).includes('does not verify an external dress code'));
+console.log('PASS: exact factors, Unknown, context separation and historical round-trip display.');

@@ -1,0 +1,4532 @@
+{
+  "version": "soft-policy-synthetic-bank-1.0.1",
+  "qualification": "Authored synthetic evidence-contract states, not photographic/model/source-attestation validation",
+  "primary_values": "Hypothetical exact component inputs; current primary scorers and parsers are not executed. R/C/P states retained, null contributes zero.",
+  "cases": [
+    {
+      "id": "SP-01",
+      "title": "Exact numerical tie; blue has smaller stable ID",
+      "kind": "core",
+      "mandatory_contract": "Existing source/structure/wearer/context safeguards and authored hard conditions; local wish is never hard.",
+      "wish": {
+        "polarity": "prefer",
+        "role": "lower",
+        "quantifier": "exists",
+        "same_member": true,
+        "predicates": [
+          {
+            "field": "category",
+            "operator": "in",
+            "value": "trousers"
+          },
+          {
+            "field": "primary_colour",
+            "operator": "in",
+            "value": "black"
+          }
+        ]
+      },
+      "resolution": "Active",
+      "notes": "",
+      "mutation_before_write": false,
+      "candidates": [
+        {
+          "label": "blue",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "blue",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "4/5"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        },
+        {
+          "label": "black",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "black",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "4/5"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "SP-02",
+      "title": "Similar compatibility, black lower by 1/20",
+      "kind": "core",
+      "mandatory_contract": "Existing source/structure/wearer/context safeguards and authored hard conditions; local wish is never hard.",
+      "wish": {
+        "polarity": "prefer",
+        "role": "lower",
+        "quantifier": "exists",
+        "same_member": true,
+        "predicates": [
+          {
+            "field": "category",
+            "operator": "in",
+            "value": "trousers"
+          },
+          {
+            "field": "primary_colour",
+            "operator": "in",
+            "value": "black"
+          }
+        ]
+      },
+      "resolution": "Active",
+      "notes": "",
+      "mutation_before_write": false,
+      "candidates": [
+        {
+          "label": "blue",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "blue",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "17/20"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        },
+        {
+          "label": "black",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "black",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "4/5"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "SP-03",
+      "title": "Black compatibility lower by 1/10",
+      "kind": "core",
+      "mandatory_contract": "Existing source/structure/wearer/context safeguards and authored hard conditions; local wish is never hard.",
+      "wish": {
+        "polarity": "prefer",
+        "role": "lower",
+        "quantifier": "exists",
+        "same_member": true,
+        "predicates": [
+          {
+            "field": "category",
+            "operator": "in",
+            "value": "trousers"
+          },
+          {
+            "field": "primary_colour",
+            "operator": "in",
+            "value": "black"
+          }
+        ]
+      },
+      "resolution": "Active",
+      "notes": "",
+      "mutation_before_write": false,
+      "candidates": [
+        {
+          "label": "blue",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "blue",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "4/5"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        },
+        {
+          "label": "black",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "black",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "7/10"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "SP-04",
+      "title": "Black compatibility lower by 1/5",
+      "kind": "core",
+      "mandatory_contract": "Existing source/structure/wearer/context safeguards and authored hard conditions; local wish is never hard.",
+      "wish": {
+        "polarity": "prefer",
+        "role": "lower",
+        "quantifier": "exists",
+        "same_member": true,
+        "predicates": [
+          {
+            "field": "category",
+            "operator": "in",
+            "value": "trousers"
+          },
+          {
+            "field": "primary_colour",
+            "operator": "in",
+            "value": "black"
+          }
+        ]
+      },
+      "resolution": "Active",
+      "notes": "",
+      "mutation_before_write": false,
+      "candidates": [
+        {
+          "label": "blue",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "blue",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "4/5"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        },
+        {
+          "label": "black",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "black",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "3/5"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "SP-05",
+      "title": "Substantially lower black compatibility",
+      "kind": "core",
+      "mandatory_contract": "Existing source/structure/wearer/context safeguards and authored hard conditions; local wish is never hard.",
+      "wish": {
+        "polarity": "prefer",
+        "role": "lower",
+        "quantifier": "exists",
+        "same_member": true,
+        "predicates": [
+          {
+            "field": "category",
+            "operator": "in",
+            "value": "trousers"
+          },
+          {
+            "field": "primary_colour",
+            "operator": "in",
+            "value": "black"
+          }
+        ]
+      },
+      "resolution": "Active",
+      "notes": "",
+      "mutation_before_write": false,
+      "candidates": [
+        {
+          "label": "blue",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "blue",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "1"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        },
+        {
+          "label": "black",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "black",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "1/5"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "SP-06",
+      "title": "Only blue eligible; black hard Fail or Unknown",
+      "kind": "core",
+      "mandatory_contract": "Existing source/structure/wearer/context safeguards and authored hard conditions; local wish is never hard.",
+      "wish": {
+        "polarity": "prefer",
+        "role": "lower",
+        "quantifier": "exists",
+        "same_member": true,
+        "predicates": [
+          {
+            "field": "category",
+            "operator": "in",
+            "value": "trousers"
+          },
+          {
+            "field": "primary_colour",
+            "operator": "in",
+            "value": "black"
+          }
+        ]
+      },
+      "resolution": "Active",
+      "notes": "",
+      "mutation_before_write": false,
+      "candidates": [
+        {
+          "label": "blue",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "blue",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "4/5"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        },
+        {
+          "label": "black-fail",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "black",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Fail"
+          },
+          "primary_inputs": null
+        },
+        {
+          "label": "black-hard-unknown",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000003",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "black",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Unknown"
+          },
+          "primary_inputs": null
+        }
+      ]
+    },
+    {
+      "id": "SP-07",
+      "title": "Black colour Unknown, equal primary scores",
+      "kind": "core",
+      "mandatory_contract": "Existing source/structure/wearer/context safeguards and authored hard conditions; local wish is never hard.",
+      "wish": {
+        "polarity": "prefer",
+        "role": "lower",
+        "quantifier": "exists",
+        "same_member": true,
+        "predicates": [
+          {
+            "field": "category",
+            "operator": "in",
+            "value": "trousers"
+          },
+          {
+            "field": "primary_colour",
+            "operator": "in",
+            "value": "black"
+          }
+        ]
+      },
+      "resolution": "Active",
+      "notes": "",
+      "mutation_before_write": false,
+      "candidates": [
+        {
+          "label": "blue",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "blue",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "4/5"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        },
+        {
+          "label": "black-unverified",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "black",
+                  "qualification": "Unknown",
+                  "source": "synthetic_unqualified_or_unresolved"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "4/5"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "SP-08",
+      "title": "Unknown black source is the primary winner",
+      "kind": "core",
+      "mandatory_contract": "Existing source/structure/wearer/context safeguards and authored hard conditions; local wish is never hard.",
+      "wish": {
+        "polarity": "prefer",
+        "role": "lower",
+        "quantifier": "exists",
+        "same_member": true,
+        "predicates": [
+          {
+            "field": "category",
+            "operator": "in",
+            "value": "trousers"
+          },
+          {
+            "field": "primary_colour",
+            "operator": "in",
+            "value": "black"
+          }
+        ]
+      },
+      "resolution": "Active",
+      "notes": "",
+      "mutation_before_write": false,
+      "candidates": [
+        {
+          "label": "blue",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "blue",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "4/5"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        },
+        {
+          "label": "black-unverified",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "black",
+                  "qualification": "Unqualified",
+                  "source": "synthetic_unqualified_or_unresolved"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "1"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "SP-09",
+      "title": "Small saved P1 trade-off",
+      "kind": "core",
+      "mandatory_contract": "Existing source/structure/wearer/context safeguards and authored hard conditions; local wish is never hard.",
+      "wish": {
+        "polarity": "prefer",
+        "role": "lower",
+        "quantifier": "exists",
+        "same_member": true,
+        "predicates": [
+          {
+            "field": "category",
+            "operator": "in",
+            "value": "trousers"
+          },
+          {
+            "field": "primary_colour",
+            "operator": "in",
+            "value": "black"
+          }
+        ]
+      },
+      "resolution": "Active",
+      "notes": "",
+      "mutation_before_write": false,
+      "candidates": [
+        {
+          "label": "blue",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "blue",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "4/5"
+            },
+            "P": {
+              "state": "Available",
+              "value": "1/2"
+            }
+          }
+        },
+        {
+          "label": "black",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "black",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "4/5"
+            },
+            "P": {
+              "state": "Available",
+              "value": "2/5"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "SP-10",
+      "title": "Strong saved P1 trade-off",
+      "kind": "core",
+      "mandatory_contract": "Existing source/structure/wearer/context safeguards and authored hard conditions; local wish is never hard.",
+      "wish": {
+        "polarity": "prefer",
+        "role": "lower",
+        "quantifier": "exists",
+        "same_member": true,
+        "predicates": [
+          {
+            "field": "category",
+            "operator": "in",
+            "value": "trousers"
+          },
+          {
+            "field": "primary_colour",
+            "operator": "in",
+            "value": "black"
+          }
+        ]
+      },
+      "resolution": "Active",
+      "notes": "",
+      "mutation_before_write": false,
+      "candidates": [
+        {
+          "label": "blue",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "blue",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "4/5"
+            },
+            "P": {
+              "state": "Available",
+              "value": "1"
+            }
+          }
+        },
+        {
+          "label": "black",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "black",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "4/5"
+            },
+            "P": {
+              "state": "Available",
+              "value": "0"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "SP-11",
+      "title": "Equal T, black loses all C but gains P",
+      "kind": "core",
+      "mandatory_contract": "Existing source/structure/wearer/context safeguards and authored hard conditions; local wish is never hard.",
+      "wish": {
+        "polarity": "prefer",
+        "role": "lower",
+        "quantifier": "exists",
+        "same_member": true,
+        "predicates": [
+          {
+            "field": "category",
+            "operator": "in",
+            "value": "trousers"
+          },
+          {
+            "field": "primary_colour",
+            "operator": "in",
+            "value": "black"
+          }
+        ]
+      },
+      "resolution": "Active",
+      "notes": "Cancellation trap: equal T does not mean equal compatibility.",
+      "mutation_before_write": false,
+      "candidates": [
+        {
+          "label": "blue",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "blue",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "1"
+            },
+            "P": {
+              "state": "Available",
+              "value": "0"
+            }
+          }
+        },
+        {
+          "label": "black",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "black",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "0"
+            },
+            "P": {
+              "state": "Available",
+              "value": "1"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "SP-12",
+      "title": "Baseline already satisfies wish",
+      "kind": "core",
+      "mandatory_contract": "Existing source/structure/wearer/context safeguards and authored hard conditions; local wish is never hard.",
+      "wish": {
+        "polarity": "prefer",
+        "role": "lower",
+        "quantifier": "exists",
+        "same_member": true,
+        "predicates": [
+          {
+            "field": "category",
+            "operator": "in",
+            "value": "trousers"
+          },
+          {
+            "field": "primary_colour",
+            "operator": "in",
+            "value": "black"
+          }
+        ]
+      },
+      "resolution": "Active",
+      "notes": "",
+      "mutation_before_write": false,
+      "candidates": [
+        {
+          "label": "blue",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "blue",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "0"
+            },
+            "P": {
+              "state": "Available",
+              "value": "1"
+            }
+          }
+        },
+        {
+          "label": "black",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "black",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "1"
+            },
+            "P": {
+              "state": "Available",
+              "value": "0"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "SP-13",
+      "title": "Multiple black matches, exact deterministic ID tie",
+      "kind": "core",
+      "mandatory_contract": "Existing source/structure/wearer/context safeguards and authored hard conditions; local wish is never hard.",
+      "wish": {
+        "polarity": "prefer",
+        "role": "lower",
+        "quantifier": "exists",
+        "same_member": true,
+        "predicates": [
+          {
+            "field": "category",
+            "operator": "in",
+            "value": "trousers"
+          },
+          {
+            "field": "primary_colour",
+            "operator": "in",
+            "value": "black"
+          }
+        ]
+      },
+      "resolution": "Active",
+      "notes": "",
+      "mutation_before_write": false,
+      "candidates": [
+        {
+          "label": "blue",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "blue",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "4/5"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        },
+        {
+          "label": "black-smaller",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "black",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "4/5"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        },
+        {
+          "label": "black-larger",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000003",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "black",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "4/5"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "SP-14",
+      "title": "Hard black conflicts with optional blue",
+      "kind": "core",
+      "mandatory_contract": "The same lower member must be black trousers; proof of scalar colour contradiction makes the retained blue wish ranking-inactive.",
+      "wish": {
+        "polarity": "prefer",
+        "role": "lower",
+        "quantifier": "exists",
+        "same_member": true,
+        "predicates": [
+          {
+            "field": "category",
+            "operator": "in",
+            "value": "trousers"
+          },
+          {
+            "field": "primary_colour",
+            "operator": "in",
+            "value": "blue"
+          }
+        ]
+      },
+      "resolution": "ContradictedByHard",
+      "notes": "",
+      "mutation_before_write": false,
+      "candidates": [
+        {
+          "label": "black-required",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "black",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "4/5"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        },
+        {
+          "label": "blue-forbidden",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "blue",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Fail"
+          },
+          "primary_inputs": null
+        }
+      ]
+    },
+    {
+      "id": "SP-15",
+      "title": "Optional black already entailed by hard black",
+      "kind": "core",
+      "mandatory_contract": "Same lower member must be black trousers; retained wish is already guaranteed and ranking-inactive.",
+      "wish": {
+        "polarity": "prefer",
+        "role": "lower",
+        "quantifier": "exists",
+        "same_member": true,
+        "predicates": [
+          {
+            "field": "category",
+            "operator": "in",
+            "value": "trousers"
+          },
+          {
+            "field": "primary_colour",
+            "operator": "in",
+            "value": "black"
+          }
+        ]
+      },
+      "resolution": "EntailedByHard",
+      "notes": "",
+      "mutation_before_write": false,
+      "candidates": [
+        {
+          "label": "black-best",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "black",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "4/5"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        },
+        {
+          "label": "black-other",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "black",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "7/10"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "SP-16",
+      "title": "Black top cannot satisfy black-trouser wish",
+      "kind": "core",
+      "mandatory_contract": "Existing source/structure/wearer/context safeguards and authored hard conditions; local wish is never hard.",
+      "wish": {
+        "polarity": "prefer",
+        "role": "lower",
+        "quantifier": "exists",
+        "same_member": true,
+        "predicates": [
+          {
+            "field": "category",
+            "operator": "in",
+            "value": "trousers"
+          },
+          {
+            "field": "primary_colour",
+            "operator": "in",
+            "value": "black"
+          }
+        ]
+      },
+      "resolution": "Active",
+      "notes": "",
+      "mutation_before_write": false,
+      "candidates": [
+        {
+          "label": "blue-trousers-black-top",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000101",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "black",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "blue",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "17/20"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        },
+        {
+          "label": "black-trousers",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "black",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "4/5"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "SP-17",
+      "title": "Black skirt cannot satisfy category-colour conjunction",
+      "kind": "core",
+      "mandatory_contract": "No mandatory trouser category: skirt and trousers both eligible; only the wish requests black trousers.",
+      "wish": {
+        "polarity": "prefer",
+        "role": "lower",
+        "quantifier": "exists",
+        "same_member": true,
+        "predicates": [
+          {
+            "field": "category",
+            "operator": "in",
+            "value": "trousers"
+          },
+          {
+            "field": "primary_colour",
+            "operator": "in",
+            "value": "black"
+          }
+        ]
+      },
+      "resolution": "Active",
+      "notes": "",
+      "mutation_before_write": false,
+      "candidates": [
+        {
+          "label": "black-skirt",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "facts": {
+                "category": {
+                  "recorded_value": "skirt",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "black",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "17/20"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        },
+        {
+          "label": "black-trousers",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "black",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "4/5"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "SP-18",
+      "title": "One-piece has no preferred lower role",
+      "kind": "core",
+      "mandatory_contract": "Both one-piece and upper/lower structures are mandatory-eligible.",
+      "wish": {
+        "polarity": "prefer",
+        "role": "lower",
+        "quantifier": "exists",
+        "same_member": true,
+        "predicates": [
+          {
+            "field": "category",
+            "operator": "in",
+            "value": "trousers"
+          },
+          {
+            "field": "primary_colour",
+            "operator": "in",
+            "value": "black"
+          }
+        ]
+      },
+      "resolution": "Active",
+      "notes": "",
+      "mutation_before_write": false,
+      "candidates": [
+        {
+          "label": "blue-dress",
+          "members": [
+            {
+              "role": "one_piece",
+              "id": "00000000-0000-4000-8000-000000000101",
+              "facts": {
+                "category": {
+                  "recorded_value": "vest_dress",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "blue",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "4/5"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        },
+        {
+          "label": "black-trousers",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "black",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "3/4"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "SP-19",
+      "title": "Upper wish cannot borrow blue from lower",
+      "kind": "core",
+      "mandatory_contract": "Existing source/structure/wearer/context safeguards and authored hard conditions; local wish is never hard.",
+      "wish": {
+        "polarity": "prefer",
+        "role": "upper",
+        "quantifier": "exists",
+        "same_member": true,
+        "predicates": [
+          {
+            "field": "category",
+            "operator": "in",
+            "value": "short_sleeve_top"
+          },
+          {
+            "field": "primary_colour",
+            "operator": "in",
+            "value": "blue"
+          }
+        ]
+      },
+      "resolution": "Active",
+      "notes": "",
+      "mutation_before_write": false,
+      "candidates": [
+        {
+          "label": "black-top-blue-lower",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000101",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "black",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "blue",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "17/20"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        },
+        {
+          "label": "blue-top-black-lower",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000102",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "blue",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "black",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "4/5"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "SP-20",
+      "title": "Unknown primary winner versus low-C qualified match",
+      "kind": "core",
+      "mandatory_contract": "Existing source/structure/wearer/context safeguards and authored hard conditions; local wish is never hard.",
+      "wish": {
+        "polarity": "prefer",
+        "role": "lower",
+        "quantifier": "exists",
+        "same_member": true,
+        "predicates": [
+          {
+            "field": "category",
+            "operator": "in",
+            "value": "trousers"
+          },
+          {
+            "field": "primary_colour",
+            "operator": "in",
+            "value": "black"
+          }
+        ]
+      },
+      "resolution": "Active",
+      "notes": "",
+      "mutation_before_write": false,
+      "candidates": [
+        {
+          "label": "unknown-primary",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "black",
+                  "qualification": "Unknown",
+                  "source": "synthetic_unqualified_or_unresolved"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "1"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        },
+        {
+          "label": "blue",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "blue",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "4/5"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        },
+        {
+          "label": "qualified-black",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000003",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "black",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "1/5"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "SP-21",
+      "title": "Different R values: request-match loss stress",
+      "kind": "numeric_stress",
+      "mandatory_contract": "Existing source/structure/wearer/context safeguards and authored hard conditions; local wish is never hard.",
+      "wish": {
+        "polarity": "prefer",
+        "role": "lower",
+        "quantifier": "exists",
+        "same_member": true,
+        "predicates": [
+          {
+            "field": "category",
+            "operator": "in",
+            "value": "trousers"
+          },
+          {
+            "field": "primary_colour",
+            "operator": "in",
+            "value": "black"
+          }
+        ]
+      },
+      "resolution": "Active",
+      "notes": "Hypothetical certified component vectors, not asserted achievable from the current pure-B1 parser; tests R protection.",
+      "mutation_before_write": false,
+      "candidates": [
+        {
+          "label": "blue",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "blue",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "Available",
+              "value": "1/2"
+            },
+            "C": {
+              "state": "Available",
+              "value": "4/5"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        },
+        {
+          "label": "black",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "black",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "Available",
+              "value": "12/25"
+            },
+            "C": {
+              "state": "Available",
+              "value": "4/5"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "SP-22",
+      "title": "R gain can hide C/P losses",
+      "kind": "numeric_stress",
+      "mandatory_contract": "Existing source/structure/wearer/context safeguards and authored hard conditions; local wish is never hard.",
+      "wish": {
+        "polarity": "prefer",
+        "role": "lower",
+        "quantifier": "exists",
+        "same_member": true,
+        "predicates": [
+          {
+            "field": "category",
+            "operator": "in",
+            "value": "trousers"
+          },
+          {
+            "field": "primary_colour",
+            "operator": "in",
+            "value": "black"
+          }
+        ]
+      },
+      "resolution": "Active",
+      "notes": "Hypothetical component robustness case, not an application-generated outfit.",
+      "mutation_before_write": false,
+      "candidates": [
+        {
+          "label": "blue",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "blue",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "Available",
+              "value": "0"
+            },
+            "C": {
+              "state": "Available",
+              "value": "9/10"
+            },
+            "P": {
+              "state": "Available",
+              "value": "1/2"
+            }
+          }
+        },
+        {
+          "label": "black",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "black",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "Available",
+              "value": "1/10"
+            },
+            "C": {
+              "state": "Available",
+              "value": "4/5"
+            },
+            "P": {
+              "state": "Available",
+              "value": "1/4"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "SP-23",
+      "title": "No qualified matching option; saved P and C differ",
+      "kind": "core",
+      "mandatory_contract": "Existing source/structure/wearer/context safeguards and authored hard conditions; local wish is never hard.",
+      "wish": {
+        "polarity": "prefer",
+        "role": "lower",
+        "quantifier": "exists",
+        "same_member": true,
+        "predicates": [
+          {
+            "field": "category",
+            "operator": "in",
+            "value": "trousers"
+          },
+          {
+            "field": "primary_colour",
+            "operator": "in",
+            "value": "black"
+          }
+        ]
+      },
+      "resolution": "Active",
+      "notes": "",
+      "mutation_before_write": false,
+      "candidates": [
+        {
+          "label": "blue",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "blue",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "3/5"
+            },
+            "P": {
+              "state": "Available",
+              "value": "4/5"
+            }
+          }
+        },
+        {
+          "label": "grey",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "grey",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "9/10"
+            },
+            "P": {
+              "state": "Available",
+              "value": "2/5"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "SP-24",
+      "title": "Stale black evidence at capture",
+      "kind": "core",
+      "mandatory_contract": "Existing source/structure/wearer/context safeguards and authored hard conditions; local wish is never hard.",
+      "wish": {
+        "polarity": "prefer",
+        "role": "lower",
+        "quantifier": "exists",
+        "same_member": true,
+        "predicates": [
+          {
+            "field": "category",
+            "operator": "in",
+            "value": "trousers"
+          },
+          {
+            "field": "primary_colour",
+            "operator": "in",
+            "value": "black"
+          }
+        ]
+      },
+      "resolution": "Active",
+      "notes": "",
+      "mutation_before_write": false,
+      "candidates": [
+        {
+          "label": "blue",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "blue",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "4/5"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        },
+        {
+          "label": "stale-black",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "black",
+                  "qualification": "Stale",
+                  "source": "synthetic_unqualified_or_unresolved"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "4/5"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "SP-25",
+      "title": "Category-only wish ignores irrelevant unknown colour",
+      "kind": "core",
+      "mandatory_contract": "Existing source/structure/wearer/context safeguards and authored hard conditions; local wish is never hard.",
+      "wish": {
+        "polarity": "prefer",
+        "role": "lower",
+        "quantifier": "exists",
+        "same_member": true,
+        "predicates": [
+          {
+            "field": "category",
+            "operator": "in",
+            "value": "trousers"
+          }
+        ]
+      },
+      "resolution": "Active",
+      "notes": "",
+      "mutation_before_write": false,
+      "candidates": [
+        {
+          "label": "dress",
+          "members": [
+            {
+              "role": "one_piece",
+              "id": "00000000-0000-4000-8000-000000000101",
+              "facts": {
+                "category": {
+                  "recorded_value": "vest_dress",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "blue",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "17/20"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        },
+        {
+          "label": "trousers-colour-unknown",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "black",
+                  "qualification": "Unknown",
+                  "source": "synthetic_unqualified_or_unresolved"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "4/5"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "SP-26",
+      "title": "Combined small C/P losses exactly at total guard",
+      "kind": "core",
+      "mandatory_contract": "Existing source/structure/wearer/context safeguards and authored hard conditions; local wish is never hard.",
+      "wish": {
+        "polarity": "prefer",
+        "role": "lower",
+        "quantifier": "exists",
+        "same_member": true,
+        "predicates": [
+          {
+            "field": "category",
+            "operator": "in",
+            "value": "trousers"
+          },
+          {
+            "field": "primary_colour",
+            "operator": "in",
+            "value": "black"
+          }
+        ]
+      },
+      "resolution": "Active",
+      "notes": "",
+      "mutation_before_write": false,
+      "candidates": [
+        {
+          "label": "blue",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "blue",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "4/5"
+            },
+            "P": {
+              "state": "Available",
+              "value": "1/2"
+            }
+          }
+        },
+        {
+          "label": "black",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "black",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "3/4"
+            },
+            "P": {
+              "state": "Available",
+              "value": "9/20"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "SP-27",
+      "title": "No-soft historical behaviour control",
+      "kind": "core",
+      "mandatory_contract": "Existing source/structure/wearer/context safeguards and authored hard conditions; local wish is never hard.",
+      "wish": null,
+      "resolution": "Absent",
+      "notes": "",
+      "mutation_before_write": false,
+      "candidates": [
+        {
+          "label": "blue",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "blue",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "4/5"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        },
+        {
+          "label": "black",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "black",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "7/10"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "SP-28",
+      "title": "Two independent wishes are outside initial scope",
+      "kind": "core",
+      "mandatory_contract": "Existing source/structure/wearer/context safeguards and authored hard conditions; local wish is never hard.",
+      "wish": {
+        "unsupported_groups": 2
+      },
+      "resolution": "Unsupported",
+      "notes": "Do not average wishes, invent priorities or drop one. Analysis refusal; no current parser execution.",
+      "mutation_before_write": false,
+      "candidates": [
+        {
+          "label": "black-lower",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "black",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "4/5"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        },
+        {
+          "label": "blue-upper",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000102",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "blue",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "blue",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "4/5"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "SP-29",
+      "title": "Evidence mutates after provisional selection",
+      "kind": "core",
+      "mandatory_contract": "Existing source/structure/wearer/context safeguards and authored hard conditions; local wish is never hard.",
+      "wish": {
+        "polarity": "prefer",
+        "role": "lower",
+        "quantifier": "exists",
+        "same_member": true,
+        "predicates": [
+          {
+            "field": "category",
+            "operator": "in",
+            "value": "trousers"
+          },
+          {
+            "field": "primary_colour",
+            "operator": "in",
+            "value": "black"
+          }
+        ]
+      },
+      "resolution": "Active",
+      "notes": "Ranking is provisional. Actual locked write/revalidation is not exercised; all policies must abort a changed captured scope.",
+      "mutation_before_write": true,
+      "candidates": [
+        {
+          "label": "blue",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "blue",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "4/5"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        },
+        {
+          "label": "black",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "black",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": {
+            "R": {
+              "state": "NotApplicable",
+              "value": null
+            },
+            "C": {
+              "state": "Available",
+              "value": "4/5"
+            },
+            "P": {
+              "state": "NoPreferences",
+              "value": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "SP-30",
+      "title": "No candidate passes mandatory admission",
+      "kind": "core",
+      "mandatory_contract": "Existing source/structure/wearer/context safeguards and authored hard conditions; local wish is never hard.",
+      "wish": {
+        "polarity": "prefer",
+        "role": "lower",
+        "quantifier": "exists",
+        "same_member": true,
+        "predicates": [
+          {
+            "field": "category",
+            "operator": "in",
+            "value": "trousers"
+          },
+          {
+            "field": "primary_colour",
+            "operator": "in",
+            "value": "black"
+          }
+        ]
+      },
+      "resolution": "Active",
+      "notes": "",
+      "mutation_before_write": false,
+      "candidates": [
+        {
+          "label": "foreign",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "black",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Fail",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": null
+        },
+        {
+          "label": "archived",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "black",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Fail",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": null
+        },
+        {
+          "label": "wearer-denied",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000003",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "black",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Fail",
+            "context": "Pass",
+            "hard": "Pass"
+          },
+          "primary_inputs": null
+        },
+        {
+          "label": "context-unknown",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000004",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "black",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Unknown",
+            "hard": "Pass"
+          },
+          "primary_inputs": null
+        },
+        {
+          "label": "hard-failed",
+          "members": [
+            {
+              "role": "upper",
+              "id": "00000000-0000-4000-8000-000000000100",
+              "facts": {
+                "category": {
+                  "recorded_value": "short_sleeve_top",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "white",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            },
+            {
+              "role": "lower",
+              "id": "00000000-0000-4000-8000-000000000005",
+              "facts": {
+                "category": {
+                  "recorded_value": "trousers",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                },
+                "primary_colour": {
+                  "recorded_value": "black",
+                  "qualification": "Qualified",
+                  "source": "synthetic_owner_declaration"
+                }
+              }
+            }
+          ],
+          "mandatory": {
+            "owner": "Pass",
+            "availability": "Pass",
+            "wearer": "Pass",
+            "context": "Pass",
+            "hard": "Fail"
+          },
+          "primary_inputs": null
+        }
+      ]
+    }
+  ]
+}

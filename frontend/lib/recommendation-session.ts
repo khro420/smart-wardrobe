@@ -6,7 +6,7 @@ import { attributeDraftVersion, validAttributeConditions, codePointCount, type A
 // Namespace only; backend authentication remains authoritative.
 export const sessionOwner = (wearerProfileId: string | null = getSelectedWardrobeProfileId()) => `${authenticationSession()}:wearer:${wearerProfileId ?? "unselected"}`;
 const prefix = "smart_wardrobe_interaction:";
-export type AssistantDraft = { compatibilityProfile?: CompatibilityProfile; preferenceProfile?: PreferenceProfile; key: string; text: string; wearerProfileId?: string; wearerName?: string; submitted?: string; chatId?: string; refinement?: RefinementAction; previousChatId?: string; attributeDraftVersion?: typeof attributeDraftVersion; attributeConditions?: AttributeConditions };
+export type AssistantDraft = { syntheticFixture?: boolean; compatibilityProfile?: CompatibilityProfile; preferenceProfile?: PreferenceProfile; key: string; text: string; wearerProfileId?: string; wearerName?: string; submitted?: string; chatId?: string; refinement?: RefinementAction; previousChatId?: string; attributeDraftVersion?: typeof attributeDraftVersion; attributeConditions?: AttributeConditions };
 function validAction(action: unknown): action is RefinementAction {
   if (!action || typeof action !== "object" || !("version" in action) || action.version !== "assistant-refinement-request-1.0.0" || !("kind" in action)) return false;
   if (action.kind === "initial" && "excluded_categories" in action && Object.keys(action).length === 3) {
@@ -40,6 +40,7 @@ export function readAssistantDraft(wearerProfileId = getSelectedWardrobeProfileI
       (stored.submitted === undefined || typeof stored.submitted === "string" && codePointCount(stored.submitted) <= 500) &&
       (stored.chatId === undefined || typeof stored.chatId === "string") &&
       (stored.previousChatId === undefined || typeof stored.previousChatId === "string") &&
+      (stored.syntheticFixture === undefined || typeof stored.syntheticFixture === "boolean") &&
       (stored.compatibilityProfile === undefined || stored.compatibilityProfile === "recorded_palette_compatibility_v1") &&
       (stored.preferenceProfile === undefined || stored.preferenceProfile === "attribute_preference_decision_v2") &&
       (stored.refinement === undefined || validAction(stored.refinement)) &&

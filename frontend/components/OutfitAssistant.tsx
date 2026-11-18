@@ -10,6 +10,9 @@ import RecommendationResult from "./RecommendationResult";
 import AttributeRequestControls from "./AttributeRequestControls";
 import { CapturedAttributeRequirements } from "./AttributeRequirements";
 import { attributeDraftVersion, copyAttributeConditions, storedTypedAttributes, codePointCount, stableAttributeText, type AttributeConditions } from "@/lib/attribute-request";
+import { continuationDescriptor, eligibleContinuation, followUpChatId, historyFollowUpDraft } from "@/lib/assistant-follow-up";
+
+const continuationRefusals = ["GarmentRefinementExhausted", "GarmentRefinementInsufficientEvidence", "RefinementExhausted", "RefinementInsufficientEvidence", "RefinementLimitReached", "RefinementScopeChanged", "RefinementUnavailable"];
 
 async function restoreChat(chatId: string, wearerProfileId: string | undefined) {
   try { return await getCompletedChat(chatId, {}, wearerProfileId); }
@@ -17,6 +20,13 @@ async function restoreChat(chatId: string, wearerProfileId: string | undefined) 
     if (!(cause instanceof ApiError) || cause.status !== 409 || !wearerProfileId) throw cause;
     return getCompletedChat(chatId, { view: "historical", wearer_profile_id: wearerProfileId }, wearerProfileId);
   }
+}
+
+function clearFollowUpLink() {
+  const url=new URL(window.location.href);
+  if (!url.searchParams.has("continue_chat")) return;
+  url.searchParams.delete("continue_chat");
+  window.history.replaceState(window.history.state,"",url.pathname+url.search+url.hash);
 }
 
 export default function OutfitAssistant() {
@@ -44,7 +54,7 @@ export default function OutfitAssistant() {
     if (focusOutcome) focusOutcomeKey.current = value.key;
     busy.current = true; setPending(true); setMessage(""); setRetryable(false); setContextSummary(undefined);
     try {
-      const actionKey = stableAttributeText({ text: value.submitted, refinement: value.refinement ?? null, attributes: value.attributeConditions ?? null, preferenceProfile: value.preferenceProfile ?? null, compatibilityProfile: value.compatibilityProfile ?? null });
+      const actionKey = stableAttributeText({ text: value.submitted, refinement: value.refinement ?? null, attributes: value.attributeConditions ?? null, preferenceProfile: value.preferenceProfile ?? null, compatibilityProfile: value.compatibilityProfile ?? null, syntheticFixture: value.syntheticFixture === true });
       const response = await singleFlight(`assistant:${value.key}:${actionKey}`, () => createRecommendation(value.submitted!, value.key, value.refinement, value.wearerProfileId, recovery, value.attributeConditions, value.preferenceProfile, value.compatibilityProfile), value.wearerProfileId);
       if (!alive.current || current.current?.key !== value.key || sessionOwner() !== owner) return;
       if (response.outcome === "Selected" && response.complete && response.recommendation?.chat_id) {
@@ -52,9 +62,10 @@ export default function OutfitAssistant() {
         current.current = completed; writeAssistantDraft(completed); setDraft(completed);
         setContinuationEnded(false); setResult(response.recommendation); setHistorical(response.replayed === true);
         if (response.replayed && value.refinement?.kind === "alternative") setMessage("This alternative was already generated; continue from it.");
-      } else { if (["GarmentRefinementExhausted", "GarmentRefinementInsufficientEvidence", "RefinementLimitReached"].includes(response.outcome ?? "")) setContinuationEnded(true); setContextSummary(response.context_summary); setMessage(response.outcome?.startsWith("GarmentRefinement") ? outcomeMessage(response.outcome, response.contextual_message, response.context_reason) : contextEvidenceMessage(response.context_summary?.version, response.outcome, response.context_reason) ?? (response.outcome ? outcomeMessage(response.outcome, response.contextual_message, response.context_reason) : "The integrated Assistant is unavailable. No legacy result is displayed.")); }
+      } else { if (continuationRefusals.includes(response.outcome ?? "")) setContinuationEnded(true); setContextSummary(response.context_summary); setMessage(response.outcome?.startsWith("GarmentRefinement") ? outcomeMessage(response.outcome, response.contextual_message, response.context_reason) : contextEvidenceMessage(response.context_summary?.version, response.outcome, response.context_reason) ?? (response.outcome ? outcomeMessage(response.outcome, response.contextual_message, response.context_reason) : "The integrated Assistant is unavailable. No legacy result is displayed.")); }
     } catch (cause) {
       if (alive.current && current.current?.key === value.key && sessionOwner() === owner) {
+        if (cause instanceof ApiError && continuationRefusals.includes(cause.outcome ?? "")) setContinuationEnded(true);
         if (cause instanceof ApiError && cause.payload && typeof cause.payload === "object" && "context_summary" in cause.payload) setContextSummary(cause.payload.context_summary as ContextSummary);
         setMessage(errorMessage(cause)); setRetryable(!(cause instanceof ApiError) || cause.status >= 500);
       }
@@ -79,12 +90,33 @@ export default function OutfitAssistant() {
         if (alive.current && sessionOwner() === owner) {
           setCapabilities(value);
           const fresh = current.current;
-          if (fresh && !fresh.submitted && !fresh.chatId && value.attribute_preferences?.enabled) {
+          if (fresh && !fresh.submitted && !fresh.chatId && !value.mixed_wardrobe?.enabled && fresh.syntheticFixture !== true && value.attribute_preferences?.enabled) {
             const captured = {...fresh, preferenceProfile: value.attribute_preferences.profile};
             current.current = captured; writeAssistantDraft(captured); setDraft(captured);
           }
         }
       }).catch(() => { /* The pinned submission returns controlled availability errors. */ });
+      let chosenChat: string | undefined;
+      try { chosenChat=followUpChatId(window.location.search); }
+      catch (cause) {
+        const blank={key:crypto.randomUUID(),text:"",wearerProfileId:wearer.id,wearerName:wearer.name};
+        current.current=blank; setDraft(blank); setMessage(errorMessage(cause)); return;
+      }
+      if (chosenChat) {
+        try {
+          const chat=await getCompletedChat(chosenChat,{},wearer.id);
+          if (!alive.current || sessionOwner()!==owner) return;
+          const value=historyFollowUpDraft(chat.recommendation,wearer.id,crypto.randomUUID());
+          current.current=value; writeAssistantDraft(value); setDraft(value);
+          setResult(chat.recommendation); setHistorical(true); clearFollowUpLink();
+        } catch (cause) {
+          if (alive.current && sessionOwner()===owner) {
+            const blank={key:crypto.randomUUID(),text:"",wearerProfileId:wearer.id,wearerName:wearer.name};
+            current.current=blank; setDraft(blank); setMessage(errorMessage(cause));
+          }
+        }
+        return;
+      }
       const value = readAssistantDraft(wearer.id, wearer.name);
       current.current = value; setDraft(value);
       if (value.chatId) {
@@ -109,14 +141,15 @@ export default function OutfitAssistant() {
   };
   const newChat = () => {
     if (busy.current) return;
+    clearFollowUpLink();
     focusOutcomeKey.current = undefined;
-    remember({ preferenceProfile: capabilities?.attribute_preferences?.enabled ? capabilities.attribute_preferences.profile : undefined, key: crypto.randomUUID(), text: "", wearerProfileId: draft?.wearerProfileId, wearerName: draft?.wearerName }); setPending(false); setResult(undefined); setMessage(""); setHistorical(false); setRetryable(false); setContextSummary(undefined);
+    remember({ preferenceProfile: !capabilities?.mixed_wardrobe?.enabled && capabilities?.attribute_preferences?.enabled ? capabilities.attribute_preferences.profile : undefined, key: crypto.randomUUID(), text: "", wearerProfileId: draft?.wearerProfileId, wearerName: draft?.wearerName }); setPending(false); setResult(undefined); setMessage(""); setHistorical(false); setRetryable(false); setContextSummary(undefined);
     setContinuationEnded(false); setEditingExclusions(false); setExcludedDraft([]);
   };
   const refinementEnabled = capabilities?.refinement?.version === "recommendation-refinement-capabilities-1.0.0" && capabilities.refinement.available;
-  const view = result?.scoring_display;
   const garmentEnabled = capabilities?.garment_continuation?.version === "garment-only-continuation-capabilities-1.0.0" && capabilities.garment_continuation.available;
-  const descriptor = result?.garment_continuation?.version === "garment-only-continuation-display-1.0.0" ? result.garment_continuation : view?.kind === "ContextRelevance" && view.version === "assistant-scoring-display-2.2.0" || view?.kind === "AttributePreference" && view.version === "assistant-scoring-display-3.0.0" || view?.kind === "PaletteCompatibility" && view.version === "assistant-scoring-display-4.0.0" ? view.refinement : undefined;
+  const descriptor = continuationDescriptor(result);
+  const canContinue = !categoryPolicy.blocked && eligibleContinuation(result,capabilities,draft?.wearerProfileId,continuationEnded);
   const openExclusions = () => {
     setExcludedDraft(descriptor?.excluded_categories ?? (draft?.refinement?.kind === "initial" ? draft.refinement.excluded_categories : []));
     setEditingExclusions(true);
@@ -135,7 +168,7 @@ export default function OutfitAssistant() {
     } else remember({ ...draft, refinement: action });
   };
   const another = () => {
-    if (!descriptor?.next_action || !result?.request_text || result.wearer_archived || busy.current || continuationEnded || !(result.garment_continuation ? garmentEnabled : refinementEnabled)) return;
+    if (!canContinue || !descriptor?.next_action || !result?.request_text || busy.current) return;
     let attributes: AttributeConditions | undefined;
     try { attributes = storedTypedAttributes(result); } catch (cause) { setMessage(errorMessage(cause)); return; }
     const next: AssistantDraft = { wearerProfileId: draft?.wearerProfileId, wearerName: draft?.wearerName, compatibilityProfile: descriptor.next_action.compatibility_profile ?? draft?.compatibilityProfile, preferenceProfile: descriptor.next_action.preference_profile ?? draft?.preferenceProfile, key: descriptor.next_action.submission_key, text: result.request_text, submitted: result.request_text, refinement: descriptor.next_action.refinement, previousChatId: result.chat_id ?? undefined, attributeDraftVersion: attributes ? attributeDraftVersion : undefined, attributeConditions: attributes };
@@ -159,23 +192,30 @@ export default function OutfitAssistant() {
     {capabilities?.context_ranking?.version === "context-ranking-capabilities-1.0.0" && <p className="text-sm text-slate-600 [overflow-wrap:anywhere]">Ordinary shopping, class and outing requests use a casual appearance goal; ordinary dates and dinner use smart casual. These are unvalidated prototype defaults, not dress codes. An explicit supported style request overrides the default. No separate garment review or occasion profile is required.</p>}
     {capabilities?.context_support?.situations.some(s => s.id === "everyday.academic_attendance" && s.policy_available) && <p className="text-sm text-slate-600 [overflow-wrap:anywhere]">Try “I’m going to class”, “I have university tomorrow”, “I’m going shopping” or “I’m going out with friends”. Ordinary appearance suggestions still require reliable garment evidence.</p>}
     {capabilities?.context_ranking?.version === "context-ranking-capabilities-1.1.0" && <div className="space-y-2 text-sm [overflow-wrap:anywhere]">
-      <p>Ordinary appearance goals are unvalidated prototype conventions, not dress codes. An explicit supported style request overrides the default. These ordinary policies require no separate garment review or occasion profile. Wedding, presentation and interview evidence remains strict.</p>
+      <p>Appearance suggestions use saved garment attributes and remain provisional, not dress-code certification. An explicit supported style request overrides the default. No separate garment review is required; explicit owner restrictions and unsupported conditions still apply.</p>
       <ul>{capabilities.context_support?.situations.filter(s => s.policy_available && s.example).map(s => <li key={s.id}>{s.label}: {s.example}</li>)}</ul>
       <p>Library/study restrictions can inherit campus Deny; office/meeting restrictions inherit work Deny. Other ordinary subcontexts preserve their stated broad restrictions. Broad permission does not invent missing appearance evidence.</p>
     </div>}
     </details>
+    {capabilities?.mixed_wardrobe?.enabled && <p role="status" className="rounded-xl border border-amber-300 bg-amber-50 p-3 text-sm">Development mixed wardrobe: original confirmed garments and declared synthetic fixtures are considered together. Wearer restrictions and normal evidence requirements still apply. Synthetic items are labelled in results and history.</p>}
     {!draft ? <p role="status">Loading your interaction…</p> : draft.submitted ? <div className="rounded-2xl border border-slate-200 bg-white p-5"><h2 className="text-sm font-semibold text-slate-500">Original request · read-only</h2><p className="mt-2 whitespace-pre-wrap">{draft.submitted}</p></div> : <form onSubmit={event => { event.preventDefault(); submit(); }} className="space-y-3 rounded-2xl border border-slate-200 bg-white p-5">
       <label htmlFor="outfit-request" className="block text-sm font-semibold">What would you like to wear?</label><textarea id="outfit-request" value={draft.text} onChange={event => { if (codePointCount(event.target.value) <= 500) remember({ ...draft, text: event.target.value }); else setMessage("Requests can contain up to 500 characters. Shorten the text before submitting."); }} className="min-h-32 w-full rounded-xl border border-slate-300 p-3" placeholder="Suggest an outfit with vintage style" /><p className="text-right text-xs text-slate-500">{codePointCount(draft.text)}/500</p><button disabled={pending || categoryPolicy.blocked || !draft.wearerProfileId || !draft.text.trim() || codePointCount(draft.text) > 500 || capabilities?.wearer_identity?.version !== "assistant-wearer-intent-1.0.0"} className="min-h-11 rounded-xl bg-[#6d335b] px-4 text-sm font-semibold text-white disabled:opacity-50">Suggest an outfit</button>
     </form>}
+    {capabilities?.local_preferences?.enabled && <section aria-label="Text preference support" className="space-y-2 rounded-xl border border-slate-200 p-4 text-sm">
+      <p>Optional text preferences are available with basic preferences (P1) and basic compatibility (C1). Try “I’d prefer black trousers.” or “I need trousers, preferably black.”</p>
+      <p>One optional top or bottom preference. Grammar 1.9 supports its bounded hard clauses and exclusions; contextual soft preferences and soft continuation remain unavailable.</p>
+      {draft && !capabilities.mixed_wardrobe?.enabled && capabilities.attribute_preferences?.enabled && <label className="flex min-h-11 items-center gap-2"><input type="checkbox" disabled={pending || !!draft.submitted || draft.syntheticFixture === true} checked={!!draft.preferenceProfile} onChange={event => remember({...draft, preferenceProfile: event.target.checked ? capabilities.attribute_preferences?.profile : undefined})} />Use saved attribute preferences (P2). Turn this off for a text preference.</label>}
+      <p>Leave recorded palette compatibility off for a text preference. Existing required conditions are never relaxed.</p>
+    </section>}
     {draft?.preferenceProfile && <p className="text-sm">Saved likes and avoids for this wearer influence ranking softly. Required conditions still apply. <Link href="/profile" className="underline">Edit saved preferences</Link>.</p>}
     <p data-testid="wearer-category-guidance" role="status">{categoryPolicy.text} <Link href="/profile" className="underline">Wearer information</Link></p>
     <CapturedAttributeRequirements value={draft?.attributeConditions} />
-    {draft && capabilities?.palette_compatibility?.version === "palette-compatibility-capabilities-1.0.0" && capabilities.palette_compatibility.enabled && <fieldset disabled={pending || !!draft.submitted} className="space-y-2 rounded-xl border border-slate-200 p-4 text-sm">
+    {draft && !capabilities?.mixed_wardrobe?.enabled && capabilities?.palette_compatibility?.version === "palette-compatibility-capabilities-1.0.0" && capabilities.palette_compatibility.enabled && <fieldset disabled={pending || !!draft.submitted || draft.syntheticFixture === true} className="space-y-2 rounded-xl border border-slate-200 p-4 text-sm">
       <label className="flex min-h-11 items-center gap-2"><input type="checkbox" checked={draft.compatibilityProfile === "recorded_palette_compatibility_v1"} onChange={event => remember({...draft, compatibilityProfile: event.target.checked ? "recorded_palette_compatibility_v1" : undefined})} />Use recorded palette colours for compatibility</label>
       <p>Your recorded palette fractions extend the prototype colour rule. Uncertain fractions remain unknown. The choice is retained for retries and alternatives.</p>
     </fieldset>}
-    {draft && capabilities?.attributes?.enabled && <AttributeRequestControls key={draft.key} capability={capabilities.attributes} allowedCategories={categoryPolicy.data?.enabled ? categoryPolicy.data.allowed_categories : undefined} value={draft.attributeConditions} disabled={pending || categoryPolicy.blocked || !draft.wearerProfileId} submitted={!!draft.submitted} onApply={applyAttributes} />}
-    {(refinementEnabled || garmentEnabled && descriptor) && (!draft?.submitted || descriptor) && <section aria-label="Optional recommendation controls" className="min-w-0 space-y-3 rounded-xl border border-slate-200 p-4 text-sm">
+    {draft && !capabilities?.mixed_wardrobe?.enabled && capabilities?.attributes?.enabled && <AttributeRequestControls key={draft.key} capability={capabilities.attributes} allowedCategories={categoryPolicy.data?.enabled ? categoryPolicy.data.allowed_categories : undefined} value={draft.attributeConditions} disabled={pending || categoryPolicy.blocked || !draft.wearerProfileId || draft.syntheticFixture === true} submitted={!!draft.submitted} onApply={applyAttributes} />}
+    {!capabilities?.mixed_wardrobe?.enabled && (refinementEnabled || garmentEnabled && descriptor) && (!draft?.submitted || descriptor) && <section aria-label="Optional recommendation controls" className="min-w-0 space-y-3 rounded-xl border border-slate-200 p-4 text-sm">
       {!editingExclusions ? <button type="button" onClick={openExclusions} disabled={pending} className="min-h-11 font-semibold underline">Exclude garment categories</button> : <fieldset disabled={pending} className="space-y-3">
         <legend className="font-semibold">Exclude garment categories</legend>
         <p>Hard exclusions for this request only. These are not your saved preferences.</p>
@@ -185,8 +225,8 @@ export default function OutfitAssistant() {
         <div className="flex flex-wrap gap-3"><button type="button" onClick={applyExclusions} className="min-h-11 rounded-lg border px-3 font-semibold">Apply exclusions</button><button type="button" onClick={() => setEditingExclusions(false)} className="min-h-11 px-3 underline">Cancel</button><button type="button" onClick={() => setExcludedDraft([])} className="min-h-11 px-3 underline">Clear draft</button></div>
       </fieldset>}
       {!editingExclusions && draft?.refinement?.kind === "initial" && !draft.submitted && <p>Request exclusions: {draft.refinement.excluded_categories.map(c => c.replaceAll("_", " ")).join(", ") || "none"}.</p>}
-      {descriptor && <button type="button" disabled={pending || categoryPolicy.blocked || result?.wearer_archived || continuationEnded || !descriptor.next_action || !(result?.garment_continuation ? garmentEnabled : refinementEnabled)} onClick={another} className="min-h-11 rounded-xl bg-[#6d335b] px-4 font-semibold text-white disabled:opacity-50">Suggest another outfit</button>}
     </section>}
+    {canContinue && <button type="button" disabled={pending} onClick={another} className="min-h-11 rounded-xl bg-[#6d335b] px-4 font-semibold text-white disabled:opacity-50">Suggest another outfit</button>}
     {pending && <p role="status">Interpreting your request and checking complete outfits…</p>}
     {(message || result) && <div ref={outcomeRegion} tabIndex={-1} role="region" aria-label="Recommendation outcome" className="min-w-0 scroll-mt-24 space-y-3 focus:outline-none">
       {message && <div role="alert" className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900"><h2 className="mb-2 text-lg font-semibold">{retryable ? "Request could not be completed" : result ? "Recommendation update" : "No outfit generated"}</h2><p>{message}</p><Link href="/wardrobe" className="mt-2 inline-flex min-h-11 items-center font-semibold underline">Open wardrobe</Link>{retryable && !pending && draft?.submitted && !draft.chatId && <button onClick={() => void send(draft, true, true)} className="ml-3 min-h-11 font-semibold underline">Retry same request</button>}</div>}

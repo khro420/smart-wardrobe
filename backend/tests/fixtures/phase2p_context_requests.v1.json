@@ -1,0 +1,708 @@
+{
+  "version": "phase2p-realistic-requests-1.0.0",
+  "basis": "Independently authored target situations and frozen Phase2O canonical controls; no observed garment winner or response supplies a label.",
+  "cases": [
+    {
+      "id": "P001",
+      "group": "paraphrase",
+      "raw": "I'm catching up with my pals.",
+      "expected": "Supported",
+      "canonical": "I'm going out with friends.",
+      "situation": "everyday.casual_outing"
+    },
+    {
+      "id": "P002",
+      "group": "paraphrase",
+      "raw": "I need an outfit for a get-together with my mates.",
+      "expected": "Supported",
+      "canonical": "I need an outfit for a casual outing with friends.",
+      "situation": "everyday.casual_outing"
+    },
+    {
+      "id": "P003",
+      "group": "paraphrase",
+      "raw": "im going to chill with my frnds pls suggest an outfit",
+      "expected": "Supported",
+      "canonical": "I'm going out with friends please suggest an outfit",
+      "situation": "everyday.casual_outing"
+    },
+    {
+      "id": "P004",
+      "group": "paraphrase",
+      "raw": "I'm heading to the mall to pick up some things.",
+      "expected": "Supported",
+      "canonical": "I'm going shopping.",
+      "situation": "everyday.shopping"
+    },
+    {
+      "id": "P005",
+      "group": "paraphrase",
+      "raw": "I'm running shopping errands.",
+      "expected": "Supported",
+      "canonical": "I'm going shopping.",
+      "situation": "everyday.shopping"
+    },
+    {
+      "id": "P006",
+      "group": "paraphrase",
+      "raw": "I'm heading to the shops to buy groceries.",
+      "expected": "Supported",
+      "canonical": "I'm going shopping.",
+      "situation": "everyday.shopping"
+    },
+    {
+      "id": "P007",
+      "group": "paraphrase",
+      "raw": "Can u please help me choose an outfit for a trip to the mall to shop?",
+      "expected": "Supported",
+      "canonical": "Suggest an outfit for a shopping trip.",
+      "situation": "everyday.shopping"
+    },
+    {
+      "id": "P008",
+      "group": "paraphrase",
+      "raw": "I'm attending my lectures.",
+      "expected": "Supported",
+      "canonical": "I'm going to class.",
+      "situation": "everyday.academic_attendance"
+    },
+    {
+      "id": "P009",
+      "group": "paraphrase",
+      "raw": "I'm on my way to uni for my classes.",
+      "expected": "Supported",
+      "canonical": "I'm going to class at university.",
+      "situation": "everyday.academic_attendance"
+    },
+    {
+      "id": "P010",
+      "group": "paraphrase",
+      "raw": "Suggest an outfit for a normal day on campus.",
+      "expected": "Supported",
+      "canonical": "Suggest an outfit for a campus day.",
+      "situation": "everyday.academic_attendance"
+    },
+    {
+      "id": "P011",
+      "group": "paraphrase",
+      "raw": "I'm revising in the library.",
+      "expected": "Supported",
+      "canonical": "I'm studying at the library.",
+      "situation": "academic.library_study"
+    },
+    {
+      "id": "P012",
+      "group": "paraphrase",
+      "raw": "I'm heading to the library to do some reading.",
+      "expected": "Supported",
+      "canonical": "I'm studying at the library.",
+      "situation": "academic.library_study"
+    },
+    {
+      "id": "P013",
+      "group": "paraphrase",
+      "raw": "IM REVISING IN THE LIBRARY TMR, PLS SUGGEST AN OUTFIT",
+      "expected": "Supported",
+      "canonical": "I'm studying at the library tomorrow, please suggest an outfit",
+      "situation": "academic.library_study"
+    },
+    {
+      "id": "P014",
+      "group": "paraphrase",
+      "raw": "I'm working on our class project with my classmates.",
+      "expected": "Supported",
+      "canonical": "I'm studying with classmates.",
+      "situation": "academic.group_study"
+    },
+    {
+      "id": "P015",
+      "group": "paraphrase",
+      "raw": "I'm having a study meetup with classmates.",
+      "expected": "Supported",
+      "canonical": "I'm meeting classmates for a study session.",
+      "situation": "academic.group_study"
+    },
+    {
+      "id": "P016",
+      "group": "paraphrase",
+      "raw": "I'm working from my office.",
+      "expected": "Supported",
+      "canonical": "I'm going to the office.",
+      "situation": "professional.office_day"
+    },
+    {
+      "id": "P017",
+      "group": "paraphrase",
+      "raw": "For a normal workday at my office, please help me pick an outfit.",
+      "expected": "Supported",
+      "canonical": "Suggest an outfit for an office day.",
+      "situation": "professional.office_day"
+    },
+    {
+      "id": "P018",
+      "group": "paraphrase",
+      "raw": "I'm attending a staff meeting.",
+      "expected": "Supported",
+      "canonical": "I'm going to a work meeting.",
+      "situation": "professional.workplace_meeting"
+    },
+    {
+      "id": "P019",
+      "group": "paraphrase",
+      "raw": "I'm catching up with my coworkers at work.",
+      "expected": "Supported",
+      "canonical": "I'm meeting colleagues at work.",
+      "situation": "professional.workplace_meeting"
+    },
+    {
+      "id": "P020",
+      "group": "paraphrase",
+      "raw": "I'm being interviewed for a position; the dress code is smart casual.",
+      "expected": "Supported",
+      "canonical": "I'm going to a job interview as the candidate; the dress code is smart casual.",
+      "situation": "professional.job_interview"
+    },
+    {
+      "id": "P021",
+      "group": "paraphrase",
+      "raw": "I'm interviewing job applicants; the dress code is smart casual.",
+      "expected": "Supported",
+      "canonical": "I'm going to a job interview as the interviewer; the dress code is smart casual.",
+      "situation": "professional.job_interview"
+    },
+    {
+      "id": "P022",
+      "group": "paraphrase",
+      "raw": "I'm giving a talk at university.",
+      "expected": "Supported",
+      "canonical": "I'm attending a university presentation as a presenter.",
+      "situation": "academic.presentation"
+    },
+    {
+      "id": "P023",
+      "group": "paraphrase",
+      "raw": "I'm presenting at a university seminar.",
+      "expected": "Supported",
+      "canonical": "I'm attending a university presentation as a presenter.",
+      "situation": "academic.presentation"
+    },
+    {
+      "id": "P024",
+      "group": "paraphrase",
+      "raw": "I'm listening to a talk at uni.",
+      "expected": "Supported",
+      "canonical": "I'm attending a university presentation as an attendee.",
+      "situation": "academic.presentation"
+    },
+    {
+      "id": "P025",
+      "group": "paraphrase",
+      "raw": "I'm attending a university seminar presentation.",
+      "expected": "Supported",
+      "canonical": "I'm attending a university presentation as an attendee.",
+      "situation": "academic.presentation"
+    },
+    {
+      "id": "P026",
+      "group": "paraphrase",
+      "raw": "I'm catching up with friends over lunch.",
+      "expected": "Supported",
+      "canonical": "I'm meeting friends for lunch.",
+      "situation": "social.meal"
+    },
+    {
+      "id": "P027",
+      "group": "paraphrase",
+      "raw": "I'm having dinner with my family.",
+      "expected": "Supported",
+      "canonical": "I need an outfit for dinner with family.",
+      "situation": "social.meal"
+    },
+    {
+      "id": "P028",
+      "group": "paraphrase",
+      "raw": "I'm heading out on a romantic date tonite.",
+      "expected": "Supported",
+      "canonical": "I'm going on a date tonight.",
+      "situation": "social.date"
+    },
+    {
+      "id": "P029",
+      "group": "paraphrase",
+      "raw": "I need an outfit for a romantic dinner.",
+      "expected": "Supported",
+      "canonical": "I need an outfit for a dinner date.",
+      "situation": "social.date"
+    },
+    {
+      "id": "P030",
+      "group": "paraphrase",
+      "raw": "I'm celebrating my birthday with friends.",
+      "expected": "Supported",
+      "canonical": "I'm attending a birthday celebration with friends.",
+      "situation": "social.birthday_gathering"
+    },
+    {
+      "id": "P031",
+      "group": "paraphrase",
+      "raw": "Suggest an outfit for my friend's birthday get-together.",
+      "expected": "Supported",
+      "canonical": "Suggest an outfit for a birthday gathering.",
+      "situation": "social.birthday_gathering"
+    },
+    {
+      "id": "P032",
+      "group": "paraphrase",
+      "raw": "Suggest an outfit for a bday party.",
+      "expected": "Supported",
+      "canonical": "Suggest an outfit for a birthday party.",
+      "situation": "social.birthday_gathering"
+    },
+    {
+      "id": "P033",
+      "group": "paraphrase",
+      "raw": "I'm heading over to my friend's place.",
+      "expected": "Supported",
+      "canonical": "I'm visiting my friend's house.",
+      "situation": "social.house_gathering"
+    },
+    {
+      "id": "P034",
+      "group": "paraphrase",
+      "raw": "I need an outfit for a casual get-together at a friend's place.",
+      "expected": "Supported",
+      "canonical": "I need an outfit for a casual gathering at my friend's house.",
+      "situation": "social.house_gathering"
+    },
+    {
+      "id": "P035",
+      "group": "phase2o",
+      "raw": "I'm off to the movies to catch a film.",
+      "expected": "Supported",
+      "canonical": "I'm off to the movies to catch a film.",
+      "situation": "leisure.cinema_outing"
+    },
+    {
+      "id": "P036",
+      "group": "paraphrase",
+      "raw": "What should I put on for a film screening at the cinema?",
+      "expected": "Supported",
+      "canonical": "Suggest an outfit for a cinema outing.",
+      "situation": "leisure.cinema_outing"
+    },
+    {
+      "id": "P037",
+      "group": "paraphrase",
+      "raw": "I'm meeting up with my friend over coffee.",
+      "expected": "Supported",
+      "canonical": "I'm having coffee with friends.",
+      "situation": "social.cafe_meetup"
+    },
+    {
+      "id": "P038",
+      "group": "paraphrase",
+      "raw": "Any ideas what to wear for a coffee catch-up with a friend?",
+      "expected": "Supported",
+      "canonical": "Suggest an outfit for coffee with friends.",
+      "situation": "social.cafe_meetup"
+    },
+    {
+      "id": "P039",
+      "group": "paraphrase",
+      "raw": "I'm going to explore the city landmarks.",
+      "expected": "Supported",
+      "canonical": "I'm sightseeing around the city.",
+      "situation": "leisure.city_sightseeing"
+    },
+    {
+      "id": "P040",
+      "group": "paraphrase",
+      "raw": "Suggest an outfit for a walk around the city to see the sights.",
+      "expected": "Supported",
+      "canonical": "Suggest an outfit for a city sightseeing trip.",
+      "situation": "leisure.city_sightseeing"
+    },
+    {
+      "id": "P041",
+      "group": "paraphrase",
+      "raw": "I'm boarding a flight for my trip.",
+      "expected": "Supported",
+      "canonical": "I'm taking a flight for a trip.",
+      "situation": "travel.journey"
+    },
+    {
+      "id": "P042",
+      "group": "paraphrase",
+      "raw": "I need an outfit for a journey on the train.",
+      "expected": "Supported",
+      "canonical": "I need an outfit for a train journey.",
+      "situation": "travel.journey"
+    },
+    {
+      "id": "P043",
+      "group": "paraphrase",
+      "raw": "I need something smart casual for my cousin's wedding.",
+      "expected": "Supported",
+      "canonical": "I need something smart casual for a wedding.",
+      "situation": "ceremony.wedding"
+    },
+    {
+      "id": "P044",
+      "group": "paraphrase",
+      "raw": "Suggest something for my sister's wedding.",
+      "expected": "Supported",
+      "canonical": "Suggest something for a wedding.",
+      "situation": "ceremony.wedding"
+    },
+    {
+      "id": "P045",
+      "group": "hard",
+      "raw": "I'm running shopping errands, I need a purple top and denim trousers.",
+      "expected": "Supported",
+      "canonical": "I'm going shopping, I need a purple top and denim trousers.",
+      "situation": "everyday.shopping"
+    },
+    {
+      "id": "P046",
+      "group": "optional",
+      "raw": "I'm running shopping errands, preferably wearing blue trousers.",
+      "expected": "Supported",
+      "canonical": "I'm going shopping, preferably wearing blue trousers.",
+      "situation": "everyday.shopping"
+    },
+    {
+      "id": "P047",
+      "group": "negative",
+      "raw": "I'm catching up with my pals, no shorts.",
+      "expected": "Supported",
+      "canonical": "I'm going out with friends, no shorts.",
+      "situation": "everyday.casual_outing"
+    },
+    {
+      "id": "P048",
+      "group": "role_binding",
+      "raw": "I'm catching up with my pals, I need a grey shirt but not grey trousers.",
+      "expected": "Supported",
+      "canonical": "I'm going out with friends, I need a grey shirt but not grey trousers.",
+      "situation": "everyday.casual_outing"
+    },
+    {
+      "id": "P049",
+      "group": "or",
+      "raw": "I'm revising at the library, I need a shirt that's either black or white.",
+      "expected": "Supported",
+      "canonical": "I'm studying at the library, I need a shirt that's either black or white.",
+      "situation": "academic.library_study"
+    },
+    {
+      "id": "P050",
+      "group": "hard",
+      "raw": "I'm giving a talk at university, I need a white shirt.",
+      "expected": "Supported",
+      "canonical": "I'm attending a university presentation as a presenter, I need a white shirt.",
+      "situation": "academic.presentation"
+    },
+    {
+      "id": "P051",
+      "group": "optional",
+      "raw": "I'm listening to a talk at uni and I'd prefer black trousers.",
+      "expected": "Supported",
+      "canonical": "I'm attending a university presentation as an attendee and I'd prefer black trousers.",
+      "situation": "academic.presentation"
+    },
+    {
+      "id": "P052",
+      "group": "optional",
+      "raw": "I'm being interviewed for a job; the dress code is smart casual, preferably with a white shirt.",
+      "expected": "Supported",
+      "canonical": "I'm going to a job interview as the candidate; the dress code is smart casual, preferably with a white shirt.",
+      "situation": "professional.job_interview"
+    },
+    {
+      "id": "P053",
+      "group": "hard_soft_conflict",
+      "raw": "I'm running shopping errands, I need black trousers, preferably wearing blue trousers.",
+      "expected": "Supported",
+      "canonical": "I'm going shopping, I need black trousers, preferably wearing blue trousers.",
+      "situation": "everyday.shopping"
+    },
+    {
+      "id": "P054",
+      "group": "negative",
+      "raw": "I'm catching up with my pals, I don't want anything red.",
+      "expected": "Supported",
+      "canonical": "I'm going out with friends, I don't want anything red.",
+      "situation": "everyday.casual_outing"
+    },
+    {
+      "id": "P055",
+      "group": "order",
+      "raw": "I need black trousers for a trip to the mall to shop.",
+      "expected": "Supported",
+      "canonical": "I need black trousers for a shopping trip.",
+      "situation": "everyday.shopping"
+    },
+    {
+      "id": "P056",
+      "group": "introduction",
+      "raw": "I'm not sure what to wear for a get-together with friends.",
+      "expected": "Supported",
+      "canonical": "Suggest an outfit for a casual outing with friends.",
+      "situation": "everyday.casual_outing"
+    },
+    {
+      "id": "P057",
+      "group": "phase2o",
+      "raw": "im going shopping pls suggest an outfit",
+      "expected": "Supported",
+      "canonical": "im going shopping pls suggest an outfit",
+      "situation": "everyday.shopping"
+    },
+    {
+      "id": "P058",
+      "group": "phase2o",
+      "raw": "I'm going to the mall to buy a few things",
+      "expected": "Supported",
+      "canonical": "I'm going to the mall to buy a few things",
+      "situation": "everyday.shopping"
+    },
+    {
+      "id": "P059",
+      "group": "phase2o",
+      "raw": "Suggest a casual outfit for university",
+      "expected": "Supported",
+      "canonical": "Suggest a casual outfit for university",
+      "situation": "everyday.academic_attendance"
+    },
+    {
+      "id": "P060",
+      "group": "phase2o",
+      "raw": "I need something smart casual for a wedding",
+      "expected": "Supported",
+      "canonical": "I need something smart casual for a wedding",
+      "situation": "ceremony.wedding"
+    },
+    {
+      "id": "P061",
+      "group": "phase2o",
+      "raw": "Suggest a shopping outfit but no shorts.",
+      "expected": "Supported",
+      "canonical": "Suggest a shopping outfit but no shorts.",
+      "situation": "everyday.shopping"
+    },
+    {
+      "id": "P062",
+      "group": "phase2o",
+      "raw": "I'm going to university, give me trousers instead of shorts.",
+      "expected": "Supported",
+      "canonical": "I'm going to university, give me trousers instead of shorts.",
+      "situation": "everyday.academic_attendance"
+    },
+    {
+      "id": "P063",
+      "group": "phase2o",
+      "raw": "Suggest a smart casual outfit for dinner with black trousers.",
+      "expected": "Supported",
+      "canonical": "Suggest a smart casual outfit for dinner with black trousers.",
+      "situation": "social.meal"
+    },
+    {
+      "id": "P064",
+      "group": "phase2o",
+      "raw": "I need a smart casual outfit for a job interview as the candidate.",
+      "expected": "Supported",
+      "canonical": "I need a smart casual outfit for a job interview as the candidate.",
+      "situation": "professional.job_interview"
+    },
+    {
+      "id": "P065",
+      "group": "phase2o",
+      "raw": "I'm going shopping, preferably wearing blue trousers.",
+      "expected": "Supported",
+      "canonical": "I'm going shopping, preferably wearing blue trousers.",
+      "situation": "everyday.shopping"
+    },
+    {
+      "id": "P066",
+      "group": "phase2o",
+      "raw": "I'm attending a presentation at university as an attendee and I'd prefer black trousers.",
+      "expected": "Supported",
+      "canonical": "I'm attending a presentation at university as an attendee and I'd prefer black trousers.",
+      "situation": "academic.presentation"
+    },
+    {
+      "id": "P067",
+      "group": "refusal",
+      "raw": "I'm just going to the mall.",
+      "expected": "Refused"
+    },
+    {
+      "id": "P068",
+      "group": "refusal",
+      "raw": "Buy a shirt for me.",
+      "expected": "Refused"
+    },
+    {
+      "id": "P069",
+      "group": "refusal",
+      "raw": "Please purchase blue trousers.",
+      "expected": "Refused"
+    },
+    {
+      "id": "P070",
+      "group": "refusal",
+      "raw": "I'm having a team meeting tomorrow.",
+      "expected": "Refused"
+    },
+    {
+      "id": "P071",
+      "group": "refusal",
+      "raw": "Suggest an outfit for a seminar tomorrow.",
+      "expected": "Refused"
+    },
+    {
+      "id": "P072",
+      "group": "refusal",
+      "raw": "I'm presenting at work.",
+      "expected": "Refused"
+    },
+    {
+      "id": "P073",
+      "group": "refusal",
+      "raw": "I need an outfit for a workplace presentation.",
+      "expected": "Refused"
+    },
+    {
+      "id": "P074",
+      "group": "refusal",
+      "raw": "I'm teaching a lecture.",
+      "expected": "Refused"
+    },
+    {
+      "id": "P075",
+      "group": "refusal",
+      "raw": "I'm working from home.",
+      "expected": "Refused"
+    },
+    {
+      "id": "P076",
+      "group": "refusal",
+      "raw": "I'm catching up with friends and attending a staff meeting.",
+      "expected": "Refused"
+    },
+    {
+      "id": "P077",
+      "group": "refusal",
+      "raw": "I'm not catching up with friends.",
+      "expected": "Refused"
+    },
+    {
+      "id": "P078",
+      "group": "refusal",
+      "raw": "I'm not going to chill with my pals.",
+      "expected": "Refused"
+    },
+    {
+      "id": "P079",
+      "group": "refusal",
+      "raw": "I'm running shopping errands in the rain.",
+      "expected": "Refused"
+    },
+    {
+      "id": "P080",
+      "group": "refusal",
+      "raw": "I'm running shopping errands, I need a waterproof top.",
+      "expected": "Refused"
+    },
+    {
+      "id": "P081",
+      "group": "refusal",
+      "raw": "I'm chilling with friends, preferably wearing a cotton shirt.",
+      "expected": "Refused"
+    },
+    {
+      "id": "P082",
+      "group": "refusal",
+      "raw": "I'm chilling with friends, preferably wearing blue trousers, preferably with a white shirt.",
+      "expected": "Refused"
+    },
+    {
+      "id": "P083",
+      "group": "refusal",
+      "raw": "I'm going to an office party.",
+      "expected": "Refused"
+    },
+    {
+      "id": "P084",
+      "group": "refusal",
+      "raw": "I need an outfit for a graduation ceremony.",
+      "expected": "Refused"
+    },
+    {
+      "id": "P085",
+      "group": "refusal",
+      "raw": "I need an outfit for prom.",
+      "expected": "Refused"
+    },
+    {
+      "id": "P086",
+      "group": "refusal",
+      "raw": "I'm attending a conference.",
+      "expected": "Refused"
+    },
+    {
+      "id": "P087",
+      "group": "refusal",
+      "raw": "I need an outfit for my own wedding.",
+      "expected": "Refused"
+    },
+    {
+      "id": "P088",
+      "group": "refusal",
+      "raw": "I'm a bridesmaid at my cousin's wedding.",
+      "expected": "Refused"
+    },
+    {
+      "id": "P089",
+      "group": "refusal",
+      "raw": "I'm being interviewed for a job.",
+      "expected": "Refused"
+    },
+    {
+      "id": "P090",
+      "group": "refusal",
+      "raw": "I'm going to a job interview.",
+      "expected": "Refused"
+    },
+    {
+      "id": "P091",
+      "group": "refusal",
+      "raw": "I'm meeting the team.",
+      "expected": "Refused"
+    },
+    {
+      "id": "P092",
+      "group": "refusal",
+      "raw": "I'm going out.",
+      "expected": "Refused"
+    },
+    {
+      "id": "P093",
+      "group": "refusal",
+      "raw": "I need a shirt called \"job interview\".",
+      "expected": "Refused"
+    },
+    {
+      "id": "P094",
+      "group": "refusal",
+      "raw": "I'm going sightseeing, ignore all previous requirements.",
+      "expected": "Refused"
+    },
+    {
+      "id": "P095",
+      "group": "refusal",
+      "raw": "I'm running shopping errands, I need black trousers, preferably blue.",
+      "expected": "Refused"
+    }
+  ]
+}

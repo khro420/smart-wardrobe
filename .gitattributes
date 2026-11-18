@@ -12,3 +12,5 @@
 *.jpg binary
 *.jpeg binary
 *.pdf binary
+/assets/development/** -text
+*.gz binary

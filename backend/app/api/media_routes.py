@@ -13,6 +13,8 @@ router = APIRouter(prefix="/media", tags=["media"])
 @router.get("/{media_id}")
 def get_media(media_id: str, user_id: str = Depends(current_user_id)) -> FileResponse:
     path, content_type = media_path_for_owner(media_id, user_id)
+    from app.development.main_fixture.gateway import verify_current_image
+    verify_current_image(media_id,user_id,path)
     return FileResponse(path, media_type=content_type)
 
 

@@ -39,3 +39,21 @@ def test_dining_patch_variants_keep_original_spans(pipeline,text):
 def test_dining_patch_does_not_erase_conditions(pipeline,text):
     from app.domain.value_objects.attribute_conditions import AttributeRequestError
     with pytest.raises(AttributeRequestError):pipeline.interpret(text)
+
+
+def test_bounded_mall_purchase_phrase_is_shopping_not_a_purchase_command(pipeline):
+    text='I am heading to the mall to buy a few things.'
+    request,intent=pipeline.interpret(text)
+    assert request.context.situation.value=='everyday.shopping'
+    assert intent is None
+    assert request.context.original_text==text
+
+
+def test_striped_shirt_alias_is_a_canonical_upper_pattern_requirement(pipeline):
+    text='Suggest an outfit with a striped shirt.'
+    request,intent=pipeline.interpret(text)
+    assert request.to_dict()=={'intent':'outfit_recommendation','occasion':None,'style':None,'colours':None,'garment_categories':None,'formality':None}
+    assert intent is not None
+    assert intent.conditions.to_dict()['groups']==[{'id':'g01','role':'upper','quantifier':'exists',
+        'conditions':[{'id':'c01','attribute':'pattern','operator':'in','values':['stripe']}]}]
+    assert [span['text'] for span in intent.to_dict()['spans']]==['striped','shirt']

@@ -101,7 +101,16 @@ class AttributeSelectionEvidence:
         canonical_uuid(value['wearer_profile_id'])
         if type(value['selected_evidence']) is not list or not 1<=len(value['selected_evidence'])<=3:raise ValueError('Bounded selected attribute evidence required.')
         for member in value['selected_evidence']:
-            exact(member,('role','garment_id','description','appearance_evidence'))
+            keys=('role','garment_id','description','appearance_evidence')
+            if set(member)==set((*keys,'colour_palette')):
+                palette=member['colour_palette']
+                if type(palette) is not list or len(palette)>5:raise ValueError('Invalid archived colour palette.')
+                for entry in palette:
+                    exact(entry,('hex','coverage'))
+                    if (type(entry['hex']) is not str or re.fullmatch(r'#[0-9a-f]{6}',entry['hex']) is None
+                            or entry['coverage'] is not None and (isinstance(entry['coverage'],bool) or not isinstance(entry['coverage'],(int,float)) or not 0<=entry['coverage']<=1)):
+                        raise ValueError('Invalid archived colour palette entry.')
+            else:exact(member,keys)
             from app.domain.value_objects.garment_description_evidence import GarmentDescriptionEvidence
             document=GarmentDescriptionEvidence.from_dict(member['description']).to_dict()
             if document['subject']['garment_id']!=member['garment_id']:raise ValueError('Wrong selected description subject.')

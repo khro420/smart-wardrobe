@@ -186,7 +186,8 @@ class ContextRelevancePolicy:
             grammar_raw = source.read(MAX_CONFIGURATION_BYTES+1)
         if len(grammar_raw) > MAX_CONFIGURATION_BYTES:
             raise ValueError('Unbounded interpretation grammar.')
-        return cls(policy_hash, catalogue_hash, hashlib.sha256(grammar_raw).hexdigest(),
+        from app.shared_contracts.grammar_identity import ResourceIdentity
+        return cls(policy_hash, catalogue_hash, ResourceIdentity.capture(grammar_raw).semantic_sha256,
                    registry, styles, tuple(sorted(entries, key=lambda entry: entry.objective.situation)))
 
     @property

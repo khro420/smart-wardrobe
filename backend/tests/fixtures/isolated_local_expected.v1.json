@@ -1,0 +1,1899 @@
+{
+  "bank_sha256": "6458d0b298bdb6db33c177d8e7bebb139c616744a8f90beb29e36648c7df577b",
+  "frozen_outcomes_sha256": "3f4901943e82b9e1a89fbac112650f480f7cd3095030b75161890d0889d2e536",
+  "policy": "C_bounded_1_50",
+  "cases": {
+    "SP-01": {
+      "baseline": "blue",
+      "eligible": [
+        "blue",
+        "black"
+      ],
+      "optional": {
+        "blue": "Unsatisfied",
+        "black": "Satisfied"
+      },
+      "expected": {
+        "policy": "C_bounded_1_50",
+        "winner": "black",
+        "status": "SelectedInSyntheticModel",
+        "wish_satisfied": true,
+        "optional_state": "Satisfied",
+        "original_score": {
+          "R": "0",
+          "C": "4/5",
+          "P": "0",
+          "T": "4/25"
+        },
+        "baseline_score": {
+          "R": "0",
+          "C": "4/5",
+          "P": "0",
+          "T": "4/25"
+        },
+        "score_losses_from_baseline": {
+          "T": "0",
+          "R": "0",
+          "C": "0",
+          "P": "0"
+        },
+        "score_changes_from_baseline": {
+          "T": "0",
+          "R": "0",
+          "C": "0",
+          "P": "0"
+        },
+        "winner_changed": true,
+        "exact_final_stable_member_key": [
+          [
+            "upper",
+            "00000000-0000-4000-8000-000000000100"
+          ],
+          [
+            "lower",
+            "00000000-0000-4000-8000-000000000002"
+          ]
+        ],
+        "large_numerical_sacrifice_flag": false,
+        "explanation": "The selected member has qualified evidence satisfying the complete optional wish on that same garment.",
+        "decision": {
+          "kind": "bounded_promotion",
+          "promotable": [
+            "black"
+          ],
+          "promotion_checks": {
+            "blue": [
+              "no_qualified_local_match"
+            ],
+            "black": []
+          }
+        }
+      }
+    },
+    "SP-02": {
+      "baseline": "blue",
+      "eligible": [
+        "blue",
+        "black"
+      ],
+      "optional": {
+        "blue": "Unsatisfied",
+        "black": "Satisfied"
+      },
+      "expected": {
+        "policy": "C_bounded_1_50",
+        "winner": "black",
+        "status": "SelectedInSyntheticModel",
+        "wish_satisfied": true,
+        "optional_state": "Satisfied",
+        "original_score": {
+          "R": "0",
+          "C": "4/5",
+          "P": "0",
+          "T": "4/25"
+        },
+        "baseline_score": {
+          "R": "0",
+          "C": "17/20",
+          "P": "0",
+          "T": "17/100"
+        },
+        "score_losses_from_baseline": {
+          "T": "1/100",
+          "R": "0",
+          "C": "1/20",
+          "P": "0"
+        },
+        "score_changes_from_baseline": {
+          "T": "-1/100",
+          "R": "0",
+          "C": "-1/20",
+          "P": "0"
+        },
+        "winner_changed": true,
+        "exact_final_stable_member_key": [
+          [
+            "upper",
+            "00000000-0000-4000-8000-000000000100"
+          ],
+          [
+            "lower",
+            "00000000-0000-4000-8000-000000000002"
+          ]
+        ],
+        "large_numerical_sacrifice_flag": false,
+        "explanation": "The selected member has qualified evidence satisfying the complete optional wish on that same garment.",
+        "decision": {
+          "kind": "bounded_promotion",
+          "promotable": [
+            "black"
+          ],
+          "promotion_checks": {
+            "blue": [
+              "no_qualified_local_match"
+            ],
+            "black": []
+          }
+        }
+      }
+    },
+    "SP-03": {
+      "baseline": "blue",
+      "eligible": [
+        "blue",
+        "black"
+      ],
+      "optional": {
+        "blue": "Unsatisfied",
+        "black": "Satisfied"
+      },
+      "expected": {
+        "policy": "C_bounded_1_50",
+        "winner": "black",
+        "status": "SelectedInSyntheticModel",
+        "wish_satisfied": true,
+        "optional_state": "Satisfied",
+        "original_score": {
+          "R": "0",
+          "C": "7/10",
+          "P": "0",
+          "T": "7/50"
+        },
+        "baseline_score": {
+          "R": "0",
+          "C": "4/5",
+          "P": "0",
+          "T": "4/25"
+        },
+        "score_losses_from_baseline": {
+          "T": "1/50",
+          "R": "0",
+          "C": "1/10",
+          "P": "0"
+        },
+        "score_changes_from_baseline": {
+          "T": "-1/50",
+          "R": "0",
+          "C": "-1/10",
+          "P": "0"
+        },
+        "winner_changed": true,
+        "exact_final_stable_member_key": [
+          [
+            "upper",
+            "00000000-0000-4000-8000-000000000100"
+          ],
+          [
+            "lower",
+            "00000000-0000-4000-8000-000000000002"
+          ]
+        ],
+        "large_numerical_sacrifice_flag": false,
+        "explanation": "The selected member has qualified evidence satisfying the complete optional wish on that same garment.",
+        "decision": {
+          "kind": "bounded_promotion",
+          "promotable": [
+            "black"
+          ],
+          "promotion_checks": {
+            "blue": [
+              "no_qualified_local_match"
+            ],
+            "black": []
+          }
+        }
+      }
+    },
+    "SP-04": {
+      "baseline": "blue",
+      "eligible": [
+        "blue",
+        "black"
+      ],
+      "optional": {
+        "blue": "Unsatisfied",
+        "black": "Satisfied"
+      },
+      "expected": {
+        "policy": "C_bounded_1_50",
+        "winner": "blue",
+        "status": "SelectedInSyntheticModel",
+        "wish_satisfied": false,
+        "optional_state": "Unsatisfied",
+        "original_score": {
+          "R": "0",
+          "C": "4/5",
+          "P": "0",
+          "T": "4/25"
+        },
+        "baseline_score": {
+          "R": "0",
+          "C": "4/5",
+          "P": "0",
+          "T": "4/25"
+        },
+        "score_losses_from_baseline": {
+          "T": "0",
+          "R": "0",
+          "C": "0",
+          "P": "0"
+        },
+        "score_changes_from_baseline": {
+          "T": "0",
+          "R": "0",
+          "C": "0",
+          "P": "0"
+        },
+        "winner_changed": false,
+        "exact_final_stable_member_key": [
+          [
+            "upper",
+            "00000000-0000-4000-8000-000000000100"
+          ],
+          [
+            "lower",
+            "00000000-0000-4000-8000-000000000001"
+          ]
+        ],
+        "large_numerical_sacrifice_flag": false,
+        "explanation": "A qualified matching option existed but exceeded the declared promotion budgets or request-match protection.",
+        "decision": {
+          "kind": "bounded_promotion",
+          "promotable": [],
+          "promotion_checks": {
+            "blue": [
+              "no_qualified_local_match"
+            ],
+            "black": [
+              "T_loss_above_budget",
+              "C_loss_above_budget"
+            ]
+          }
+        }
+      }
+    },
+    "SP-05": {
+      "baseline": "blue",
+      "eligible": [
+        "blue",
+        "black"
+      ],
+      "optional": {
+        "blue": "Unsatisfied",
+        "black": "Satisfied"
+      },
+      "expected": {
+        "policy": "C_bounded_1_50",
+        "winner": "blue",
+        "status": "SelectedInSyntheticModel",
+        "wish_satisfied": false,
+        "optional_state": "Unsatisfied",
+        "original_score": {
+          "R": "0",
+          "C": "1",
+          "P": "0",
+          "T": "1/5"
+        },
+        "baseline_score": {
+          "R": "0",
+          "C": "1",
+          "P": "0",
+          "T": "1/5"
+        },
+        "score_losses_from_baseline": {
+          "T": "0",
+          "R": "0",
+          "C": "0",
+          "P": "0"
+        },
+        "score_changes_from_baseline": {
+          "T": "0",
+          "R": "0",
+          "C": "0",
+          "P": "0"
+        },
+        "winner_changed": false,
+        "exact_final_stable_member_key": [
+          [
+            "upper",
+            "00000000-0000-4000-8000-000000000100"
+          ],
+          [
+            "lower",
+            "00000000-0000-4000-8000-000000000001"
+          ]
+        ],
+        "large_numerical_sacrifice_flag": false,
+        "explanation": "A qualified matching option existed but exceeded the declared promotion budgets or request-match protection.",
+        "decision": {
+          "kind": "bounded_promotion",
+          "promotable": [],
+          "promotion_checks": {
+            "blue": [
+              "no_qualified_local_match"
+            ],
+            "black": [
+              "T_loss_above_budget",
+              "C_loss_above_budget"
+            ]
+          }
+        }
+      }
+    },
+    "SP-06": {
+      "baseline": "blue",
+      "eligible": [
+        "blue"
+      ],
+      "optional": {
+        "blue": "Unsatisfied"
+      },
+      "expected": {
+        "policy": "C_bounded_1_50",
+        "winner": "blue",
+        "status": "SelectedInSyntheticModel",
+        "wish_satisfied": false,
+        "optional_state": "Unsatisfied",
+        "original_score": {
+          "R": "0",
+          "C": "4/5",
+          "P": "0",
+          "T": "4/25"
+        },
+        "baseline_score": {
+          "R": "0",
+          "C": "4/5",
+          "P": "0",
+          "T": "4/25"
+        },
+        "score_losses_from_baseline": {
+          "T": "0",
+          "R": "0",
+          "C": "0",
+          "P": "0"
+        },
+        "score_changes_from_baseline": {
+          "T": "0",
+          "R": "0",
+          "C": "0",
+          "P": "0"
+        },
+        "winner_changed": false,
+        "exact_final_stable_member_key": [
+          [
+            "upper",
+            "00000000-0000-4000-8000-000000000100"
+          ],
+          [
+            "lower",
+            "00000000-0000-4000-8000-000000000001"
+          ]
+        ],
+        "large_numerical_sacrifice_flag": false,
+        "explanation": "No currently verified hard-eligible option has the requested qualified optional features. Mandatory conditions were kept.",
+        "decision": {
+          "kind": "bounded_promotion",
+          "promotable": [],
+          "promotion_checks": {
+            "blue": [
+              "no_qualified_local_match"
+            ]
+          }
+        }
+      }
+    },
+    "SP-07": {
+      "baseline": "blue",
+      "eligible": [
+        "blue",
+        "black-unverified"
+      ],
+      "optional": {
+        "blue": "Unsatisfied",
+        "black-unverified": "Unverifiable"
+      },
+      "expected": {
+        "policy": "C_bounded_1_50",
+        "winner": "blue",
+        "status": "SelectedInSyntheticModel",
+        "wish_satisfied": false,
+        "optional_state": "Unsatisfied",
+        "original_score": {
+          "R": "0",
+          "C": "4/5",
+          "P": "0",
+          "T": "4/25"
+        },
+        "baseline_score": {
+          "R": "0",
+          "C": "4/5",
+          "P": "0",
+          "T": "4/25"
+        },
+        "score_losses_from_baseline": {
+          "T": "0",
+          "R": "0",
+          "C": "0",
+          "P": "0"
+        },
+        "score_changes_from_baseline": {
+          "T": "0",
+          "R": "0",
+          "C": "0",
+          "P": "0"
+        },
+        "winner_changed": false,
+        "exact_final_stable_member_key": [
+          [
+            "upper",
+            "00000000-0000-4000-8000-000000000100"
+          ],
+          [
+            "lower",
+            "00000000-0000-4000-8000-000000000001"
+          ]
+        ],
+        "large_numerical_sacrifice_flag": false,
+        "explanation": "Mandatory requirements are satisfied, but optional evidence is unresolved for some verified hard-eligible options. No absence of a matching option is established.",
+        "decision": {
+          "kind": "bounded_promotion",
+          "promotable": [],
+          "promotion_checks": {
+            "blue": [
+              "no_qualified_local_match"
+            ],
+            "black-unverified": [
+              "no_qualified_local_match"
+            ]
+          }
+        }
+      }
+    },
+    "SP-08": {
+      "baseline": "black-unverified",
+      "eligible": [
+        "blue",
+        "black-unverified"
+      ],
+      "optional": {
+        "blue": "Unsatisfied",
+        "black-unverified": "Unverifiable"
+      },
+      "expected": {
+        "policy": "C_bounded_1_50",
+        "winner": "black-unverified",
+        "status": "SelectedInSyntheticModel",
+        "wish_satisfied": false,
+        "optional_state": "Unverifiable",
+        "original_score": {
+          "R": "0",
+          "C": "1",
+          "P": "0",
+          "T": "1/5"
+        },
+        "baseline_score": {
+          "R": "0",
+          "C": "1",
+          "P": "0",
+          "T": "1/5"
+        },
+        "score_losses_from_baseline": {
+          "T": "0",
+          "R": "0",
+          "C": "0",
+          "P": "0"
+        },
+        "score_changes_from_baseline": {
+          "T": "0",
+          "R": "0",
+          "C": "0",
+          "P": "0"
+        },
+        "winner_changed": false,
+        "exact_final_stable_member_key": [
+          [
+            "upper",
+            "00000000-0000-4000-8000-000000000100"
+          ],
+          [
+            "lower",
+            "00000000-0000-4000-8000-000000000002"
+          ]
+        ],
+        "large_numerical_sacrifice_flag": false,
+        "explanation": "Mandatory requirements are satisfied, but optional evidence is unresolved for some verified hard-eligible options. No absence of a matching option is established.",
+        "decision": {
+          "kind": "bounded_promotion",
+          "promotable": [],
+          "promotion_checks": {
+            "blue": [
+              "no_qualified_local_match",
+              "T_loss_above_budget",
+              "C_loss_above_budget"
+            ],
+            "black-unverified": [
+              "no_qualified_local_match"
+            ]
+          }
+        }
+      }
+    },
+    "SP-09": {
+      "baseline": "blue",
+      "eligible": [
+        "blue",
+        "black"
+      ],
+      "optional": {
+        "blue": "Unsatisfied",
+        "black": "Satisfied"
+      },
+      "expected": {
+        "policy": "C_bounded_1_50",
+        "winner": "black",
+        "status": "SelectedInSyntheticModel",
+        "wish_satisfied": true,
+        "optional_state": "Satisfied",
+        "original_score": {
+          "R": "0",
+          "C": "4/5",
+          "P": "2/5",
+          "T": "6/25"
+        },
+        "baseline_score": {
+          "R": "0",
+          "C": "4/5",
+          "P": "1/2",
+          "T": "13/50"
+        },
+        "score_losses_from_baseline": {
+          "T": "1/50",
+          "R": "0",
+          "C": "0",
+          "P": "1/10"
+        },
+        "score_changes_from_baseline": {
+          "T": "-1/50",
+          "R": "0",
+          "C": "0",
+          "P": "-1/10"
+        },
+        "winner_changed": true,
+        "exact_final_stable_member_key": [
+          [
+            "upper",
+            "00000000-0000-4000-8000-000000000100"
+          ],
+          [
+            "lower",
+            "00000000-0000-4000-8000-000000000002"
+          ]
+        ],
+        "large_numerical_sacrifice_flag": false,
+        "explanation": "The selected member has qualified evidence satisfying the complete optional wish on that same garment.",
+        "decision": {
+          "kind": "bounded_promotion",
+          "promotable": [
+            "black"
+          ],
+          "promotion_checks": {
+            "blue": [
+              "no_qualified_local_match"
+            ],
+            "black": []
+          }
+        }
+      }
+    },
+    "SP-10": {
+      "baseline": "blue",
+      "eligible": [
+        "blue",
+        "black"
+      ],
+      "optional": {
+        "blue": "Unsatisfied",
+        "black": "Satisfied"
+      },
+      "expected": {
+        "policy": "C_bounded_1_50",
+        "winner": "blue",
+        "status": "SelectedInSyntheticModel",
+        "wish_satisfied": false,
+        "optional_state": "Unsatisfied",
+        "original_score": {
+          "R": "0",
+          "C": "4/5",
+          "P": "1",
+          "T": "9/25"
+        },
+        "baseline_score": {
+          "R": "0",
+          "C": "4/5",
+          "P": "1",
+          "T": "9/25"
+        },
+        "score_losses_from_baseline": {
+          "T": "0",
+          "R": "0",
+          "C": "0",
+          "P": "0"
+        },
+        "score_changes_from_baseline": {
+          "T": "0",
+          "R": "0",
+          "C": "0",
+          "P": "0"
+        },
+        "winner_changed": false,
+        "exact_final_stable_member_key": [
+          [
+            "upper",
+            "00000000-0000-4000-8000-000000000100"
+          ],
+          [
+            "lower",
+            "00000000-0000-4000-8000-000000000001"
+          ]
+        ],
+        "large_numerical_sacrifice_flag": false,
+        "explanation": "A qualified matching option existed but exceeded the declared promotion budgets or request-match protection.",
+        "decision": {
+          "kind": "bounded_promotion",
+          "promotable": [],
+          "promotion_checks": {
+            "blue": [
+              "no_qualified_local_match"
+            ],
+            "black": [
+              "T_loss_above_budget",
+              "P_loss_above_budget"
+            ]
+          }
+        }
+      }
+    },
+    "SP-11": {
+      "baseline": "blue",
+      "eligible": [
+        "blue",
+        "black"
+      ],
+      "optional": {
+        "blue": "Unsatisfied",
+        "black": "Satisfied"
+      },
+      "expected": {
+        "policy": "C_bounded_1_50",
+        "winner": "blue",
+        "status": "SelectedInSyntheticModel",
+        "wish_satisfied": false,
+        "optional_state": "Unsatisfied",
+        "original_score": {
+          "R": "0",
+          "C": "1",
+          "P": "0",
+          "T": "1/5"
+        },
+        "baseline_score": {
+          "R": "0",
+          "C": "1",
+          "P": "0",
+          "T": "1/5"
+        },
+        "score_losses_from_baseline": {
+          "T": "0",
+          "R": "0",
+          "C": "0",
+          "P": "0"
+        },
+        "score_changes_from_baseline": {
+          "T": "0",
+          "R": "0",
+          "C": "0",
+          "P": "0"
+        },
+        "winner_changed": false,
+        "exact_final_stable_member_key": [
+          [
+            "upper",
+            "00000000-0000-4000-8000-000000000100"
+          ],
+          [
+            "lower",
+            "00000000-0000-4000-8000-000000000001"
+          ]
+        ],
+        "large_numerical_sacrifice_flag": false,
+        "explanation": "A qualified matching option existed but exceeded the declared promotion budgets or request-match protection.",
+        "decision": {
+          "kind": "bounded_promotion",
+          "promotable": [],
+          "promotion_checks": {
+            "blue": [
+              "no_qualified_local_match"
+            ],
+            "black": [
+              "C_loss_above_budget"
+            ]
+          }
+        }
+      }
+    },
+    "SP-12": {
+      "baseline": "black",
+      "eligible": [
+        "blue",
+        "black"
+      ],
+      "optional": {
+        "blue": "Unsatisfied",
+        "black": "Satisfied"
+      },
+      "expected": {
+        "policy": "C_bounded_1_50",
+        "winner": "black",
+        "status": "SelectedInSyntheticModel",
+        "wish_satisfied": true,
+        "optional_state": "Satisfied",
+        "original_score": {
+          "R": "0",
+          "C": "1",
+          "P": "0",
+          "T": "1/5"
+        },
+        "baseline_score": {
+          "R": "0",
+          "C": "1",
+          "P": "0",
+          "T": "1/5"
+        },
+        "score_losses_from_baseline": {
+          "T": "0",
+          "R": "0",
+          "C": "0",
+          "P": "0"
+        },
+        "score_changes_from_baseline": {
+          "T": "0",
+          "R": "0",
+          "C": "0",
+          "P": "0"
+        },
+        "winner_changed": false,
+        "exact_final_stable_member_key": [
+          [
+            "upper",
+            "00000000-0000-4000-8000-000000000100"
+          ],
+          [
+            "lower",
+            "00000000-0000-4000-8000-000000000002"
+          ]
+        ],
+        "large_numerical_sacrifice_flag": false,
+        "explanation": "The selected member has qualified evidence satisfying the complete optional wish on that same garment.",
+        "decision": {
+          "kind": "bounded_promotion",
+          "promotable": [
+            "black"
+          ],
+          "promotion_checks": {
+            "blue": [
+              "no_qualified_local_match",
+              "C_loss_above_budget"
+            ],
+            "black": []
+          }
+        }
+      }
+    },
+    "SP-13": {
+      "baseline": "blue",
+      "eligible": [
+        "blue",
+        "black-smaller",
+        "black-larger"
+      ],
+      "optional": {
+        "blue": "Unsatisfied",
+        "black-smaller": "Satisfied",
+        "black-larger": "Satisfied"
+      },
+      "expected": {
+        "policy": "C_bounded_1_50",
+        "winner": "black-smaller",
+        "status": "SelectedInSyntheticModel",
+        "wish_satisfied": true,
+        "optional_state": "Satisfied",
+        "original_score": {
+          "R": "0",
+          "C": "4/5",
+          "P": "0",
+          "T": "4/25"
+        },
+        "baseline_score": {
+          "R": "0",
+          "C": "4/5",
+          "P": "0",
+          "T": "4/25"
+        },
+        "score_losses_from_baseline": {
+          "T": "0",
+          "R": "0",
+          "C": "0",
+          "P": "0"
+        },
+        "score_changes_from_baseline": {
+          "T": "0",
+          "R": "0",
+          "C": "0",
+          "P": "0"
+        },
+        "winner_changed": true,
+        "exact_final_stable_member_key": [
+          [
+            "upper",
+            "00000000-0000-4000-8000-000000000100"
+          ],
+          [
+            "lower",
+            "00000000-0000-4000-8000-000000000002"
+          ]
+        ],
+        "large_numerical_sacrifice_flag": false,
+        "explanation": "The selected member has qualified evidence satisfying the complete optional wish on that same garment.",
+        "decision": {
+          "kind": "bounded_promotion",
+          "promotable": [
+            "black-smaller",
+            "black-larger"
+          ],
+          "promotion_checks": {
+            "blue": [
+              "no_qualified_local_match"
+            ],
+            "black-smaller": [],
+            "black-larger": []
+          }
+        }
+      }
+    },
+    "SP-14": {
+      "baseline": "black-required",
+      "eligible": [
+        "black-required"
+      ],
+      "optional": {
+        "black-required": "Unsatisfied"
+      },
+      "expected": {
+        "policy": "C_bounded_1_50",
+        "winner": "black-required",
+        "status": "SelectedInSyntheticModel",
+        "wish_satisfied": false,
+        "optional_state": "Unsatisfied",
+        "original_score": {
+          "R": "0",
+          "C": "4/5",
+          "P": "0",
+          "T": "4/25"
+        },
+        "baseline_score": {
+          "R": "0",
+          "C": "4/5",
+          "P": "0",
+          "T": "4/25"
+        },
+        "score_losses_from_baseline": {
+          "T": "0",
+          "R": "0",
+          "C": "0",
+          "P": "0"
+        },
+        "score_changes_from_baseline": {
+          "T": "0",
+          "R": "0",
+          "C": "0",
+          "P": "0"
+        },
+        "winner_changed": false,
+        "exact_final_stable_member_key": [
+          [
+            "upper",
+            "00000000-0000-4000-8000-000000000100"
+          ],
+          [
+            "lower",
+            "00000000-0000-4000-8000-000000000002"
+          ]
+        ],
+        "large_numerical_sacrifice_flag": false,
+        "explanation": "The mandatory black requirement remains satisfied. The optional blue wish conflicts with it and is ranking-inactive.",
+        "decision": {
+          "kind": "baseline_inactive",
+          "decision_value": "4/25"
+        }
+      }
+    },
+    "SP-15": {
+      "baseline": "black-best",
+      "eligible": [
+        "black-best",
+        "black-other"
+      ],
+      "optional": {
+        "black-best": "Satisfied",
+        "black-other": "Satisfied"
+      },
+      "expected": {
+        "policy": "C_bounded_1_50",
+        "winner": "black-best",
+        "status": "SelectedInSyntheticModel",
+        "wish_satisfied": true,
+        "optional_state": "Satisfied",
+        "original_score": {
+          "R": "0",
+          "C": "4/5",
+          "P": "0",
+          "T": "4/25"
+        },
+        "baseline_score": {
+          "R": "0",
+          "C": "4/5",
+          "P": "0",
+          "T": "4/25"
+        },
+        "score_losses_from_baseline": {
+          "T": "0",
+          "R": "0",
+          "C": "0",
+          "P": "0"
+        },
+        "score_changes_from_baseline": {
+          "T": "0",
+          "R": "0",
+          "C": "0",
+          "P": "0"
+        },
+        "winner_changed": false,
+        "exact_final_stable_member_key": [
+          [
+            "upper",
+            "00000000-0000-4000-8000-000000000100"
+          ],
+          [
+            "lower",
+            "00000000-0000-4000-8000-000000000001"
+          ]
+        ],
+        "large_numerical_sacrifice_flag": false,
+        "explanation": "The mandatory requirement already guarantees the wish. No extra optional priority was earned.",
+        "decision": {
+          "kind": "baseline_inactive",
+          "decision_value": "4/25"
+        }
+      }
+    },
+    "SP-16": {
+      "baseline": "blue-trousers-black-top",
+      "eligible": [
+        "blue-trousers-black-top",
+        "black-trousers"
+      ],
+      "optional": {
+        "blue-trousers-black-top": "Unsatisfied",
+        "black-trousers": "Satisfied"
+      },
+      "expected": {
+        "policy": "C_bounded_1_50",
+        "winner": "black-trousers",
+        "status": "SelectedInSyntheticModel",
+        "wish_satisfied": true,
+        "optional_state": "Satisfied",
+        "original_score": {
+          "R": "0",
+          "C": "4/5",
+          "P": "0",
+          "T": "4/25"
+        },
+        "baseline_score": {
+          "R": "0",
+          "C": "17/20",
+          "P": "0",
+          "T": "17/100"
+        },
+        "score_losses_from_baseline": {
+          "T": "1/100",
+          "R": "0",
+          "C": "1/20",
+          "P": "0"
+        },
+        "score_changes_from_baseline": {
+          "T": "-1/100",
+          "R": "0",
+          "C": "-1/20",
+          "P": "0"
+        },
+        "winner_changed": true,
+        "exact_final_stable_member_key": [
+          [
+            "upper",
+            "00000000-0000-4000-8000-000000000100"
+          ],
+          [
+            "lower",
+            "00000000-0000-4000-8000-000000000002"
+          ]
+        ],
+        "large_numerical_sacrifice_flag": false,
+        "explanation": "The selected member has qualified evidence satisfying the complete optional wish on that same garment.",
+        "decision": {
+          "kind": "bounded_promotion",
+          "promotable": [
+            "black-trousers"
+          ],
+          "promotion_checks": {
+            "blue-trousers-black-top": [
+              "no_qualified_local_match"
+            ],
+            "black-trousers": []
+          }
+        }
+      }
+    },
+    "SP-17": {
+      "baseline": "black-skirt",
+      "eligible": [
+        "black-skirt",
+        "black-trousers"
+      ],
+      "optional": {
+        "black-skirt": "Unsatisfied",
+        "black-trousers": "Satisfied"
+      },
+      "expected": {
+        "policy": "C_bounded_1_50",
+        "winner": "black-trousers",
+        "status": "SelectedInSyntheticModel",
+        "wish_satisfied": true,
+        "optional_state": "Satisfied",
+        "original_score": {
+          "R": "0",
+          "C": "4/5",
+          "P": "0",
+          "T": "4/25"
+        },
+        "baseline_score": {
+          "R": "0",
+          "C": "17/20",
+          "P": "0",
+          "T": "17/100"
+        },
+        "score_losses_from_baseline": {
+          "T": "1/100",
+          "R": "0",
+          "C": "1/20",
+          "P": "0"
+        },
+        "score_changes_from_baseline": {
+          "T": "-1/100",
+          "R": "0",
+          "C": "-1/20",
+          "P": "0"
+        },
+        "winner_changed": true,
+        "exact_final_stable_member_key": [
+          [
+            "upper",
+            "00000000-0000-4000-8000-000000000100"
+          ],
+          [
+            "lower",
+            "00000000-0000-4000-8000-000000000002"
+          ]
+        ],
+        "large_numerical_sacrifice_flag": false,
+        "explanation": "The selected member has qualified evidence satisfying the complete optional wish on that same garment.",
+        "decision": {
+          "kind": "bounded_promotion",
+          "promotable": [
+            "black-trousers"
+          ],
+          "promotion_checks": {
+            "black-skirt": [
+              "no_qualified_local_match"
+            ],
+            "black-trousers": []
+          }
+        }
+      }
+    },
+    "SP-18": {
+      "baseline": "blue-dress",
+      "eligible": [
+        "blue-dress",
+        "black-trousers"
+      ],
+      "optional": {
+        "blue-dress": "Unsatisfied",
+        "black-trousers": "Satisfied"
+      },
+      "expected": {
+        "policy": "C_bounded_1_50",
+        "winner": "black-trousers",
+        "status": "SelectedInSyntheticModel",
+        "wish_satisfied": true,
+        "optional_state": "Satisfied",
+        "original_score": {
+          "R": "0",
+          "C": "3/4",
+          "P": "0",
+          "T": "3/20"
+        },
+        "baseline_score": {
+          "R": "0",
+          "C": "4/5",
+          "P": "0",
+          "T": "4/25"
+        },
+        "score_losses_from_baseline": {
+          "T": "1/100",
+          "R": "0",
+          "C": "1/20",
+          "P": "0"
+        },
+        "score_changes_from_baseline": {
+          "T": "-1/100",
+          "R": "0",
+          "C": "-1/20",
+          "P": "0"
+        },
+        "winner_changed": true,
+        "exact_final_stable_member_key": [
+          [
+            "upper",
+            "00000000-0000-4000-8000-000000000100"
+          ],
+          [
+            "lower",
+            "00000000-0000-4000-8000-000000000002"
+          ]
+        ],
+        "large_numerical_sacrifice_flag": false,
+        "explanation": "The selected member has qualified evidence satisfying the complete optional wish on that same garment.",
+        "decision": {
+          "kind": "bounded_promotion",
+          "promotable": [
+            "black-trousers"
+          ],
+          "promotion_checks": {
+            "blue-dress": [
+              "no_qualified_local_match"
+            ],
+            "black-trousers": []
+          }
+        }
+      }
+    },
+    "SP-19": {
+      "baseline": "black-top-blue-lower",
+      "eligible": [
+        "black-top-blue-lower",
+        "blue-top-black-lower"
+      ],
+      "optional": {
+        "black-top-blue-lower": "Unsatisfied",
+        "blue-top-black-lower": "Satisfied"
+      },
+      "expected": {
+        "policy": "C_bounded_1_50",
+        "winner": "blue-top-black-lower",
+        "status": "SelectedInSyntheticModel",
+        "wish_satisfied": true,
+        "optional_state": "Satisfied",
+        "original_score": {
+          "R": "0",
+          "C": "4/5",
+          "P": "0",
+          "T": "4/25"
+        },
+        "baseline_score": {
+          "R": "0",
+          "C": "17/20",
+          "P": "0",
+          "T": "17/100"
+        },
+        "score_losses_from_baseline": {
+          "T": "1/100",
+          "R": "0",
+          "C": "1/20",
+          "P": "0"
+        },
+        "score_changes_from_baseline": {
+          "T": "-1/100",
+          "R": "0",
+          "C": "-1/20",
+          "P": "0"
+        },
+        "winner_changed": true,
+        "exact_final_stable_member_key": [
+          [
+            "upper",
+            "00000000-0000-4000-8000-000000000102"
+          ],
+          [
+            "lower",
+            "00000000-0000-4000-8000-000000000002"
+          ]
+        ],
+        "large_numerical_sacrifice_flag": false,
+        "explanation": "The selected member has qualified evidence satisfying the complete optional wish on that same garment.",
+        "decision": {
+          "kind": "bounded_promotion",
+          "promotable": [
+            "blue-top-black-lower"
+          ],
+          "promotion_checks": {
+            "black-top-blue-lower": [
+              "no_qualified_local_match"
+            ],
+            "blue-top-black-lower": []
+          }
+        }
+      }
+    },
+    "SP-20": {
+      "baseline": "unknown-primary",
+      "eligible": [
+        "unknown-primary",
+        "blue",
+        "qualified-black"
+      ],
+      "optional": {
+        "unknown-primary": "Unverifiable",
+        "blue": "Unsatisfied",
+        "qualified-black": "Satisfied"
+      },
+      "expected": {
+        "policy": "C_bounded_1_50",
+        "winner": "unknown-primary",
+        "status": "SelectedInSyntheticModel",
+        "wish_satisfied": false,
+        "optional_state": "Unverifiable",
+        "original_score": {
+          "R": "0",
+          "C": "1",
+          "P": "0",
+          "T": "1/5"
+        },
+        "baseline_score": {
+          "R": "0",
+          "C": "1",
+          "P": "0",
+          "T": "1/5"
+        },
+        "score_losses_from_baseline": {
+          "T": "0",
+          "R": "0",
+          "C": "0",
+          "P": "0"
+        },
+        "score_changes_from_baseline": {
+          "T": "0",
+          "R": "0",
+          "C": "0",
+          "P": "0"
+        },
+        "winner_changed": false,
+        "exact_final_stable_member_key": [
+          [
+            "upper",
+            "00000000-0000-4000-8000-000000000100"
+          ],
+          [
+            "lower",
+            "00000000-0000-4000-8000-000000000001"
+          ]
+        ],
+        "large_numerical_sacrifice_flag": false,
+        "explanation": "The optional feature on the selected member is unverified. A qualified matching option existed but exceeded the declared promotion budgets or request-match protection.",
+        "decision": {
+          "kind": "bounded_promotion",
+          "promotable": [],
+          "promotion_checks": {
+            "unknown-primary": [
+              "no_qualified_local_match"
+            ],
+            "blue": [
+              "no_qualified_local_match",
+              "T_loss_above_budget",
+              "C_loss_above_budget"
+            ],
+            "qualified-black": [
+              "T_loss_above_budget",
+              "C_loss_above_budget"
+            ]
+          }
+        }
+      }
+    },
+    "SP-21": {
+      "baseline": "blue",
+      "eligible": [
+        "blue",
+        "black"
+      ],
+      "optional": {
+        "blue": "Unsatisfied",
+        "black": "Satisfied"
+      },
+      "expected": {
+        "policy": "C_bounded_1_50",
+        "winner": "blue",
+        "status": "SelectedInSyntheticModel",
+        "wish_satisfied": false,
+        "optional_state": "Unsatisfied",
+        "original_score": {
+          "R": "1/2",
+          "C": "4/5",
+          "P": "0",
+          "T": "23/50"
+        },
+        "baseline_score": {
+          "R": "1/2",
+          "C": "4/5",
+          "P": "0",
+          "T": "23/50"
+        },
+        "score_losses_from_baseline": {
+          "T": "0",
+          "R": "0",
+          "C": "0",
+          "P": "0"
+        },
+        "score_changes_from_baseline": {
+          "T": "0",
+          "R": "0",
+          "C": "0",
+          "P": "0"
+        },
+        "winner_changed": false,
+        "exact_final_stable_member_key": [
+          [
+            "upper",
+            "00000000-0000-4000-8000-000000000100"
+          ],
+          [
+            "lower",
+            "00000000-0000-4000-8000-000000000001"
+          ]
+        ],
+        "large_numerical_sacrifice_flag": false,
+        "explanation": "A qualified matching option existed but exceeded the declared promotion budgets or request-match protection.",
+        "decision": {
+          "kind": "bounded_promotion",
+          "promotable": [],
+          "promotion_checks": {
+            "blue": [
+              "no_qualified_local_match"
+            ],
+            "black": [
+              "R_would_decrease"
+            ]
+          }
+        }
+      }
+    },
+    "SP-22": {
+      "baseline": "blue",
+      "eligible": [
+        "blue",
+        "black"
+      ],
+      "optional": {
+        "blue": "Unsatisfied",
+        "black": "Satisfied"
+      },
+      "expected": {
+        "policy": "C_bounded_1_50",
+        "winner": "blue",
+        "status": "SelectedInSyntheticModel",
+        "wish_satisfied": false,
+        "optional_state": "Unsatisfied",
+        "original_score": {
+          "R": "0",
+          "C": "9/10",
+          "P": "1/2",
+          "T": "7/25"
+        },
+        "baseline_score": {
+          "R": "0",
+          "C": "9/10",
+          "P": "1/2",
+          "T": "7/25"
+        },
+        "score_losses_from_baseline": {
+          "T": "0",
+          "R": "0",
+          "C": "0",
+          "P": "0"
+        },
+        "score_changes_from_baseline": {
+          "T": "0",
+          "R": "0",
+          "C": "0",
+          "P": "0"
+        },
+        "winner_changed": false,
+        "exact_final_stable_member_key": [
+          [
+            "upper",
+            "00000000-0000-4000-8000-000000000100"
+          ],
+          [
+            "lower",
+            "00000000-0000-4000-8000-000000000001"
+          ]
+        ],
+        "large_numerical_sacrifice_flag": false,
+        "explanation": "A qualified matching option existed but exceeded the declared promotion budgets or request-match protection.",
+        "decision": {
+          "kind": "bounded_promotion",
+          "promotable": [],
+          "promotion_checks": {
+            "blue": [
+              "no_qualified_local_match"
+            ],
+            "black": [
+              "P_loss_above_budget"
+            ]
+          }
+        }
+      }
+    },
+    "SP-23": {
+      "baseline": "blue",
+      "eligible": [
+        "blue",
+        "grey"
+      ],
+      "optional": {
+        "blue": "Unsatisfied",
+        "grey": "Unsatisfied"
+      },
+      "expected": {
+        "policy": "C_bounded_1_50",
+        "winner": "blue",
+        "status": "SelectedInSyntheticModel",
+        "wish_satisfied": false,
+        "optional_state": "Unsatisfied",
+        "original_score": {
+          "R": "0",
+          "C": "3/5",
+          "P": "4/5",
+          "T": "7/25"
+        },
+        "baseline_score": {
+          "R": "0",
+          "C": "3/5",
+          "P": "4/5",
+          "T": "7/25"
+        },
+        "score_losses_from_baseline": {
+          "T": "0",
+          "R": "0",
+          "C": "0",
+          "P": "0"
+        },
+        "score_changes_from_baseline": {
+          "T": "0",
+          "R": "0",
+          "C": "0",
+          "P": "0"
+        },
+        "winner_changed": false,
+        "exact_final_stable_member_key": [
+          [
+            "upper",
+            "00000000-0000-4000-8000-000000000100"
+          ],
+          [
+            "lower",
+            "00000000-0000-4000-8000-000000000001"
+          ]
+        ],
+        "large_numerical_sacrifice_flag": false,
+        "explanation": "No currently verified hard-eligible option has the requested qualified optional features. Mandatory conditions were kept.",
+        "decision": {
+          "kind": "bounded_promotion",
+          "promotable": [],
+          "promotion_checks": {
+            "blue": [
+              "no_qualified_local_match"
+            ],
+            "grey": [
+              "no_qualified_local_match",
+              "P_loss_above_budget"
+            ]
+          }
+        }
+      }
+    },
+    "SP-24": {
+      "baseline": "blue",
+      "eligible": [
+        "blue",
+        "stale-black"
+      ],
+      "optional": {
+        "blue": "Unsatisfied",
+        "stale-black": "Unverifiable"
+      },
+      "expected": {
+        "policy": "C_bounded_1_50",
+        "winner": "blue",
+        "status": "SelectedInSyntheticModel",
+        "wish_satisfied": false,
+        "optional_state": "Unsatisfied",
+        "original_score": {
+          "R": "0",
+          "C": "4/5",
+          "P": "0",
+          "T": "4/25"
+        },
+        "baseline_score": {
+          "R": "0",
+          "C": "4/5",
+          "P": "0",
+          "T": "4/25"
+        },
+        "score_losses_from_baseline": {
+          "T": "0",
+          "R": "0",
+          "C": "0",
+          "P": "0"
+        },
+        "score_changes_from_baseline": {
+          "T": "0",
+          "R": "0",
+          "C": "0",
+          "P": "0"
+        },
+        "winner_changed": false,
+        "exact_final_stable_member_key": [
+          [
+            "upper",
+            "00000000-0000-4000-8000-000000000100"
+          ],
+          [
+            "lower",
+            "00000000-0000-4000-8000-000000000001"
+          ]
+        ],
+        "large_numerical_sacrifice_flag": false,
+        "explanation": "Mandatory requirements are satisfied, but optional evidence is unresolved for some verified hard-eligible options. No absence of a matching option is established.",
+        "decision": {
+          "kind": "bounded_promotion",
+          "promotable": [],
+          "promotion_checks": {
+            "blue": [
+              "no_qualified_local_match"
+            ],
+            "stale-black": [
+              "no_qualified_local_match"
+            ]
+          }
+        }
+      }
+    },
+    "SP-25": {
+      "baseline": "dress",
+      "eligible": [
+        "dress",
+        "trousers-colour-unknown"
+      ],
+      "optional": {
+        "dress": "Unsatisfied",
+        "trousers-colour-unknown": "Satisfied"
+      },
+      "expected": {
+        "policy": "C_bounded_1_50",
+        "winner": "trousers-colour-unknown",
+        "status": "SelectedInSyntheticModel",
+        "wish_satisfied": true,
+        "optional_state": "Satisfied",
+        "original_score": {
+          "R": "0",
+          "C": "4/5",
+          "P": "0",
+          "T": "4/25"
+        },
+        "baseline_score": {
+          "R": "0",
+          "C": "17/20",
+          "P": "0",
+          "T": "17/100"
+        },
+        "score_losses_from_baseline": {
+          "T": "1/100",
+          "R": "0",
+          "C": "1/20",
+          "P": "0"
+        },
+        "score_changes_from_baseline": {
+          "T": "-1/100",
+          "R": "0",
+          "C": "-1/20",
+          "P": "0"
+        },
+        "winner_changed": true,
+        "exact_final_stable_member_key": [
+          [
+            "upper",
+            "00000000-0000-4000-8000-000000000100"
+          ],
+          [
+            "lower",
+            "00000000-0000-4000-8000-000000000002"
+          ]
+        ],
+        "large_numerical_sacrifice_flag": false,
+        "explanation": "The selected member has qualified evidence satisfying the complete optional wish on that same garment.",
+        "decision": {
+          "kind": "bounded_promotion",
+          "promotable": [
+            "trousers-colour-unknown"
+          ],
+          "promotion_checks": {
+            "dress": [
+              "no_qualified_local_match"
+            ],
+            "trousers-colour-unknown": []
+          }
+        }
+      }
+    },
+    "SP-26": {
+      "baseline": "blue",
+      "eligible": [
+        "blue",
+        "black"
+      ],
+      "optional": {
+        "blue": "Unsatisfied",
+        "black": "Satisfied"
+      },
+      "expected": {
+        "policy": "C_bounded_1_50",
+        "winner": "black",
+        "status": "SelectedInSyntheticModel",
+        "wish_satisfied": true,
+        "optional_state": "Satisfied",
+        "original_score": {
+          "R": "0",
+          "C": "3/4",
+          "P": "9/20",
+          "T": "6/25"
+        },
+        "baseline_score": {
+          "R": "0",
+          "C": "4/5",
+          "P": "1/2",
+          "T": "13/50"
+        },
+        "score_losses_from_baseline": {
+          "T": "1/50",
+          "R": "0",
+          "C": "1/20",
+          "P": "1/20"
+        },
+        "score_changes_from_baseline": {
+          "T": "-1/50",
+          "R": "0",
+          "C": "-1/20",
+          "P": "-1/20"
+        },
+        "winner_changed": true,
+        "exact_final_stable_member_key": [
+          [
+            "upper",
+            "00000000-0000-4000-8000-000000000100"
+          ],
+          [
+            "lower",
+            "00000000-0000-4000-8000-000000000002"
+          ]
+        ],
+        "large_numerical_sacrifice_flag": false,
+        "explanation": "The selected member has qualified evidence satisfying the complete optional wish on that same garment.",
+        "decision": {
+          "kind": "bounded_promotion",
+          "promotable": [
+            "black"
+          ],
+          "promotion_checks": {
+            "blue": [
+              "no_qualified_local_match"
+            ],
+            "black": []
+          }
+        }
+      }
+    },
+    "SP-27": {
+      "baseline": "blue",
+      "eligible": [
+        "blue",
+        "black"
+      ],
+      "optional": {
+        "blue": "NotApplicable",
+        "black": "NotApplicable"
+      },
+      "expected": {
+        "policy": "C_bounded_1_50",
+        "winner": "blue",
+        "status": "SelectedInSyntheticModel",
+        "wish_satisfied": false,
+        "optional_state": "NotApplicable",
+        "original_score": {
+          "R": "0",
+          "C": "4/5",
+          "P": "0",
+          "T": "4/25"
+        },
+        "baseline_score": {
+          "R": "0",
+          "C": "4/5",
+          "P": "0",
+          "T": "4/25"
+        },
+        "score_losses_from_baseline": {
+          "T": "0",
+          "R": "0",
+          "C": "0",
+          "P": "0"
+        },
+        "score_changes_from_baseline": {
+          "T": "0",
+          "R": "0",
+          "C": "0",
+          "P": "0"
+        },
+        "winner_changed": false,
+        "exact_final_stable_member_key": [
+          [
+            "upper",
+            "00000000-0000-4000-8000-000000000100"
+          ],
+          [
+            "lower",
+            "00000000-0000-4000-8000-000000000001"
+          ]
+        ],
+        "large_numerical_sacrifice_flag": false,
+        "explanation": "No local preference: the original ranking and tie-break apply.",
+        "decision": {
+          "kind": "baseline_inactive",
+          "decision_value": "4/25"
+        }
+      }
+    },
+    "SP-28": {
+      "baseline": "black-lower",
+      "eligible": [
+        "black-lower",
+        "blue-upper"
+      ],
+      "optional": {},
+      "expected": {
+        "policy": "C_bounded_1_50",
+        "winner": null,
+        "status": "UnsupportedPreferenceSet",
+        "analysis_label_not_current_API_status": true,
+        "explanation": "No ranking/recommendation: unsupported multi-wish contract."
+      }
+    },
+    "SP-29": {
+      "baseline": "blue",
+      "eligible": [
+        "blue",
+        "black"
+      ],
+      "optional": {
+        "blue": "Unsatisfied",
+        "black": "Satisfied"
+      },
+      "expected": {
+        "policy": "C_bounded_1_50",
+        "winner": "black",
+        "status": "ProvisionalRankingOnly",
+        "wish_satisfied": true,
+        "optional_state": "Satisfied",
+        "original_score": {
+          "R": "0",
+          "C": "4/5",
+          "P": "0",
+          "T": "4/25"
+        },
+        "baseline_score": {
+          "R": "0",
+          "C": "4/5",
+          "P": "0",
+          "T": "4/25"
+        },
+        "score_losses_from_baseline": {
+          "T": "0",
+          "R": "0",
+          "C": "0",
+          "P": "0"
+        },
+        "score_changes_from_baseline": {
+          "T": "0",
+          "R": "0",
+          "C": "0",
+          "P": "0"
+        },
+        "winner_changed": true,
+        "exact_final_stable_member_key": [
+          [
+            "upper",
+            "00000000-0000-4000-8000-000000000100"
+          ],
+          [
+            "lower",
+            "00000000-0000-4000-8000-000000000002"
+          ]
+        ],
+        "large_numerical_sacrifice_flag": false,
+        "explanation": "The selected member has qualified evidence satisfying the complete optional wish on that same garment.",
+        "decision": {
+          "kind": "bounded_promotion",
+          "promotable": [
+            "black"
+          ],
+          "promotion_checks": {
+            "blue": [
+              "no_qualified_local_match"
+            ],
+            "black": []
+          }
+        },
+        "persistence_expectation": "Must abort changed scope atomically; application writer not executed."
+      }
+    },
+    "SP-30": {
+      "baseline": null,
+      "eligible": [],
+      "optional": {},
+      "expected": {
+        "policy": "C_bounded_1_50",
+        "winner": null,
+        "status": "NoHardEligibleCandidate",
+        "analysis_label_not_current_API_status": true,
+        "explanation": "No candidate passed all mandatory admission checks."
+      }
+    }
+  }
+}

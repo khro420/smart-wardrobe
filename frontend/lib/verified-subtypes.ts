@@ -14,3 +14,9 @@ export function capturedSubtypeSummaries(provenance: Record<string, unknown> | n
 export function subtypeSummary(view: VerifiedSubtypeView | undefined) {
   return view?.state === "Known" ? view.registry.entries.find(e => e.id === view.value)?.label ?? "Unknown" : view?.state === "Inapplicable" ? "Not required for this category" : `Unknown${view ? ` (${view.state})` : ""}`;
 }
+
+// A verified subtype is deliberately narrower than the stored garment category.
+// Show it only when it provides a confirmed, more-specific type; otherwise the
+// already-established category is the truthful garment type to show on a card.
+export const garmentTypeSummary = (category: string, view: VerifiedSubtypeView | undefined) =>
+  view?.state === "Known" ? subtypeSummary(view) : category.replaceAll("_", " ");

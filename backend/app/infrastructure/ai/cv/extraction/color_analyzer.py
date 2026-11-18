@@ -1,6 +1,8 @@
 import cv2
 import numpy as np
 
+VERSION = "dominant-colour-kmeans-1.0.0"
+
 
 class ColorAnalyzer:
     """
@@ -117,4 +119,11 @@ class ColorAnalyzer:
             "palette": palette,
             "color_temperature": lab.get("color_temperature", "neutral"),
             "is_dominant": bool(is_dominant),
+            # Stored with the detector output.  This identifies automated
+            # image evidence without claiming that an owner confirmed it.
+            "colour_detection": {
+                "method": "dominant_colour_kmeans_masked_v1",
+                "version": VERSION,
+                "primary_hex": primary_hex,
+            },
         }

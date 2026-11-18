@@ -67,9 +67,62 @@ def test_expansion_requires_valid_server_selection(monkeypatch):
     with pytest.raises(ValueError):contextual_selection()
 
 @pytest.mark.parametrize('text',["I'm attending a wedding as a guest.","I'm attending a university presentation as a presenter.","I'm going to a job interview as a candidate. The dress code is smart casual."])
-def test_specialist_explanations_do_not_claim_unreviewed_admission(text):
+def test_specialists_use_saved_style_provisional_admission(text):
     from app.application.recommendation.general_context_evaluator import EvaluatorSpecification
     request=GeneralContextInterpreter('context_18_v1').interpret(text).structured_request
     summary=EvaluatorSpecification.current('context_18_v1').construct().summary(request)
-    assert summary['version'] in ('general-context-explanation-1.0.0','general-context-explanation-1.2.0')
-    assert summary.get('evidence_contract')!='saved_singleton_style_provisional_v1'
+    assert summary['version'] in ('general-context-explanation-1.4.0','general-context-explanation-2.0.0')
+    assert summary['evidence_contract']=='saved_singleton_style_provisional_v1'
+    assert 'dress-code compliance' in summary['limits_note']
+
+
+def test_specialist_policy_keeps_roles_and_formality_strict_without_review_predicates():
+    registry=ContextPolicyRegistry.load(bundle_id='context_18_v1')
+    interview=registry.binding_for('professional.job_interview')
+    presentation=registry.binding_for('academic.presentation')
+    wedding=registry.binding_for('ceremony.wedding')
+    assert interview.roles==('candidate','interviewer')
+    assert interview.appearance_required is True  # requires an explicit supported dress code/formality
+    assert all(p.dress_code=='smart_casual' and p.operator=='saved_style_in' for p in interview.predicates)
+    assert presentation.roles==('presenter','attendee')
+    assert all(p.operator=='saved_style_in' for p in presentation.predicates)
+    assert wedding.assumed_role=='guest'
+    assert all(p.operator=='saved_style_in' for p in wedding.predicates)
+
+
+@pytest.mark.parametrize(('text','role'),[
+    ('Suggest an outfit for a job interview as candidate. The dress code is smart casual.','candidate'),
+    ('Suggest an outfit for a job interview as interviewer. The dress code is smart casual.','interviewer'),
+    ('Suggest an outfit for a job interview where I am candidate. The dress code is smart casual.','candidate'),
+    ('Suggest an outfit for a job interview where I am interviewer. The dress code is smart casual.','interviewer'),
+    ("Suggest an outfit for a job interview where I'm candidate. The dress code is smart casual.",'candidate'),
+    ("Suggest an outfit for a job interview where I'm interviewer. The dress code is smart casual.",'interviewer'),
+    ('Suggest an outfit for a job interview where I am the candidate. The dress code is smart casual.','candidate'),
+    ('Suggest an outfit for a job interview where I am the interviewer. The dress code is smart casual.','interviewer'),
+    ("Suggest an outfit for a job interview where I'm the candidate. The dress code is smart casual.",'candidate'),
+    ("Suggest an outfit for a job interview where I'm the interviewer. The dress code is smart casual.",'interviewer'),
+    ('Suggest an outfit for a job interview as a candidate. The dress code is smart casual.','candidate'),
+    ('I am being interviewed for a job; the dress code is smart casual.','candidate'),
+    ('I am conducting a job interview; the dress code is smart casual.','interviewer'),
+])
+def test_interview_role_expressions_are_consumed_and_compile(text,role):
+    result=GeneralContextInterpreter('context_18_v1').interpret(text)
+    assert result.status=='Supported',result
+    request=result.structured_request
+    assert request.context.role.value==role and request.formality=='smart_casual'
+    plan=compile_context(ContextPolicyRegistry.load(bundle_id='context_18_v1'),request)
+    assert plan.available and plan.reason=='approved_binding'
+
+
+def test_interview_role_and_formality_requirements_remain_strict():
+    parser=GeneralContextInterpreter('context_18_v1');registry=ContextPolicyRegistry.load(bundle_id='context_18_v1')
+    missing=parser.interpret('Suggest an outfit for a job interview.')
+    assert missing.status=='Supported' and compile_context(registry,missing.structured_request).reason=='required_context_missing'
+    formal=parser.interpret('Suggest a formal outfit for a job interview as candidate.')
+    assert formal.status=='Supported' and formal.structured_request.formality=='formal'
+    assert compile_context(registry,formal.structured_request).reason=='unsupported_dress_code'
+    for text in ('Suggest an outfit for a job interview as recruiter. The dress code is smart casual.',
+                 'Suggest an outfit for a job interview as candidate and as interviewer. The dress code is smart casual.',
+                 'Suggest an outfit for a job interview as candidate without a dress code.',
+                 'Suggest an outfit for a job interview as candidate in a laboratory. The dress code is smart casual.'):
+        assert parser.interpret(text).status=='UnsupportedRequest'

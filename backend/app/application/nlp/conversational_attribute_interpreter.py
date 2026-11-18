@@ -1,13 +1,15 @@
 """Supplement existing B1 bindings without altering its canonical algebra."""
 import re,json,hashlib
 from app.application.nlp.attribute_request_interpreter import AttributeRequestInterpreter,AttributeInterpretation
-from app.application.nlp.conversational_context_interpreter import load_language,fingerprint,outside_literals
+from app.application.nlp.conversational_context_interpreter import load_language,fingerprint,outside_literals,requested_formality_spans
 from app.domain.value_objects.attribute_conditions import AttributeConditions,AttributeRequestError,CANONICAL_ENUMS,VERSION
+from app.application.nlp.conversational_attribute_forms import DESCRIPTORS,parse_bounded
 
 class ConversationalAttributeInterpreter(AttributeRequestInterpreter):
     def __init__(self):
         super().__init__();self.language=load_language()
         self.descriptors=(*self.descriptors,*((re.compile(r'(?<!\w)(?:'+a['pattern']+r')(?!\w)',re.I),a['field'],a['value']) for a in self.language['attribute_aliases']))
+        self.descriptors=(*self.descriptors,*((re.compile(r'(?<!\w)(?:'+p+r')(?!\w)',re.I),f,v) for p,f,v in DESCRIPTORS))
     @property
     def sha256(self):return fingerprint()
 
@@ -17,6 +19,7 @@ class ConversationalAttributeInterpreter(AttributeRequestInterpreter):
             for pattern in patterns:
                 for m in re.finditer(r'(?<!\w)(?:'+pattern+r')(?!\w)',matching,re.I):shield[m.start():m.end()]=[True]*(m.end()-m.start())
         for m in re.finditer(r'\b(?:the )?dress code is (?:smart casual|casual|formal|black tie)\b',matching,re.I):shield[m.start():m.end()]=[True]*(m.end()-m.start())
+        for a,b,_ in requested_formality_spans(original):shield[a:b]=[True]*(b-a)
         attribute_text=''.join(' ' if used else c for c,used in zip(original,shield))
         # Explicit field-first colour clauses are aliases of the existing
         # field-qualified forms. Shield them before generic colour extraction
@@ -115,6 +118,8 @@ class ConversationalAttributeInterpreter(AttributeRequestInterpreter):
         if type(original) is not str or not original.strip() or len(original)>500:
             return self._legacy_parse(original)
         if re.search(r'\bon\s+the\s+same\s+garment\b',original,re.I):return self._legacy_parse(original)
+        bounded=parse_bounded(self,original)
+        if bounded is not None:return bounded
         descriptors=(*self.descriptors,*((p,e['attribute'],e['value']) for p,e in self.entries if e['attribute']=='sleeve_length' and e['status']=='Planned'))
         descriptors=(*descriptors,*((re.compile(r'(?<!\w)(?:'+d['pattern']+r')(?!\w)',re.I),d['field'],d['value']) for d in self.language['noun_descriptors']))
         text=outside_literals(original);blocked=[False]*len(text)
@@ -126,6 +131,7 @@ class ConversationalAttributeInterpreter(AttributeRequestInterpreter):
             if entry['attribute'] not in ('category','primary_colour','secondary_colour','palette_colour','palette_coverage'):continue
             for m in pattern.finditer(text):blocked[m.start():m.end()]=[True]*(m.end()-m.start())
         for m in re.finditer(r'\b(?:the )?dress code is (?:smart casual|casual|formal|black tie)\b',text,re.I):blocked[m.start():m.end()]=[True]*(m.end()-m.start())
+        for a,b,_ in requested_formality_spans(original):blocked[a:b]=[True]*(b-a)
         occupied=blocked[:];consumed=[False]*len(text);groups=[];spans=[]
         def free(a,b):return not any(occupied[a:b])
         def use(a,b):
@@ -160,6 +166,22 @@ class ConversationalAttributeInterpreter(AttributeRequestInterpreter):
                 conditions.append({'id':cid,'attribute':field,'operator':'exact_text' if field=='garment_name' else 'bool_eq' if type(value) is bool else 'contains_any' if field in ('material','style') else 'in','values':list(value) if type(value) is tuple else [value]})
                 for x,y in ((a,b),noun,*extra):spans.append((cid,'nlp',x,y,original[x:y]))
             groups.append({'id':f'g{len(groups)+1:02d}','role':role,'quantifier':quantifier,'conditions':conditions})
+        # Postposed positional colours bind to the named role. Never leave them
+        # for the older independent-field scanner, which would broaden scope.
+        colours='|'.join(re.escape(c) for c in sorted(CANONICAL_ENUMS['primary_colour'],key=len,reverse=True))
+        positional=re.finditer(r'\b('+colours+r')\s+(?:on|at)\s+(?:(?:the|my)\s+)?(top|bottom)\b',text,re.I)
+        positions={}
+        for m in positional:
+            if not free(m.start(),m.end()):continue
+            role='upper' if m.group(2).lower()=='top' else 'lower'
+            neg=negative(m.start());value=m.group(1).lower()
+            if not neg and role in positions and positions[role]!=value:
+                raise AttributeRequestError('UnsupportedRequest','ambiguous_same_binding')
+            if not neg:positions[role]=value
+            extra=((neg.start(),neg.end()),) if neg else ()
+            add([('primary_colour',value,m.start(1),m.end(1))],role,'none' if neg else 'exists',m.span(2),extra)
+            use(m.start(),m.end())
+            if neg:use(neg.start(),neg.end())
         heads=[]
         for name,role in self.nouns.items():
             heads.extend((m,role,None) for m in re.finditer(r'\b'+re.escape(name)+(r'\b' if name.endswith('s') or name=='something' else r's?\b'),text,re.I))
@@ -225,6 +247,10 @@ class ConversationalAttributeInterpreter(AttributeRequestInterpreter):
                 # of the coarse category. Explicit field-qualified forms above
                 # are shielded and never acquire inferred fine attributes.
                 if not neg and '_' not in noun.group() and re.search(r'long[\s-]+sleeve',noun.group(),re.I) and not any(o[0]=='sleeve_length' for o in obs):obs.append(('sleeve_length','wrist-length',a,b))
+                if '_' not in noun.group() and re.search(r'short[\s-]+sleeve',noun.group(),re.I) and not any(o[0]=='sleeve_length' for o in obs):obs.append(('sleeve_length','short',a,b))
+            if not obs and negative_tail and noun.group().lower().rstrip('s') in ('shirt','top'):
+                upper=tuple(c for c in CANONICAL_ENUMS['category'] if c in ('short_sleeve_top','long_sleeve_top','vest','sling'))
+                obs=[('category',upper,a,b)]
             if anonymous:
                 if len(obs)<2:continue  # bare "something blue" keeps its contract
                 role='base_upper_body' if any(o[0] in ('sleeve_length','neckline') for o in obs) else 'base' if any(o[0] in ('style','silhouette') for o in obs) else 'all_selected'

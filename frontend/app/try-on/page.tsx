@@ -121,6 +121,7 @@ function OutfitVisualisationContent() {
 
   return <Layout><div className="space-y-7">
     <Link href="/wardrobe" className="inline-flex min-h-10 items-center text-sm underline">Back to wardrobe</Link>
+    <Link href="/try-on/group" className="ml-4 inline-flex min-h-10 items-center text-sm underline">Try outfits on a group photo</Link>
     <div className="border-2 border-black bg-white p-6"><p className="font-mono text-[10px] font-black tracking-widest text-zinc-500">OUTFIT VISUALISATION</p><h1 className="mt-2 text-3xl font-black">Choose a private base image</h1><p className="mt-2 max-w-2xl text-sm text-zinc-600">Every confirmed garment in the selected outfit is checked before a request can be submitted.</p></div>
     {!source && <p role="alert" className="border-2 border-amber-600 bg-amber-50 p-3 text-sm text-amber-800">{missingSourceMessage}</p>}
     {error && <p role="alert" className="border-2 border-rose-600 bg-rose-50 p-3 text-sm text-rose-700">{error}</p>}

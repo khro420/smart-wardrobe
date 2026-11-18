@@ -124,3 +124,10 @@ backend/runs/fashionpedia_attribute_heads/*
 !storage/
 storage/*
 !storage/smart_wardrobe.seed.db
+
+# Credential-free exported dataset is intentionally shared. Source DBs stay local.
+!assets/development/
+!assets/development/**
+storage/smart_wardrobe.seed.db
+!storage/demo-media/
+!storage/demo-media/**

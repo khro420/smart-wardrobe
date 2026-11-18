@@ -1,0 +1,1625 @@
+{
+  "version": "phase2nd-main-catalog-1.0.0",
+  "origin": "synthetic_fixture_declaration",
+  "instance_id": "27d85bc6-0fca-4b35-896d-8a84e41adc9f",
+  "database": "C:\\Users\\chong\\Desktop\\Smart Wardrobe\\smart-wardrobe-clean\\storage\\smart_wardrobe.db",
+  "owner_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+  "profiles": {
+    "ea6cc20e-3709-412e-9e38-a53120476448": {
+      "row": {
+        "id": "ea6cc20e-3709-412e-9e38-a53120476448",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "name": "My wardrobe",
+        "is_default": 1,
+        "status": "active",
+        "created_at": "2026-10-29T12:04:57.824116+00:00",
+        "updated_at": "2026-10-29T12:04:57.824116+00:00"
+      },
+      "details": {
+        "profile_id": "ea6cc20e-3709-412e-9e38-a53120476448",
+        "version": "wearer-profile-details-1.0.0",
+        "gender_identity": "male",
+        "revision": "f246e6554cfc4c2d8cba548d3df5ec67",
+        "updated_at": "2026-11-12T18:09:42.595889+00:00"
+      },
+      "gender": "male",
+      "preferences": []
+    }
+  },
+  "garments": [
+    {
+      "fixture_id": "TEST-2N-001",
+      "attributes": {
+        "category": "short_sleeve_top",
+        "primary_colour": "black",
+        "pattern": "plain",
+        "material": [
+          "cotton"
+        ],
+        "silhouette": "regular",
+        "style": [
+          "casual"
+        ],
+        "sleeve_length": "short"
+      },
+      "row": {
+        "id": "2e2d0000-0000-4000-8000-000000000001",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "processing_item_id": null,
+        "preferred_media_id": "9659d69e-0641-479e-9e14-e4d4a7d422e1",
+        "name": "TEST-2ND-001 black short_sleeve_top SYNTHETIC",
+        "category": "short_sleeve_top",
+        "primary_colour": "black",
+        "pattern": "plain",
+        "attributes_json": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"regular\", \"garment_type\": \"top\", \"layering_index\": 0, \"material\": [\"cotton\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"short_sleeve_top\", \"material\": [\"cotton\"], \"pattern\": \"plain\", \"primary_colour\": \"black\", \"silhouette\": \"regular\", \"sleeve_length\": \"short\", \"style\": [\"casual\"]}, \"fixture_id\": \"TEST-2N-001\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"black\", \"style\": [\"casual\"]}",
+        "status": "available",
+        "is_favourite": 0,
+        "created_at": "2026-11-17T15:53:08.343796+00:00",
+        "updated_at": "2026-11-17T15:53:08.343796+00:00",
+        "deleted_at": null,
+        "secondary_colour": null,
+        "style_tags": "[\"casual\"]",
+        "custom_tags": "[\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"]",
+        "structural_scores": "{\"garment_role\": \"top\", \"layering_index\": 0}",
+        "additional_attributes": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"regular\", \"garment_type\": \"top\", \"layering_index\": 0, \"material\": [\"cotton\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"short_sleeve_top\", \"material\": [\"cotton\"], \"pattern\": \"plain\", \"primary_colour\": \"black\", \"silhouette\": \"regular\", \"sleeve_length\": \"short\", \"style\": [\"casual\"]}, \"fixture_id\": \"TEST-2N-001\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"black\", \"style\": [\"casual\"]}",
+        "embedding": "null",
+        "profile_id": null
+      },
+      "media": {
+        "id": "9659d69e-0641-479e-9e14-e4d4a7d422e1",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "media_type": "synthetic_development_garment",
+        "storage_key": "2cf3d69d-bc6d-4cf2-81fc-3fa5407c3520.png",
+        "content_type": "image/png",
+        "size_bytes": 13201,
+        "status": "available",
+        "created_at": "2026-11-17T15:53:08.075773+00:00",
+        "width": 480,
+        "height": 600,
+        "original_filename": "TEST-2N-001.png"
+      },
+      "image_sha256": "9a70326325427178ef4e4a5d92a91e924f48a52bea7e7c7c9c9dee9c59ab9220"
+    },
+    {
+      "fixture_id": "TEST-2N-002",
+      "attributes": {
+        "category": "short_sleeve_top",
+        "primary_colour": "white",
+        "pattern": "plain",
+        "material": [
+          "cotton"
+        ],
+        "silhouette": "regular",
+        "style": [
+          "casual"
+        ],
+        "sleeve_length": "short"
+      },
+      "row": {
+        "id": "2e2d0000-0000-4000-8000-000000000002",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "processing_item_id": null,
+        "preferred_media_id": "7bf2f920-dd97-4a06-89ad-7f43ddae005b",
+        "name": "TEST-2ND-002 white short_sleeve_top SYNTHETIC",
+        "category": "short_sleeve_top",
+        "primary_colour": "white",
+        "pattern": "plain",
+        "attributes_json": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"regular\", \"garment_type\": \"top\", \"layering_index\": 0, \"material\": [\"cotton\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"short_sleeve_top\", \"material\": [\"cotton\"], \"pattern\": \"plain\", \"primary_colour\": \"white\", \"silhouette\": \"regular\", \"sleeve_length\": \"short\", \"style\": [\"casual\"]}, \"fixture_id\": \"TEST-2N-002\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"white\", \"style\": [\"casual\"]}",
+        "status": "available",
+        "is_favourite": 0,
+        "created_at": "2026-11-17T15:53:08.343796+00:00",
+        "updated_at": "2026-11-17T15:53:08.343796+00:00",
+        "deleted_at": null,
+        "secondary_colour": null,
+        "style_tags": "[\"casual\"]",
+        "custom_tags": "[\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"]",
+        "structural_scores": "{\"garment_role\": \"top\", \"layering_index\": 0}",
+        "additional_attributes": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"regular\", \"garment_type\": \"top\", \"layering_index\": 0, \"material\": [\"cotton\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"short_sleeve_top\", \"material\": [\"cotton\"], \"pattern\": \"plain\", \"primary_colour\": \"white\", \"silhouette\": \"regular\", \"sleeve_length\": \"short\", \"style\": [\"casual\"]}, \"fixture_id\": \"TEST-2N-002\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"white\", \"style\": [\"casual\"]}",
+        "embedding": "null",
+        "profile_id": null
+      },
+      "media": {
+        "id": "7bf2f920-dd97-4a06-89ad-7f43ddae005b",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "media_type": "synthetic_development_garment",
+        "storage_key": "3f48a04d-c2de-4580-8b9b-4d528e7e0e6c.png",
+        "content_type": "image/png",
+        "size_bytes": 13110,
+        "status": "available",
+        "created_at": "2026-11-17T15:53:08.086060+00:00",
+        "width": 480,
+        "height": 600,
+        "original_filename": "TEST-2N-002.png"
+      },
+      "image_sha256": "888c4a3d44952e7be4fe514f2b4ed9c890489fcee1ab4b145786a08b626a1991"
+    },
+    {
+      "fixture_id": "TEST-2N-003",
+      "attributes": {
+        "category": "short_sleeve_top",
+        "primary_colour": "blue",
+        "pattern": "stripe",
+        "material": [
+          "cotton"
+        ],
+        "silhouette": "regular",
+        "style": [
+          "casual"
+        ],
+        "sleeve_length": "short"
+      },
+      "row": {
+        "id": "2e2d0000-0000-4000-8000-000000000003",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "processing_item_id": null,
+        "preferred_media_id": "e64225aa-683b-4fcb-bcdf-c46791a1bf12",
+        "name": "TEST-2ND-003 blue short_sleeve_top SYNTHETIC",
+        "category": "short_sleeve_top",
+        "primary_colour": "blue",
+        "pattern": "stripe",
+        "attributes_json": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"regular\", \"garment_type\": \"top\", \"layering_index\": 0, \"material\": [\"cotton\"], \"pattern\": \"stripe\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"short_sleeve_top\", \"material\": [\"cotton\"], \"pattern\": \"stripe\", \"primary_colour\": \"blue\", \"silhouette\": \"regular\", \"sleeve_length\": \"short\", \"style\": [\"casual\"]}, \"fixture_id\": \"TEST-2N-003\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"blue\", \"style\": [\"casual\"]}",
+        "status": "available",
+        "is_favourite": 0,
+        "created_at": "2026-11-17T15:53:08.343796+00:00",
+        "updated_at": "2026-11-17T15:53:08.343796+00:00",
+        "deleted_at": null,
+        "secondary_colour": null,
+        "style_tags": "[\"casual\"]",
+        "custom_tags": "[\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"]",
+        "structural_scores": "{\"garment_role\": \"top\", \"layering_index\": 0}",
+        "additional_attributes": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"regular\", \"garment_type\": \"top\", \"layering_index\": 0, \"material\": [\"cotton\"], \"pattern\": \"stripe\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"short_sleeve_top\", \"material\": [\"cotton\"], \"pattern\": \"stripe\", \"primary_colour\": \"blue\", \"silhouette\": \"regular\", \"sleeve_length\": \"short\", \"style\": [\"casual\"]}, \"fixture_id\": \"TEST-2N-003\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"blue\", \"style\": [\"casual\"]}",
+        "embedding": "null",
+        "profile_id": null
+      },
+      "media": {
+        "id": "e64225aa-683b-4fcb-bcdf-c46791a1bf12",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "media_type": "synthetic_development_garment",
+        "storage_key": "5423042d-c8b3-42b0-be73-5acd64cc08b4.png",
+        "content_type": "image/png",
+        "size_bytes": 13525,
+        "status": "available",
+        "created_at": "2026-11-17T15:53:08.095731+00:00",
+        "width": 480,
+        "height": 600,
+        "original_filename": "TEST-2N-003.png"
+      },
+      "image_sha256": "acf868cc57d3494a6fbe5ed36bf039d18da3c61aa718880134a2adf8a92edec5"
+    },
+    {
+      "fixture_id": "TEST-2N-004",
+      "attributes": {
+        "category": "short_sleeve_top",
+        "primary_colour": "red",
+        "pattern": "plain",
+        "material": [
+          "linen"
+        ],
+        "silhouette": "loose",
+        "style": [
+          "casual"
+        ],
+        "sleeve_length": "short"
+      },
+      "row": {
+        "id": "2e2d0000-0000-4000-8000-000000000004",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "processing_item_id": null,
+        "preferred_media_id": "9bdb6023-c4b2-4b3b-b219-8447e3ec529e",
+        "name": "TEST-2ND-004 red short_sleeve_top SYNTHETIC",
+        "category": "short_sleeve_top",
+        "primary_colour": "red",
+        "pattern": "plain",
+        "attributes_json": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"loose\", \"garment_type\": \"top\", \"layering_index\": 0, \"material\": [\"linen\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"short_sleeve_top\", \"material\": [\"linen\"], \"pattern\": \"plain\", \"primary_colour\": \"red\", \"silhouette\": \"loose\", \"sleeve_length\": \"short\", \"style\": [\"casual\"]}, \"fixture_id\": \"TEST-2N-004\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"red\", \"style\": [\"casual\"]}",
+        "status": "available",
+        "is_favourite": 0,
+        "created_at": "2026-11-17T15:53:08.343796+00:00",
+        "updated_at": "2026-11-17T15:53:08.343796+00:00",
+        "deleted_at": null,
+        "secondary_colour": null,
+        "style_tags": "[\"casual\"]",
+        "custom_tags": "[\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"]",
+        "structural_scores": "{\"garment_role\": \"top\", \"layering_index\": 0}",
+        "additional_attributes": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"loose\", \"garment_type\": \"top\", \"layering_index\": 0, \"material\": [\"linen\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"short_sleeve_top\", \"material\": [\"linen\"], \"pattern\": \"plain\", \"primary_colour\": \"red\", \"silhouette\": \"loose\", \"sleeve_length\": \"short\", \"style\": [\"casual\"]}, \"fixture_id\": \"TEST-2N-004\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"red\", \"style\": [\"casual\"]}",
+        "embedding": "null",
+        "profile_id": null
+      },
+      "media": {
+        "id": "9bdb6023-c4b2-4b3b-b219-8447e3ec529e",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "media_type": "synthetic_development_garment",
+        "storage_key": "0da24846-a619-402c-aa25-8965473a12d0.png",
+        "content_type": "image/png",
+        "size_bytes": 13109,
+        "status": "available",
+        "created_at": "2026-11-17T15:53:08.104971+00:00",
+        "width": 480,
+        "height": 600,
+        "original_filename": "TEST-2N-004.png"
+      },
+      "image_sha256": "a634edb61193784324160982a7c1a37c321e861a56bc153de507b770989cd339"
+    },
+    {
+      "fixture_id": "TEST-2N-005",
+      "attributes": {
+        "category": "short_sleeve_top",
+        "primary_colour": "green",
+        "pattern": "check",
+        "material": [
+          "cotton"
+        ],
+        "silhouette": "regular",
+        "style": [
+          "smart casual"
+        ],
+        "sleeve_length": "short"
+      },
+      "row": {
+        "id": "2e2d0000-0000-4000-8000-000000000005",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "processing_item_id": null,
+        "preferred_media_id": "d4145a5f-d163-4b35-b4c2-21c2bbac4cd1",
+        "name": "TEST-2ND-005 green short_sleeve_top SYNTHETIC",
+        "category": "short_sleeve_top",
+        "primary_colour": "green",
+        "pattern": "check",
+        "attributes_json": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"regular\", \"garment_type\": \"top\", \"layering_index\": 0, \"material\": [\"cotton\"], \"pattern\": \"check\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"short_sleeve_top\", \"material\": [\"cotton\"], \"pattern\": \"check\", \"primary_colour\": \"green\", \"silhouette\": \"regular\", \"sleeve_length\": \"short\", \"style\": [\"smart casual\"]}, \"fixture_id\": \"TEST-2N-005\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"green\", \"style\": [\"smart casual\"]}",
+        "status": "available",
+        "is_favourite": 0,
+        "created_at": "2026-11-17T15:53:08.343796+00:00",
+        "updated_at": "2026-11-17T15:53:08.343796+00:00",
+        "deleted_at": null,
+        "secondary_colour": null,
+        "style_tags": "[\"smart casual\"]",
+        "custom_tags": "[\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"]",
+        "structural_scores": "{\"garment_role\": \"top\", \"layering_index\": 0}",
+        "additional_attributes": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"regular\", \"garment_type\": \"top\", \"layering_index\": 0, \"material\": [\"cotton\"], \"pattern\": \"check\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"short_sleeve_top\", \"material\": [\"cotton\"], \"pattern\": \"check\", \"primary_colour\": \"green\", \"silhouette\": \"regular\", \"sleeve_length\": \"short\", \"style\": [\"smart casual\"]}, \"fixture_id\": \"TEST-2N-005\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"green\", \"style\": [\"smart casual\"]}",
+        "embedding": "null",
+        "profile_id": null
+      },
+      "media": {
+        "id": "d4145a5f-d163-4b35-b4c2-21c2bbac4cd1",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "media_type": "synthetic_development_garment",
+        "storage_key": "67feaa7c-76fc-482d-bbc5-bc8688bb6aa7.png",
+        "content_type": "image/png",
+        "size_bytes": 13720,
+        "status": "available",
+        "created_at": "2026-11-17T15:53:08.113542+00:00",
+        "width": 480,
+        "height": 600,
+        "original_filename": "TEST-2N-005.png"
+      },
+      "image_sha256": "6fcda55f82c57bbde7f8d2acd1df819dc12db6a1e0ec8d8641255591d040de9e"
+    },
+    {
+      "fixture_id": "TEST-2N-006",
+      "attributes": {
+        "category": "short_sleeve_top",
+        "primary_colour": "grey",
+        "pattern": "plain",
+        "material": [
+          "synthetic"
+        ],
+        "silhouette": "regular",
+        "style": [
+          "sporty"
+        ],
+        "sleeve_length": "short"
+      },
+      "row": {
+        "id": "2e2d0000-0000-4000-8000-000000000006",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "processing_item_id": null,
+        "preferred_media_id": "47ebdbea-5fda-4f1a-9fb6-3b038df0a639",
+        "name": "TEST-2ND-006 grey short_sleeve_top SYNTHETIC",
+        "category": "short_sleeve_top",
+        "primary_colour": "grey",
+        "pattern": "plain",
+        "attributes_json": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"regular\", \"garment_type\": \"top\", \"layering_index\": 0, \"material\": [\"synthetic\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"short_sleeve_top\", \"material\": [\"synthetic\"], \"pattern\": \"plain\", \"primary_colour\": \"grey\", \"silhouette\": \"regular\", \"sleeve_length\": \"short\", \"style\": [\"sporty\"]}, \"fixture_id\": \"TEST-2N-006\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"grey\", \"style\": [\"sporty\"]}",
+        "status": "available",
+        "is_favourite": 0,
+        "created_at": "2026-11-17T15:53:08.343796+00:00",
+        "updated_at": "2026-11-17T15:53:08.343796+00:00",
+        "deleted_at": null,
+        "secondary_colour": null,
+        "style_tags": "[\"sporty\"]",
+        "custom_tags": "[\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"]",
+        "structural_scores": "{\"garment_role\": \"top\", \"layering_index\": 0}",
+        "additional_attributes": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"regular\", \"garment_type\": \"top\", \"layering_index\": 0, \"material\": [\"synthetic\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"short_sleeve_top\", \"material\": [\"synthetic\"], \"pattern\": \"plain\", \"primary_colour\": \"grey\", \"silhouette\": \"regular\", \"sleeve_length\": \"short\", \"style\": [\"sporty\"]}, \"fixture_id\": \"TEST-2N-006\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"grey\", \"style\": [\"sporty\"]}",
+        "embedding": "null",
+        "profile_id": null
+      },
+      "media": {
+        "id": "47ebdbea-5fda-4f1a-9fb6-3b038df0a639",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "media_type": "synthetic_development_garment",
+        "storage_key": "6ba55835-7cd3-466b-b290-b1fd38bbcb33.png",
+        "content_type": "image/png",
+        "size_bytes": 13577,
+        "status": "available",
+        "created_at": "2026-11-17T15:53:08.122442+00:00",
+        "width": 480,
+        "height": 600,
+        "original_filename": "TEST-2N-006.png"
+      },
+      "image_sha256": "ffda97c6141510b65cca720a3742a59827a2eebef7f512677bc93c0bc12e68c3"
+    },
+    {
+      "fixture_id": "TEST-2N-007",
+      "attributes": {
+        "category": "long_sleeve_top",
+        "primary_colour": "black",
+        "pattern": "stripe",
+        "material": [
+          "cotton"
+        ],
+        "silhouette": "regular",
+        "style": [
+          "casual"
+        ],
+        "sleeve_length": "wrist-length"
+      },
+      "row": {
+        "id": "2e2d0000-0000-4000-8000-000000000007",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "processing_item_id": null,
+        "preferred_media_id": "e837c5d4-3a4c-4457-9a59-62c9eefa4b7f",
+        "name": "TEST-2ND-007 black long_sleeve_top SYNTHETIC",
+        "category": "long_sleeve_top",
+        "primary_colour": "black",
+        "pattern": "stripe",
+        "attributes_json": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"regular\", \"garment_type\": \"top\", \"layering_index\": 1, \"material\": [\"cotton\"], \"pattern\": \"stripe\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"long_sleeve_top\", \"material\": [\"cotton\"], \"pattern\": \"stripe\", \"primary_colour\": \"black\", \"silhouette\": \"regular\", \"sleeve_length\": \"wrist-length\", \"style\": [\"casual\"]}, \"fixture_id\": \"TEST-2N-007\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"black\", \"style\": [\"casual\"]}",
+        "status": "available",
+        "is_favourite": 0,
+        "created_at": "2026-11-17T15:53:08.343796+00:00",
+        "updated_at": "2026-11-17T15:53:08.343796+00:00",
+        "deleted_at": null,
+        "secondary_colour": null,
+        "style_tags": "[\"casual\"]",
+        "custom_tags": "[\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"]",
+        "structural_scores": "{\"garment_role\": \"top\", \"layering_index\": 1}",
+        "additional_attributes": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"regular\", \"garment_type\": \"top\", \"layering_index\": 1, \"material\": [\"cotton\"], \"pattern\": \"stripe\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"long_sleeve_top\", \"material\": [\"cotton\"], \"pattern\": \"stripe\", \"primary_colour\": \"black\", \"silhouette\": \"regular\", \"sleeve_length\": \"wrist-length\", \"style\": [\"casual\"]}, \"fixture_id\": \"TEST-2N-007\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"black\", \"style\": [\"casual\"]}",
+        "embedding": "null",
+        "profile_id": null
+      },
+      "media": {
+        "id": "e837c5d4-3a4c-4457-9a59-62c9eefa4b7f",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "media_type": "synthetic_development_garment",
+        "storage_key": "1ef57d08-fa49-4421-a355-fafdfb283efe.png",
+        "content_type": "image/png",
+        "size_bytes": 14270,
+        "status": "available",
+        "created_at": "2026-11-17T15:53:08.132559+00:00",
+        "width": 480,
+        "height": 600,
+        "original_filename": "TEST-2N-007.png"
+      },
+      "image_sha256": "446231ce1f98f95661453a6424403f6311fb9056e90a7601ac98a9fc5f336cc9"
+    },
+    {
+      "fixture_id": "TEST-2N-008",
+      "attributes": {
+        "category": "long_sleeve_top",
+        "primary_colour": "white",
+        "pattern": "plain",
+        "material": [
+          "cotton"
+        ],
+        "silhouette": "regular",
+        "style": [
+          "smart casual"
+        ],
+        "sleeve_length": "wrist-length"
+      },
+      "row": {
+        "id": "2e2d0000-0000-4000-8000-000000000008",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "processing_item_id": null,
+        "preferred_media_id": "87cea37b-597f-4059-9257-850abd4a03b7",
+        "name": "TEST-2ND-008 white long_sleeve_top SYNTHETIC",
+        "category": "long_sleeve_top",
+        "primary_colour": "white",
+        "pattern": "plain",
+        "attributes_json": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"regular\", \"garment_type\": \"top\", \"layering_index\": 1, \"material\": [\"cotton\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"long_sleeve_top\", \"material\": [\"cotton\"], \"pattern\": \"plain\", \"primary_colour\": \"white\", \"silhouette\": \"regular\", \"sleeve_length\": \"wrist-length\", \"style\": [\"smart casual\"]}, \"fixture_id\": \"TEST-2N-008\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"white\", \"style\": [\"smart casual\"]}",
+        "status": "available",
+        "is_favourite": 0,
+        "created_at": "2026-11-17T15:53:08.343796+00:00",
+        "updated_at": "2026-11-17T15:53:08.343796+00:00",
+        "deleted_at": null,
+        "secondary_colour": null,
+        "style_tags": "[\"smart casual\"]",
+        "custom_tags": "[\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"]",
+        "structural_scores": "{\"garment_role\": \"top\", \"layering_index\": 1}",
+        "additional_attributes": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"regular\", \"garment_type\": \"top\", \"layering_index\": 1, \"material\": [\"cotton\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"long_sleeve_top\", \"material\": [\"cotton\"], \"pattern\": \"plain\", \"primary_colour\": \"white\", \"silhouette\": \"regular\", \"sleeve_length\": \"wrist-length\", \"style\": [\"smart casual\"]}, \"fixture_id\": \"TEST-2N-008\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"white\", \"style\": [\"smart casual\"]}",
+        "embedding": "null",
+        "profile_id": null
+      },
+      "media": {
+        "id": "87cea37b-597f-4059-9257-850abd4a03b7",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "media_type": "synthetic_development_garment",
+        "storage_key": "988d3b15-20b9-4302-aba6-3b77762af739.png",
+        "content_type": "image/png",
+        "size_bytes": 13700,
+        "status": "available",
+        "created_at": "2026-11-17T15:53:08.140497+00:00",
+        "width": 480,
+        "height": 600,
+        "original_filename": "TEST-2N-008.png"
+      },
+      "image_sha256": "ef43f08e28965c1807ef3054e4f1f1643a67df28e5a4e9b44ff095fbbd0676a0"
+    },
+    {
+      "fixture_id": "TEST-2N-009",
+      "attributes": {
+        "category": "long_sleeve_top",
+        "primary_colour": "grey",
+        "pattern": "check",
+        "material": [
+          "linen"
+        ],
+        "silhouette": "loose",
+        "style": [
+          "casual"
+        ],
+        "sleeve_length": "wrist-length"
+      },
+      "row": {
+        "id": "2e2d0000-0000-4000-8000-000000000009",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "processing_item_id": null,
+        "preferred_media_id": "c54d4edf-f512-4761-80da-68dcb4eabd2c",
+        "name": "TEST-2ND-009 grey long_sleeve_top SYNTHETIC",
+        "category": "long_sleeve_top",
+        "primary_colour": "grey",
+        "pattern": "check",
+        "attributes_json": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"loose\", \"garment_type\": \"top\", \"layering_index\": 1, \"material\": [\"linen\"], \"pattern\": \"check\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"long_sleeve_top\", \"material\": [\"linen\"], \"pattern\": \"check\", \"primary_colour\": \"grey\", \"silhouette\": \"loose\", \"sleeve_length\": \"wrist-length\", \"style\": [\"casual\"]}, \"fixture_id\": \"TEST-2N-009\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"grey\", \"style\": [\"casual\"]}",
+        "status": "available",
+        "is_favourite": 0,
+        "created_at": "2026-11-17T15:53:08.343796+00:00",
+        "updated_at": "2026-11-17T15:53:08.343796+00:00",
+        "deleted_at": null,
+        "secondary_colour": null,
+        "style_tags": "[\"casual\"]",
+        "custom_tags": "[\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"]",
+        "structural_scores": "{\"garment_role\": \"top\", \"layering_index\": 1}",
+        "additional_attributes": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"loose\", \"garment_type\": \"top\", \"layering_index\": 1, \"material\": [\"linen\"], \"pattern\": \"check\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"long_sleeve_top\", \"material\": [\"linen\"], \"pattern\": \"check\", \"primary_colour\": \"grey\", \"silhouette\": \"loose\", \"sleeve_length\": \"wrist-length\", \"style\": [\"casual\"]}, \"fixture_id\": \"TEST-2N-009\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"grey\", \"style\": [\"casual\"]}",
+        "embedding": "null",
+        "profile_id": null
+      },
+      "media": {
+        "id": "c54d4edf-f512-4761-80da-68dcb4eabd2c",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "media_type": "synthetic_development_garment",
+        "storage_key": "dfcb9147-9115-4325-888c-ab7f42d18651.png",
+        "content_type": "image/png",
+        "size_bytes": 14328,
+        "status": "available",
+        "created_at": "2026-11-17T15:53:08.150230+00:00",
+        "width": 480,
+        "height": 600,
+        "original_filename": "TEST-2N-009.png"
+      },
+      "image_sha256": "87ca55235d2d629c93a71621c531643a7c84a7595bad36dd56fcd4ab07e50148"
+    },
+    {
+      "fixture_id": "TEST-2N-010",
+      "attributes": {
+        "category": "long_sleeve_top",
+        "primary_colour": "blue",
+        "pattern": "plain",
+        "material": [
+          "cotton"
+        ],
+        "silhouette": "regular",
+        "style": [
+          "smart casual"
+        ],
+        "sleeve_length": "wrist-length"
+      },
+      "row": {
+        "id": "2e2d0000-0000-4000-8000-000000000010",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "processing_item_id": null,
+        "preferred_media_id": "65bd5059-0559-472e-903b-d9161c6e98c2",
+        "name": "TEST-2ND-010 blue long_sleeve_top SYNTHETIC",
+        "category": "long_sleeve_top",
+        "primary_colour": "blue",
+        "pattern": "plain",
+        "attributes_json": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"regular\", \"garment_type\": \"top\", \"layering_index\": 1, \"material\": [\"cotton\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"long_sleeve_top\", \"material\": [\"cotton\"], \"pattern\": \"plain\", \"primary_colour\": \"blue\", \"silhouette\": \"regular\", \"sleeve_length\": \"wrist-length\", \"style\": [\"smart casual\"]}, \"fixture_id\": \"TEST-2N-010\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"blue\", \"style\": [\"smart casual\"]}",
+        "status": "available",
+        "is_favourite": 0,
+        "created_at": "2026-11-17T15:53:08.343796+00:00",
+        "updated_at": "2026-11-17T15:53:08.343796+00:00",
+        "deleted_at": null,
+        "secondary_colour": null,
+        "style_tags": "[\"smart casual\"]",
+        "custom_tags": "[\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"]",
+        "structural_scores": "{\"garment_role\": \"top\", \"layering_index\": 1}",
+        "additional_attributes": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"regular\", \"garment_type\": \"top\", \"layering_index\": 1, \"material\": [\"cotton\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"long_sleeve_top\", \"material\": [\"cotton\"], \"pattern\": \"plain\", \"primary_colour\": \"blue\", \"silhouette\": \"regular\", \"sleeve_length\": \"wrist-length\", \"style\": [\"smart casual\"]}, \"fixture_id\": \"TEST-2N-010\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"blue\", \"style\": [\"smart casual\"]}",
+        "embedding": "null",
+        "profile_id": null
+      },
+      "media": {
+        "id": "65bd5059-0559-472e-903b-d9161c6e98c2",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "media_type": "synthetic_development_garment",
+        "storage_key": "3d458c6e-151f-4ce3-a377-7969ec84b0f6.png",
+        "content_type": "image/png",
+        "size_bytes": 13192,
+        "status": "available",
+        "created_at": "2026-11-17T15:53:08.160361+00:00",
+        "width": 480,
+        "height": 600,
+        "original_filename": "TEST-2N-010.png"
+      },
+      "image_sha256": "6b209fc95d6d67c188d8a583866c5ce85e1c11977a4a1b78fd84eb4ba09ef0fd"
+    },
+    {
+      "fixture_id": "TEST-2N-011",
+      "attributes": {
+        "category": "long_sleeve_top",
+        "primary_colour": "green",
+        "pattern": "plain",
+        "material": [
+          "wool"
+        ],
+        "silhouette": "regular",
+        "style": [
+          "classic"
+        ],
+        "sleeve_length": "wrist-length"
+      },
+      "row": {
+        "id": "2e2d0000-0000-4000-8000-000000000011",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "processing_item_id": null,
+        "preferred_media_id": "9240fa4d-fb04-416b-8e51-dc6b483a5364",
+        "name": "TEST-2ND-011 green long_sleeve_top SYNTHETIC",
+        "category": "long_sleeve_top",
+        "primary_colour": "green",
+        "pattern": "plain",
+        "attributes_json": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"regular\", \"garment_type\": \"top\", \"layering_index\": 1, \"material\": [\"wool\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"long_sleeve_top\", \"material\": [\"wool\"], \"pattern\": \"plain\", \"primary_colour\": \"green\", \"silhouette\": \"regular\", \"sleeve_length\": \"wrist-length\", \"style\": [\"classic\"]}, \"fixture_id\": \"TEST-2N-011\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"green\", \"style\": [\"classic\"]}",
+        "status": "available",
+        "is_favourite": 0,
+        "created_at": "2026-11-17T15:53:08.343796+00:00",
+        "updated_at": "2026-11-17T15:53:08.343796+00:00",
+        "deleted_at": null,
+        "secondary_colour": null,
+        "style_tags": "[\"classic\"]",
+        "custom_tags": "[\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"]",
+        "structural_scores": "{\"garment_role\": \"top\", \"layering_index\": 1}",
+        "additional_attributes": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"regular\", \"garment_type\": \"top\", \"layering_index\": 1, \"material\": [\"wool\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"long_sleeve_top\", \"material\": [\"wool\"], \"pattern\": \"plain\", \"primary_colour\": \"green\", \"silhouette\": \"regular\", \"sleeve_length\": \"wrist-length\", \"style\": [\"classic\"]}, \"fixture_id\": \"TEST-2N-011\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"green\", \"style\": [\"classic\"]}",
+        "embedding": "null",
+        "profile_id": null
+      },
+      "media": {
+        "id": "9240fa4d-fb04-416b-8e51-dc6b483a5364",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "media_type": "synthetic_development_garment",
+        "storage_key": "821787aa-2317-4704-b9a3-9c8e7dd242c4.png",
+        "content_type": "image/png",
+        "size_bytes": 13222,
+        "status": "available",
+        "created_at": "2026-11-17T15:53:08.168603+00:00",
+        "width": 480,
+        "height": 600,
+        "original_filename": "TEST-2N-011.png"
+      },
+      "image_sha256": "bea029603325de40db7d13ddf95ccaa152ac95cf834a82c6185b2659c54e070f"
+    },
+    {
+      "fixture_id": "TEST-2N-012",
+      "attributes": {
+        "category": "long_sleeve_top",
+        "primary_colour": "orange",
+        "pattern": "check",
+        "material": null,
+        "silhouette": "regular",
+        "style": [
+          "casual"
+        ],
+        "sleeve_length": "wrist-length"
+      },
+      "row": {
+        "id": "2e2d0000-0000-4000-8000-000000000012",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "processing_item_id": null,
+        "preferred_media_id": "bf911afc-be64-4d59-a7c4-4387fc700da0",
+        "name": "TEST-2ND-012 orange long_sleeve_top UNKNOWN-MATERIAL SYNTHETIC",
+        "category": "long_sleeve_top",
+        "primary_colour": "orange",
+        "pattern": "check",
+        "attributes_json": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"regular\", \"garment_type\": \"top\", \"layering_index\": 1, \"material\": null, \"pattern\": \"check\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"long_sleeve_top\", \"material\": null, \"pattern\": \"check\", \"primary_colour\": \"orange\", \"silhouette\": \"regular\", \"sleeve_length\": \"wrist-length\", \"style\": [\"casual\"]}, \"fixture_id\": \"TEST-2N-012\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"orange\", \"style\": [\"casual\"]}",
+        "status": "available",
+        "is_favourite": 0,
+        "created_at": "2026-11-17T15:53:08.343796+00:00",
+        "updated_at": "2026-11-17T15:53:08.343796+00:00",
+        "deleted_at": null,
+        "secondary_colour": null,
+        "style_tags": "[\"casual\"]",
+        "custom_tags": "[\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"]",
+        "structural_scores": "{\"garment_role\": \"top\", \"layering_index\": 1}",
+        "additional_attributes": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"regular\", \"garment_type\": \"top\", \"layering_index\": 1, \"material\": null, \"pattern\": \"check\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"long_sleeve_top\", \"material\": null, \"pattern\": \"check\", \"primary_colour\": \"orange\", \"silhouette\": \"regular\", \"sleeve_length\": \"wrist-length\", \"style\": [\"casual\"]}, \"fixture_id\": \"TEST-2N-012\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"orange\", \"style\": [\"casual\"]}",
+        "embedding": "null",
+        "profile_id": null
+      },
+      "media": {
+        "id": "bf911afc-be64-4d59-a7c4-4387fc700da0",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "media_type": "synthetic_development_garment",
+        "storage_key": "2b596aca-3de5-4b83-aefc-e11c8b26214e.png",
+        "content_type": "image/png",
+        "size_bytes": 15198,
+        "status": "available",
+        "created_at": "2026-11-17T15:53:08.177458+00:00",
+        "width": 480,
+        "height": 600,
+        "original_filename": "TEST-2N-012.png"
+      },
+      "image_sha256": "4c5db3bb93f8b53ff3c77ffcb9368b6cd5b31e70cfab1839acc72fcb04278cb6"
+    },
+    {
+      "fixture_id": "TEST-2N-013",
+      "attributes": {
+        "category": "vest",
+        "primary_colour": "green",
+        "pattern": "plain",
+        "material": [
+          "wool"
+        ],
+        "silhouette": "regular",
+        "style": [
+          "smart casual"
+        ],
+        "sleeve_length": "sleeveless"
+      },
+      "row": {
+        "id": "2e2d0000-0000-4000-8000-000000000013",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "processing_item_id": null,
+        "preferred_media_id": "71ff2210-af08-4d5c-9d21-14c862cd9e26",
+        "name": "TEST-2ND-013 green vest SYNTHETIC",
+        "category": "vest",
+        "primary_colour": "green",
+        "pattern": "plain",
+        "attributes_json": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"regular\", \"garment_type\": \"top\", \"layering_index\": 1, \"material\": [\"wool\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"vest\", \"material\": [\"wool\"], \"pattern\": \"plain\", \"primary_colour\": \"green\", \"silhouette\": \"regular\", \"sleeve_length\": \"sleeveless\", \"style\": [\"smart casual\"]}, \"fixture_id\": \"TEST-2N-013\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"green\", \"style\": [\"smart casual\"]}",
+        "status": "available",
+        "is_favourite": 0,
+        "created_at": "2026-11-17T15:53:08.343796+00:00",
+        "updated_at": "2026-11-17T15:53:08.343796+00:00",
+        "deleted_at": null,
+        "secondary_colour": null,
+        "style_tags": "[\"smart casual\"]",
+        "custom_tags": "[\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"]",
+        "structural_scores": "{\"garment_role\": \"top\", \"layering_index\": 1}",
+        "additional_attributes": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"regular\", \"garment_type\": \"top\", \"layering_index\": 1, \"material\": [\"wool\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"vest\", \"material\": [\"wool\"], \"pattern\": \"plain\", \"primary_colour\": \"green\", \"silhouette\": \"regular\", \"sleeve_length\": \"sleeveless\", \"style\": [\"smart casual\"]}, \"fixture_id\": \"TEST-2N-013\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"green\", \"style\": [\"smart casual\"]}",
+        "embedding": "null",
+        "profile_id": null
+      },
+      "media": {
+        "id": "71ff2210-af08-4d5c-9d21-14c862cd9e26",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "media_type": "synthetic_development_garment",
+        "storage_key": "066bfaa7-7a7e-47e1-a871-b0facb7bb33d.png",
+        "content_type": "image/png",
+        "size_bytes": 12055,
+        "status": "available",
+        "created_at": "2026-11-17T15:53:08.185634+00:00",
+        "width": 480,
+        "height": 600,
+        "original_filename": "TEST-2N-013.png"
+      },
+      "image_sha256": "b676f676d70534364ea3b211a0f37516e82d8ce0e99dd49e26b35820dd93abc2"
+    },
+    {
+      "fixture_id": "TEST-2N-014",
+      "attributes": {
+        "category": "trousers",
+        "primary_colour": "blue",
+        "pattern": "plain",
+        "material": [
+          "denim"
+        ],
+        "silhouette": "straight",
+        "style": [
+          "casual"
+        ],
+        "sleeve_length": null
+      },
+      "row": {
+        "id": "2e2d0000-0000-4000-8000-000000000014",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "processing_item_id": null,
+        "preferred_media_id": "35ec7eb4-a15d-4a21-937f-bffccfac1b01",
+        "name": "TEST-2ND-014 blue trousers SYNTHETIC",
+        "category": "trousers",
+        "primary_colour": "blue",
+        "pattern": "plain",
+        "attributes_json": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"straight\", \"garment_type\": \"bottom\", \"layering_index\": 0, \"material\": [\"denim\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"trousers\", \"material\": [\"denim\"], \"pattern\": \"plain\", \"primary_colour\": \"blue\", \"silhouette\": \"straight\", \"sleeve_length\": null, \"style\": [\"casual\"]}, \"fixture_id\": \"TEST-2N-014\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"blue\", \"style\": [\"casual\"]}",
+        "status": "available",
+        "is_favourite": 0,
+        "created_at": "2026-11-17T15:53:08.343796+00:00",
+        "updated_at": "2026-11-17T15:53:08.343796+00:00",
+        "deleted_at": null,
+        "secondary_colour": null,
+        "style_tags": "[\"casual\"]",
+        "custom_tags": "[\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"]",
+        "structural_scores": "{\"garment_role\": \"bottom\", \"layering_index\": 0}",
+        "additional_attributes": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"straight\", \"garment_type\": \"bottom\", \"layering_index\": 0, \"material\": [\"denim\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"trousers\", \"material\": [\"denim\"], \"pattern\": \"plain\", \"primary_colour\": \"blue\", \"silhouette\": \"straight\", \"sleeve_length\": null, \"style\": [\"casual\"]}, \"fixture_id\": \"TEST-2N-014\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"blue\", \"style\": [\"casual\"]}",
+        "embedding": "null",
+        "profile_id": null
+      },
+      "media": {
+        "id": "35ec7eb4-a15d-4a21-937f-bffccfac1b01",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "media_type": "synthetic_development_garment",
+        "storage_key": "07cc4953-f429-4439-accc-a0dca3c5cb34.png",
+        "content_type": "image/png",
+        "size_bytes": 12495,
+        "status": "available",
+        "created_at": "2026-11-17T15:53:08.195552+00:00",
+        "width": 480,
+        "height": 600,
+        "original_filename": "TEST-2N-014.png"
+      },
+      "image_sha256": "9cd3f959936b3bc2de837e252e5e4591a96a90ac0bdfde02c958ea223fe6e57d"
+    },
+    {
+      "fixture_id": "TEST-2N-015",
+      "attributes": {
+        "category": "trousers",
+        "primary_colour": "black",
+        "pattern": "plain",
+        "material": [
+          "denim"
+        ],
+        "silhouette": "regular",
+        "style": [
+          "casual"
+        ],
+        "sleeve_length": null
+      },
+      "row": {
+        "id": "2e2d0000-0000-4000-8000-000000000015",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "processing_item_id": null,
+        "preferred_media_id": "0d51df01-9e16-4a46-a96f-f48ebbd26be5",
+        "name": "TEST-2ND-015 black trousers SYNTHETIC",
+        "category": "trousers",
+        "primary_colour": "black",
+        "pattern": "plain",
+        "attributes_json": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"regular\", \"garment_type\": \"bottom\", \"layering_index\": 0, \"material\": [\"denim\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"trousers\", \"material\": [\"denim\"], \"pattern\": \"plain\", \"primary_colour\": \"black\", \"silhouette\": \"regular\", \"sleeve_length\": null, \"style\": [\"casual\"]}, \"fixture_id\": \"TEST-2N-015\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"black\", \"style\": [\"casual\"]}",
+        "status": "available",
+        "is_favourite": 0,
+        "created_at": "2026-11-17T15:53:08.343796+00:00",
+        "updated_at": "2026-11-17T15:53:08.343796+00:00",
+        "deleted_at": null,
+        "secondary_colour": null,
+        "style_tags": "[\"casual\"]",
+        "custom_tags": "[\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"]",
+        "structural_scores": "{\"garment_role\": \"bottom\", \"layering_index\": 0}",
+        "additional_attributes": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"regular\", \"garment_type\": \"bottom\", \"layering_index\": 0, \"material\": [\"denim\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"trousers\", \"material\": [\"denim\"], \"pattern\": \"plain\", \"primary_colour\": \"black\", \"silhouette\": \"regular\", \"sleeve_length\": null, \"style\": [\"casual\"]}, \"fixture_id\": \"TEST-2N-015\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"black\", \"style\": [\"casual\"]}",
+        "embedding": "null",
+        "profile_id": null
+      },
+      "media": {
+        "id": "0d51df01-9e16-4a46-a96f-f48ebbd26be5",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "media_type": "synthetic_development_garment",
+        "storage_key": "0268c2e6-3093-4029-8123-da3262ec2a07.png",
+        "content_type": "image/png",
+        "size_bytes": 12542,
+        "status": "available",
+        "created_at": "2026-11-17T15:53:08.203739+00:00",
+        "width": 480,
+        "height": 600,
+        "original_filename": "TEST-2N-015.png"
+      },
+      "image_sha256": "9b4885ebc532147e6866ef16efa7ebaf2965446b7f8d90c1ecd16f116f50232e"
+    },
+    {
+      "fixture_id": "TEST-2N-016",
+      "attributes": {
+        "category": "trousers",
+        "primary_colour": "grey",
+        "pattern": "plain",
+        "material": [
+          "denim"
+        ],
+        "silhouette": "straight",
+        "style": [
+          "casual"
+        ],
+        "sleeve_length": null
+      },
+      "row": {
+        "id": "2e2d0000-0000-4000-8000-000000000016",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "processing_item_id": null,
+        "preferred_media_id": "11e83bce-8711-49ff-ba67-e7da16e83b0d",
+        "name": "TEST-2ND-016 grey trousers SYNTHETIC",
+        "category": "trousers",
+        "primary_colour": "grey",
+        "pattern": "plain",
+        "attributes_json": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"straight\", \"garment_type\": \"bottom\", \"layering_index\": 0, \"material\": [\"denim\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"trousers\", \"material\": [\"denim\"], \"pattern\": \"plain\", \"primary_colour\": \"grey\", \"silhouette\": \"straight\", \"sleeve_length\": null, \"style\": [\"casual\"]}, \"fixture_id\": \"TEST-2N-016\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"grey\", \"style\": [\"casual\"]}",
+        "status": "available",
+        "is_favourite": 0,
+        "created_at": "2026-11-17T15:53:08.343796+00:00",
+        "updated_at": "2026-11-17T15:53:08.343796+00:00",
+        "deleted_at": null,
+        "secondary_colour": null,
+        "style_tags": "[\"casual\"]",
+        "custom_tags": "[\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"]",
+        "structural_scores": "{\"garment_role\": \"bottom\", \"layering_index\": 0}",
+        "additional_attributes": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"straight\", \"garment_type\": \"bottom\", \"layering_index\": 0, \"material\": [\"denim\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"trousers\", \"material\": [\"denim\"], \"pattern\": \"plain\", \"primary_colour\": \"grey\", \"silhouette\": \"straight\", \"sleeve_length\": null, \"style\": [\"casual\"]}, \"fixture_id\": \"TEST-2N-016\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"grey\", \"style\": [\"casual\"]}",
+        "embedding": "null",
+        "profile_id": null
+      },
+      "media": {
+        "id": "11e83bce-8711-49ff-ba67-e7da16e83b0d",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "media_type": "synthetic_development_garment",
+        "storage_key": "95dac2b4-09cb-4f94-8548-24533b9b49b1.png",
+        "content_type": "image/png",
+        "size_bytes": 12674,
+        "status": "available",
+        "created_at": "2026-11-17T15:53:08.212663+00:00",
+        "width": 480,
+        "height": 600,
+        "original_filename": "TEST-2N-016.png"
+      },
+      "image_sha256": "269520c5eddcf71662db40b4bedbe394a2af27192a2c2ecda1e6caa244684b33"
+    },
+    {
+      "fixture_id": "TEST-2N-017",
+      "attributes": {
+        "category": "trousers",
+        "primary_colour": "black",
+        "pattern": "plain",
+        "material": [
+          "cotton"
+        ],
+        "silhouette": "regular",
+        "style": [
+          "smart casual"
+        ],
+        "sleeve_length": null
+      },
+      "row": {
+        "id": "2e2d0000-0000-4000-8000-000000000017",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "processing_item_id": null,
+        "preferred_media_id": "73125f78-ffb1-42a2-a918-f4b53994b97d",
+        "name": "TEST-2ND-017 black trousers SYNTHETIC",
+        "category": "trousers",
+        "primary_colour": "black",
+        "pattern": "plain",
+        "attributes_json": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"regular\", \"garment_type\": \"bottom\", \"layering_index\": 0, \"material\": [\"cotton\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"trousers\", \"material\": [\"cotton\"], \"pattern\": \"plain\", \"primary_colour\": \"black\", \"silhouette\": \"regular\", \"sleeve_length\": null, \"style\": [\"smart casual\"]}, \"fixture_id\": \"TEST-2N-017\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"black\", \"style\": [\"smart casual\"]}",
+        "status": "available",
+        "is_favourite": 0,
+        "created_at": "2026-11-17T15:53:08.343796+00:00",
+        "updated_at": "2026-11-17T15:53:08.343796+00:00",
+        "deleted_at": null,
+        "secondary_colour": null,
+        "style_tags": "[\"smart casual\"]",
+        "custom_tags": "[\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"]",
+        "structural_scores": "{\"garment_role\": \"bottom\", \"layering_index\": 0}",
+        "additional_attributes": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"regular\", \"garment_type\": \"bottom\", \"layering_index\": 0, \"material\": [\"cotton\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"trousers\", \"material\": [\"cotton\"], \"pattern\": \"plain\", \"primary_colour\": \"black\", \"silhouette\": \"regular\", \"sleeve_length\": null, \"style\": [\"smart casual\"]}, \"fixture_id\": \"TEST-2N-017\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"black\", \"style\": [\"smart casual\"]}",
+        "embedding": "null",
+        "profile_id": null
+      },
+      "media": {
+        "id": "73125f78-ffb1-42a2-a918-f4b53994b97d",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "media_type": "synthetic_development_garment",
+        "storage_key": "3c670dff-e721-4a07-a251-88097b12cb33.png",
+        "content_type": "image/png",
+        "size_bytes": 12402,
+        "status": "available",
+        "created_at": "2026-11-17T15:53:08.222517+00:00",
+        "width": 480,
+        "height": 600,
+        "original_filename": "TEST-2N-017.png"
+      },
+      "image_sha256": "01a49a0173e710841f6b30fab8d86481c7ba8f9172682e4d7cf4260ac633ff86"
+    },
+    {
+      "fixture_id": "TEST-2N-018",
+      "attributes": {
+        "category": "trousers",
+        "primary_colour": "white",
+        "pattern": "plain",
+        "material": [
+          "cotton"
+        ],
+        "silhouette": "loose",
+        "style": [
+          "casual"
+        ],
+        "sleeve_length": null
+      },
+      "row": {
+        "id": "2e2d0000-0000-4000-8000-000000000018",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "processing_item_id": null,
+        "preferred_media_id": "79411a42-bf10-4bce-be96-13c3370f81b7",
+        "name": "TEST-2ND-018 white trousers SYNTHETIC",
+        "category": "trousers",
+        "primary_colour": "white",
+        "pattern": "plain",
+        "attributes_json": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"loose\", \"garment_type\": \"bottom\", \"layering_index\": 0, \"material\": [\"cotton\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"trousers\", \"material\": [\"cotton\"], \"pattern\": \"plain\", \"primary_colour\": \"white\", \"silhouette\": \"loose\", \"sleeve_length\": null, \"style\": [\"casual\"]}, \"fixture_id\": \"TEST-2N-018\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"white\", \"style\": [\"casual\"]}",
+        "status": "available",
+        "is_favourite": 0,
+        "created_at": "2026-11-17T15:53:08.343796+00:00",
+        "updated_at": "2026-11-17T15:53:08.343796+00:00",
+        "deleted_at": null,
+        "secondary_colour": null,
+        "style_tags": "[\"casual\"]",
+        "custom_tags": "[\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"]",
+        "structural_scores": "{\"garment_role\": \"bottom\", \"layering_index\": 0}",
+        "additional_attributes": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"loose\", \"garment_type\": \"bottom\", \"layering_index\": 0, \"material\": [\"cotton\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"trousers\", \"material\": [\"cotton\"], \"pattern\": \"plain\", \"primary_colour\": \"white\", \"silhouette\": \"loose\", \"sleeve_length\": null, \"style\": [\"casual\"]}, \"fixture_id\": \"TEST-2N-018\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"white\", \"style\": [\"casual\"]}",
+        "embedding": "null",
+        "profile_id": null
+      },
+      "media": {
+        "id": "79411a42-bf10-4bce-be96-13c3370f81b7",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "media_type": "synthetic_development_garment",
+        "storage_key": "e9fa4b59-c09a-4bf7-9284-1b702bb1b5df.png",
+        "content_type": "image/png",
+        "size_bytes": 12358,
+        "status": "available",
+        "created_at": "2026-11-17T15:53:08.230357+00:00",
+        "width": 480,
+        "height": 600,
+        "original_filename": "TEST-2N-018.png"
+      },
+      "image_sha256": "33acb9606dedff8ff7dd49202ce50b52e150d9a92a681ac87887da5573646c1b"
+    },
+    {
+      "fixture_id": "TEST-2N-019",
+      "attributes": {
+        "category": "trousers",
+        "primary_colour": "green",
+        "pattern": "plain",
+        "material": [
+          "linen"
+        ],
+        "silhouette": "loose",
+        "style": [
+          "casual"
+        ],
+        "sleeve_length": null
+      },
+      "row": {
+        "id": "2e2d0000-0000-4000-8000-000000000019",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "processing_item_id": null,
+        "preferred_media_id": "d0503c7b-ba2e-4160-b5d4-508436525f54",
+        "name": "TEST-2ND-019 green trousers SYNTHETIC",
+        "category": "trousers",
+        "primary_colour": "green",
+        "pattern": "plain",
+        "attributes_json": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"loose\", \"garment_type\": \"bottom\", \"layering_index\": 0, \"material\": [\"linen\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"trousers\", \"material\": [\"linen\"], \"pattern\": \"plain\", \"primary_colour\": \"green\", \"silhouette\": \"loose\", \"sleeve_length\": null, \"style\": [\"casual\"]}, \"fixture_id\": \"TEST-2N-019\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"green\", \"style\": [\"casual\"]}",
+        "status": "available",
+        "is_favourite": 0,
+        "created_at": "2026-11-17T15:53:08.343796+00:00",
+        "updated_at": "2026-11-17T15:53:08.343796+00:00",
+        "deleted_at": null,
+        "secondary_colour": null,
+        "style_tags": "[\"casual\"]",
+        "custom_tags": "[\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"]",
+        "structural_scores": "{\"garment_role\": \"bottom\", \"layering_index\": 0}",
+        "additional_attributes": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"loose\", \"garment_type\": \"bottom\", \"layering_index\": 0, \"material\": [\"linen\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"trousers\", \"material\": [\"linen\"], \"pattern\": \"plain\", \"primary_colour\": \"green\", \"silhouette\": \"loose\", \"sleeve_length\": null, \"style\": [\"casual\"]}, \"fixture_id\": \"TEST-2N-019\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"green\", \"style\": [\"casual\"]}",
+        "embedding": "null",
+        "profile_id": null
+      },
+      "media": {
+        "id": "d0503c7b-ba2e-4160-b5d4-508436525f54",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "media_type": "synthetic_development_garment",
+        "storage_key": "0e87324e-e28d-4a1c-bded-b57e3f7aaf94.png",
+        "content_type": "image/png",
+        "size_bytes": 12214,
+        "status": "available",
+        "created_at": "2026-11-17T15:53:08.239006+00:00",
+        "width": 480,
+        "height": 600,
+        "original_filename": "TEST-2N-019.png"
+      },
+      "image_sha256": "4b745c99f9e31191cf49b310da90ac8b82a451eb8de6034eaed29bd33b41ac95"
+    },
+    {
+      "fixture_id": "TEST-2N-020",
+      "attributes": {
+        "category": "shorts",
+        "primary_colour": "black",
+        "pattern": "plain",
+        "material": [
+          "cotton"
+        ],
+        "silhouette": "regular",
+        "style": [
+          "casual"
+        ],
+        "sleeve_length": null
+      },
+      "row": {
+        "id": "2e2d0000-0000-4000-8000-000000000020",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "processing_item_id": null,
+        "preferred_media_id": "c20e9645-6b23-40f2-9c99-4ba9d0345a30",
+        "name": "TEST-2ND-020 black shorts SYNTHETIC",
+        "category": "shorts",
+        "primary_colour": "black",
+        "pattern": "plain",
+        "attributes_json": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"regular\", \"garment_type\": \"bottom\", \"layering_index\": 0, \"material\": [\"cotton\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"shorts\", \"material\": [\"cotton\"], \"pattern\": \"plain\", \"primary_colour\": \"black\", \"silhouette\": \"regular\", \"sleeve_length\": null, \"style\": [\"casual\"]}, \"fixture_id\": \"TEST-2N-020\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"black\", \"style\": [\"casual\"]}",
+        "status": "available",
+        "is_favourite": 0,
+        "created_at": "2026-11-17T15:53:08.343796+00:00",
+        "updated_at": "2026-11-17T15:53:08.343796+00:00",
+        "deleted_at": null,
+        "secondary_colour": null,
+        "style_tags": "[\"casual\"]",
+        "custom_tags": "[\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"]",
+        "structural_scores": "{\"garment_role\": \"bottom\", \"layering_index\": 0}",
+        "additional_attributes": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"regular\", \"garment_type\": \"bottom\", \"layering_index\": 0, \"material\": [\"cotton\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"shorts\", \"material\": [\"cotton\"], \"pattern\": \"plain\", \"primary_colour\": \"black\", \"silhouette\": \"regular\", \"sleeve_length\": null, \"style\": [\"casual\"]}, \"fixture_id\": \"TEST-2N-020\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"black\", \"style\": [\"casual\"]}",
+        "embedding": "null",
+        "profile_id": null
+      },
+      "media": {
+        "id": "c20e9645-6b23-40f2-9c99-4ba9d0345a30",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "media_type": "synthetic_development_garment",
+        "storage_key": "eb184f7a-cc7b-4b71-b2a1-4b7837a9328b.png",
+        "content_type": "image/png",
+        "size_bytes": 11889,
+        "status": "available",
+        "created_at": "2026-11-17T15:53:08.247964+00:00",
+        "width": 480,
+        "height": 600,
+        "original_filename": "TEST-2N-020.png"
+      },
+      "image_sha256": "6edf12be2c10dece5cc667c88e3717ef5944ecee4705e1ce1dbc31b3a008aff3"
+    },
+    {
+      "fixture_id": "TEST-2N-021",
+      "attributes": {
+        "category": "shorts",
+        "primary_colour": "blue",
+        "pattern": "plain",
+        "material": [
+          "denim"
+        ],
+        "silhouette": "regular",
+        "style": [
+          "casual"
+        ],
+        "sleeve_length": null
+      },
+      "row": {
+        "id": "2e2d0000-0000-4000-8000-000000000021",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "processing_item_id": null,
+        "preferred_media_id": "17f435bb-4fdf-4ba0-b353-5b90ecebf051",
+        "name": "TEST-2ND-021 blue shorts SYNTHETIC",
+        "category": "shorts",
+        "primary_colour": "blue",
+        "pattern": "plain",
+        "attributes_json": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"regular\", \"garment_type\": \"bottom\", \"layering_index\": 0, \"material\": [\"denim\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"shorts\", \"material\": [\"denim\"], \"pattern\": \"plain\", \"primary_colour\": \"blue\", \"silhouette\": \"regular\", \"sleeve_length\": null, \"style\": [\"casual\"]}, \"fixture_id\": \"TEST-2N-021\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"blue\", \"style\": [\"casual\"]}",
+        "status": "available",
+        "is_favourite": 0,
+        "created_at": "2026-11-17T15:53:08.343796+00:00",
+        "updated_at": "2026-11-17T15:53:08.343796+00:00",
+        "deleted_at": null,
+        "secondary_colour": null,
+        "style_tags": "[\"casual\"]",
+        "custom_tags": "[\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"]",
+        "structural_scores": "{\"garment_role\": \"bottom\", \"layering_index\": 0}",
+        "additional_attributes": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"regular\", \"garment_type\": \"bottom\", \"layering_index\": 0, \"material\": [\"denim\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"shorts\", \"material\": [\"denim\"], \"pattern\": \"plain\", \"primary_colour\": \"blue\", \"silhouette\": \"regular\", \"sleeve_length\": null, \"style\": [\"casual\"]}, \"fixture_id\": \"TEST-2N-021\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"blue\", \"style\": [\"casual\"]}",
+        "embedding": "null",
+        "profile_id": null
+      },
+      "media": {
+        "id": "17f435bb-4fdf-4ba0-b353-5b90ecebf051",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "media_type": "synthetic_development_garment",
+        "storage_key": "55ba7f58-7b3a-4ff1-b976-aa070ecc6662.png",
+        "content_type": "image/png",
+        "size_bytes": 11711,
+        "status": "available",
+        "created_at": "2026-11-17T15:53:08.256990+00:00",
+        "width": 480,
+        "height": 600,
+        "original_filename": "TEST-2N-021.png"
+      },
+      "image_sha256": "436b2d9a65957fbbb30ec1a56c744ec4342aa5bc2c88a00be17616be4bd12b05"
+    },
+    {
+      "fixture_id": "TEST-2N-022",
+      "attributes": {
+        "category": "shorts",
+        "primary_colour": "grey",
+        "pattern": "plain",
+        "material": [
+          "synthetic"
+        ],
+        "silhouette": "regular",
+        "style": [
+          "sporty"
+        ],
+        "sleeve_length": null
+      },
+      "row": {
+        "id": "2e2d0000-0000-4000-8000-000000000022",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "processing_item_id": null,
+        "preferred_media_id": "4789ac10-fd72-4243-9fc9-7d80b40cf34a",
+        "name": "TEST-2ND-022 grey shorts SYNTHETIC",
+        "category": "shorts",
+        "primary_colour": "grey",
+        "pattern": "plain",
+        "attributes_json": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"regular\", \"garment_type\": \"bottom\", \"layering_index\": 0, \"material\": [\"synthetic\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"shorts\", \"material\": [\"synthetic\"], \"pattern\": \"plain\", \"primary_colour\": \"grey\", \"silhouette\": \"regular\", \"sleeve_length\": null, \"style\": [\"sporty\"]}, \"fixture_id\": \"TEST-2N-022\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"grey\", \"style\": [\"sporty\"]}",
+        "status": "available",
+        "is_favourite": 0,
+        "created_at": "2026-11-17T15:53:08.343796+00:00",
+        "updated_at": "2026-11-17T15:53:08.343796+00:00",
+        "deleted_at": null,
+        "secondary_colour": null,
+        "style_tags": "[\"sporty\"]",
+        "custom_tags": "[\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"]",
+        "structural_scores": "{\"garment_role\": \"bottom\", \"layering_index\": 0}",
+        "additional_attributes": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"regular\", \"garment_type\": \"bottom\", \"layering_index\": 0, \"material\": [\"synthetic\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"shorts\", \"material\": [\"synthetic\"], \"pattern\": \"plain\", \"primary_colour\": \"grey\", \"silhouette\": \"regular\", \"sleeve_length\": null, \"style\": [\"sporty\"]}, \"fixture_id\": \"TEST-2N-022\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"grey\", \"style\": [\"sporty\"]}",
+        "embedding": "null",
+        "profile_id": null
+      },
+      "media": {
+        "id": "4789ac10-fd72-4243-9fc9-7d80b40cf34a",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "media_type": "synthetic_development_garment",
+        "storage_key": "64bee493-e07d-44af-a94f-f719c6db8d98.png",
+        "content_type": "image/png",
+        "size_bytes": 12068,
+        "status": "available",
+        "created_at": "2026-11-17T15:53:08.264875+00:00",
+        "width": 480,
+        "height": 600,
+        "original_filename": "TEST-2N-022.png"
+      },
+      "image_sha256": "a869798f1cb86cb5112495d36ace71c13b0815f498c01fcae43ae593a79eba29"
+    },
+    {
+      "fixture_id": "TEST-2N-023",
+      "attributes": {
+        "category": "skirt",
+        "primary_colour": "green",
+        "pattern": "plain",
+        "material": [
+          "cotton"
+        ],
+        "silhouette": "a-line",
+        "style": [
+          "casual"
+        ],
+        "sleeve_length": null
+      },
+      "row": {
+        "id": "2e2d0000-0000-4000-8000-000000000023",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "processing_item_id": null,
+        "preferred_media_id": "41566f77-f229-42ee-ae91-b0ed1fd71e98",
+        "name": "TEST-2ND-023 green skirt SYNTHETIC",
+        "category": "skirt",
+        "primary_colour": "green",
+        "pattern": "plain",
+        "attributes_json": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"a-line\", \"garment_type\": \"bottom\", \"layering_index\": 0, \"material\": [\"cotton\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"skirt\", \"material\": [\"cotton\"], \"pattern\": \"plain\", \"primary_colour\": \"green\", \"silhouette\": \"a-line\", \"sleeve_length\": null, \"style\": [\"casual\"]}, \"fixture_id\": \"TEST-2N-023\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"green\", \"style\": [\"casual\"]}",
+        "status": "available",
+        "is_favourite": 0,
+        "created_at": "2026-11-17T15:53:08.343796+00:00",
+        "updated_at": "2026-11-17T15:53:08.343796+00:00",
+        "deleted_at": null,
+        "secondary_colour": null,
+        "style_tags": "[\"casual\"]",
+        "custom_tags": "[\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"]",
+        "structural_scores": "{\"garment_role\": \"bottom\", \"layering_index\": 0}",
+        "additional_attributes": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"a-line\", \"garment_type\": \"bottom\", \"layering_index\": 0, \"material\": [\"cotton\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"skirt\", \"material\": [\"cotton\"], \"pattern\": \"plain\", \"primary_colour\": \"green\", \"silhouette\": \"a-line\", \"sleeve_length\": null, \"style\": [\"casual\"]}, \"fixture_id\": \"TEST-2N-023\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"green\", \"style\": [\"casual\"]}",
+        "embedding": "null",
+        "profile_id": null
+      },
+      "media": {
+        "id": "41566f77-f229-42ee-ae91-b0ed1fd71e98",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "media_type": "synthetic_development_garment",
+        "storage_key": "c5500f50-fce3-4b13-bfad-a171732025d9.png",
+        "content_type": "image/png",
+        "size_bytes": 11216,
+        "status": "available",
+        "created_at": "2026-11-17T15:53:08.274038+00:00",
+        "width": 480,
+        "height": 600,
+        "original_filename": "TEST-2N-023.png"
+      },
+      "image_sha256": "393f326096fb5b59d8c0a735f64612cb818e08c9849e340222f969d25f3f5e00"
+    },
+    {
+      "fixture_id": "TEST-2N-024",
+      "attributes": {
+        "category": "skirt",
+        "primary_colour": "red",
+        "pattern": "check",
+        "material": [
+          "wool"
+        ],
+        "silhouette": "straight",
+        "style": [
+          "classic"
+        ],
+        "sleeve_length": null
+      },
+      "row": {
+        "id": "2e2d0000-0000-4000-8000-000000000024",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "processing_item_id": null,
+        "preferred_media_id": "d4324895-6263-41dd-af12-1fa78e08ed1c",
+        "name": "TEST-2ND-024 red skirt SYNTHETIC",
+        "category": "skirt",
+        "primary_colour": "red",
+        "pattern": "check",
+        "attributes_json": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"straight\", \"garment_type\": \"bottom\", \"layering_index\": 0, \"material\": [\"wool\"], \"pattern\": \"check\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"skirt\", \"material\": [\"wool\"], \"pattern\": \"check\", \"primary_colour\": \"red\", \"silhouette\": \"straight\", \"sleeve_length\": null, \"style\": [\"classic\"]}, \"fixture_id\": \"TEST-2N-024\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"red\", \"style\": [\"classic\"]}",
+        "status": "available",
+        "is_favourite": 0,
+        "created_at": "2026-11-17T15:53:08.343796+00:00",
+        "updated_at": "2026-11-17T15:53:08.343796+00:00",
+        "deleted_at": null,
+        "secondary_colour": null,
+        "style_tags": "[\"classic\"]",
+        "custom_tags": "[\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"]",
+        "structural_scores": "{\"garment_role\": \"bottom\", \"layering_index\": 0}",
+        "additional_attributes": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"straight\", \"garment_type\": \"bottom\", \"layering_index\": 0, \"material\": [\"wool\"], \"pattern\": \"check\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"skirt\", \"material\": [\"wool\"], \"pattern\": \"check\", \"primary_colour\": \"red\", \"silhouette\": \"straight\", \"sleeve_length\": null, \"style\": [\"classic\"]}, \"fixture_id\": \"TEST-2N-024\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"red\", \"style\": [\"classic\"]}",
+        "embedding": "null",
+        "profile_id": null
+      },
+      "media": {
+        "id": "d4324895-6263-41dd-af12-1fa78e08ed1c",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "media_type": "synthetic_development_garment",
+        "storage_key": "752c0d6d-5a71-41e2-983a-a6ef0b9bc727.png",
+        "content_type": "image/png",
+        "size_bytes": 12123,
+        "status": "available",
+        "created_at": "2026-11-17T15:53:08.281342+00:00",
+        "width": 480,
+        "height": 600,
+        "original_filename": "TEST-2N-024.png"
+      },
+      "image_sha256": "25eb4557641f88ee842422c5882647d301b8f71bdea2354e0877527da1527254"
+    },
+    {
+      "fixture_id": "TEST-2N-025",
+      "attributes": {
+        "category": "long_sleeve_outwear",
+        "primary_colour": "black",
+        "pattern": "plain",
+        "material": [
+          "wool"
+        ],
+        "silhouette": "regular",
+        "style": [
+          "formal"
+        ],
+        "sleeve_length": "wrist-length"
+      },
+      "row": {
+        "id": "2e2d0000-0000-4000-8000-000000000025",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "processing_item_id": null,
+        "preferred_media_id": "ef0ec81b-2eb7-4278-aabb-29fac58eed7f",
+        "name": "TEST-2ND-025 black long_sleeve_outwear SYNTHETIC",
+        "category": "long_sleeve_outwear",
+        "primary_colour": "black",
+        "pattern": "plain",
+        "attributes_json": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"regular\", \"garment_type\": \"outerwear\", \"layering_index\": 2, \"material\": [\"wool\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"long_sleeve_outwear\", \"material\": [\"wool\"], \"pattern\": \"plain\", \"primary_colour\": \"black\", \"silhouette\": \"regular\", \"sleeve_length\": \"wrist-length\", \"style\": [\"formal\"]}, \"fixture_id\": \"TEST-2N-025\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"black\", \"style\": [\"formal\"]}",
+        "status": "available",
+        "is_favourite": 0,
+        "created_at": "2026-11-17T15:53:08.343796+00:00",
+        "updated_at": "2026-11-17T15:53:08.343796+00:00",
+        "deleted_at": null,
+        "secondary_colour": null,
+        "style_tags": "[\"formal\"]",
+        "custom_tags": "[\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"]",
+        "structural_scores": "{\"garment_role\": \"outerwear\", \"layering_index\": 2}",
+        "additional_attributes": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"regular\", \"garment_type\": \"outerwear\", \"layering_index\": 2, \"material\": [\"wool\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"long_sleeve_outwear\", \"material\": [\"wool\"], \"pattern\": \"plain\", \"primary_colour\": \"black\", \"silhouette\": \"regular\", \"sleeve_length\": \"wrist-length\", \"style\": [\"formal\"]}, \"fixture_id\": \"TEST-2N-025\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"black\", \"style\": [\"formal\"]}",
+        "embedding": "null",
+        "profile_id": null
+      },
+      "media": {
+        "id": "ef0ec81b-2eb7-4278-aabb-29fac58eed7f",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "media_type": "synthetic_development_garment",
+        "storage_key": "72e2a0be-29ce-4bfe-8985-c79fa1a6656c.png",
+        "content_type": "image/png",
+        "size_bytes": 14744,
+        "status": "available",
+        "created_at": "2026-11-17T15:53:08.291222+00:00",
+        "width": 480,
+        "height": 600,
+        "original_filename": "TEST-2N-025.png"
+      },
+      "image_sha256": "e36feb9e732e1865c3d70bcc32dd9bb3fc8be78e79a6be0ba7a5764030804638"
+    },
+    {
+      "fixture_id": "TEST-2N-026",
+      "attributes": {
+        "category": "long_sleeve_outwear",
+        "primary_colour": "grey",
+        "pattern": "check",
+        "material": [
+          "wool"
+        ],
+        "silhouette": "regular",
+        "style": [
+          "smart casual"
+        ],
+        "sleeve_length": "wrist-length"
+      },
+      "row": {
+        "id": "2e2d0000-0000-4000-8000-000000000026",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "processing_item_id": null,
+        "preferred_media_id": "e97dd190-b66e-4c2d-985d-23b1c7f552b9",
+        "name": "TEST-2ND-026 grey long_sleeve_outwear SYNTHETIC",
+        "category": "long_sleeve_outwear",
+        "primary_colour": "grey",
+        "pattern": "check",
+        "attributes_json": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"regular\", \"garment_type\": \"outerwear\", \"layering_index\": 2, \"material\": [\"wool\"], \"pattern\": \"check\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"long_sleeve_outwear\", \"material\": [\"wool\"], \"pattern\": \"check\", \"primary_colour\": \"grey\", \"silhouette\": \"regular\", \"sleeve_length\": \"wrist-length\", \"style\": [\"smart casual\"]}, \"fixture_id\": \"TEST-2N-026\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"grey\", \"style\": [\"smart casual\"]}",
+        "status": "available",
+        "is_favourite": 0,
+        "created_at": "2026-11-17T15:53:08.343796+00:00",
+        "updated_at": "2026-11-17T15:53:08.343796+00:00",
+        "deleted_at": null,
+        "secondary_colour": null,
+        "style_tags": "[\"smart casual\"]",
+        "custom_tags": "[\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"]",
+        "structural_scores": "{\"garment_role\": \"outerwear\", \"layering_index\": 2}",
+        "additional_attributes": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"regular\", \"garment_type\": \"outerwear\", \"layering_index\": 2, \"material\": [\"wool\"], \"pattern\": \"check\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"long_sleeve_outwear\", \"material\": [\"wool\"], \"pattern\": \"check\", \"primary_colour\": \"grey\", \"silhouette\": \"regular\", \"sleeve_length\": \"wrist-length\", \"style\": [\"smart casual\"]}, \"fixture_id\": \"TEST-2N-026\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"grey\", \"style\": [\"smart casual\"]}",
+        "embedding": "null",
+        "profile_id": null
+      },
+      "media": {
+        "id": "e97dd190-b66e-4c2d-985d-23b1c7f552b9",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "media_type": "synthetic_development_garment",
+        "storage_key": "5646549f-6240-496e-8b79-2f9072d2234a.png",
+        "content_type": "image/png",
+        "size_bytes": 15460,
+        "status": "available",
+        "created_at": "2026-11-17T15:53:08.299653+00:00",
+        "width": 480,
+        "height": 600,
+        "original_filename": "TEST-2N-026.png"
+      },
+      "image_sha256": "8debb5b567ab767dd9945ae03cd9ab32cda4fc3e7009ac79650a1b6de1d60f27"
+    },
+    {
+      "fixture_id": "TEST-2N-027",
+      "attributes": {
+        "category": "long_sleeve_outwear",
+        "primary_colour": "navy",
+        "pattern": "plain",
+        "material": [
+          "synthetic"
+        ],
+        "silhouette": "loose",
+        "style": [
+          "casual"
+        ],
+        "sleeve_length": "wrist-length"
+      },
+      "row": {
+        "id": "2e2d0000-0000-4000-8000-000000000027",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "processing_item_id": null,
+        "preferred_media_id": "840087c8-b921-4fad-8785-8d44725691d6",
+        "name": "TEST-2ND-027 navy long_sleeve_outwear SYNTHETIC",
+        "category": "long_sleeve_outwear",
+        "primary_colour": "navy",
+        "pattern": "plain",
+        "attributes_json": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"loose\", \"garment_type\": \"outerwear\", \"layering_index\": 2, \"material\": [\"synthetic\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"long_sleeve_outwear\", \"material\": [\"synthetic\"], \"pattern\": \"plain\", \"primary_colour\": \"navy\", \"silhouette\": \"loose\", \"sleeve_length\": \"wrist-length\", \"style\": [\"casual\"]}, \"fixture_id\": \"TEST-2N-027\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"navy\", \"style\": [\"casual\"]}",
+        "status": "available",
+        "is_favourite": 0,
+        "created_at": "2026-11-17T15:53:08.343796+00:00",
+        "updated_at": "2026-11-17T15:53:08.343796+00:00",
+        "deleted_at": null,
+        "secondary_colour": null,
+        "style_tags": "[\"casual\"]",
+        "custom_tags": "[\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"]",
+        "structural_scores": "{\"garment_role\": \"outerwear\", \"layering_index\": 2}",
+        "additional_attributes": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"loose\", \"garment_type\": \"outerwear\", \"layering_index\": 2, \"material\": [\"synthetic\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"long_sleeve_outwear\", \"material\": [\"synthetic\"], \"pattern\": \"plain\", \"primary_colour\": \"navy\", \"silhouette\": \"loose\", \"sleeve_length\": \"wrist-length\", \"style\": [\"casual\"]}, \"fixture_id\": \"TEST-2N-027\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"navy\", \"style\": [\"casual\"]}",
+        "embedding": "null",
+        "profile_id": null
+      },
+      "media": {
+        "id": "840087c8-b921-4fad-8785-8d44725691d6",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "media_type": "synthetic_development_garment",
+        "storage_key": "0aeb5e9f-d2cf-48a8-b976-0ff67353e156.png",
+        "content_type": "image/png",
+        "size_bytes": 14730,
+        "status": "available",
+        "created_at": "2026-11-17T15:53:08.308757+00:00",
+        "width": 480,
+        "height": 600,
+        "original_filename": "TEST-2N-027.png"
+      },
+      "image_sha256": "bd73bd30c8f6a505a00bada49c3a1b571e38e095bdce68906e00a5c146cf0b0f"
+    },
+    {
+      "fixture_id": "TEST-2N-028",
+      "attributes": {
+        "category": "short_sleeve_outwear",
+        "primary_colour": "blue",
+        "pattern": "plain",
+        "material": [
+          "cotton"
+        ],
+        "silhouette": "regular",
+        "style": [
+          "casual"
+        ],
+        "sleeve_length": "short"
+      },
+      "row": {
+        "id": "2e2d0000-0000-4000-8000-000000000028",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "processing_item_id": null,
+        "preferred_media_id": "a51618d4-2db4-4faf-8bb5-ab23def1ef91",
+        "name": "TEST-2ND-028 blue short_sleeve_outwear SYNTHETIC",
+        "category": "short_sleeve_outwear",
+        "primary_colour": "blue",
+        "pattern": "plain",
+        "attributes_json": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"regular\", \"garment_type\": \"outerwear\", \"layering_index\": 2, \"material\": [\"cotton\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"short_sleeve_outwear\", \"material\": [\"cotton\"], \"pattern\": \"plain\", \"primary_colour\": \"blue\", \"silhouette\": \"regular\", \"sleeve_length\": \"short\", \"style\": [\"casual\"]}, \"fixture_id\": \"TEST-2N-028\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"blue\", \"style\": [\"casual\"]}",
+        "status": "available",
+        "is_favourite": 0,
+        "created_at": "2026-11-17T15:53:08.343796+00:00",
+        "updated_at": "2026-11-17T15:53:08.343796+00:00",
+        "deleted_at": null,
+        "secondary_colour": null,
+        "style_tags": "[\"casual\"]",
+        "custom_tags": "[\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"]",
+        "structural_scores": "{\"garment_role\": \"outerwear\", \"layering_index\": 2}",
+        "additional_attributes": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"regular\", \"garment_type\": \"outerwear\", \"layering_index\": 2, \"material\": [\"cotton\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"short_sleeve_outwear\", \"material\": [\"cotton\"], \"pattern\": \"plain\", \"primary_colour\": \"blue\", \"silhouette\": \"regular\", \"sleeve_length\": \"short\", \"style\": [\"casual\"]}, \"fixture_id\": \"TEST-2N-028\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"blue\", \"style\": [\"casual\"]}",
+        "embedding": "null",
+        "profile_id": null
+      },
+      "media": {
+        "id": "a51618d4-2db4-4faf-8bb5-ab23def1ef91",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "media_type": "synthetic_development_garment",
+        "storage_key": "fba5117a-cb2f-4643-b1d0-ec8645569ed7.png",
+        "content_type": "image/png",
+        "size_bytes": 13962,
+        "status": "available",
+        "created_at": "2026-11-17T15:53:08.317705+00:00",
+        "width": 480,
+        "height": 600,
+        "original_filename": "TEST-2N-028.png"
+      },
+      "image_sha256": "d85407d34bf6b62eeac050dcb36f0d820ddd8cfec53679bba0df73e4ac15cc2c"
+    },
+    {
+      "fixture_id": "TEST-2N-029",
+      "attributes": {
+        "category": "short_sleeve_dress",
+        "primary_colour": "red",
+        "pattern": "plain",
+        "material": [
+          "cotton"
+        ],
+        "silhouette": "a-line",
+        "style": [
+          "casual"
+        ],
+        "sleeve_length": "short"
+      },
+      "row": {
+        "id": "2e2d0000-0000-4000-8000-000000000029",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "processing_item_id": null,
+        "preferred_media_id": "8708492b-18d7-4442-a2e4-d32a238e39fc",
+        "name": "TEST-2ND-029 red short_sleeve_dress SYNTHETIC",
+        "category": "short_sleeve_dress",
+        "primary_colour": "red",
+        "pattern": "plain",
+        "attributes_json": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"a-line\", \"garment_type\": \"dress\", \"layering_index\": 0, \"material\": [\"cotton\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"short_sleeve_dress\", \"material\": [\"cotton\"], \"pattern\": \"plain\", \"primary_colour\": \"red\", \"silhouette\": \"a-line\", \"sleeve_length\": \"short\", \"style\": [\"casual\"]}, \"fixture_id\": \"TEST-2N-029\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"red\", \"style\": [\"casual\"]}",
+        "status": "available",
+        "is_favourite": 0,
+        "created_at": "2026-11-17T15:53:08.343796+00:00",
+        "updated_at": "2026-11-17T15:53:08.343796+00:00",
+        "deleted_at": null,
+        "secondary_colour": null,
+        "style_tags": "[\"casual\"]",
+        "custom_tags": "[\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"]",
+        "structural_scores": "{\"garment_role\": \"dress\", \"layering_index\": 0}",
+        "additional_attributes": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"a-line\", \"garment_type\": \"dress\", \"layering_index\": 0, \"material\": [\"cotton\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"short_sleeve_dress\", \"material\": [\"cotton\"], \"pattern\": \"plain\", \"primary_colour\": \"red\", \"silhouette\": \"a-line\", \"sleeve_length\": \"short\", \"style\": [\"casual\"]}, \"fixture_id\": \"TEST-2N-029\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"red\", \"style\": [\"casual\"]}",
+        "embedding": "null",
+        "profile_id": null
+      },
+      "media": {
+        "id": "8708492b-18d7-4442-a2e4-d32a238e39fc",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "media_type": "synthetic_development_garment",
+        "storage_key": "2b91191f-4555-4bbd-9f3c-d1a93099e197.png",
+        "content_type": "image/png",
+        "size_bytes": 13009,
+        "status": "available",
+        "created_at": "2026-11-17T15:53:08.328074+00:00",
+        "width": 480,
+        "height": 600,
+        "original_filename": "TEST-2N-029.png"
+      },
+      "image_sha256": "2b5826f07ee47350818071a18f57cd9ac41c75f17a7370d667a16f0ccb5c96eb"
+    },
+    {
+      "fixture_id": "TEST-2N-030",
+      "attributes": {
+        "category": "long_sleeve_dress",
+        "primary_colour": "navy",
+        "pattern": "plain",
+        "material": [
+          "wool"
+        ],
+        "silhouette": "regular",
+        "style": [
+          "formal"
+        ],
+        "sleeve_length": "wrist-length"
+      },
+      "row": {
+        "id": "2e2d0000-0000-4000-8000-000000000030",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "processing_item_id": null,
+        "preferred_media_id": "cb538f57-3379-4857-bc46-008d3326994d",
+        "name": "TEST-2ND-030 navy long_sleeve_dress SYNTHETIC",
+        "category": "long_sleeve_dress",
+        "primary_colour": "navy",
+        "pattern": "plain",
+        "attributes_json": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"regular\", \"garment_type\": \"dress\", \"layering_index\": 0, \"material\": [\"wool\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"long_sleeve_dress\", \"material\": [\"wool\"], \"pattern\": \"plain\", \"primary_colour\": \"navy\", \"silhouette\": \"regular\", \"sleeve_length\": \"wrist-length\", \"style\": [\"formal\"]}, \"fixture_id\": \"TEST-2N-030\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"navy\", \"style\": [\"formal\"]}",
+        "status": "available",
+        "is_favourite": 0,
+        "created_at": "2026-11-17T15:53:08.343796+00:00",
+        "updated_at": "2026-11-17T15:53:08.343796+00:00",
+        "deleted_at": null,
+        "secondary_colour": null,
+        "style_tags": "[\"formal\"]",
+        "custom_tags": "[\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"]",
+        "structural_scores": "{\"garment_role\": \"dress\", \"layering_index\": 0}",
+        "additional_attributes": "{\"custom_tags\": [\"SYNTHETIC DEVELOPMENT TEST\", \"Authored fixture attributes; not extraction or owner review\"], \"fit\": \"regular\", \"garment_type\": \"dress\", \"layering_index\": 0, \"material\": [\"wool\"], \"pattern\": \"plain\", \"phase2nd_synthetic\": {\"declaration\": {\"category\": \"long_sleeve_dress\", \"material\": [\"wool\"], \"pattern\": \"plain\", \"primary_colour\": \"navy\", \"silhouette\": \"regular\", \"sleeve_length\": \"wrist-length\", \"style\": [\"formal\"]}, \"fixture_id\": \"TEST-2N-030\", \"instance_id\": \"27d85bc6-0fca-4b35-896d-8a84e41adc9f\", \"origin\": \"synthetic_fixture_declaration\"}, \"primary_colour\": \"navy\", \"style\": [\"formal\"]}",
+        "embedding": "null",
+        "profile_id": null
+      },
+      "media": {
+        "id": "cb538f57-3379-4857-bc46-008d3326994d",
+        "user_id": "561cc928-8b0b-40fc-b700-0fc3f9139c5c",
+        "media_type": "synthetic_development_garment",
+        "storage_key": "1fde80e1-2dbf-452a-a6ad-b0111a7673d4.png",
+        "content_type": "image/png",
+        "size_bytes": 13925,
+        "status": "available",
+        "created_at": "2026-11-17T15:53:08.336883+00:00",
+        "width": 480,
+        "height": 600,
+        "original_filename": "TEST-2N-030.png"
+      },
+      "image_sha256": "4e9eea3a3de44e1e8223f19210864c23240d4426fdf31ce39b9a4b675eefefec"
+    }
+  ],
+  "scope": "fixture_only_explicit_v1",
+  "normal_garments_included": false,
+  "renderer": "phase2n-original-png-drawing-1.0.0",
+  "license": "Original procedural illustrations created for this test; freely reusable.",
+  "source_catalog_sha256": "f47fa7938cb23054089794ce218b4dd4fc9ffa77732fc8327e050f9a9a796b9f",
+  "limitations": "Authored synthetic declarations, NOT owner confirmation, extraction, model accuracy or photographic truth."
+}

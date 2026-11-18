@@ -67,6 +67,14 @@ def display_for_record(record):
 
 
 def with_scoring_display(record):
+    if isinstance(record.get('provenance'),dict) and 'compositional_selection' in record['provenance']:
+        from app.application.recommendation.compositional_workflow_v1 import display
+        return display(record)
+    if isinstance(record.get('provenance'),dict) and 'normalized_selection' in record['provenance']:
+        from app.application.recommendation.normalized_workflow_v1 import display
+        return display(record)
+    if isinstance(record.get('provenance'),dict) and 'request_local_preference' in record['provenance']:
+        return local_preference_display(record)
     display=asdict(display_for_record(record))
     provenance=record.get('provenance')
     if isinstance(provenance,dict) and 'context_relevance' in provenance and 'attribute_preference' not in provenance and 'palette_compatibility' not in provenance:
@@ -135,6 +143,22 @@ def with_scoring_display(record):
         from app.application.recommendation.garment_only_refinement_verifier import descriptor
         result['garment_continuation']=descriptor(record)
     return result
+
+
+def local_preference_display(record):
+    """New immutable display contract; never reinterpret captured language."""
+    from app.domain.value_objects.request_local_selection import LocalSelectionProof
+    from app.domain.value_objects.attribute_conditions import encode
+    from app.application.recommendation.request_local_selection_verifier import verify,_is_verified_record
+    proof=LocalSelectionProof(encode(record['provenance']['request_local_preference']))
+    if not _is_verified_record(record):
+        verify(proof,record['user_id'],record['profile_id'],score=score_from_json(json.dumps(record['score_metadata'])),text=record['request_text'])
+    saved=proof.to_dict()
+    return {**record,'scoring_display':{'version':'request-local-preference-display-1.0.0','kind':'RequestLocalPreference',
+        'profile':saved['policy']['version'],'grammar_version':saved['intent']['grammar_version'],
+        'mandatory_request':saved['intent']['mandatory_request'],'hard_intent':saved['intent']['hard_intent'],
+        'optional_intent':saved['intent']['optional'],'decision':saved['decision'],'budgets':saved['policy'],
+        'continuation_available':False,'continuation_reason':'soft_continuation_not_implemented'}}
 
 
 def preference_display(record):

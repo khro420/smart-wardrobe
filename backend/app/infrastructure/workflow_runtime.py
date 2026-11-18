@@ -50,6 +50,21 @@ def configure_local_workflow():
     # Reject invalid server settings at startup, including disabled integration.
     execution = AssistantExecutionSelection(os.getenv(EXECUTION_KEY,DEFAULT_ENGINE))
     scoring = AssistantScoringSelection(os.getenv(SCORING_KEY,DEFERRED))
+    from app.application.recommendation.local_preference_assistant import ENVIRONMENT_KEY as LOCAL_KEY,PROFILE as LOCAL_PROFILE
+    local_profile=os.getenv(LOCAL_KEY,'disabled')
+    if local_profile not in ('disabled',LOCAL_PROFILE):raise ValueError('Unknown local preference profile.')
+    if local_profile!='disabled' and not (os.getenv('SMART_WARDROBE_ASSISTANT_ENABLED','false').lower()=='true' and attributes.enabled and description_policy is not None and category_policy is not None and language_profile=='conversational_language_v1' and scoring.profile=='experimental_compatibility_decision_v1'):
+        raise ValueError('Local preferences require Assistant, B0/B1, conversational language, wearer policy and P1/C1 decision scoring.')
+    from app.application.nlp.normalized_request_v1 import ENVIRONMENT_KEY as NORMAL_KEY,PROFILE as NORMAL_PROFILE
+    normalization_profile=os.getenv(NORMAL_KEY,'disabled')
+    if normalization_profile not in ('disabled',NORMAL_PROFILE):raise ValueError('Unknown normalization profile.')
+    if normalization_profile!='disabled' and (local_profile!=LOCAL_PROFILE or os.getenv('SMART_WARDROBE_VERIFIED_SUBTYPE_PROFILE','disabled')!='disabled' or os.getenv(CATEGORY_KEY)!='gender_category_v1'):
+        raise ValueError('Normalized v1 requires the explicit v1 wearer/B0/B1/local preference dependency bundle.')
+    from app.application.nlp.compositional_request_v1 import ENVIRONMENT_KEY as COMPOSE_KEY,PROFILE as COMPOSE_PROFILE
+    composition_profile=os.getenv(COMPOSE_KEY,'disabled')
+    if composition_profile not in ('disabled',COMPOSE_PROFILE):raise ValueError('Unknown compositional input profile.')
+    if composition_profile!='disabled' and (normalization_profile!='disabled' or local_profile!=LOCAL_PROFILE or os.getenv('SMART_WARDROBE_VERIFIED_SUBTYPE_PROFILE','disabled')!='disabled' or os.getenv(CATEGORY_KEY)!='gender_category_v1'):
+        raise ValueError('Composition requires the explicit v1 wearer/B0/B1/local dependency bundle and disabled 1.8 opt-in.')
     from app.application.recommendation.attribute_preference_policy import configure as configure_preferences, ENVIRONMENT_KEY as PREFERENCE_KEY
     from app.application.recommendation.assistant_scoring_selection import DECISION
     preference_policy=configure_preferences(os.getenv(PREFERENCE_KEY,'disabled'),dependencies=(
@@ -125,7 +140,21 @@ def configure_local_workflow():
         repository.preference_policy=preference_policy
         repository.compatibility_policy=palette_policy
         repository.attribute_preference_query=preference_query
-        configure_assistant_service(OutfitAssistantService(interpreter,RequestCandidateEngine(get_confirmed_garment_query(),evaluator_factory=evaluator),SqliteActivePreferenceQuery(),repository,scoring_profile=scoring.profile,execution_engine=execution.engine,context_ranking_profile=context_ranking,refinement_profile=refinement,attribute_pipeline=attribute_pipeline,preference_policy=preference_policy,attribute_preference_query=preference_query,compatibility_policy=palette_policy,garment_refinement_profile=os.getenv('SMART_WARDROBE_GARMENT_ONLY_REFINEMENT_PROFILE','disabled')))
+        assistant=OutfitAssistantService(interpreter,RequestCandidateEngine(get_confirmed_garment_query(),evaluator_factory=evaluator),SqliteActivePreferenceQuery(),repository,scoring_profile=scoring.profile,execution_engine=execution.engine,context_ranking_profile=context_ranking,refinement_profile=refinement,attribute_pipeline=attribute_pipeline,preference_policy=preference_policy,attribute_preference_query=preference_query,compatibility_policy=palette_policy,garment_refinement_profile=os.getenv('SMART_WARDROBE_GARMENT_ONLY_REFINEMENT_PROFILE','disabled'))
+        if local_profile==LOCAL_PROFILE:
+            from app.application.recommendation.request_local_soft_workflow import InternalLocalPreferenceWorkflow
+            from app.domain.value_objects.request_local_source_codec import VERSION as SOURCE_CODEC
+            from app.application.recommendation.local_preference_assistant import LocalPreferenceAssistant
+            local_workflow=InternalLocalPreferenceWorkflow(source_codec=SOURCE_CODEC)
+            repository._local_preference_workflow=local_workflow
+            assistant.local_preferences=LocalPreferenceAssistant(repository,local_workflow,execution.engine)
+        if normalization_profile==NORMAL_PROFILE:
+            from app.application.recommendation.normalized_workflow_v1 import NormalizedWorkflow
+            assistant.input_normalization=NormalizedWorkflow(repository,execution.engine)
+        if composition_profile==COMPOSE_PROFILE:
+            from app.application.recommendation.compositional_workflow_v1 import CompositionalWorkflow
+            assistant.input_composition=CompositionalWorkflow(repository,execution.engine)
+        configure_assistant_service(assistant)
     subtype_profile=os.getenv('SMART_WARDROBE_VERIFIED_SUBTYPE_PROFILE','disabled')
     subtype_store=None
     if subtype_profile not in ('disabled','verified_subtype_v1'):raise ValueError('Unknown verified subtype profile.')

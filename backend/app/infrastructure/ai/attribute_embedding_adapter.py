@@ -47,6 +47,20 @@ class DevelopmentAttributeAdapter(GarmentAttributePort):
         return GarmentAttributes({"embedding": None, "embedding_status": "unavailable", "source": "pipeline-managed"})
 
 
+class OptionalAttributeAdapter(GarmentAttributePort):
+    """Keep the observed garment when optional model enrichment fails."""
+
+    def __init__(self, adapter: GarmentAttributePort):
+        self.adapter = adapter
+
+    def extract(self, image_path: str) -> GarmentAttributes:
+        try:
+            return self.adapter.extract(image_path)
+        except Exception:
+            LOGGER.exception("Optional visual attribute extraction failed; retaining the garment crop")
+            return GarmentAttributes({"embedding": None, "embedding_status": "unavailable", "source": "pipeline-managed"})
+
+
 class SiglipEmbeddingAdapter(GarmentAttributePort):
     """Extract a finite, L2-normalised, fixed-width visual garment vector."""
 
@@ -184,4 +198,4 @@ def get_attribute_adapter() -> GarmentAttributePort:
         if not cuda_available:
             LOGGER.warning("CUDA embedding is unavailable; continuing without visual embeddings.")
             return DevelopmentAttributeAdapter()
-    return SiglipEmbeddingAdapter()
+    return OptionalAttributeAdapter(SiglipEmbeddingAdapter())

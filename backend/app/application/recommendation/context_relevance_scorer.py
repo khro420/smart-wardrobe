@@ -224,7 +224,13 @@ def reference_rank(engine,query,user,request,refinement_plan=None):
             check_category_conflicts(request,refinement_plan.exclusions,Vocabulary.load())
             filtered=filter_snapshot(garments,refinement_plan.exclusions)
             garments=filtered.garments
-        replay_engine=RequestCandidateEngine(SnapshotQuery(user,garments),evaluator_factory=actual.evaluator_factory)
+        # The reference replay owns the exhausted admission stream. Retain the
+        # captured B1 predicates and independent verifier, just as P2/C2 do;
+        # otherwise ranking loses both hard admission and its completed ledger.
+        replay_engine=RequestCandidateEngine(SnapshotQuery(user,garments),evaluator_factory=actual.evaluator_factory,
+            attribute_context=getattr(actual,'attribute_context',None),attribute_verifier=getattr(actual,'attribute_verifier',None))
+        replay_engine.attribute_seen=getattr(actual,'attribute_seen',())
+        replay_engine.attribute_counter_guard=getattr(actual,'attribute_counter_guard',None)
         session=replay_engine.generate_candidates(user,request)
         if hasattr(engine,'session'):engine.session=session
         if session.result.status in ('PolicyUnavailable','ProcessingFailure','Interrupted'):return RankingOutcome(session.result.status)

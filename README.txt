@@ -1,8 +1,5 @@
-To start:
+See README.md for the Windows handover and CPU/GPU requirements.
 
-cd backend
-pip install -r requirements.txt
-python -m uvicorn app.main:app --reload --port 8000
-
-cd frontend
-npm run dev
+First setup: powershell -ExecutionPolicy Bypass -File .\scripts\Setup-Windows.ps1 -Mode CPU
+Start: powershell -ExecutionPolicy Bypass -File .\scripts\Start-Windows.ps1
+Stop owned services: powershell -ExecutionPolicy Bypass -File .\scripts\Start-Windows.ps1 -Stop

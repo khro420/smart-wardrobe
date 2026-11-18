@@ -1,5 +1,5 @@
 {
-  "version": "conversational-language-1.1.3",
+  "version": "conversational-language-1.2.0",
   "profile": "conversational_language_v1",
   "base_bundle": "context_18_v1",
   "contexts": {
@@ -111,6 +111,11 @@
     "\\bwanna\\b(?=\\s+(?:wear|go|attend|have|meet|visit|watch|study|travel|get|find|choose|pick)\\b)"
   ],
   "attribute_aliases": [
+    {
+      "pattern": "striped",
+      "field": "pattern",
+      "value": "stripe"
+    },
     {
       "pattern": "long[\\s-]+sleeves?|long[\\s-]+sleeved",
       "field": "sleeve_length",

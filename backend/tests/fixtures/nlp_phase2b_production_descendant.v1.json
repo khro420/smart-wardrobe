@@ -1,0 +1,69 @@
+{
+  "version": "nlp-phase2b-production-scope-1.0.0",
+  "base_commit": "8f3e0cb6607a588fb2300c8f55bebba256f4afae",
+  "predecessor_registration_sha256": "a6af60f9293c2a616b2411fa70ca23a8bc31351bfddb29130d0238808b8931fc",
+  "scope": "Phase 1 through Phase 2B modified production paths only; not a full historical source certificate",
+  "hash_contract": "raw-byte-sha256",
+  "entries": {
+    "backend/app/application/nlp/config/conversational_language.v1.json": {
+      "before_git_blob_sha256": "0c75ee730750d147c0ba5a20285688e07732c8e6dad4ca0b9bb4f429c4e91cf8",
+      "before_phase2b_file_sha256": "58686ffab49c60b82de14fb76f681e3d80cbc994774ead1859055ac3aa7c2a15",
+      "after_file_sha256": "58686ffab49c60b82de14fb76f681e3d80cbc994774ead1859055ac3aa7c2a15"
+    },
+    "backend/app/application/nlp/conversational_attribute_forms.py": {
+      "before_git_blob_sha256": null,
+      "before_phase2b_file_sha256": null,
+      "after_file_sha256": "affdbda5bda9fe41d305d1f88ff03ed7569f339d9d192a80686ba2df8cba795f"
+    },
+    "backend/app/application/nlp/conversational_attribute_interpreter.py": {
+      "before_git_blob_sha256": "be68e4f95799d10d002af7e8811b9983062441006d0df03a25ba70f901f3b111",
+      "before_phase2b_file_sha256": "2d4dbca7c15ddf38e3b5f1d3c29f42af32c9cbee2160dfcba9d9bc414a735fa2",
+      "after_file_sha256": "48fe84abbcd31adc8771399c0de00c897282fbcf318cb1eedd899ec5323aded2"
+    },
+    "backend/app/application/nlp/conversational_context_interpreter.py": {
+      "before_git_blob_sha256": "e205057c2539f929f48c39850394b86500dba9374b37a11373a6b50abf59676d",
+      "before_phase2b_file_sha256": "a8092fcc33d5f6b18c216ed2e8dcf3c9817b49e50f01d2e6ca7ce308119deb1c",
+      "after_file_sha256": "df00a6b235a1a5972c389caa16690261b41568d664f98f5aec66dee534dcff2b"
+    },
+    "backend/app/application/nlp/general_context_interpreter.py": {
+      "before_git_blob_sha256": "1f94649095fe44383c73dc9a74eb66b39b3f9660408456bfd5d378d0471ccf6d",
+      "before_phase2b_file_sha256": "3a01a867e1715e42b13ab2da92b5ff4edcb298ccffd3a2ed15933d517523acb1",
+      "after_file_sha256": "3a01a867e1715e42b13ab2da92b5ff4edcb298ccffd3a2ed15933d517523acb1"
+    },
+    "backend/app/application/recommendation/attribute_selection_verifier.py": {
+      "before_git_blob_sha256": "0413ccbe48985c2aacbbc2180331297ec50d188e0f61a79f1cd47698061ae008",
+      "before_phase2b_file_sha256": "a64dfbf8008ce18b25dfac741f8aa341b83b432622c552ed5312946fd8dbf6cf",
+      "after_file_sha256": "146da3ad905dfcdbbe10470df528013c16b1b78e33cfb2102e1eb50be4565976"
+    },
+    "backend/app/application/recommendation/context_relevance_policy.py": {
+      "before_git_blob_sha256": "db500db462ef764237ec50bb9796fcd943ae38e9702f8024a8a5b7b61c468ff3",
+      "before_phase2b_file_sha256": "3f6be0bb9a1cfeef499328a516470605188b50d00be3c4e95d9a63c2f57cba5b",
+      "after_file_sha256": "3f6be0bb9a1cfeef499328a516470605188b50d00be3c4e95d9a63c2f57cba5b"
+    },
+    "backend/app/application/recommendation/context_relevance_scorer.py": {
+      "before_git_blob_sha256": "8e55c8ded8b2567af71578b055725dfd4ce622b203806f67cd7e715c1332ebe3",
+      "before_phase2b_file_sha256": "08ef98adb575a4a435ae5c40feb5d0edfb14ac5f8254610fe546a674135986cc",
+      "after_file_sha256": "08ef98adb575a4a435ae5c40feb5d0edfb14ac5f8254610fe546a674135986cc"
+    },
+    "backend/app/application/recommendation/conversational_request_pipeline.py": {
+      "before_git_blob_sha256": "f781797c781346d7ce9ac511434a232cfeba992f92c61e5fbc323818b5c31e52",
+      "before_phase2b_file_sha256": "2e3d76f52e80e2e1dec9d41c914c6a9a3a0ed7e29db90fa3368354c301f3cbf0",
+      "after_file_sha256": "e2d9c9630a4695db5b7bb0efe62cba4049c37213681c378017a5ab0b2204d1ab"
+    },
+    "backend/app/application/recommendation/general_context_evaluator.py": {
+      "before_git_blob_sha256": "0e5fc116f594b846afb974d143163572ab3b1e0aabe2f5a0b3d593727eee81de",
+      "before_phase2b_file_sha256": "3e26d5ee0cc6a94ad688c2a892dafd19645d04e9f6c9b65ed5d9019663bbb596",
+      "after_file_sha256": "3e26d5ee0cc6a94ad688c2a892dafd19645d04e9f6c9b65ed5d9019663bbb596"
+    },
+    "backend/app/shared_contracts/grammar_identity.py": {
+      "before_git_blob_sha256": null,
+      "before_phase2b_file_sha256": "fe6016a167cc2d52acb4c8fed390e433cbe2d07dbde385e0ff6aa152a82b1d7e",
+      "after_file_sha256": "fe6016a167cc2d52acb4c8fed390e433cbe2d07dbde385e0ff6aa152a82b1d7e"
+    },
+    "frontend/lib/recommendation-messages.ts": {
+      "before_git_blob_sha256": "0d544fb4905be7ac4fa88d7c4a9b49be196b53d4bbf5df7cea212430670e6224",
+      "before_phase2b_file_sha256": "0d544fb4905be7ac4fa88d7c4a9b49be196b53d4bbf5df7cea212430670e6224",
+      "after_file_sha256": "203084086e2aa7b160efc3d5f96b7a135499c611627e91e58f694ebb28672b53"
+    }
+  }
+}

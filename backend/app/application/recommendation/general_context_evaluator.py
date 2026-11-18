@@ -8,7 +8,9 @@ from app.application.recommendation.context_evidence_resolver import ContextEvid
 from app.application.recommendation.suitability_request_evaluator import SuitabilityRequestEvaluator
 from app.domain.value_objects.general_context_request import GeneralContextRequest
 from app.domain.value_objects.request_candidate_evaluation import MandatoryCondition, RequestEvaluation
+from app.shared_contracts.grammar_identity import ResourceIdentity
 
+INTERVIEW_DEFAULT_SPEC = 'interview-default-evaluator-spec-1.0.0'
 
 @dataclass(frozen=True)
 class EvaluatorSpecification:
@@ -19,19 +21,21 @@ class EvaluatorSpecification:
     bundle_id: str = 'legacy_8_v1'
 
     @classmethod
-    def current(cls, bundle_id='legacy_8_v1'):
+    def current(cls, bundle_id='legacy_8_v1', *, interview_default=False):
+        if interview_default and bundle_id!='context_18_v1':
+            raise ValueError('Interview default requires the approved context18 bundle.')
         registry = ContextPolicyRegistry.load(bundle_id=bundle_id)
         if bundle_id!='legacy_8_v1':
             from app.application.recommendation.context_bundle import ContextBundle
-            return cls(registry.hash,registry.taxonomy_hash,ContextBundle.load(bundle_id).record['grammar_sha256'],bundle_id=bundle_id)
+            return cls(registry.hash,registry.taxonomy_hash,ContextBundle.load(bundle_id).record['grammar_sha256'],version=INTERVIEW_DEFAULT_SPEC if interview_default else 'general-evaluator-spec-1.0.0',bundle_id=bundle_id)
         grammar = Path(__file__).parents[1]/'nlp/config/context_grammar.v1.json'
-        return cls(registry.hash, registry.taxonomy_hash, hashlib.sha256(grammar.read_bytes()).hexdigest())
+        return cls(registry.hash, registry.taxonomy_hash, ResourceIdentity.capture(grammar.read_bytes()).semantic_sha256)
 
     def construct(self):
-        if type(self) is not EvaluatorSpecification or self.version != 'general-evaluator-spec-1.0.0':
+        if type(self) is not EvaluatorSpecification or self.version not in ('general-evaluator-spec-1.0.0',INTERVIEW_DEFAULT_SPEC):
             raise ValueError('Unapproved evaluator specification.')
         registry = ContextPolicyRegistry.load(bundle_id=self.bundle_id)
-        if self != type(self).current(self.bundle_id):
+        if self != type(self).current(self.bundle_id,interview_default=self.version==INTERVIEW_DEFAULT_SPEC):
             raise ValueError('Evaluator bundle mismatch.')
         return GeneralContextEvaluator(registry, self)
 
@@ -44,7 +48,7 @@ class GeneralContextEvaluator:
             raise ValueError('Unapproved registry instance.')
         self.registry = actual
         self.specification = specification or EvaluatorSpecification.current(bundle_id)
-        if self.specification != EvaluatorSpecification.current(bundle_id):
+        if self.specification != EvaluatorSpecification.current(bundle_id,interview_default=self.specification.version==INTERVIEW_DEFAULT_SPEC):
             raise ValueError('Invalid evaluator bundle.')
         self.legacy = SuitabilityRequestEvaluator()
         self.minimum, self.mapper = self.legacy.minimum, self.legacy.mapper
@@ -57,9 +61,29 @@ class GeneralContextEvaluator:
         if request.context.grammar_sha256 != self.specification.grammar_sha256:
             raise ValueError('Unverified interpretation grammar.')
         if self._prepared_request != request:
-            self._plan = compile_context(self.registry, request)
+            if self.inferred_interview_default(request):
+                # The observed frame stays Unspecified. Only the effective
+                # evaluation field carries the separately recorded default.
+                from dataclasses import replace
+                from app.application.recommendation.context_constraint_compiler import ContextPlan
+                observed=replace(request,formality=None)
+                plan=compile_context(self.registry,observed)
+                binding=self.registry.binding_for(request.context.situation.value)
+                if (plan.reason=='required_context_missing' and binding.required_context==('situation','role')
+                        and binding.appearance_required):
+                    predicate=next((p for p in binding.predicates if p.role==request.context.role.value and p.dress_code=='smart_casual'),None)
+                    self._plan=ContextPlan(True,'approved_interview_default',binding,predicate,('Smart-casual interview policy default; no dress code was specified.',)) if predicate else plan
+                else:self._plan=plan
+            else:self._plan = compile_context(self.registry, request)
             self._prepared_request = request
         return self._plan
+
+    def inferred_interview_default(self,request):
+        return (self.specification.version==INTERVIEW_DEFAULT_SPEC and type(request) is GeneralContextRequest
+                and request.context.situation.value=='professional.job_interview'
+                and request.context.role.value in ('candidate','interviewer')
+                and request.context.dress_code.state=='Unspecified' and request.context.formality.state=='Unspecified'
+                and request.context.facets.state=='Unspecified' and request.formality=='smart_casual')
 
     def supports(self, request):
         if not isinstance(request, GeneralContextRequest):
@@ -106,6 +130,8 @@ class GeneralContextEvaluator:
                 'unavailable_conditions': unavailable,
                 'registry_sha256': self.registry.hash, 'taxonomy_sha256': self.registry.taxonomy_hash,
                 'context': asdict(frame)}
+        if self.inferred_interview_default(request):
+            summary['inferred_defaults']={'formality':'smart_casual','origin':'approved_policy_default','verified_dress_code':False}
         binding = self.registry.binding_for(frame.situation.value)
         if binding is not None and binding.declaration_source == 'legacy_exact_declarations_v1':
             summary.update(version='general-context-explanation-1.1.0', binding=binding.identifier,
@@ -159,17 +185,14 @@ class GeneralContextEvaluator:
         def saved_source(garment):
             if self.plan(request).binding.evidence_contract != 'saved_singleton_style_provisional_v1':
                 return {}
-            review = garment.contextual_suitability
             style = self.mapper.classify(garment).style
-            reviewed = (review.review_state == 'Known' and style.state == 'Known' and len(style.values) == 1
-                        and review.reviewed_styles == style.values and review.reviewed_category == garment.category)
             return {'saved_attribute_evidence': asdict(garment.saved_attribute_evidence),
-                    'style_verification': 'owner_reviewed_current' if reviewed else 'saved_unreviewed'}
+                    'style_verification': 'saved_attribute' if style.state == 'Known' else 'unknown'}
         return {**self.summary(request), 'members': [
             {'garment_id': m.garment.garment_id, 'review': asdict(m.garment.contextual_suitability),
              **saved_source(m.garment),
              **({'appearance_observations':asdict(m.garment.appearance_evidence), 'appearance_current':m.garment.appearance_evidence.current(m.garment)}
-                 if self.plan(request).binding.appearance_required else {}),
+                 if self.plan(request).binding.evidence_contract == 'owner_appearance_observations_v1' else {}),
              'observed_styles': asdict(self.mapper.classify(m.garment).style), 'conditions': [
                 condition(m.garment, field)
                 for field in ('occasion', 'formality') if getattr(request, field) is not None]}

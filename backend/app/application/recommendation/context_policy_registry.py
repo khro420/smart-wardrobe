@@ -91,15 +91,18 @@ def professional_binding(item, situations):
     interview = item['id'] == 'job_interview_appearance_v1'
     sid = 'professional.job_interview' if interview else 'academic.presentation'
     roles = ['candidate','interviewer'] if interview else ['presenter','attendee']
-    notes = {} if interview else {
+    source_notes = {} if interview else {
         'presenter':'No dress code was supplied. This provisional university-presenter suggestion uses reviewed smart-casual appearance; it does not establish a course requirement or infer a dress code.',
         'attendee':'No dress code was supplied. This provisional university-attendee suggestion uses reviewed casual/smart-casual appearance; it does not establish a course requirement or infer a dress code.'}
+    notes = {} if interview else {
+        'presenter':'No dress code was supplied. This provisional university-presenter suggestion uses saved smart-casual style; it does not establish a course requirement or infer a dress code.',
+        'attendee':'No dress code was supplied. This provisional university-attendee suggestion uses saved casual/smart-casual style; it does not establish a course requirement or infer a dress code.'}
     if (item['situation'] != sid or item['declaration_target'] != sid or next(s.projection_occasion for s in situations if s.identifier == sid) != sid
             or item['roles'] != roles or item['assumed_role'] is not None or item['required_context'] != ['situation','role']
             or item['declaration_source'] != 'parent_negative_only_v1' or item['parent_negative'] != ('work' if interview else 'campus')
             or item['evidence_contract'] != ('owner_appearance_observations_v1' if interview else 'current_owner_reviewed_singleton_style_v1')
             or item['appearance_required'] is not interview or item['allowed_venues'] != (['company','office'] if interview else ['university'])
-            or item['allowed_companions'] != [] or item['unspecified_note'] is not None or item['role_notes'] != notes
+            or item['allowed_companions'] != [] or item['unspecified_note'] is not None or item['role_notes'] != source_notes
             or item['unknown_rule'] != ('IP05' if interview else 'AP06') or item['unavailable_rule'] != ('IP04' if interview else 'AP05')
             or item['policy_version'] != ('job-interview-appearance-1.0.0' if interview else 'university-presentation-appearance-1.0.0')
             or item['limits_note'] != 'This is a provisional appearance suggestion, not proof of dress-code compliance, professional suitability, current physical condition, wearer fit, shoes or accessories.'
@@ -129,8 +132,10 @@ def professional_binding(item, situations):
             if actual != positive:
                 raise ValueError('Unapproved positive evidence expression.')
             frozen.append((member,actual))
-        predicates.append(Predicate(rule['id'],code,'expression',(),role,tuple(frozen)))
-    return Binding(item['id'],sid,sid,tuple(roles),None,('situation','role'),item['evidence_contract'],tuple(predicates),item['unknown_rule'],item['unavailable_rule'],
+        # The checked source grammar remains immutable, but specialist admission now
+        # uses the saved style attribute rather than this retired review workflow.
+        predicates.append(Predicate(rule['id'],code,'saved_style_in',style,role))
+    return Binding(item['id'],sid,sid,tuple(roles),None,('situation','role'),SAVED_CONTRACT,tuple(predicates),item['unknown_rule'],item['unavailable_rule'],
                    item['policy_version'],item['declaration_source'],tuple(item['allowed_venues']),(),None,item['limits_note'],item['parent_negative'],interview,tuple(notes.items()))
 
 
@@ -237,9 +242,17 @@ class ContextPolicyRegistry:
                 identifiers.add(rule['id'])
                 codes.add(rule['dress_code'])
                 predicates.append(Predicate(rule['id'], rule['dress_code'], rule['operator'], value))
-            bindings.append(Binding(item['id'], item['situation'], item['declaration_target'], tuple(item['roles']), item['assumed_role'], tuple(item['required_context']), item['evidence_contract'], tuple(predicates), item['unknown_rule'], item['unavailable_rule'], **{
+            # Wedding admission follows the same saved-attribute contract.  Existing
+            # owner wedding decisions remain available to the resolver, including Deny.
+            evidence_contract = SAVED_CONTRACT if item['id'] == 'wedding_guest_equivalent_v1' else item['evidence_contract']
+            if item['id'] == 'wedding_guest_equivalent_v1':
+                predicates = [Predicate(p.identifier, p.dress_code, 'saved_style_in', (p.value,)) for p in predicates]
+            binding_options = {
                 name: tuple(item[name]) if name in ('allowed_venues', 'allowed_companions') else item[name]
-                for name in ('policy_version', 'declaration_source', 'allowed_venues', 'allowed_companions', 'unspecified_note', 'limits_note') if social}))
+                for name in ('policy_version', 'declaration_source', 'allowed_venues', 'allowed_companions', 'unspecified_note', 'limits_note') if social}
+            if item['id'] == 'wedding_guest_equivalent_v1':
+                binding_options['limits_note'] = SAVED_LIMITS
+            bindings.append(Binding(item['id'], item['situation'], item['declaration_target'], tuple(item['roles']), item['assumed_role'], tuple(item['required_context']), evidence_contract, tuple(predicates), item['unknown_rule'], item['unavailable_rule'], **binding_options))
         if {b.identifier for b in bindings} != {'wedding_guest_equivalent_v1','date_appearance_v1','dinner_appearance_v1','job_interview_appearance_v1','university_presentation_appearance_v1', *EVERYDAY}:
             raise ValueError('Missing or duplicate approved binding.')
         return cls(data['version'], digest, taxonomy_hash, tuple(situations), tuple(bindings))
@@ -264,5 +277,5 @@ class ContextPolicyRegistry:
                 if expression and expression['required_any'] and not any(word in phrase for word in expression['required_any']):
                     example+=' at '+('university' if 'university' in expression['required_any'] else expression['required_any'][0])
                 item['example']=example
-            result.update(bundle_id=self.bundle_id,limits='Ordinary contexts use provisional saved labels without a review requirement. Prototype appearance goals are unvalidated and do not establish dress-code compliance, comfort, weather protection, equipment or safety. Wedding/presentation/interview evidence remains strict. Unsupported modifiers are not ignored.')
+            result.update(bundle_id=self.bundle_id,limits='Contexts use provisional saved labels without a separate garment review. They do not establish dress-code compliance, physical condition, comfort, weather protection, equipment or safety. Explicit owner denials and unsupported modifiers are not ignored.')
         return result

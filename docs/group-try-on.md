@@ -1,0 +1,13 @@
+# Group virtual try-on
+
+Open **Virtual try-on** from the main navigation. Upload a JPEG or PNG or select an existing private photo; people are detected automatically. Select one or two numbered people on the image or in the list, and select them again to remove them. Confirm the selection, assign a saved outfit to each person, and generate or download the combined preview. Unselected people are left unchanged.
+
+Use a clear, front-facing image with each person's relevant body regions visible. People may touch: pixels claimed by multiple people and detected foreground objects are protected. Detection can miss people or objects; inspect the numbered boxes and resulting image. Heavy overlap or a failed clothing mask can prevent generation. Edge crops are padded for inference, then mapped back to the original photo. Mask edges are softened inside the editable region, but protected regions retain their original appearance and may still cause visible seams. The result is an AI preview, not a fit measurement. Clothing changes are clipped to the detected person, which can limit new garment silhouettes.
+
+The feature uses the existing local YOLOv8 person segmentation weights and CatVTON installation. It requires the production CatVTON runtime and CUDA; the development copy adapter cannot generate group previews. Requests are processed sequentially through the existing GPU slot. CatVTON's asset and source integrity checks still apply. If the recorded source hash does not match the installed vendor tree, restore a trusted matching CatVTON installation and rerun the documented `backend/scripts/setup_vton.py` installation; do not bypass the check for normal use. Offline setup records hashes of the files already present and cannot independently verify their upstream provenance.
+
+Run the focused CPU tests with `python -m unittest tests.test_group_vton_pipeline_unittest tests.test_group_visualisation_unittest` from `backend`. The compositing tests use a mock generator and do not establish the visual quality of real inference.
+
+Use **Current processes** to return to queued or running try-ons and garment-processing jobs for the selected wearer, including jobs that are ready for review. The list also includes recently finished jobs. Queue order is not guaranteed by the shared GPU lock, and some garment-processing work may report processing while waiting for a resource. A service restart marks interrupted jobs as failed. Photo detection itself is a foreground step and is not tracked as a resumable background job.
+
+**Try-on history** shows completed single-person and group previews across the account. Removing a history entry hides it from the list; it does not delete the underlying private media or job record.

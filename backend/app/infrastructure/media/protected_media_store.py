@@ -122,6 +122,9 @@ def find_orphaned_media(retention_hours: int = ORPHAN_MEDIA_RETENTION_HOURS) -> 
               AND NOT EXISTS (SELECT 1 FROM person_images p WHERE p.media_id = m.id)
               AND NOT EXISTS (SELECT 1 FROM visualisations v WHERE v.output_media_id = m.id)
               AND NOT EXISTS (SELECT 1 FROM visualisation_items v WHERE v.source_media_id = m.id)
+              AND NOT EXISTS (SELECT 1 FROM group_visualisations g WHERE g.output_media_id = m.id OR g.person_media_id = m.id)
+              AND NOT EXISTS (SELECT 1 FROM group_visualisations g, json_each(g.detections_json) d WHERE json_extract(d.value, '$.mask_media_id') = m.id)
+              AND NOT EXISTS (SELECT 1 FROM group_visualisations g, json_each(g.assignments_json) a, json_each(a.value, '$.plan.garments') item WHERE json_extract(item.value, '$.source_media_id') = m.id)
             ORDER BY m.created_at
             """,
             (cutoff,),

@@ -45,6 +45,27 @@ def score_from_json(text):
     if not isinstance(data, dict) or set(data) != {"request_match", "compatibility", "preference", "total", "profile_name", "policy_version", "weights"}:
         raise ValueError("Versioned recommendation score metadata required.")
     from app.domain.value_objects.palette_compatibility import PROFILES
+    if data['profile_name']=='fashion_compatibility_v2':
+        from app.development.mixed_wardrobe.fashion_contract import POLICY_VERSION
+        from app.development.mixed_wardrobe.fashion_policy import POLICY_SHA256,policy
+        policy()
+        if len(text.encode('utf-8'))>262144 or data['policy_version']!=POLICY_VERSION:raise ValueError('Invalid fashion scoring version/budget.')
+        c=component(data['compatibility'])
+        if c.summary.name!='fashion_compatibility_v2' or tuple(d.name for d in c.details)!=('colour','style','pattern','layering','silhouette') or c.summary.reasons not in ((POLICY_SHA256,),()):raise ValueError('Invalid fashion factor evidence.')
+        for d in c.details:
+            valid=(d.state=='NotApplicable' and d.possible==d.observed==0 or
+                   d.state=='Unknown' and d.observed==0 and d.possible>0 or
+                   d.state=='Available' and d.observed==d.possible and d.possible>0 or
+                   d.state=='Partial' and 0<d.observed<d.possible)
+            if not valid or d.reasons!=('qualified_attribute_rules',):raise ValueError('Invalid fashion coverage.')
+        active=[d for d in c.details if d.state!='NotApplicable'];den=sum((F(policy()['weights'][d.name]) for d in active),F())
+        observed=sum(d.observed for d in active);possible=sum(d.possible for d in active)
+        state='NotApplicable' if not active else 'Unknown' if not observed else 'Available' if observed==possible else 'Partial'
+        value=sum((F(policy()['weights'][d.name])*(d.value or F()) for d in active),F())/den if observed else None
+        if (c.summary.state,c.summary.value,c.summary.observed,c.summary.possible)!=(state,value,observed,possible):raise ValueError('Fashion aggregate mismatch.')
+        result=RecommendationScore(component(data['request_match']),c,component(data['preference']),fraction(data['total']),data['profile_name'],data['policy_version'],tuple(fraction(w) for w in data['weights']))
+        if result.weights!=(F(3,5),F(1,5),F(1,5)):raise ValueError('Fashion outer weights changed.')
+        return result
     if data['profile_name'] in PROFILES.values():
         from app.application.recommendation.palette_compatibility_codec import score_from_data
         if len(text.encode('utf-8'))>262144:raise ValueError('C2 score exceeds unchanged limit.')
@@ -91,6 +112,10 @@ def score_from_json(text):
 
 def score_to_json(score):
     from app.domain.value_objects.palette_compatibility import PROFILES
+    if isinstance(score,RecommendationScore) and score.profile_name=='fashion_compatibility_v2':
+        text=json.dumps(asdict(score),sort_keys=True,separators=(',',':'),allow_nan=False,default=lambda x:{'numerator':x.numerator,'denominator':x.denominator} if isinstance(x,F) else None)
+        if score_from_json(text)!=score:raise ValueError('Fashion score replay mismatch.')
+        return text
     if isinstance(score,RecommendationScore) and score.profile_name in PROFILES.values():
         from app.application.recommendation.palette_compatibility_codec import score_to_json as palette_json
         return palette_json(score)

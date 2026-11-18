@@ -1,0 +1,100 @@
+{
+  "grammar_transition": "1.5.0 to 1.6.0; additive registrations only",
+  "neutral": [
+    "Surprise me with an outfit.",
+    "Can you recommend something for me to wear?",
+    "Pick something for me.",
+    "Help me choose an outfit.",
+    "Could you suggest an outfit, please?"
+  ],
+  "neutral_expected": {
+    "intent": "outfit_recommendation",
+    "occasion": null,
+    "style": null,
+    "colours": null,
+    "garment_categories": null,
+    "formality": null,
+    "attribute_intent": null
+  },
+  "wrapper_pairs": [
+    [
+      "Hey, can you suggest a black top please?",
+      "I want a black top.",
+      [
+        [
+          "upper",
+          "exists",
+          "primary_colour",
+          "black"
+        ]
+      ]
+    ],
+    [
+      "Hi, could you recommend a casual outfit?",
+      "A casual outfit.",
+      [
+        [
+          "all_selected",
+          "all_present",
+          "style",
+          "casual"
+        ]
+      ]
+    ],
+    [
+      "Please suggest black trousers.",
+      "I need black trousers.",
+      [
+        [
+          "lower",
+          "exists",
+          "primary_colour",
+          "black"
+        ],
+        [
+          "lower",
+          "exists",
+          "category",
+          "trousers"
+        ]
+      ]
+    ],
+    [
+      "Can you help me find a striped shirt?",
+      "I'd like a striped shirt.",
+      [
+        [
+          "upper",
+          "exists",
+          "pattern",
+          "stripe"
+        ]
+      ]
+    ]
+  ],
+  "pattern_values": {
+    "checked shirt": "check",
+    "checkered shirt": "check",
+    "striped shirt": "stripe",
+    "shirt with stripes": "stripe",
+    "polka-dot shirt": "dot",
+    "shirt with polka dots": "dot"
+  },
+  "sleeve": {
+    "text": "A three-quarter-sleeve shirt.",
+    "expected_status": "UnsupportedAttributeValue",
+    "expected_reason": "unsupported_sleeve_mapping",
+    "no_mapping_to_short_elbow_or_wrist": true
+  },
+  "unchanged_boundaries": [
+    "soft wishes",
+    "OR",
+    "history references",
+    "same-member binding",
+    "contradictions",
+    "external capability",
+    "unknown trailing modifiers",
+    "three requested outfits"
+  ],
+  "historical_rule": "Existing 1.5 archive proof and exact old fingerprints must still verify; only current-writer assertions may advance."
+}

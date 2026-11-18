@@ -101,6 +101,13 @@ CREATE TABLE IF NOT EXISTS visualisation_items (
   role TEXT NOT NULL, item_order INTEGER NOT NULL,
   PRIMARY KEY(visualisation_id, garment_id)
 );
+CREATE TABLE IF NOT EXISTS group_visualisations (
+  id TEXT PRIMARY KEY, user_id TEXT NOT NULL, profile_id TEXT NOT NULL,
+  person_image_id TEXT NOT NULL, person_media_id TEXT NOT NULL,
+  detections_json TEXT NOT NULL, assignments_json TEXT,
+  status TEXT NOT NULL, progress_message TEXT, error_message TEXT,
+  output_media_id TEXT, created_at TEXT NOT NULL, updated_at TEXT NOT NULL
+);
 """
 
 
@@ -164,9 +171,13 @@ def initialise_database() -> None:
             ("error_code", "TEXT"), ("progress_percent", "INTEGER NOT NULL DEFAULT 0"),
             ("progress_current", "INTEGER NOT NULL DEFAULT 0"),
             ("progress_total", "INTEGER NOT NULL DEFAULT 0"), ("progress_message", "TEXT"),
+            ("history_hidden", "INTEGER NOT NULL DEFAULT 0"),
         ):
             if name not in visualisation_columns:
                 conn.execute(f"ALTER TABLE visualisations ADD COLUMN {name} {sql_type}")
+        group_columns = {row[1] for row in conn.execute("PRAGMA table_info(group_visualisations)")}
+        if "history_hidden" not in group_columns:
+            conn.execute("ALTER TABLE group_visualisations ADD COLUMN history_hidden INTEGER NOT NULL DEFAULT 0")
         conn.execute(
             "UPDATE visualisations SET output_kind='development',"
             "model_version='development-copy-v1' WHERE output_kind IS NULL "

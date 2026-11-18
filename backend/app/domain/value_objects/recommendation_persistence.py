@@ -25,8 +25,16 @@ class RecommendationWrite:
     preference: object | None = None
     compatibility: object | None = None
     eligibility: object | None = None
+    local_preference: object | None = None
 
     def __post_init__(self):
+        if self.local_preference is not None:
+            from app.domain.value_objects.request_local_selection import LocalPreferenceWriteDraft
+            if type(self.local_preference) is not LocalPreferenceWriteDraft or self.operation!='assistant' or self.wearer is None or self.eligibility is None or self.captured_garment_sha256 is None or any(x is not None for x in (self.attribute,self.preference,self.compatibility,self.refinement)):
+                raise ValueError('Local preferences require a disjoint captured internal Assistant write.')
+            proof=self.local_preference.proof.to_dict()
+            if proof['owner_id']!=self.user_id or proof['wearer']!=__import__('dataclasses').asdict(self.wearer) or proof['intent']['original_text']!=self.request_text or json.loads(self.request_json)!=proof['intent']['mandatory_request']:
+                raise ValueError('Local draft/request binding mismatch.')
         from app.domain.value_objects.wearer_category_eligibility import EligibilityWriteDraft
         if self.eligibility is not None and (type(self.eligibility) is not EligibilityWriteDraft or self.wearer is None):raise ValueError('Captured owned wearer eligibility draft required.')
         from app.domain.value_objects.palette_compatibility import PaletteWriteDraft,PROFILES

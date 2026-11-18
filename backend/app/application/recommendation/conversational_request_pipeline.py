@@ -3,7 +3,7 @@ from dataclasses import replace
 import re
 from app.application.recommendation.attribute_request_pipeline import AttributeRequestPipeline
 from app.application.nlp.general_context_interpreter import GeneralContextInterpreter
-from app.application.nlp.conversational_context_interpreter import ConversationalContextInterpreter,guard,load_language,PROFILE,RESOURCE_SHA256
+from app.application.nlp.conversational_context_interpreter import ConversationalContextInterpreter,guard,load_language,mask_polite_frame,PROFILE,RESOURCE_SHA256
 from app.application.nlp.conversational_attribute_interpreter import ConversationalAttributeInterpreter
 from app.application.nlp.request_field_extractor import UnsupportedMeaning,RequestFieldExtractor
 from app.domain.value_objects.attribute_conditions import AttributeConditions,AttributeRequestError,conjoin,ROLES
@@ -26,7 +26,7 @@ class ConversationalRequestPipeline(AttributeRequestPipeline):
         return {'version':'conversational-language-capabilities-1.0.0','enabled':True,'profile':PROFILE,'supplement_sha256':RESOURCE_SHA256,'interpreter_sha256':self.interpreter.hash,'examples':["I'm going out to eat.",'Going to the movies.','Need an outfit for uni.','I want a cotton shirt.'],'soft_requests':'Use saved preference settings; no request-local score.','alternative_requests':'Use the bound Suggest another outfit action; supported ordinary contexts or enabled pure garment requirements.'}
     def capabilities(self):
         value=super().capabilities()
-        value['grammar_version']='conversational-attribute-grammar-1.1.3'
+        value['grammar_version']='conversational-attribute-grammar-1.6.0'
         from app.application.nlp.verified_subtype_interpreter import active
         if active():
             from app.domain.value_objects.verified_garment_subtype import registry,VALUES
@@ -43,14 +43,15 @@ class ConversationalRequestPipeline(AttributeRequestPipeline):
     def interpret(self,text,typed_input=None):
         from app.application.nlp.garment_wording_guidance import check
         check(text)
-        try:guard(text)
+        from app.application.nlp.conversational_attribute_forms import connector_spans
+        try:guard(text,allowed_connectors=connector_spans(text))
         except UnsupportedMeaning as e:raise AttributeRequestError('InvalidInput' if e.reason=='invalid_text' else 'UnsupportedRequest',e.reason) from e
         # Preserve old successful interpretations only when bindings and context agree.
         original_result=None
         try:original_result=self.original.interpret(text,typed_input)
         except AttributeRequestError:pass
         typed=AttributeConditions.from_dict(typed_input) if typed_input is not None else None
-        try:parsed=self.grammar.parse(text)
+        try:parsed=self.grammar.parse(mask_polite_frame(text))
         except AttributeRequestError as e:
             if e.reason in ('ambiguous_same_binding','incompatible_binding_scopes','conflicting_binding_role','nested_binding_negation'):raise AttributeRequestError('UnsupportedRequest','language_conflicting_request') from e
             raise
@@ -59,7 +60,15 @@ class ConversationalRequestPipeline(AttributeRequestPipeline):
             groups=combined.to_dict()['groups']
             for positive in (g for g in groups if g['quantifier']=='exists'):
                 for negative in (g for g in groups if g['quantifier']=='none' and set(ROLES[positive['role']])<=set(ROLES[g['role']])):
-                    if any(a['attribute']==b['attribute'] and a['operator']==b['operator'] and set(map(str,a['values']))<=set(map(str,b['values'])) for a in positive['conditions'] for b in negative['conditions']):raise AttributeRequestError('AttributeConflict','language_conflicting_request')
+                    # A forbidden conjunction conflicts only when every one of
+                    # its predicates follows from the required conjunction.
+                    # Shared category alone is not a conflict between colours.
+                    def implies(a,b):
+                        if (a['attribute'],a['operator'])!=(b['attribute'],b['operator']):return False
+                        av,bv=set(map(str,a['values'])),set(map(str,b['values']))
+                        return bv<=av if a['operator']=='contains_all' else av<=bv
+                    if all(any(implies(a,b) for a in positive['conditions']) for b in negative['conditions']):
+                        raise AttributeRequestError('AttributeConflict','language_conflicting_request')
         remaining=parsed.remaining
         # Explicit supported name/tag literals have already been consumed at
         # their original offsets. Unbound quotes must not reach context rules

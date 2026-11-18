@@ -1,0 +1,7 @@
+# Runnable SQLite/NLP/wardrobe/HTTP core. AI operations are explicitly disabled.
+# GPU/CV packages remain in requirements.txt; this does not replace that stack.
+fastapi==0.162.7
+pydantic==2.14.3
+uvicorn==0.54.0
+Pillow==13.0.0
+python-multipart==0.0.33

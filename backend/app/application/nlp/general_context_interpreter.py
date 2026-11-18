@@ -8,6 +8,7 @@ from app.application.nlp.request_field_extractor import RequestFieldExtractor, U
 from app.application.nlp.controlled_value_mapper import ControlledValueMapper
 from app.domain.value_objects.general_context_request import ContextSlot, SourceSpan, GeneralContext, GeneralContextRequest, Situation
 from app.domain.value_objects.nlp_result import NLPOutcome
+from app.shared_contracts.grammar_identity import ResourceIdentity, canonical_bytes
 
 GRAMMAR = Path(__file__).with_name('config')/'context_grammar.v1.json'
 TAXONOMY = Path(__file__).parents[1]/'recommendation/config/situation_taxonomy.v1.json'
@@ -18,7 +19,7 @@ def read_json(path):
     # those JSON files with CRLF on Windows, so emit the same digest that the
     # bundle verifier uses rather than creating a frame that cannot be
     # subsequently certified as part of its own bundle.
-    raw = path.read_bytes().replace(b'\r\n', b'\n')
+    raw = canonical_bytes(path.read_bytes())
     if len(raw) > 65536:
         raise ValueError('Configuration exceeds its bounded schema size.')
     def pairs(items):
@@ -81,11 +82,13 @@ class GeneralContextInterpreter:
             self.situations,self.taxonomy_hash=load_taxonomy(APP/'application/recommendation/config/situation_taxonomy.v2.json',approved_version='situation-taxonomy-'+bundle.record['registry_version'].removeprefix('context-registry-'))
             self.grammar=bundle.read('application/nlp/config/context_grammar.v2.json')
             self.grammar_hash=bundle.record['grammar_sha256']
+            self.grammar_identity=ResourceIdentity.capture((APP/'application/nlp/config/context_grammar.v2.json').read_bytes())
             self.extractor=RequestFieldExtractor(self.vocabulary);self.mapper=ControlledValueMapper(self.vocabulary)
             self.hash=hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
             return
         self.situations, self.taxonomy_hash = load_taxonomy()
         self.grammar, self.grammar_hash = read_json(GRAMMAR)
+        self.grammar_identity=ResourceIdentity.capture(GRAMMAR.read_bytes())
         keys(self.grammar, ('version', 'frames', 'roles', 'dress_codes', 'venues', 'temporal', 'goals', 'temporal_contract'))
         if (self.grammar['version'] != 'context-grammar-1.3.0'
                 or self.grammar['frames'] != ['going', 'attending', 'having', 'meeting', 'wanting', 'command', 'going_out', 'outfit_question', 'presenting', 'being_interviewed', 'conducting_interview']

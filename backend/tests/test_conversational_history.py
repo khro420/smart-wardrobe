@@ -20,15 +20,15 @@ def test_completed_language_receipt_survives_disabled_parser(language_api,monkey
     client,wearer=language_api;key=uuid.uuid4().hex
     profile='recorded_palette_compatibility_v1' if c2 else None
     text='Going shopping with no floral patterns.' if hard else 'Going shopping.'
+    # This test creates a fresh request using the active grammar. Historical
+    # identities are verified separately; they are not today's writer identity.
+    current_grammar=assistant_service().attribute_pipeline.grammar.sha256
     response,root=submit(client,wearer,text,key,p2,profile=profile)
     assert response.status_code==201 and root['outcome']=='Selected',root
     if hard:
         captured=root['provenance']['attribute_selection']['intent']['grammar_sha256']
-        if captured=='03b41d02401e3e28c028cf907da6141f63d368e98d65d4cfbe963b5b8fe0c110':
-            # Explicit approved current descendant; old v1 intent schema remains exact.
-            assert root['provenance']['attribute_selection']['intent']['version']=='assistant-attribute-intent-1.0.0'
-        else:
-            assert root['provenance']['attribute_selection']['intent']['grammar_sha256']=='4fdf75bd573dfc920579bfb2bd88378e4f32068db75df17448400c975b542f26'
+        assert captured==current_grammar
+        assert root['provenance']['attribute_selection']['intent']['version']=='assistant-attribute-intent-1.0.0'
 
     action=root['scoring_display']['refinement']['next_action']
     response,child=submit(client,wearer,root['request_text'],action['submission_key'],p2,action['refinement'],profile=profile)

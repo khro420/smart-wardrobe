@@ -1,0 +1,15 @@
+# Local mixed-source development wardrobe
+
+Opt-in: `SMART_WARDROBE_DEVELOPMENT_MIXED_PROFILE=phase2nd_mixed_v1`.
+
+This profile uses the existing pinned Phase 2N-D catalog and proof secret, but a separate additive proof namespace (`phase2nd_mixed_selection`, version `phase2nd-mixed-wardrobe-selection-1.0.0`). Default is disabled. HTTP admission additionally requires a loopback client and the exact registered account/database/media/catalog. The existing production environment and authentication settings are retained.
+
+New Outfit Assistant requests through the ordinary integrated endpoint acquire both normal confirmed original sources and the 30 registered synthetic sources. Original B0/B1 qualification, source/media/processing links, Unknown states and wearer rules remain unchanged. Synthetic facts are authored fixture declarations, never extraction or owner confirmation. Archived originals are excluded. There is no source checkbox. Each result discloses source counts and selected item origins. An all-synthetic winner is valid; no source diversity bonus is added.
+
+Supported generation scope matches the working fixture workflow: grammar 1.9 text requests, P1/C1, non-contextual hard conditions/negation and the existing bounded optional preference policy. P2/C2, extra typed condition controls, contextual requests and soft continuation are explicitly refused. New result saving/VTON actions are not offered by this proof namespace; Student 1 workflows are unchanged. Historical normal chains and receipt readers retain their captured semantics. No latency or NFR acceptance is asserted.
+
+Every new write reacquires the complete scope under BEGIN IMMEDIATE, compares it to the initial snapshot, independently enumerates and scores the full candidate universe, and validates all persisted mirrors before commit. Source/model qualification is never inferred from a garment name. The existing lossless source codec is reused without raising its limits. Each verification pass owns its decoded B0 documents. New proof tables are created transactionally only on the first successful user write, not at application startup.
+
+Hard-request alternatives use actual authenticated mixed parents, exact text/wearer, a server-issued receipt/action, Seen bases ignoring outerwear variants, the root R floor and the original ten-result cap. Changed sources invalidate a new continuation; immutable archived proof reconstruction remains available. Soft continuation is unavailable.
+
+To use: hard-refresh localhost:3000, choose My wardrobe, open Outfit Assistant, click New Chat, and submit I need jeans. Original and synthetic garments are combined automatically. To stop new mixed generation, disable only this profile and restart the verified backend on 8000. Keep this reader, the private catalog/secret and media for historical replay. Do not delete rows/files by a TEST prefix. Review mixed proof dependencies as well as old fixture proof/item references before any future retirement; this task does not remove fixtures.

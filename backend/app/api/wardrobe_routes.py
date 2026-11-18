@@ -31,7 +31,9 @@ def garments(
     user_id: str = Depends(current_user_id),
     profile_id: str = Depends(active_profile_id),
 ) -> list[dict]:
-    return wardrobe.list_garments(user_id, profile_id, query.strip(), category, favourite, sort, colour, style, availability, include_wearer_eligibility)
+    rows=wardrobe.list_garments(user_id, profile_id, query.strip(), category, favourite, sort, colour, style, availability, include_wearer_eligibility)
+    from app.development.mixed_wardrobe.gateway import wardrobe_annotations
+    return wardrobe_annotations(user_id,profile_id,rows)
 
 
 @router.get("/garments/{garment_id}/dependencies")

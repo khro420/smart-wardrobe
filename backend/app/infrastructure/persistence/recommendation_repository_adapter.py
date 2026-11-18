@@ -51,12 +51,16 @@ def request_fingerprint(operation, request_json, request_text, refinement_action
 
 
 class SqliteRecommendationRepository:
-    def __init__(self, database_path=DATABASE_PATH, checkpoint=None,*,description_policy=None,preference_policy=None,attribute_preference_query=None,compatibility_policy=None):
+    def __init__(self, database_path=DATABASE_PATH, checkpoint=None,*,description_policy=None,preference_policy=None,attribute_preference_query=None,compatibility_policy=None,_local_preference_workflow=None):
         self.database_path = database_path
         self.checkpoint = checkpoint or (lambda stage, conn: None)
         self.description_policy=description_policy
         self.preference_policy,self.attribute_preference_query=preference_policy,attribute_preference_query
         self.compatibility_policy=compatibility_policy
+        self._local_preference_workflow=_local_preference_workflow
+        if _local_preference_workflow is not None:
+            from app.application.recommendation.request_local_soft_workflow import InternalLocalPreferenceWorkflow
+            if type(_local_preference_workflow) is not InternalLocalPreferenceWorkflow:raise ValueError('Restricted internal local workflow required.')
 
     def _connect(self):
         conn = sqlite3.connect(self.database_path, timeout=10)
@@ -77,6 +81,9 @@ class SqliteRecommendationRepository:
         if not isinstance(command, RecommendationWrite):
             raise ValueError("Expected immutable persistence command.")
         provenance=json.loads(command.provenance_json)
+        local=command.local_preference
+        if 'request_local_preference' in provenance:raise ValueError('Only writer may attach local preference proof.')
+        if local is not None and self._local_preference_workflow is None:raise ValueError('Local preference writes are disabled.')
         draft=command.refinement
         from app.domain.value_objects.garment_only_refinement import GarmentRefinementDraft
         garment_draft=type(draft) is GarmentRefinementDraft
@@ -136,14 +143,22 @@ class SqliteRecommendationRepository:
         # Fingerprint request identity, not nondeterministic selected result.
         fingerprint = request_fingerprint(command.operation, command.request_json, command.request_text,draft.action if draft else None,command.wearer.profile_id if command.wearer else None,
             attribute_conditions=typed_input,attribute_mode=attribute is not None,preference_profile=preference_profile,compatibility_profile=compatibility_profile)
+        local_intent=None
+        if local is not None:
+            from app.domain.value_objects.request_local_preference import RequestLocalPreferenceIntent
+            from app.domain.value_objects.attribute_conditions import encode as local_encode
+            from app.domain.value_objects.request_local_selection import fingerprint as local_fingerprint
+            local_intent=RequestLocalPreferenceIntent(local_encode(local.proof.to_dict()['intent']))
+            fingerprint=local_fingerprint(local_intent,command.wearer)
         profile_id = command.wearer.profile_id if command.wearer else current_profile_id()
         conn = self._connect()
+        local_verification=None
         try:
             conn.execute("BEGIN IMMEDIATE")
             if not conn.execute("SELECT 1 FROM users WHERE id=? AND account_status='active'", (command.user_id,)).fetchone():
                 raise ValueError("Active authenticated owner required.")
             prior = self._completed(conn,command.user_id,command.operation,command.submission_key,
-                command.request_text,draft.action if draft else None,profile_id,attribute_conditions=typed_input,preference_profile=preference_profile,compatibility_profile=compatibility_profile)
+                command.request_text,draft.action if draft else None,profile_id,attribute_conditions=typed_input,preference_profile=preference_profile,compatibility_profile=compatibility_profile,local_request=local_intent)
             if prior is not None:
                 saved_fingerprint=conn.execute('SELECT fingerprint FROM recommendation_submissions WHERE user_id=? AND operation=? AND submission_key=?',(command.user_id,command.operation,command.submission_key)).fetchone()[0]
                 if saved_fingerprint!=fingerprint:raise PersistenceConflict('Trusted command payload conflict.')
@@ -154,6 +169,11 @@ class SqliteRecommendationRepository:
                 require_active_profile(conn,command.user_id,profile_id)
                 if 'intended_wearer' in provenance:raise ValueError('Only the writer may create wearer evidence.')
                 provenance['intended_wearer']=command.wearer.evidence()
+            if local is not None:
+                self.checkpoint('local_preference_before_revalidation',conn)
+                local_verification=self._local_preference_workflow.revalidate(conn,command)
+                provenance['request_local_preference']=local_verification.proof.to_dict()
+                self.checkpoint('local_preference_revalidated',conn)
             from app.application.wardrobe import wearer_category_service as categories
             eligibility_capture=categories.revalidate(conn,command.user_id,profile_id,command.eligibility)
             if command.eligibility is not None:
@@ -163,7 +183,7 @@ class SqliteRecommendationRepository:
                 validate_evidence(saved_eligibility,command.user_id,profile_id,command.candidate.members)
                 provenance[ELIGIBILITY_KEY]=saved_eligibility
             strict_query=eligibility_capture or SqliteConfirmedGarmentQuery(conn)
-            if attribute is not None or preference is not None or palette is not None:
+            if attribute is not None or preference is not None or palette is not None or local is not None:
                 from app.domain.value_objects.attribute_selection_evidence import description_digest
                 if self.description_policy is None:raise ValueError('Prepared description policy required for a new attribute write.')
                 try:collection=strict_query.get_confirmed_garment_descriptions(command.user_id,self.description_policy)
@@ -296,14 +316,14 @@ class SqliteRecommendationRepository:
                 conn.execute("INSERT INTO recommendation_item_snapshots VALUES (?,?,?)", (identifier, g.garment_id, encode({"name": g.name, "category": g.category, "preferred_media_id": g.preferred_media_id})))
                 self.checkpoint("snapshot", conn)
             exact_score=encode(score) if score else None
-            if score is not None and (palette is not None or score.profile_name in ('context_relevance_decision_v1','attribute_preference_decision_v2')):
+            if score is not None and (local is not None or palette is not None or score.profile_name in ('context_relevance_decision_v1','attribute_preference_decision_v2')):
                 from app.application.recommendation.decision_score_codec import score_to_json
                 exact_score=score_to_json(score)
             conn.execute("INSERT INTO recommendation_metadata VALUES (?,?,?)", (identifier, provenance_text, exact_score))
             self.checkpoint("metadata", conn)
             conn.execute("INSERT INTO recommendation_submissions VALUES (?,?,?,?,?)", (command.user_id, command.operation, command.submission_key, fingerprint, identifier))
             self.checkpoint("submission", conn)
-            result = self._read(conn, command.user_id, identifier,eligible=set(current) if draft is not None or attribute is not None else None)
+            result = self._read(conn, command.user_id, identifier,eligible=set(current) if draft is not None or attribute is not None else None,_local_verification=local_verification)
             self.checkpoint("before_commit", conn)
             conn.commit()
             return result, False
@@ -318,7 +338,7 @@ class SqliteRecommendationRepository:
             raise ValueError("Expected Assistant command.")
         return self._persist(command)
 
-    def _completed(self,conn,user_id,operation,key,text=None,action=None,wearer_profile_id=None,header_profile_id=None,*,attribute_conditions=None,preference_profile=None,compatibility_profile=None):
+    def _completed(self,conn,user_id,operation,key,text=None,action=None,wearer_profile_id=None,header_profile_id=None,*,attribute_conditions=None,preference_profile=None,compatibility_profile=None,local_request=None,local_policy=None):
         if not conn.execute("SELECT 1 FROM users WHERE id=? AND account_status='active'",(user_id,)).fetchone():
             raise ValueError('Active authenticated owner required.')
         row=conn.execute("SELECT s.fingerprint,r.id,r.profile_id,c.extracted_entities_json,m.provenance_json,m.score_json FROM recommendation_submissions s JOIN recommendations r ON r.id=s.recommendation_id AND r.user_id=s.user_id LEFT JOIN nlp_chats c ON c.id=r.chat_id AND c.user_id=r.user_id LEFT JOIN recommendation_metadata m ON m.recommendation_id=r.id WHERE s.user_id=? AND s.operation=? AND s.submission_key=?",(user_id,operation,key)).fetchone()
@@ -327,6 +347,13 @@ class SqliteRecommendationRepository:
             if assertion is not None and assertion!=row['profile_id']:
                 raise PersistenceConflict('Submission wearer conflict.')
         provenance=json.loads(row['provenance_json']) if row['provenance_json'] else {}
+        if 'request_local_preference' in provenance or local_request is not None:
+            if 'request_local_preference' not in provenance or local_request is None or action is not None or attribute_conditions is not None or preference_profile is not None or compatibility_profile is not None:raise PersistenceConflict('Submission local preference mode conflict.')
+            from types import SimpleNamespace
+            from app.domain.value_objects.request_local_selection import fingerprint as local_fingerprint,POLICY
+            expected=local_fingerprint(local_request,SimpleNamespace(account_id=user_id,profile_id=wearer_profile_id),policy=local_policy if local_policy is not None else POLICY)
+            if row['fingerprint']!=expected:raise PersistenceConflict('Submission local intent/policy/wearer conflict.')
+            return self._read(conn,user_id,row['id'],account_history=True)
         stored_palette=provenance.get('palette_compatibility')
         from app.domain.value_objects.palette_compatibility import PROFILES
         stored_score=json.loads(row['score_json']) if row['score_json'] else {}
@@ -355,6 +382,16 @@ class SqliteRecommendationRepository:
             return self._completed(conn,user_id,'assistant',submission_key,request_text,refinement_action,asserted,header_profile_id,attribute_conditions=attribute_conditions,preference_profile=preference_profile,compatibility_profile=compatibility_profile)
         finally:
             conn.rollback();conn.close()
+
+    def find_local_submission(self,owner,profile_id,intent,key,*,policy=None):
+        if self._local_preference_workflow is None:raise ValueError('Local preference workflow is disabled.')
+        conn=self._connect()
+        try:
+            conn.execute('BEGIN')
+            from app.application.wardrobe.profile_service import require_active_profile
+            require_active_profile(conn,owner,profile_id)
+            return self._completed(conn,owner,'assistant',key,wearer_profile_id=profile_id,local_request=intent,local_policy=policy)
+        finally:conn.rollback();conn.close()
 
     def get(self, user_id, recommendation_id,*,profile_id=None,view='active'):
         conn = self._connect()
@@ -417,7 +454,20 @@ class SqliteRecommendationRepository:
         finally:
             conn.rollback();conn.close()
 
-    def _read(self, conn, user_id, identifier,eligible=None,*,account_history=False):
+    def _read(self, conn, user_id, identifier,eligible=None,*,account_history=False,_local_verification=None):
+        probe=conn.execute('SELECT m.provenance_json FROM recommendation_metadata m JOIN recommendations r ON r.id=m.recommendation_id WHERE r.id=? AND r.user_id=?',(identifier,user_id)).fetchone()
+        if probe is not None and 'phase2nd_mixed_selection' in json.loads(probe[0]):
+            from app.development.mixed_wardrobe.gateway import record_from_conn
+            record=record_from_conn(conn,user_id,identifier)
+            if not account_history and current_profile_id() is not None and current_profile_id()!=record['profile_id']:
+                raise LookupError('Recommendation not found.')
+            return record
+        if probe is not None and 'phase2nd_fixture_selection' in json.loads(probe[0]):
+            from app.development.main_fixture.gateway import record_from_conn
+            record=record_from_conn(conn,user_id,identifier)
+            if not account_history and current_profile_id() is not None and current_profile_id()!=record['profile_id']:
+                raise LookupError('Recommendation not found.')
+            return record
         profile_id=current_profile_id()
         sql="SELECT r.*,c.request_text FROM recommendations r LEFT JOIN nlp_chats c ON c.id=r.chat_id AND c.user_id=r.user_id WHERE r.id=? AND r.user_id=?"
         params=[identifier,user_id]
@@ -444,6 +494,18 @@ class SqliteRecommendationRepository:
         metadata = conn.execute("SELECT * FROM recommendation_metadata WHERE recommendation_id=?", (identifier,)).fetchone()
         result.update(items=items, provenance=json.loads(metadata["provenance_json"]) if metadata else None,
                       score_metadata=json.loads(metadata["score_json"]) if metadata and metadata["score_json"] else None)
+        if isinstance(result['provenance'],dict) and 'compositional_selection' in result['provenance'] or isinstance(result['score_metadata'],dict) and result['score_metadata'].get('version')=='compositional-score-metadata-1.0.0':
+            from app.application.recommendation.compositional_workflow_v1 import read_record
+            receipt=conn.execute("SELECT fingerprint FROM recommendation_submissions WHERE user_id=? AND operation='assistant' AND recommendation_id=?",(user_id,identifier)).fetchall()
+            if len(receipt)!=1:raise ValueError('Compositional result requires one bound receipt.')
+            return read_record(result,captured_identity_items,receipt[0]['fingerprint'])
+        # Additive reader dispatch; historical proof/score readers below retain
+        # their exact inputs and semantics for every pre-normalization record.
+        if isinstance(result['provenance'],dict) and 'normalized_selection' in result['provenance'] or isinstance(result['score_metadata'],dict) and result['score_metadata'].get('version')=='normalized-score-metadata-1.0.0':
+            from app.application.recommendation.normalized_workflow_v1 import read_record
+            receipt=conn.execute("SELECT fingerprint FROM recommendation_submissions WHERE user_id=? AND operation='assistant' AND recommendation_id=?",(user_id,identifier)).fetchall()
+            if len(receipt)!=1:raise ValueError('Normalized result requires one bound receipt.')
+            return read_record(result,captured_identity_items,receipt[0]['fingerprint'])
         from app.domain.value_objects.wearer_category_eligibility import KEY as ELIGIBILITY_KEY,validate_evidence
         if isinstance(result['provenance'],dict) and ELIGIBILITY_KEY in result['provenance']:
             validate_evidence(result['provenance'][ELIGIBILITY_KEY],user_id,result['profile_id'],captured_identity_items)
@@ -505,4 +567,15 @@ class SqliteRecommendationRepository:
             from app.infrastructure.persistence.garment_only_refinement_lineage_query import read_chain
             from app.application.recommendation.garment_only_refinement_lineage_service import validate_chain
             _,chain=read_chain(conn,user_id,identifier);validate_chain(user_id,chain)
+        if isinstance(result.get('provenance'),dict) and 'request_local_preference' in result['provenance']:
+            if _local_verification is not None:
+                from app.application.recommendation.request_local_selection_verifier import _LockedLocalVerification
+                if type(_local_verification) is not _LockedLocalVerification:raise ValueError('Typed locked local verification required.')
+                return _local_verification.read_back(conn,result,captured_identity_items)
+            from app.domain.value_objects.request_local_selection import LocalSelectionProof
+            from app.domain.value_objects.attribute_conditions import encode as local_encode
+            from app.application.recommendation.request_local_selection_verifier import verify
+            from app.application.recommendation.decision_score_codec import score_from_json
+            verify(LocalSelectionProof(local_encode(result['provenance']['request_local_preference'])),user_id,result['profile_id'],score=score_from_json(metadata['score_json']),items=captured_identity_items,text=result['request_text'])
+        elif _local_verification is not None:raise ValueError('Missing local proof in independently verified read-back.')
         return result

@@ -1,0 +1,16 @@
+const fs=require('node:fs'),path=require('node:path'),Module=require('node:module');
+const assert=require('node:assert/strict'),ts=require('typescript'),React=require('react');
+const {renderToStaticMarkup}=require('react-dom/server');
+const filename=path.resolve(__dirname,'../components/PersonalizationControls.tsx');
+const compiled=ts.transpileModule(fs.readFileSync(filename,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX}});
+const loaded=new Module(filename,module);loaded.filename=filename;loaded.paths=Module._nodeModulePaths(path.dirname(filename));
+const ordinary=loaded.require.bind(loaded);let writes=0;
+loaded.require=name=>name==='../lib/api'?{getOutfitFeedback:async()=>({verdict:null}),saveOutfitFeedback:async()=>{writes++;return {verdict:'like'};}}:ordinary(name);
+loaded._compile(compiled.outputText,filename);const View=loaded.exports.default;
+const render=value=>renderToStaticMarkup(React.createElement(View,{value,recommendationId:'r',wearerId:'w'}));
+assert.equal(render(undefined),'');
+const value={profile:'explicit_preferences_diversity_v1',applied:true,reason:'exact_score_tie_only',eligible_ties:3};
+const html=render(value);for(const label of ['Like this outfit','Dislike this outfit','Clear feedback','identical R, C, P','never imply dislike','Edit clothing preferences'])assert.ok(html.includes(label),label);
+assert.equal(render(JSON.parse(JSON.stringify(value))),html);assert.equal(writes,0);
+assert.ok(render({...value,reason:'request_policy_unchanged'}).includes('continuation ordering are unchanged'));
+console.log('PASS: explicit feedback controls, exact-tie explanation, history display; render makes no feedback writes.');
