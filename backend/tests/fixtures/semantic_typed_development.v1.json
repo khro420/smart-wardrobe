@@ -1,0 +1,1360 @@
+{
+  "version": "phase2t-independent-gold-1.0.0",
+  "authoring": "Manual semantic labels from approved contracts, before model execution; not independently human-validated.",
+  "intrinsic_venues": {
+    "academic.presentation": "university",
+    "academic.library_study": "library",
+    "professional.office_day": "office",
+    "social.house_gathering": "friend_home",
+    "leisure.cinema_outing": "cinema",
+    "social.cafe_meetup": "cafe",
+    "leisure.city_sightseeing": "city"
+  },
+  "cases": [
+    {
+      "id": "D01",
+      "subset": "discovery",
+      "text": "Could you pick clothes for my aunt's wedding?",
+      "decision": "accept",
+      "expected": {
+        "context": "ceremony.wedding",
+        "role": null,
+        "venue": null,
+        "companions": [],
+        "temporal": [],
+        "facets": [],
+        "dress_code": null,
+        "formality": null,
+        "interview_default_inferred": false,
+        "hard": [],
+        "optional": null,
+        "secondary_required": []
+      }
+    },
+    {
+      "id": "D02",
+      "subset": "discovery",
+      "text": "My date is at a restaurant tonight. I need a white top.",
+      "decision": "accept",
+      "expected": {
+        "context": "social.date",
+        "role": null,
+        "venue": "restaurant",
+        "companions": [],
+        "temporal": [
+          "tonight"
+        ],
+        "facets": [],
+        "dress_code": null,
+        "formality": null,
+        "interview_default_inferred": false,
+        "hard": [
+          {
+            "role": "upper",
+            "quantifier": "exists",
+            "predicates": [
+              {
+                "attribute": "primary_colour",
+                "operator": "in",
+                "values": [
+                  "white"
+                ]
+              }
+            ]
+          }
+        ],
+        "optional": null,
+        "secondary_required": []
+      }
+    },
+    {
+      "id": "D03",
+      "subset": "discovery",
+      "text": "I'm having lunch with family; suggest a striped top.",
+      "decision": "accept",
+      "expected": {
+        "context": "social.meal",
+        "role": null,
+        "venue": null,
+        "companions": [
+          "family"
+        ],
+        "temporal": [],
+        "facets": [],
+        "dress_code": null,
+        "formality": null,
+        "interview_default_inferred": false,
+        "hard": [
+          {
+            "role": "upper",
+            "quantifier": "exists",
+            "predicates": [
+              {
+                "attribute": "pattern",
+                "operator": "in",
+                "values": [
+                  "stripe"
+                ]
+              }
+            ]
+          }
+        ],
+        "optional": null,
+        "secondary_required": []
+      }
+    },
+    {
+      "id": "D04",
+      "subset": "discovery",
+      "text": "Tomorrow I'm interviewing applicants for a job; the dress code is smart casual. I need black trousers.",
+      "decision": "accept",
+      "expected": {
+        "context": "professional.job_interview",
+        "role": "interviewer",
+        "venue": null,
+        "companions": [],
+        "temporal": [
+          "tomorrow"
+        ],
+        "facets": [],
+        "dress_code": "smart casual",
+        "formality": null,
+        "interview_default_inferred": false,
+        "hard": [
+          {
+            "role": "lower",
+            "quantifier": "exists",
+            "predicates": [
+              {
+                "attribute": "category",
+                "operator": "in",
+                "values": [
+                  "trousers"
+                ]
+              },
+              {
+                "attribute": "primary_colour",
+                "operator": "in",
+                "values": [
+                  "black"
+                ]
+              }
+            ]
+          }
+        ],
+        "optional": null,
+        "secondary_required": []
+      }
+    },
+    {
+      "id": "D05",
+      "subset": "discovery",
+      "text": "For my university presentation, I'm the presenter. I need a white shirt.",
+      "decision": "accept",
+      "expected": {
+        "context": "academic.presentation",
+        "role": "presenter",
+        "venue": "university",
+        "companions": [],
+        "temporal": [],
+        "facets": [],
+        "dress_code": null,
+        "formality": null,
+        "interview_default_inferred": false,
+        "hard": [
+          {
+            "role": "upper",
+            "quantifier": "exists",
+            "predicates": [
+              {
+                "attribute": "primary_colour",
+                "operator": "in",
+                "values": [
+                  "white"
+                ]
+              },
+              {
+                "attribute": "category",
+                "operator": "in",
+                "values": [
+                  "long_sleeve_top",
+                  "short_sleeve_top"
+                ]
+              }
+            ]
+          }
+        ],
+        "optional": null,
+        "secondary_required": []
+      }
+    },
+    {
+      "id": "D06",
+      "subset": "discovery",
+      "text": "Could you choose an outfit for tomorrow's university lectures?",
+      "decision": "accept",
+      "expected": {
+        "context": "everyday.academic_attendance",
+        "role": null,
+        "venue": "university",
+        "companions": [],
+        "temporal": [
+          "tomorrow"
+        ],
+        "facets": [],
+        "dress_code": null,
+        "formality": null,
+        "interview_default_inferred": false,
+        "hard": [],
+        "optional": null,
+        "secondary_required": []
+      }
+    },
+    {
+      "id": "D07",
+      "subset": "discovery",
+      "text": "Gimme an outfit for shopping; I need trousers, preferably black.",
+      "decision": "accept",
+      "expected": {
+        "context": "everyday.shopping",
+        "role": null,
+        "venue": null,
+        "companions": [],
+        "temporal": [],
+        "facets": [],
+        "dress_code": null,
+        "formality": null,
+        "interview_default_inferred": false,
+        "hard": [
+          {
+            "role": "lower",
+            "quantifier": "exists",
+            "predicates": [
+              {
+                "attribute": "category",
+                "operator": "in",
+                "values": [
+                  "trousers"
+                ]
+              }
+            ]
+          }
+        ],
+        "optional": {
+          "role": "lower",
+          "quantifier": "exists",
+          "predicates": [
+            {
+              "attribute": "primary_colour",
+              "operator": "in",
+              "values": [
+                "black"
+              ]
+            }
+          ],
+          "resolution": "Active"
+        },
+        "secondary_required": []
+      }
+    },
+    {
+      "id": "D08",
+      "subset": "discovery",
+      "text": "I'm going out casually with my pals. I need a blue top.",
+      "decision": "accept",
+      "expected": {
+        "context": "everyday.casual_outing",
+        "role": null,
+        "venue": null,
+        "companions": [
+          "friends"
+        ],
+        "temporal": [],
+        "facets": [],
+        "dress_code": null,
+        "formality": null,
+        "interview_default_inferred": false,
+        "hard": [
+          {
+            "role": "upper",
+            "quantifier": "exists",
+            "predicates": [
+              {
+                "attribute": "primary_colour",
+                "operator": "in",
+                "values": [
+                  "blue"
+                ]
+              }
+            ]
+          }
+        ],
+        "optional": null,
+        "secondary_required": []
+      }
+    },
+    {
+      "id": "D09",
+      "subset": "discovery",
+      "text": "Please choose clothes for studying at a library today.",
+      "decision": "accept",
+      "expected": {
+        "context": "academic.library_study",
+        "role": null,
+        "venue": "library",
+        "companions": [],
+        "temporal": [
+          "today"
+        ],
+        "facets": [],
+        "dress_code": null,
+        "formality": null,
+        "interview_default_inferred": false,
+        "hard": [],
+        "optional": null,
+        "secondary_required": []
+      }
+    },
+    {
+      "id": "D10",
+      "subset": "discovery",
+      "text": "I'm going to a group study with classmates tomorrow.",
+      "decision": "accept",
+      "expected": {
+        "context": "academic.group_study",
+        "role": null,
+        "venue": null,
+        "companions": [
+          "classmates"
+        ],
+        "temporal": [
+          "tomorrow"
+        ],
+        "facets": [],
+        "dress_code": null,
+        "formality": null,
+        "interview_default_inferred": false,
+        "hard": [],
+        "optional": null,
+        "secondary_required": []
+      }
+    },
+    {
+      "id": "D11",
+      "subset": "discovery",
+      "text": "I have an ordinary day at the office tomorrow. I'd prefer blue trousers.",
+      "decision": "accept",
+      "expected": {
+        "context": "professional.office_day",
+        "role": null,
+        "venue": "office",
+        "companions": [],
+        "temporal": [
+          "tomorrow"
+        ],
+        "facets": [],
+        "dress_code": null,
+        "formality": null,
+        "interview_default_inferred": false,
+        "hard": [],
+        "optional": {
+          "role": "lower",
+          "quantifier": "exists",
+          "predicates": [
+            {
+              "attribute": "primary_colour",
+              "operator": "in",
+              "values": [
+                "blue"
+              ]
+            },
+            {
+              "attribute": "category",
+              "operator": "in",
+              "values": [
+                "trousers"
+              ]
+            }
+          ],
+          "resolution": "Active"
+        },
+        "secondary_required": []
+      }
+    },
+    {
+      "id": "D12",
+      "subset": "discovery",
+      "text": "There is a business meeting at my office today. I need a cotton top.",
+      "decision": "accept",
+      "expected": {
+        "context": "professional.workplace_meeting",
+        "role": null,
+        "venue": "office",
+        "companions": [],
+        "temporal": [
+          "today"
+        ],
+        "facets": [],
+        "dress_code": null,
+        "formality": null,
+        "interview_default_inferred": false,
+        "hard": [
+          {
+            "role": "upper",
+            "quantifier": "exists",
+            "predicates": [
+              {
+                "attribute": "material",
+                "operator": "contains_any",
+                "values": [
+                  "cotton"
+                ]
+              }
+            ]
+          }
+        ],
+        "optional": null,
+        "secondary_required": []
+      }
+    },
+    {
+      "id": "D13",
+      "subset": "discovery",
+      "text": "My cousin is having a birthday party tonight. I need a white top.",
+      "decision": "accept",
+      "expected": {
+        "context": "social.birthday_gathering",
+        "role": null,
+        "venue": null,
+        "companions": [],
+        "temporal": [
+          "tonight"
+        ],
+        "facets": [],
+        "dress_code": null,
+        "formality": null,
+        "interview_default_inferred": false,
+        "hard": [
+          {
+            "role": "upper",
+            "quantifier": "exists",
+            "predicates": [
+              {
+                "attribute": "primary_colour",
+                "operator": "in",
+                "values": [
+                  "white"
+                ]
+              }
+            ]
+          }
+        ],
+        "optional": null,
+        "secondary_required": []
+      }
+    },
+    {
+      "id": "D14",
+      "subset": "discovery",
+      "text": "I'm going to my friend's house for a casual gathering.",
+      "decision": "accept",
+      "expected": {
+        "context": "social.house_gathering",
+        "role": null,
+        "venue": "friend_home",
+        "companions": [],
+        "temporal": [],
+        "facets": [],
+        "dress_code": null,
+        "formality": null,
+        "interview_default_inferred": false,
+        "hard": [],
+        "optional": null,
+        "secondary_required": []
+      }
+    },
+    {
+      "id": "D15",
+      "subset": "discovery",
+      "text": "I'm watching a movie at the cinema tonight. No shorts, please.",
+      "decision": "accept",
+      "expected": {
+        "context": "leisure.cinema_outing",
+        "role": null,
+        "venue": "cinema",
+        "companions": [],
+        "temporal": [
+          "tonight"
+        ],
+        "facets": [],
+        "dress_code": null,
+        "formality": null,
+        "interview_default_inferred": false,
+        "hard": [
+          {
+            "role": "lower",
+            "quantifier": "none",
+            "predicates": [
+              {
+                "attribute": "category",
+                "operator": "in",
+                "values": [
+                  "shorts"
+                ]
+              }
+            ]
+          }
+        ],
+        "optional": null,
+        "secondary_required": []
+      }
+    },
+    {
+      "id": "D16",
+      "subset": "discovery",
+      "text": "I'm having coffee with friends at a cafe tomorrow.",
+      "decision": "accept",
+      "expected": {
+        "context": "social.cafe_meetup",
+        "role": null,
+        "venue": "cafe",
+        "companions": [
+          "friends"
+        ],
+        "temporal": [
+          "tomorrow"
+        ],
+        "facets": [],
+        "dress_code": null,
+        "formality": null,
+        "interview_default_inferred": false,
+        "hard": [],
+        "optional": null,
+        "secondary_required": []
+      }
+    },
+    {
+      "id": "D17",
+      "subset": "discovery",
+      "text": "We're going sightseeing around the city today. I need jeans.",
+      "decision": "accept",
+      "expected": {
+        "context": "leisure.city_sightseeing",
+        "role": null,
+        "venue": "city",
+        "companions": [],
+        "temporal": [
+          "today"
+        ],
+        "facets": [],
+        "dress_code": null,
+        "formality": null,
+        "interview_default_inferred": false,
+        "hard": [
+          {
+            "role": "lower",
+            "quantifier": "exists",
+            "predicates": [
+              {
+                "attribute": "category",
+                "operator": "in",
+                "values": [
+                  "trousers"
+                ]
+              },
+              {
+                "attribute": "material",
+                "operator": "contains_any",
+                "values": [
+                  "denim"
+                ]
+              }
+            ]
+          }
+        ],
+        "optional": null,
+        "secondary_required": []
+      }
+    },
+    {
+      "id": "D18",
+      "subset": "discovery",
+      "text": "I'm travelling by train tonight. I'd prefer a black top.",
+      "decision": "accept",
+      "expected": {
+        "context": "travel.journey",
+        "role": null,
+        "venue": null,
+        "companions": [],
+        "temporal": [
+          "tonight"
+        ],
+        "facets": [
+          "transport:train"
+        ],
+        "dress_code": null,
+        "formality": null,
+        "interview_default_inferred": false,
+        "hard": [],
+        "optional": {
+          "role": "upper",
+          "quantifier": "exists",
+          "predicates": [
+            {
+              "attribute": "primary_colour",
+              "operator": "in",
+              "values": [
+                "black"
+              ]
+            }
+          ],
+          "resolution": "Active"
+        },
+        "secondary_required": []
+      }
+    },
+    {
+      "id": "D19",
+      "subset": "discovery",
+      "text": "Please suggest a striped cotton shirt and black trousers.",
+      "decision": "accept",
+      "expected": {
+        "context": "none",
+        "role": null,
+        "venue": null,
+        "companions": [],
+        "temporal": [],
+        "facets": [],
+        "dress_code": null,
+        "formality": null,
+        "interview_default_inferred": false,
+        "hard": [
+          {
+            "role": "upper",
+            "quantifier": "exists",
+            "predicates": [
+              {
+                "attribute": "pattern",
+                "operator": "in",
+                "values": [
+                  "stripe"
+                ]
+              },
+              {
+                "attribute": "material",
+                "operator": "contains_any",
+                "values": [
+                  "cotton"
+                ]
+              },
+              {
+                "attribute": "category",
+                "operator": "in",
+                "values": [
+                  "long_sleeve_top",
+                  "short_sleeve_top"
+                ]
+              }
+            ]
+          },
+          {
+            "role": "lower",
+            "quantifier": "exists",
+            "predicates": [
+              {
+                "attribute": "category",
+                "operator": "in",
+                "values": [
+                  "trousers"
+                ]
+              },
+              {
+                "attribute": "primary_colour",
+                "operator": "in",
+                "values": [
+                  "black"
+                ]
+              }
+            ]
+          }
+        ],
+        "optional": null,
+        "secondary_required": []
+      }
+    },
+    {
+      "id": "D20",
+      "subset": "discovery",
+      "text": "I need either a blue or black top, but no shorts.",
+      "decision": "accept",
+      "expected": {
+        "context": "none",
+        "role": null,
+        "venue": null,
+        "companions": [],
+        "temporal": [],
+        "facets": [],
+        "dress_code": null,
+        "formality": null,
+        "interview_default_inferred": false,
+        "hard": [
+          {
+            "role": "upper",
+            "quantifier": "exists",
+            "predicates": [
+              {
+                "attribute": "primary_colour",
+                "operator": "in",
+                "values": [
+                  "black",
+                  "blue"
+                ]
+              }
+            ]
+          },
+          {
+            "role": "lower",
+            "quantifier": "none",
+            "predicates": [
+              {
+                "attribute": "category",
+                "operator": "in",
+                "values": [
+                  "shorts"
+                ]
+              }
+            ]
+          }
+        ],
+        "optional": null,
+        "secondary_required": []
+      }
+    },
+    {
+      "id": "D21",
+      "subset": "discovery",
+      "text": "I need blue trousers, preferably black.",
+      "decision": "accept",
+      "expected": {
+        "context": "none",
+        "role": null,
+        "venue": null,
+        "companions": [],
+        "temporal": [],
+        "facets": [],
+        "dress_code": null,
+        "formality": null,
+        "interview_default_inferred": false,
+        "hard": [
+          {
+            "role": "lower",
+            "quantifier": "exists",
+            "predicates": [
+              {
+                "attribute": "category",
+                "operator": "in",
+                "values": [
+                  "trousers"
+                ]
+              },
+              {
+                "attribute": "primary_colour",
+                "operator": "in",
+                "values": [
+                  "blue"
+                ]
+              }
+            ]
+          }
+        ],
+        "optional": {
+          "role": "lower",
+          "quantifier": "exists",
+          "predicates": [
+            {
+              "attribute": "primary_colour",
+              "operator": "in",
+              "values": [
+                "black"
+              ]
+            }
+          ],
+          "resolution": "ContradictedByHard"
+        },
+        "secondary_required": []
+      }
+    },
+    {
+      "id": "D22",
+      "subset": "discovery",
+      "text": "I need an outfit for my college reunion dinner.",
+      "decision": "accept",
+      "expected": {
+        "context": "social.meal",
+        "role": null,
+        "venue": null,
+        "companions": [],
+        "temporal": [],
+        "facets": [],
+        "dress_code": null,
+        "formality": null,
+        "interview_default_inferred": false,
+        "hard": [],
+        "optional": null,
+        "secondary_required": [
+          "reunion"
+        ]
+      }
+    },
+    {
+      "id": "D23",
+      "subset": "discovery",
+      "text": "I'm going to a meeting tomorrow. Pick clothes.",
+      "decision": "refuse",
+      "expected_reason_class": "ambiguous_social_vs_business_meeting"
+    },
+    {
+      "id": "D24",
+      "subset": "discovery",
+      "text": "What should I wear to an interview?",
+      "decision": "refuse",
+      "expected_reason_class": "missing_interview_role_and_kind"
+    },
+    {
+      "id": "D25",
+      "subset": "discovery",
+      "text": "I need an outfit for a wedding as the groom.",
+      "decision": "refuse",
+      "expected_reason_class": "unsupported_wedding_role"
+    },
+    {
+      "id": "D26",
+      "subset": "discovery",
+      "text": "I need an outfit for shopping that keeps me dry in heavy rain.",
+      "decision": "refuse",
+      "expected_reason_class": "unrepresentable_weather_requirement"
+    },
+    {
+      "id": "D27",
+      "subset": "discovery",
+      "text": "A top smarter than the one I wore yesterday, please.",
+      "decision": "refuse",
+      "expected_reason_class": "unsupported_comparison_history"
+    },
+    {
+      "id": "D28",
+      "subset": "discovery",
+      "text": "For my office day, I'd prefer a silk shirt.",
+      "decision": "refuse",
+      "expected_reason_class": "unsupported_optional_material"
+    },
+    {
+      "id": "D29",
+      "subset": "discovery",
+      "text": "I'm not attending the wedding. Suggest an outfit for shopping.",
+      "decision": "accept",
+      "expected": {
+        "context": "everyday.shopping",
+        "role": null,
+        "venue": null,
+        "companions": [],
+        "temporal": [],
+        "facets": [],
+        "dress_code": null,
+        "formality": null,
+        "interview_default_inferred": false,
+        "hard": [],
+        "optional": null,
+        "secondary_required": []
+      }
+    },
+    {
+      "id": "D30",
+      "subset": "discovery",
+      "text": "I'm planning dinner and a job interview on the same day. Choose one outfit.",
+      "decision": "refuse",
+      "expected_reason_class": "incompatible_multiple_events"
+    },
+    {
+      "id": "D31",
+      "subset": "discovery",
+      "text": "I don't need jeans; suggest an outfit.",
+      "decision": "refuse",
+      "expected_reason_class": "unsupported_negated_necessity"
+    },
+    {
+      "id": "D32",
+      "subset": "discovery",
+      "text": "I'd prefer a black shirt, and I need jeans or shorts.",
+      "decision": "refuse",
+      "expected_reason_class": "unrepresentable_or_of_conjunctions"
+    },
+    {
+      "id": "R01",
+      "subset": "reserve",
+      "text": "For a job interview as the candidate tomorrow, could you recommend clothes?",
+      "decision": "accept",
+      "expected": {
+        "context": "professional.job_interview",
+        "role": "candidate",
+        "venue": null,
+        "companions": [],
+        "temporal": [
+          "tomorrow"
+        ],
+        "facets": [],
+        "dress_code": null,
+        "formality": null,
+        "interview_default_inferred": true,
+        "hard": [],
+        "optional": null,
+        "secondary_required": []
+      }
+    },
+    {
+      "id": "R02",
+      "subset": "reserve",
+      "text": "I have a date tonight, and I need black trousers.",
+      "decision": "accept",
+      "expected": {
+        "context": "social.date",
+        "role": null,
+        "venue": null,
+        "companions": [],
+        "temporal": [
+          "tonight"
+        ],
+        "facets": [],
+        "dress_code": null,
+        "formality": null,
+        "interview_default_inferred": false,
+        "hard": [
+          {
+            "role": "lower",
+            "quantifier": "exists",
+            "predicates": [
+              {
+                "attribute": "category",
+                "operator": "in",
+                "values": [
+                  "trousers"
+                ]
+              },
+              {
+                "attribute": "primary_colour",
+                "operator": "in",
+                "values": [
+                  "black"
+                ]
+              }
+            ]
+          }
+        ],
+        "optional": null,
+        "secondary_required": []
+      }
+    },
+    {
+      "id": "R03",
+      "subset": "reserve",
+      "text": "I'm attending a presentation at uni as an attendee tomorrow.",
+      "decision": "accept",
+      "expected": {
+        "context": "academic.presentation",
+        "role": "attendee",
+        "venue": "university",
+        "companions": [],
+        "temporal": [
+          "tomorrow"
+        ],
+        "facets": [],
+        "dress_code": null,
+        "formality": null,
+        "interview_default_inferred": false,
+        "hard": [],
+        "optional": null,
+        "secondary_required": []
+      }
+    },
+    {
+      "id": "R04",
+      "subset": "reserve",
+      "text": "For a group project meeting with classmates, I need a cotton top.",
+      "decision": "accept",
+      "expected": {
+        "context": "academic.group_study",
+        "role": null,
+        "venue": null,
+        "companions": [
+          "classmates"
+        ],
+        "temporal": [],
+        "facets": [],
+        "dress_code": null,
+        "formality": null,
+        "interview_default_inferred": false,
+        "hard": [
+          {
+            "role": "upper",
+            "quantifier": "exists",
+            "predicates": [
+              {
+                "attribute": "material",
+                "operator": "contains_any",
+                "values": [
+                  "cotton"
+                ]
+              }
+            ]
+          }
+        ],
+        "optional": null,
+        "secondary_required": []
+      }
+    },
+    {
+      "id": "R05",
+      "subset": "reserve",
+      "text": "I'm heading to work at the office today. No shorts.",
+      "decision": "accept",
+      "expected": {
+        "context": "professional.office_day",
+        "role": null,
+        "venue": "office",
+        "companions": [],
+        "temporal": [
+          "today"
+        ],
+        "facets": [],
+        "dress_code": null,
+        "formality": null,
+        "interview_default_inferred": false,
+        "hard": [
+          {
+            "role": "lower",
+            "quantifier": "none",
+            "predicates": [
+              {
+                "attribute": "category",
+                "operator": "in",
+                "values": [
+                  "shorts"
+                ]
+              }
+            ]
+          }
+        ],
+        "optional": null,
+        "secondary_required": []
+      }
+    },
+    {
+      "id": "R06",
+      "subset": "reserve",
+      "text": "I'm meeting colleagues at the office for a workplace meeting.",
+      "decision": "accept",
+      "expected": {
+        "context": "professional.workplace_meeting",
+        "role": null,
+        "venue": "office",
+        "companions": [
+          "colleagues"
+        ],
+        "temporal": [],
+        "facets": [],
+        "dress_code": null,
+        "formality": null,
+        "interview_default_inferred": false,
+        "hard": [],
+        "optional": null,
+        "secondary_required": []
+      }
+    },
+    {
+      "id": "R07",
+      "subset": "reserve",
+      "text": "Please suggest clothing for my brother's birthday celebration.",
+      "decision": "accept",
+      "expected": {
+        "context": "social.birthday_gathering",
+        "role": null,
+        "venue": null,
+        "companions": [],
+        "temporal": [],
+        "facets": [],
+        "dress_code": null,
+        "formality": null,
+        "interview_default_inferred": false,
+        "hard": [],
+        "optional": null,
+        "secondary_required": []
+      }
+    },
+    {
+      "id": "R08",
+      "subset": "reserve",
+      "text": "There is a house gathering at a friend's place tonight.",
+      "decision": "accept",
+      "expected": {
+        "context": "social.house_gathering",
+        "role": null,
+        "venue": "friend_home",
+        "companions": [],
+        "temporal": [
+          "tonight"
+        ],
+        "facets": [],
+        "dress_code": null,
+        "formality": null,
+        "interview_default_inferred": false,
+        "hard": [],
+        "optional": null,
+        "secondary_required": []
+      }
+    },
+    {
+      "id": "R09",
+      "subset": "reserve",
+      "text": "Can you pick an outfit for seeing a film at the cinema?",
+      "decision": "accept",
+      "expected": {
+        "context": "leisure.cinema_outing",
+        "role": null,
+        "venue": "cinema",
+        "companions": [],
+        "temporal": [],
+        "facets": [],
+        "dress_code": null,
+        "formality": null,
+        "interview_default_inferred": false,
+        "hard": [],
+        "optional": null,
+        "secondary_required": []
+      }
+    },
+    {
+      "id": "R10",
+      "subset": "reserve",
+      "text": "I'm meeting my family for coffee at a cafe today.",
+      "decision": "accept",
+      "expected": {
+        "context": "social.cafe_meetup",
+        "role": null,
+        "venue": "cafe",
+        "companions": [
+          "family"
+        ],
+        "temporal": [
+          "today"
+        ],
+        "facets": [],
+        "dress_code": null,
+        "formality": null,
+        "interview_default_inferred": false,
+        "hard": [],
+        "optional": null,
+        "secondary_required": []
+      }
+    },
+    {
+      "id": "R11",
+      "subset": "reserve",
+      "text": "Help me choose clothes for a city sightseeing trip tomorrow.",
+      "decision": "accept",
+      "expected": {
+        "context": "leisure.city_sightseeing",
+        "role": null,
+        "venue": "city",
+        "companions": [],
+        "temporal": [
+          "tomorrow"
+        ],
+        "facets": [],
+        "dress_code": null,
+        "formality": null,
+        "interview_default_inferred": false,
+        "hard": [],
+        "optional": null,
+        "secondary_required": []
+      }
+    },
+    {
+      "id": "R12",
+      "subset": "reserve",
+      "text": "I need a grey shirt and black trousers, but not blue trousers.",
+      "decision": "accept",
+      "expected": {
+        "context": "none",
+        "role": null,
+        "venue": null,
+        "companions": [],
+        "temporal": [],
+        "facets": [],
+        "dress_code": null,
+        "formality": null,
+        "interview_default_inferred": false,
+        "hard": [
+          {
+            "role": "upper",
+            "quantifier": "exists",
+            "predicates": [
+              {
+                "attribute": "primary_colour",
+                "operator": "in",
+                "values": [
+                  "grey"
+                ]
+              },
+              {
+                "attribute": "category",
+                "operator": "in",
+                "values": [
+                  "long_sleeve_top",
+                  "short_sleeve_top"
+                ]
+              }
+            ]
+          },
+          {
+            "role": "lower",
+            "quantifier": "exists",
+            "predicates": [
+              {
+                "attribute": "category",
+                "operator": "in",
+                "values": [
+                  "trousers"
+                ]
+              },
+              {
+                "attribute": "primary_colour",
+                "operator": "in",
+                "values": [
+                  "black"
+                ]
+              }
+            ]
+          },
+          {
+            "role": "lower",
+            "quantifier": "none",
+            "predicates": [
+              {
+                "attribute": "category",
+                "operator": "in",
+                "values": [
+                  "trousers"
+                ]
+              },
+              {
+                "attribute": "primary_colour",
+                "operator": "in",
+                "values": [
+                  "blue"
+                ]
+              }
+            ]
+          }
+        ],
+        "optional": null,
+        "secondary_required": []
+      }
+    },
+    {
+      "id": "R13",
+      "subset": "reserve",
+      "text": "pls no shorts; id prefer a black top",
+      "decision": "accept",
+      "expected": {
+        "context": "none",
+        "role": null,
+        "venue": null,
+        "companions": [],
+        "temporal": [],
+        "facets": [],
+        "dress_code": null,
+        "formality": null,
+        "interview_default_inferred": false,
+        "hard": [
+          {
+            "role": "lower",
+            "quantifier": "none",
+            "predicates": [
+              {
+                "attribute": "category",
+                "operator": "in",
+                "values": [
+                  "shorts"
+                ]
+              }
+            ]
+          }
+        ],
+        "optional": {
+          "role": "upper",
+          "quantifier": "exists",
+          "predicates": [
+            {
+              "attribute": "primary_colour",
+              "operator": "in",
+              "values": [
+                "black"
+              ]
+            }
+          ],
+          "resolution": "Active"
+        },
+        "secondary_required": []
+      }
+    },
+    {
+      "id": "R14",
+      "subset": "reserve",
+      "text": "It's an interview tomorrow, but I'm not sure which role I'll have.",
+      "decision": "refuse",
+      "expected_reason_class": "ambiguous_interview_role"
+    },
+    {
+      "id": "R15",
+      "subset": "reserve",
+      "text": "I'm graduating tomorrow and need graduation robes.",
+      "decision": "refuse",
+      "expected_reason_class": "outside_active_contexts_and_categories"
+    },
+    {
+      "id": "R16",
+      "subset": "reserve",
+      "text": "I'm going to a wedding, but I must wear waterproof shoes.",
+      "decision": "refuse",
+      "expected_reason_class": "unsupported_weather_and_category"
+    },
+    {
+      "id": "R17",
+      "subset": "reserve",
+      "text": "I'd prefer black or blue trousers.",
+      "decision": "refuse",
+      "expected_reason_class": "unsupported_optional_or"
+    },
+    {
+      "id": "R18",
+      "subset": "reserve",
+      "text": "I'm attending my own wedding, and I need a cotton shirt.",
+      "decision": "refuse",
+      "expected_reason_class": "unsupported_wedding_participant_role"
+    },
+    {
+      "id": "R19",
+      "subset": "reserve",
+      "text": "Keep my previous trousers but change to a white shirt.",
+      "decision": "refuse",
+      "expected_reason_class": "unbound_specific_garment_history_reference"
+    },
+    {
+      "id": "R20",
+      "subset": "reserve",
+      "text": "I'm studying at a library and then attending a wedding.",
+      "decision": "refuse",
+      "expected_reason_class": "multiple_incompatible_events"
+    }
+  ]
+}

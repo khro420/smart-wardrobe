@@ -23,7 +23,7 @@ from app.application.recommendation.decision_score_codec import score_to_json, s
 from app.application.recommendation.request_local_bounded_ranking import PrimaryRecord, CompletedLedger, bounded_rank
 from app.application.recommendation.request_local_preference_evidence import OptionalEvaluation
 from app.application.recommendation.request_local_score_encoding import LocalScoreEncoding
-from app.domain.value_objects.structured_outfit_request import StructuredOutfitRequest
+from app.application.recommendation.attribute_preference_codec import restore_request
 from app.domain.value_objects.attribute_conditions import ROLES
 from app.domain.value_objects.garment_attributes import GARMENT_STRUCTURE
 from app.shared_contracts.confirmed_garment_snapshot import ConfirmedGarmentSnapshot
@@ -148,13 +148,13 @@ def optional_value(key, optional, rows, scope, independent):
     l=any(lower);u=any(upper)
     return OptionalEvaluation(key,scope,'Satisfied' if l else 'Unsatisfied' if not u else 'Unverifiable',int(l),F(l),F(u),tuple(ledger))
 
-def select(catalog, raw, wearer_id, engine='reference', *, independent=False, seen=(), floor='0', _fashion=None, _personalization=None):
+def select(catalog, raw, wearer_id, engine='reference', *, independent=False, seen=(), floor='0', _fashion=None, _personalization=None, _interpret=None):
     if identity()!=GRAMMAR_SHA: raise ValueError('Unregistered fixture grammar.')
-    intent=CompositionalIntent.capture(raw);data=intent.to_dict()
+    data=CompositionalIntent.capture(raw).to_dict() if _interpret is None else _interpret(raw)
     if 'context' in data['request']: raise UnsupportedFixtureRequest('Contextual fixture requests are not supported.')
     if wearer_id not in catalog['fixture']['profiles']: raise ValueError('Foreign fixture wearer.')
     rows=rows_from_catalog(catalog,catalog['fixture']['profiles'][wearer_id]['gender']);by_id={r.snapshot.garment_id:r for r in rows}
-    request=StructuredOutfitRequest(**data['request']);owner=catalog['fixture']['owner_id'];scope=digest(catalog)
+    request=restore_request(data['request']);owner=catalog['fixture']['owner_id'];scope=digest(catalog)
     read_preferences=preferences_from_catalog
     if _personalization is not None:
         from .personalization import preferences as read_preferences,validate,choose

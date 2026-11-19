@@ -67,8 +67,10 @@ hashes, tokens, signing secrets and private keys are absent.
 
 ## Enabled assistant features
 
-- Grammar1.9 normalization/composition, multiple hard requirements, negation,
-  OR alternatives and one bounded optional preference.
+- The local pretrained hybrid semantic interpreter, followed by deterministic
+  validation and grammar1.9 composition: multiple hard requirements, negation,
+  OR alternatives and one bounded optional preference. Historical grammars remain
+  readable. See [semantic NLP setup and limits](docs/HYBRID_SEMANTIC_NLP.md).
 - The18 approved contextual policies and meaning-based paraphrases; strict
   interview role handling and the disclosed smart-casual default.
 - Unified original/synthetic sources with normal B0/B1 qualification intact.

@@ -8,8 +8,14 @@ def versions():
     from .context_contract import VERSION as CONTEXT
     from .context_language_contract import VERSION as LANGUAGE
     from .interview_default_contract import VERSION as INTERVIEW
+    from .semantic_frame_contract import VERSION as FRAMES
+    from .semantic_constraint_contract import VERSION as NOUNS
+    from .semantic_reliability_contract import VERSION as SCOPED
+    from .semantic_structured_contract import VERSION as TYPED
     return {VERSION:'mixed-fashion-neutral-2.0.0',CONTEXT:'mixed-fashion-context-2.0.0',
-            LANGUAGE:'mixed-fashion-language-2.0.0',INTERVIEW:'mixed-fashion-interview-2.0.0'}
+            LANGUAGE:'mixed-fashion-language-2.0.0',INTERVIEW:'mixed-fashion-interview-2.0.0',
+            FRAMES:'mixed-fashion-semantic-frames-1.0.0',NOUNS:'mixed-fashion-semantic-frames-1.1.0',
+            SCOPED:'mixed-fashion-semantic-frames-1.2.0',TYPED:'mixed-fashion-semantic-frames-1.3.0'}
 
 def base_version(version):
     return next((old for old,new in versions().items() if new==version),None)

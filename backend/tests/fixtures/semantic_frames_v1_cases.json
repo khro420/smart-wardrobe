@@ -1,0 +1,43 @@
+{
+ "version":"hybrid-semantic-evaluation-1.0.0",
+ "development":[
+  ["I'm going to a friend's wedding.","ceremony.wedding"],
+  ["I'm going to a class reunion dinner.","social.meal"],
+  ["My buddy is getting married this weekend.","ceremony.wedding"],
+  ["Gonna spend the afternoon revising at the library. What should I throw on?","academic.library_study"],
+  ["I'm heading to the mall later to grab a few things.","everyday.shopping"],
+  ["I need jeans.","none"],
+  ["I want a cotton shirt.","none"],
+  ["I'd prefer blue trousers.","none"]
+ ],
+ "held_out":[
+  ["Tomorrow I'm attending my cousin's wedding.","ceremony.wedding"],
+  ["What should I wear to a wedding as a guest?","ceremony.wedding"],
+  ["I am spending tomorrow at the library studying.","academic.library_study"],
+  ["I'll go shopping tomorrow; I need cotton trousers.","everyday.shopping"],
+  ["I'm having dinner with friends and I need a white shirt.","social.meal"],
+  ["I am being interviewed for a job.","professional.job_interview"],
+  ["I need a smart casual outfit for a job interview as the interviewer.","professional.job_interview"],
+  ["Please suggest a black or white top for shopping.","everyday.shopping"],
+  ["Recommend an outfit for uni, no shorts.","everyday.academic_attendance"],
+  ["I need jeans, preferably a blue top.","none"],
+  ["Don't give me shorts; I need black trousers.","none"],
+  ["I need a long-sleeved cotton shirt.","none"]
+ ],
+ "refused":[
+  "Got a presentation at uni tomorrow. Don't wanna look like I'm just going to class.",
+  "I'm meeting some friends for dinner tonight, but it's not exactly a formal thing.",
+  "I'm going shopping, and I'd love a white or black top with jeans, but definitely no shorts.",
+  "I'm attending a wedding or going shopping.",
+  "I have a job interview tomorrow.",
+  "I need a waterproof shirt for dinner.",
+  "I need a warmer outfit for dinner.",
+  "I'm attending a wedding as the bride.",
+  "I'm attending a wedding, the dress code is black tie.",
+  "I'm not going to a wedding.",
+  "I need a magical cotton shirt.",
+  "I'm going to a meeting.",
+  "I need clothing for a presentation.",
+  "I need a blue shirt, preferably a white top and black trousers."
+ ]
+}

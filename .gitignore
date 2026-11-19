@@ -131,3 +131,6 @@ storage/*
 storage/smart_wardrobe.seed.db
 !storage/demo-media/
 !storage/demo-media/**
+
+# Verified local semantic weights are installed, never committed.
+/backend/models/semantic_nlp/

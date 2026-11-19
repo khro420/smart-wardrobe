@@ -1,0 +1,27 @@
+{
+ "version":"unseen-hybrid-semantic-holdout-1.0.0",
+ "held_out":[
+  ["For a friend's wedding tomorrow, could you help me choose an outfit?","ceremony.wedding"],
+  ["Please pick something to wear for my cousin's wedding.","ceremony.wedding"],
+  ["Later I'm going to the mall to buy a few things.","everyday.shopping"],
+  ["I'm studying in the library tomorrow, and I need a cotton shirt.","academic.library_study"],
+  ["I need jeans and I'd prefer a black top.","none"],
+  ["I don't want shorts. Please suggest blue trousers.","none"],
+  ["Recommend a black or white shirt for shopping.","everyday.shopping"],
+  ["A smart casual outfit for a job interview as the candidate, please.","professional.job_interview"],
+  ["I need an outfit for a dinner date.","social.date"],
+  ["ID PREFER BLUE TROUSERS.","none"]
+ ],
+ "refused":[
+  "Somehow make it waterproof for shopping.",
+  "I'm the bride at a wedding.",
+  "I'm getting married this weekend.",
+  "My friend is being interviewed for a job. What should I wear?",
+  "I need a formal wedding outfit, but not formal.",
+  "I'm heading to the mall.",
+  "Could I see another outfit like the previous one?",
+  "I need black trousers, but ideally a cotton shirt.",
+  "I am going shopping and studying at the library.",
+  "I need an outfit for dinner and a wedding."
+ ]
+}

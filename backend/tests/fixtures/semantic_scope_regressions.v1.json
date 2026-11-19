@@ -1,0 +1,12 @@
+{
+  "version": "semantic-scope-regressions-1.0.0",
+  "provenance": "Discovery D06/D07/D13/D21; these cases are development evidence, never held-out evidence after this correction.",
+  "cases": [
+    {"id":"D07","text":"Gimme an outfit for shopping; I need trousers, preferably black.","hard_quote":"trousers","known_downstream_refusal":"unsupported_compositional_preference"},
+    {"id":"D21","text":"I need blue trousers, preferably black.","hard_quote":"blue trousers","expected_resolution":"ContradictedByHard"}
+  ],
+  "context_cases": [
+    {"id":"D06","text":"Could you choose an outfit for tomorrow's university lectures?","expected_context":"everyday.academic_attendance","required_focus_terms":["university","lectures"]},
+    {"id":"D13","text":"My cousin is having a birthday party tonight. I need a white top.","expected_context":"social.birthday_gathering","required_focus_terms":["birthday","party"]}
+  ]
+}

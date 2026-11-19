@@ -3,7 +3,7 @@ param(
   [ValidateSet('CPU','GPU')][string]$Mode='CPU',
   [string]$DataDir='', [string]$PythonExe='',
   [int]$BackendPort=8000,
-  [switch]$WithTests,[switch]$DownloadModels,[switch]$PasswordFromStdin
+  [switch]$WithTests,[switch]$DownloadModels,[switch]$PasswordFromStdin,[switch]$SkipSemanticModel
 )
 $ErrorActionPreference='Stop'
 $projectRoot=Split-Path -Parent $PSScriptRoot
@@ -24,6 +24,14 @@ if(-not (Test-Path -LiteralPath $python)){
 $requirements=if($Mode -eq 'GPU'){'requirements.txt'}elseif($WithTests){'requirements-test-cpu.txt'}else{'requirements-cpu.txt'}
 & $python -m pip --disable-pip-version-check install --no-input -r (Join-Path $projectRoot "backend\$requirements")
 if($LASTEXITCODE -ne 0){throw 'Dependency installation failed; no database has been installed.'}
+if($Mode -eq 'GPU'){
+  & $python -m pip --disable-pip-version-check install --no-input -r (Join-Path $projectRoot 'backend\requirements-semantic.txt')
+  if($LASTEXITCODE -ne 0){throw 'Semantic NLP dependencies failed; no database has been installed.'}
+}
+if(-not $SkipSemanticModel){
+  & $python (Join-Path $projectRoot 'backend\scripts\setup_semantic_nlp.py')
+  if($LASTEXITCODE -ne 0){throw 'Semantic models are unavailable. No database has been installed.'}
+}
 & npm.cmd --prefix (Join-Path $projectRoot 'frontend') ci --no-audit --no-fund
 if($LASTEXITCODE -ne 0){throw 'npm ci failed; no database has been installed.'}
 # Config is generated before proof reconstruction, which uses these grammar selectors.

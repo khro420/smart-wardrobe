@@ -4,6 +4,9 @@ export function relativeCoverageMessage(certified: boolean, unresolved: number) 
     : `Best among outfits with computable style alignment. ${unresolved} other eligible outfit${unresolved === 1 ? " has" : "s have"} missing relative evidence and could rank higher.`;
 }
 const messages: Record<string,string> = {
+  SemanticInterpreterUnavailable: "The local semantic NLP models are unavailable or failed integrity checks. Run the documented semantic model setup and restart the backend. No older interpretation was substituted.",
+  SemanticProfileUnavailable: "The semantic interpreter configuration conflicts with its required context profiles. Check the documented settings; no older interpreter was substituted.",
+  SemanticInterpretationChanged: "Independent interpretation did not agree during saving. Nothing was saved. Start a new chat after checking the backend model configuration.",
   SoftProfileUnavailable: "Text preferences support basic P1/C1 only, without context, detailed controls or exclusions. Turn off saved attribute preferences and recorded palette compatibility, then start a new chat. No requirement was dropped.",
   UnsupportedSoftPreference: "Use one supported positive top or bottom wish, such as I'd prefer black trousers. Multiple wishes, material preferences and other modifiers are not supported.",
   AmbiguousSoftBinding: "Name one required top or bottom before preferably, so the preference has a clear garment to refer to.",
@@ -94,6 +97,16 @@ const contextReasons: Record<string, string> = {
   semantic_context_clarification: "Please name the activity or purpose and any required role. A mall visit, team meeting or unspecified seminar does not establish one supported outfit context; no purpose was guessed.",
   semantic_context_scope_unavailable: "That event or role cannot be safely mapped to the supported contexts. Wedding support is for the existing guest policy; no bridal, professional or neutral substitute was generated.",
   semantic_context_collision: "The activities imply different outfit policies. Please clarify one complete situation; no activity or garment condition was dropped.",
+  semantic_frame_modifier_scope: "A comparison or modifier cannot be represented safely. State the exact garment requirements and one activity; weather needs, similarity and relative comparisons were not ignored.",
+  semantic_modifier_scope: "The garment modifiers have an unclear or overlapping scope. State each complete garment requirement separately.",
+  semantic_role_clarification: "Please state your role explicitly. For a job interview, say candidate or interviewer; no role was assumed.",
+  semantic_clarification_required: "Please clarify the activity and any required role. The semantic interpretation was uncertain, so no outfit was generated.",
+  semantic_unsupported_requirement: "One condition or comparison cannot be represented by the current policies. State explicit garment requirements and a supported activity; nothing was silently ignored.",
+  semantic_source_grounding: "The interpretation could not be verified against your exact words. Please restate the request with explicit activity and garment requirements.",
+  semantic_polarity_mismatch: "The hard, optional or negative meaning could not be confirmed. State each requirement separately; no preference was converted into a requirement.",
+  semantic_omitted_condition: "A condition could not be accounted for safely. Please restate all garment requirements explicitly; none were dropped.",
+  semantic_unaccounted_meaning: "Some meaningful wording could not be verified. Please clarify it; no simplified outfit request was substituted.",
+  semantic_unconsumed_negation: "The scope of a negative statement could not be verified. State the exact garment exclusion or clarify the activity.",
   language_conflicting_request: "The request contains conflicting, alternative, or unclear conditions. Please state one activity and the requirements to keep together.",
   language_unsupported_requirement: "I could not represent one of the requested features or modifiers. Please clarify it or use the garment requirements controls. Your condition was kept; no outfit was generated.",
   soft_preference_requires_settings: "Conversational soft preferences are not supported yet. Use the available saved preference settings, or state a mandatory requirement only if that is what you mean. Your preference was not turned into a hard condition.",

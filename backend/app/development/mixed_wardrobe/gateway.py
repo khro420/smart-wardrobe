@@ -16,6 +16,13 @@ def open_store(*,enabled=False):
     cfg['language_profile']=LANGUAGE_PROFILE if cfg['context_profile']==CONTEXT_PROFILE and os.getenv(LANGUAGE_ENV,'disabled')==LANGUAGE_PROFILE else 'disabled'
     from .interview_default_contract import ENV as DEFAULT_ENV,PROFILE as DEFAULT_PROFILE
     cfg['interview_default_profile']=DEFAULT_PROFILE if cfg['language_profile']==LANGUAGE_PROFILE and os.getenv(DEFAULT_ENV,'disabled')==DEFAULT_PROFILE else 'disabled'
+    from .semantic_frame_contract import ENV as FRAME_ENV,PROFILE as FRAME_PROFILE
+    from .semantic_reliability_contract import PROFILE as SCOPED_PROFILE
+    from .semantic_structured_contract import PROFILE as TYPED_PROFILE
+    semantic_requested=os.getenv(FRAME_ENV,'disabled')
+    cfg['semantic_frame_profile']=semantic_requested if semantic_requested in (FRAME_PROFILE,SCOPED_PROFILE,TYPED_PROFILE) else 'disabled'
+    if semantic_requested not in ('disabled',FRAME_PROFILE,SCOPED_PROFILE,TYPED_PROFILE) or semantic_requested in (FRAME_PROFILE,SCOPED_PROFILE,TYPED_PROFILE) and cfg['interview_default_profile']!=DEFAULT_PROFILE:
+        cfg['semantic_error']='SemanticProfileUnavailable'
     from .fashion_contract import ENV as FASHION_ENV,PROFILE as FASHION_PROFILE
     cfg['fashion_profile']=FASHION_PROFILE if cfg['profile']==PROFILE and os.getenv(FASHION_ENV,'disabled')==FASHION_PROFILE else 'disabled'
     from .personalization import ENV as PERSONAL_ENV,PROFILE as PERSONAL_PROFILE
@@ -44,6 +51,25 @@ def capabilities(owner,host):
         result['contextual']={'enabled':s.config.get('context_profile')==CONTEXT_PROFILE,'profile':CONTEXT_PROFILE,'proof_version':CONTEXT_VERSION,'bundle':'context_18_v1'}
         from .context_language_contract import PROFILE as LANGUAGE_PROFILE,VERSION as LANGUAGE_VERSION
         result['contextual']['language_expansion']={'enabled':s.config.get('language_profile')==LANGUAGE_PROFILE,'profile':LANGUAGE_PROFILE,'proof_version':LANGUAGE_VERSION}
+        from .semantic_frame_contract import PROFILE as FRAME_PROFILE
+        from .semantic_constraint_contract import VERSION as FRAME_VERSION
+        from .semantic_reliability_contract import PROFILE as SCOPED_PROFILE,VERSION as SCOPED_VERSION
+        from .semantic_structured_contract import PROFILE as TYPED_PROFILE,VERSION as TYPED_VERSION
+        selected_profile=s.config.get('semantic_frame_profile')
+        semantic_on=selected_profile in (FRAME_PROFILE,SCOPED_PROFILE,TYPED_PROFILE)
+        result['contextual']['semantic_interpreter']={'enabled':semantic_on,'profile':selected_profile if semantic_on else FRAME_PROFILE,'proof_version':TYPED_VERSION if selected_profile==TYPED_PROFILE else SCOPED_VERSION if selected_profile==SCOPED_PROFILE else FRAME_VERSION,'implementation':'local_nli_dependency_hybrid_v1','model_required':True,'unavailable_behavior':'explicit_refusal_no_fallback'}
+        if semantic_on and not s.config.get('semantic_error'):
+            if selected_profile==TYPED_PROFILE:
+                from .semantic_structured_contract import GRAMMAR
+            elif selected_profile==SCOPED_PROFILE:
+                from .semantic_reliability_contract import GRAMMAR
+            else:
+                from .semantic_constraint_contract import GRAMMAR
+            from .semantic_model import ready,identity,ModelUnavailable
+            result['grammar_version']=GRAMMAR
+            try:ready();result['contextual']['semantic_interpreter'].update(ready=True,models=identity())
+            except ModelUnavailable:result['contextual']['semantic_interpreter'].update(ready=False,reason='SemanticInterpreterUnavailable')
+        if s.config.get('semantic_error'):result['contextual']['semantic_interpreter'].update(ready=False,reason=s.config['semantic_error'])
         from .interview_default_contract import PROFILE as DEFAULT_PROFILE
         result['contextual']['interview_default']={'enabled':s.config.get('interview_default_profile')==DEFAULT_PROFILE,'profile':DEFAULT_PROFILE,'value':'smart_casual','origin':'inferred_policy_default'}
     except (OSError,ValueError,sqlite3.Error):pass

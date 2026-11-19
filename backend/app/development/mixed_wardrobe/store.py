@@ -33,8 +33,28 @@ class Store(BaseStore):
         return personal_versions()[chosen] if self.config.get('personalization_profile')==PERSONAL and chosen in personal_versions() else chosen
 
     def interpretation_version(self,raw):
+        if self.config.get('semantic_error'):raise FixtureError(self.config['semantic_error'],422)
         from .context_contract import PROFILE as CONTEXT_PROFILE,VERSION as CONTEXT_VERSION
         if self.config.get('context_profile')==CONTEXT_PROFILE:
+            from .semantic_frame_contract import PROFILE as FRAME_PROFILE,VERSION as FRAME_VERSION
+            from .semantic_reliability_contract import PROFILE as SCOPED_PROFILE
+            from .semantic_structured_contract import PROFILE as TYPED_PROFILE,VERSION as TYPED_VERSION
+            typed=self.config.get('semantic_frame_profile')==TYPED_PROFILE
+            scoped=self.config.get('semantic_frame_profile')==SCOPED_PROFILE
+            if self.config.get('semantic_frame_profile') in (FRAME_PROFILE,SCOPED_PROFILE,TYPED_PROFILE):
+                try:
+                    if typed:
+                        from .semantic_structured import identity as frame_identity
+                    elif scoped:
+                        from .semantic_reliability import identity as frame_identity
+                    else:
+                        from .semantic_constraints import identity as frame_identity
+                    frame_identity()
+                except (ImportError,OSError,ValueError) as error:
+                    raise FixtureError('SemanticInterpreterUnavailable',503) from error
+                from .semantic_reliability_contract import VERSION as SCOPED_VERSION
+                from .semantic_constraint_contract import VERSION as NOUN_VERSION
+                return TYPED_VERSION if typed else SCOPED_VERSION if scoped else NOUN_VERSION
             from .interview_default_contract import PROFILE as DEFAULT_PROFILE,VERSION as DEFAULT_VERSION
             if self.config.get('interview_default_profile')==DEFAULT_PROFILE:
                 from .interview_default import contextual as interview_contextual
@@ -60,6 +80,24 @@ class Store(BaseStore):
             from .fashion import FashionFacts
             return Store.select_version(original,*args,**kwargs,_fashion=FashionFacts)
         if version==VERSION:return select(*args,**kwargs)
+        from .semantic_frame_contract import VERSION as FRAME_VERSION
+        from .semantic_constraint_contract import VERSION as NOUN_VERSION
+        from .semantic_reliability_contract import VERSION as SCOPED_VERSION
+        from .semantic_structured_contract import VERSION as TYPED_VERSION
+        if version in (FRAME_VERSION,NOUN_VERSION,SCOPED_VERSION,TYPED_VERSION):
+            if version==FRAME_VERSION:
+                from .semantic_frames import document as frame_document
+            elif version==NOUN_VERSION:
+                from .semantic_constraints import document as frame_document
+            elif version==SCOPED_VERSION:
+                from .semantic_reliability import document as frame_document
+            else:
+                from .semantic_structured import document as frame_document
+            from .context_selection import select as contextual_select
+            proposal=kwargs.pop('_semantic_proposal',None)
+            if proposal is None:raise FixtureError('MissingSemanticProposal')
+            interpret=lambda raw:frame_document(raw,proposal)
+            return (select if proposal['slots']['context']=='none' else contextual_select)(*args,**kwargs,_interpret=interpret)
         from .interview_default_contract import VERSION as DEFAULT_VERSION
         if version==DEFAULT_VERSION:
             from .interview_default import document as default_document
@@ -84,6 +122,22 @@ class Store(BaseStore):
         original=base_version(version)
         if original is not None:return Store.grammar_for(original)
         if version==VERSION:return GRAMMAR_SHA
+        from .semantic_frame_contract import VERSION as FRAME_VERSION
+        if version==FRAME_VERSION:
+            from .semantic_frames import identity as frame_identity
+            return frame_identity()
+        from .semantic_constraint_contract import VERSION as NOUN_VERSION
+        if version==NOUN_VERSION:
+            from .semantic_constraints import identity as noun_identity
+            return noun_identity()
+        from .semantic_reliability_contract import VERSION as SCOPED_VERSION
+        if version==SCOPED_VERSION:
+            from .semantic_reliability import identity as scoped_identity
+            return scoped_identity()
+        from .semantic_structured_contract import VERSION as TYPED_VERSION
+        if version==TYPED_VERSION:
+            from .semantic_structured import identity as typed_identity
+            return typed_identity()
         from .interview_default_contract import VERSION as DEFAULT_VERSION
         if version==DEFAULT_VERSION:
             from .interview_default import identity as default_identity
@@ -136,7 +190,9 @@ class Store(BaseStore):
         if digest(proof)!=row['proof_sha256'] or not hmac.compare_digest(self.sign(proof),row['signature']): raise FixtureError('ChangedFixtureProof')
         from .personalization import base_version as personal_base
         personal=personal_base(proof.get('version')) is not None
-        if set(proof)!=({'version','catalog','grammar_sha256','raw','wearer_id','engine','seen','floor','decision','parent_id','ordinal','receipt','fingerprint','record_id'}|({'personalization'} if personal else set())): raise FixtureError('UnknownFixtureProofField')
+        from .semantic_structured_contract import owns as semantic_version
+        semantic=semantic_version(proof.get('version'))
+        if set(proof)!=({'version','catalog','grammar_sha256','raw','wearer_id','engine','seen','floor','decision','parent_id','ordinal','receipt','fingerprint','record_id'}|({'personalization'} if personal else set())|({'semantic_proposal'} if semantic else set())): raise FixtureError('UnknownFixtureProofField')
         if digest(proof['catalog']['fixture']) not in self.accepted_catalogs or proof['grammar_sha256']!=self.grammar_for(proof['version']): raise FixtureError('UnregisteredFixtureProof')
         for k in ('wearer_id','parent_id','ordinal','receipt','fingerprint'):
             if proof[k]!=row[k]: raise FixtureError('ChangedFixtureRecord')
@@ -151,7 +207,7 @@ class Store(BaseStore):
             if personal and proof['personalization']!=pp.get('personalization'):raise FixtureError('ChangedFixtureLineage')
             expected_seen=pp['seen']+[self.base(pp['decision'])];floor=pp['floor'] if pp['ordinal'] else self.r_value(pp['decision']);ordinal=pp['ordinal']+1
         if proof['seen']!=expected_seen or proof['floor']!=floor or proof['ordinal']!=ordinal or ordinal>9: raise FixtureError('InvalidFixtureChain')
-        decision=self.select_version(proof['version'],proof['catalog'],proof['raw'],proof['wearer_id'],independent=True,seen=self.seen(proof['seen']),floor=proof['floor'],**({'_personalization':proof['personalization']} if personal else {}))
+        decision=self.select_version(proof['version'],proof['catalog'],proof['raw'],proof['wearer_id'],independent=True,seen=self.seen(proof['seen']),floor=proof['floor'],**({'_personalization':proof['personalization']} if personal else {}),**({'_semantic_proposal':proof['semantic_proposal']} if semantic else {}))
         if decision!=proof['decision'] or decision['status']!='Selected': raise FixtureError('IndependentFixtureHistoryMismatch')
         return proof
 
@@ -173,7 +229,14 @@ class Store(BaseStore):
         original=base_version(personal or proof['version'])
         if original is not None and self.config.get('fashion_profile')!=FASHION:return None
         version=original or proof['version']
-        if version!=VERSION:
+        from .semantic_frame_contract import VERSION as FRAME_VERSION,PROFILE as FRAME_PROFILE
+        from .semantic_constraint_contract import VERSION as NOUN_VERSION
+        from .semantic_reliability_contract import VERSION as SCOPED_VERSION,PROFILE as SCOPED_PROFILE
+        from .semantic_structured_contract import VERSION as TYPED_VERSION,PROFILE as TYPED_PROFILE
+        if version==TYPED_VERSION and (self.config.get('semantic_frame_profile')!=TYPED_PROFILE or self.config.get('semantic_error')):return None
+        if version in (FRAME_VERSION,NOUN_VERSION,SCOPED_VERSION) and (self.config.get('semantic_frame_profile') not in (FRAME_PROFILE,SCOPED_PROFILE,TYPED_PROFILE) or self.config.get('semantic_error')):return None
+        if version==SCOPED_VERSION and self.config.get('semantic_frame_profile') not in (SCOPED_PROFILE,TYPED_PROFILE):return None
+        if version!=VERSION and not (version in (FRAME_VERSION,NOUN_VERSION,SCOPED_VERSION,TYPED_VERSION) and 'context' not in proof['decision']):
             from .context_contract import PROFILE as CONTEXT_PROFILE
             if self.config.get('context_profile')!=CONTEXT_PROFILE or proof['decision']['context']['selection_mode']!='best_evidenced_with_coverage_v1':return None
             from .context_language_contract import VERSION as LANGUAGE_VERSION,PROFILE as LANGUAGE_PROFILE
@@ -226,6 +289,18 @@ class Store(BaseStore):
             from .personalization import base_version as personal_base,capture as capture_personal
             personal=pp.get('personalization') if parent_id else capture_personal(self,c,owner,wearer) if personal_base(version) else None
         options={'_personalization':personal} if personal is not None else {}
+        from .semantic_structured_contract import owns as semantic_version,base as semantic_base
+        from .semantic_reliability_contract import VERSION as SCOPED_VERSION
+        if semantic_version(version):
+            from .semantic_model import propose,ModelUnavailable
+            if semantic_base(version)==SCOPED_VERSION:
+                from .semantic_reliability import propose
+            from .semantic_structured_contract import VERSION as TYPED_VERSION
+            if semantic_base(version)==TYPED_VERSION:
+                from .semantic_structured import propose
+            try:proposal=pp['semantic_proposal'] if parent_id else propose(raw)
+            except ModelUnavailable as error:raise FixtureError('SemanticInterpreterUnavailable',503) from error
+            options['_semantic_proposal']=proposal
         decision=self.select_version(version,catalog,raw,wearer,engine,seen=self.seen(seen),floor=floor,**options)
         if decision['status']!='Selected': return {'synthetic':True,'decision':decision,'persisted':False}
         if before_lock: before_lock()
@@ -241,11 +316,19 @@ class Store(BaseStore):
             if parent_id:
                 parent=c.execute('select * from phase2nd_mixed_proofs where id=? and owner_id=?',(parent_id,owner)).fetchone()
                 if not parent or self.verify_record(c,parent,owner)!=pp: raise FixtureError('ChangedFixtureParent')
+            elif semantic_version(version):
+                # Re-run extraction independently under the write lock. History
+                # later reconstructs the signed frozen interpretation, not a
+                # potentially different model result on another machine.
+                try:reconstructed=propose(raw)
+                except ModelUnavailable as error:raise FixtureError('SemanticInterpreterUnavailable',503) from error
+                if reconstructed!=proposal:raise FixtureError('SemanticInterpretationChanged')
             independent=self.select_version(version,fresh,raw,wearer,independent=True,seen=self.seen(seen),floor=floor,**options)
             if independent!=decision: raise FixtureError('IndependentFixtureWriteMismatch')
             proof={'version':version,'catalog':fresh,'grammar_sha256':self.grammar_for(version),'raw':raw,'wearer_id':wearer,'engine':engine,
                 'seen':seen,'floor':floor,'decision':independent,'parent_id':parent_id,'ordinal':ordinal,'receipt':receipt,
                 'fingerprint':fingerprint,'record_id':str(uuid.uuid4())}
+            if semantic_version(version):proof['semantic_proposal']=proposal
             if personal is not None:proof['personalization']=personal
             wire=encoded(proof)
             if len(wire)>MAX_PROOF: raise FixtureError('OversizedFixtureProof')
