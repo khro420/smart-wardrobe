@@ -11,7 +11,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api import account_routes, garment_processing_routes, health_routes, media_routes, recommendation_routes, visualisation_routes, wardrobe_routes
-from app.api import chat_history_routes, activity_routes
+from app.api import chat_history_routes, activity_routes, outfit_review_routes
 from app.infrastructure.persistence.postgresql_repository import initialise_database
 from app.infrastructure.workflow_runtime import configure_local_workflow
 from app.application.garment_processing.processing_job_service import recover_interrupted_jobs
@@ -51,3 +51,4 @@ app.include_router(recommendation_routes.router, prefix="/api/v1")
 app.include_router(chat_history_routes.router, prefix="/api/v1")
 app.include_router(visualisation_routes.router, prefix="/api/v1")
 app.include_router(activity_routes.router, prefix="/api/v1")
+app.include_router(outfit_review_routes.router, prefix="/api/v1")

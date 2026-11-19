@@ -31,3 +31,5 @@ pycocotools==2.0.8
 scikit-image==0.24.0
 PyYAML==6.0.1
 av==12.3.0
+# Bounded local Outfit Review worker/resource supervision (no model downloads).
+psutil==7.2.2

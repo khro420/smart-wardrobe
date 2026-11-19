@@ -12,6 +12,7 @@ import { leaveHomepageFlow } from "@/lib/recommendation-session";
 const navItems = [
   { href: "/", label: "Home", icon: Home },
   { href: "/assistant", label: "Outfit Assistant", icon: Shirt },
+  { href: "/outfit-review", label: "AI Outfit Review", icon: WandSparkles },
   { href: "/wardrobe", label: "My wardrobe", icon: Shirt },
   { href: "/try-on/group", label: "Virtual try-on", icon: WandSparkles },
   { href: "/activity", label: "Current processes", icon: ListTodo },
