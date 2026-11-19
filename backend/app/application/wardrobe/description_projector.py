@@ -24,6 +24,7 @@ VISUAL = frozenset(('style', 'pattern', 'silhouette', 'neckline', 'sleeve_length
                     'primary_colour', 'secondary_colour', 'colour_palette',
                     'colour_temperature', 'colour_dominance'))
 DEPENDENT = frozenset(('secondary_colour', 'colour_palette', 'colour_temperature', 'colour_dominance'))
+STRUCTURED_MODEL_TAG_PREFIXES = ('neckline: ', 'sleeve length: ', 'silhouette: ')
 
 
 class DescriptionUpdateError(ValueError):
@@ -84,6 +85,10 @@ def _raw_values(row, attrs):
             if field not in attrs:
                 found = list(dict.fromkeys(v[len(prefix):] for v in tags if isinstance(v, str) and v.startswith(prefix)))
                 values[field] = found[0] if len(found) == 1 else found if found else MISSING
+        # The embedding adapter transports structured visual observations via
+        # these compatibility tags.  They belong in their dedicated fields,
+        # never in the user-facing free-text descriptive-tags editor.
+        values['descriptive_tags'] = [tag for tag in tags if not (isinstance(tag, str) and tag.startswith(STRUCTURED_MODEL_TAG_PREFIXES))]
     return values
 
 

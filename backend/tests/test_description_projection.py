@@ -40,6 +40,13 @@ def test_conflicts_bottoms_and_invalid_confidence(policy):
     assert d.project(row(attrs),'owner-A',policy).to_dict()['fields']['neckline']['state']=='Malformed'
 
 
+def test_structured_model_tags_do_not_leak_into_literal_tags(policy):
+    record=d.project(row({'custom_tags':['neckline: cowl','sleeve length: wrist-length','silhouette: symmetrical','gold buttons']}),'owner-A',policy).to_dict()['fields']
+    assert record['neckline']['canonical_values']==['cowl']
+    assert record['sleeve_length']['canonical_values']==['wrist-length']
+    assert record['descriptive_tags']['canonical_values']==['gold buttons']
+
+
 def action(original,**operations):
     return {'description_update':{'contract':'garment-description-update-1.0.0','expected_revision':d.revision(original,'owner-A'),'operations':operations}}
 
