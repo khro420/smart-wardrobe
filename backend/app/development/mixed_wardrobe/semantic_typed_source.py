@@ -133,8 +133,15 @@ def garments(text,doc):
    role=names[nouns[0][0]][0];binding={'kind':'explicit_role','group_id':None};cs=[]
    if len(nouns)>1:
     between=body[nouns[0].end():nouns[-1].start()]
-    if not re.search(r'\bor\b',between) or any(names[n[0]][0]!=role or n[0]=='jeans' or names[n[0]][1] is None for n in nouns):refuse('ambiguous_compositional_or_scope')
-    cs.append(('category','in',sorted(set(names[n[0]][1] for n in nouns)),[(a+n.start(),a+n.end()) for n in nouns]))
+    if not re.search(r'\bor\b',between) or any(names[n[0]][0]!=role or n[0]=='jeans' for n in nouns):refuse('ambiguous_compositional_or_scope')
+    same_head=len({n[0] for n in nouns})==1
+    # Repeated identical heads retain one member/category constraint.
+    # Different category branches plus attributes would require correlated
+    # OR-of-conjunctions; a Cartesian union would silently broaden them.
+    if not same_head and (ds or any(names[n[0]][1] is None for n in nouns)):refuse('ambiguous_compositional_or_scope')
+    categories=SHIRTS if same_head and nouns[0][0]=='shirt' else sorted({names[n[0]][1] for n in nouns if names[n[0]][1] is not None})
+    if categories:cs.append(('category','in',categories,[(a+n.start(),a+n.end()) for n in nouns]))
+    elif not ds:refuse('ambiguous_compositional_or_scope')
    else:
     noun=nouns[0];category=names[noun[0]][1];where=[(a+noun.start(),a+noun.end())]
     if category:cs.append(('category','in',[category],where))
@@ -181,6 +188,20 @@ def garments(text,doc):
   for m in markers+negative:consume(a+m.start(),a+m.end(),'optional_marker' if m in markers else 'negative_operator')
   for m in re.finditer(r"\b(?:either|or|that|that's|is|anything|everything|any|ones?)\b",body):consume(a+m.start(),a+m.end(),'validated_target_syntax')
   unit={'start':a,'end':b,'kind':'optional' if markers else 'exclude' if negative else 'hard'}
+  # A first-person positive modal desire with a direct, validated garment
+  # object is a polite request. This licenses its predicate, not arbitrary
+  # liking statements, negated wishes, reported speech or cross-role OR.
+  if nouns and not markers and not negative:
+   from .semantic_requested_actions import subjects,objects,negative as negated
+   for verb in doc:
+    if not a<=verb.idx<verb.idx+len(verb)<=b or verb.lemma_!='like' or verb.pos_!='VERB' or verb.dep_ not in ('ROOT','conj') or negated(verb):continue
+    if any(a<=v.idx<b and v.pos_=='VERB' for v in verb.ancestors):continue
+    actors=subjects(verb);aux=[t for t in verb.children if t.dep_ in ('aux','auxpass')]
+    targets=[t for t in objects(verb) if any(t.idx==a+n.start() for n in nouns)]
+    if len(actors)!=1 or actors[0].lower_ not in ('i','we') or len(aux)!=1 or aux[0].lemma_!='would' or aux[0].dep_!='aux' or len(targets)!=1:continue
+    consume(verb.idx,verb.idx+len(verb),'validated_polite_desire_command')
+    unit['request_command']={'predicate_span':[verb.idx,verb.idx+len(verb)],'actor_span':[actors[0].idx,actors[0].idx+len(actors[0])],
+     'modal_span':[aux[0].idx,aux[0].idx+len(aux[0])],'object_span':[targets[0].idx,targets[0].idx+len(targets[0])],'binding':'positive_modal_desire_object_v1'}
   if negative and command:
    x,y=command['verb_span'];consume(x,y,'validated_negative_selection_command')
    unit['negative_command']={**command,'group_id':g['id']}

@@ -18,7 +18,18 @@ def bounds(text,token):
  return max((m.end() for m in cuts if m.end()<=token.idx),default=0),min((m.start() for m in cuts if m.start()>token.idx),default=len(text))
 
 def negative(token):return [c for c in token.children if c.dep_=='neg' or c.lower_ in ('never','no')]
-def subjects(token):return [c for c in token.children if c.dep_ in ('nsubj','nsubjpass','csubj')]
+def subjects(token):
+ # A parser may attach the participant to an auxiliary (e.g. going),
+ # rather than the lexical predicate. Traverse only that auxiliary spine;
+ # subjects of objects, complements and purpose clauses are never borrowed.
+ result=[];pending=[token];seen=set()
+ while pending:
+  node=pending.pop()
+  if node.i in seen:continue
+  seen.add(node.i)
+  result.extend(c for c in node.children if c.dep_ in ('nsubj','nsubjpass','csubj'))
+  pending.extend(c for c in node.children if c.dep_ in ('aux','auxpass') and c.pos_=='AUX')
+ return result
 def objects(token):return [c for c in token.children if c.dep_ in ('dobj','obj')]
 def span(token):return [token.idx,token.idx+len(token)]
 
@@ -47,7 +58,8 @@ def actor(token,text):
  for node in [token,*token.ancestors]:
   if not a<=node.idx<b:break
   chain.append(node)
-  if node!=token and node.pos_=='VERB' and node.lemma_ not in CONTROLLERS:return 'unresolved',[],chain
+  shopping_purpose=node.lemma_=='shop' and token.head==node and token.dep_ in ('advcl','xcomp') and any(c.dep_=='aux' and c.lower_=='to' for c in token.children)
+  if node!=token and node.pos_=='VERB' and node.lemma_ not in CONTROLLERS and not shopping_purpose:return 'unresolved',[],chain
   # Need/want a product to buy is not a plan to perform an outing.
   if node!=token and node.lemma_ in ('need','want') and objects(node):return 'product_goal',[],chain
   ss=subjects(node)
@@ -131,6 +143,14 @@ def analyze(doc,text):
    # not a new outfit requirement (the existing language resource admits off).
    for node in chain:
     if node.lemma_=='off' and subjects(node):cover(*span(node),'shopping_departure_carrier')
+    # In a copular departure, spaCy makes `off` a sibling of the purpose
+    # infinitive, not its ancestor. License that modifier only on the same
+    # positive self-subject governor and with an explicit destination PP.
+    # Other modifiers and destination meanings still need source coverage.
+    if who=='user' and node.lemma_=='be' and not negative(node) and token.head==node and token.dep_ in ('advcl','xcomp') and any(c.dep_=='aux' and c.lower_=='to' for c in token.children):
+     for child in node.children:
+      if child.lemma_=='off' and child.dep_=='advmod' and any(p.dep_=='prep' and p.lemma_ in ('to','for') and any(o.dep_=='pobj' for o in p.children) for p in child.children):
+       cover(*span(child),'shopping_departure_carrier')
   records.append(record)
  if records:
   # Never resolve a purchased-item pronoun into a real wardrobe garment.

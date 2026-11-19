@@ -19,9 +19,11 @@ def open_store(*,enabled=False):
     from .semantic_frame_contract import ENV as FRAME_ENV,PROFILE as FRAME_PROFILE
     from .semantic_reliability_contract import PROFILE as SCOPED_PROFILE
     from .semantic_structured_contract import PROFILE as TYPED_PROFILE
+    from .semantic_unified_contract import PROFILE as UNIFIED_PROFILE
+    from .semantic_appearance_contract import PROFILE as APPEARANCE_PROFILE
     semantic_requested=os.getenv(FRAME_ENV,'disabled')
-    cfg['semantic_frame_profile']=semantic_requested if semantic_requested in (FRAME_PROFILE,SCOPED_PROFILE,TYPED_PROFILE) else 'disabled'
-    if semantic_requested not in ('disabled',FRAME_PROFILE,SCOPED_PROFILE,TYPED_PROFILE) or semantic_requested in (FRAME_PROFILE,SCOPED_PROFILE,TYPED_PROFILE) and cfg['interview_default_profile']!=DEFAULT_PROFILE:
+    cfg['semantic_frame_profile']=semantic_requested if semantic_requested in (FRAME_PROFILE,SCOPED_PROFILE,TYPED_PROFILE,UNIFIED_PROFILE,APPEARANCE_PROFILE) else 'disabled'
+    if semantic_requested not in ('disabled',FRAME_PROFILE,SCOPED_PROFILE,TYPED_PROFILE,UNIFIED_PROFILE,APPEARANCE_PROFILE) or semantic_requested in (FRAME_PROFILE,SCOPED_PROFILE,TYPED_PROFILE,UNIFIED_PROFILE,APPEARANCE_PROFILE) and cfg['interview_default_profile']!=DEFAULT_PROFILE:
         cfg['semantic_error']='SemanticProfileUnavailable'
     from .fashion_contract import ENV as FASHION_ENV,PROFILE as FASHION_PROFILE
     cfg['fashion_profile']=FASHION_PROFILE if cfg['profile']==PROFILE and os.getenv(FASHION_ENV,'disabled')==FASHION_PROFILE else 'disabled'
@@ -55,11 +57,17 @@ def capabilities(owner,host):
         from .semantic_constraint_contract import VERSION as FRAME_VERSION
         from .semantic_reliability_contract import PROFILE as SCOPED_PROFILE,VERSION as SCOPED_VERSION
         from .semantic_structured_contract import PROFILE as TYPED_PROFILE,VERSION as TYPED_VERSION
+        from .semantic_unified_contract import PROFILE as UNIFIED_PROFILE,VERSION as UNIFIED_VERSION
+        from .semantic_appearance_contract import PROFILE as APPEARANCE_PROFILE,VERSION as APPEARANCE_VERSION
         selected_profile=s.config.get('semantic_frame_profile')
-        semantic_on=selected_profile in (FRAME_PROFILE,SCOPED_PROFILE,TYPED_PROFILE)
-        result['contextual']['semantic_interpreter']={'enabled':semantic_on,'profile':selected_profile if semantic_on else FRAME_PROFILE,'proof_version':TYPED_VERSION if selected_profile==TYPED_PROFILE else SCOPED_VERSION if selected_profile==SCOPED_PROFILE else FRAME_VERSION,'implementation':'local_nli_dependency_hybrid_v1','model_required':True,'unavailable_behavior':'explicit_refusal_no_fallback'}
+        semantic_on=selected_profile in (FRAME_PROFILE,SCOPED_PROFILE,TYPED_PROFILE,UNIFIED_PROFILE,APPEARANCE_PROFILE)
+        result['contextual']['semantic_interpreter']={'enabled':semantic_on,'profile':selected_profile if semantic_on else FRAME_PROFILE,'proof_version':APPEARANCE_VERSION if selected_profile==APPEARANCE_PROFILE else UNIFIED_VERSION if selected_profile==UNIFIED_PROFILE else TYPED_VERSION if selected_profile==TYPED_PROFILE else SCOPED_VERSION if selected_profile==SCOPED_PROFILE else FRAME_VERSION,'implementation':'local_nli_dependency_hybrid_v1','model_required':True,'unavailable_behavior':'explicit_refusal_no_fallback'}
         if semantic_on and not s.config.get('semantic_error'):
-            if selected_profile==TYPED_PROFILE:
+            if selected_profile==APPEARANCE_PROFILE:
+                from .semantic_appearance_contract import GRAMMAR
+            elif selected_profile==UNIFIED_PROFILE:
+                from .semantic_unified_contract import GRAMMAR
+            elif selected_profile==TYPED_PROFILE:
                 from .semantic_structured_contract import GRAMMAR
             elif selected_profile==SCOPED_PROFILE:
                 from .semantic_reliability_contract import GRAMMAR

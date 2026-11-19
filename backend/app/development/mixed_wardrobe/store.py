@@ -39,11 +39,19 @@ class Store(BaseStore):
             from .semantic_frame_contract import PROFILE as FRAME_PROFILE,VERSION as FRAME_VERSION
             from .semantic_reliability_contract import PROFILE as SCOPED_PROFILE
             from .semantic_structured_contract import PROFILE as TYPED_PROFILE,VERSION as TYPED_VERSION
+            from .semantic_unified_contract import PROFILE as UNIFIED_PROFILE,VERSION as UNIFIED_VERSION
+            unified=self.config.get('semantic_frame_profile')==UNIFIED_PROFILE
+            from .semantic_appearance_contract import PROFILE as APPEARANCE_PROFILE,VERSION as APPEARANCE_VERSION
+            appearance=self.config.get('semantic_frame_profile')==APPEARANCE_PROFILE
             typed=self.config.get('semantic_frame_profile')==TYPED_PROFILE
             scoped=self.config.get('semantic_frame_profile')==SCOPED_PROFILE
-            if self.config.get('semantic_frame_profile') in (FRAME_PROFILE,SCOPED_PROFILE,TYPED_PROFILE):
+            if self.config.get('semantic_frame_profile') in (FRAME_PROFILE,SCOPED_PROFILE,TYPED_PROFILE,UNIFIED_PROFILE,APPEARANCE_PROFILE):
                 try:
-                    if typed:
+                    if appearance:
+                        from .semantic_appearance import identity as frame_identity
+                    elif unified:
+                        from .semantic_unified import identity as frame_identity
+                    elif typed:
                         from .semantic_structured import identity as frame_identity
                     elif scoped:
                         from .semantic_reliability import identity as frame_identity
@@ -54,7 +62,7 @@ class Store(BaseStore):
                     raise FixtureError('SemanticInterpreterUnavailable',503) from error
                 from .semantic_reliability_contract import VERSION as SCOPED_VERSION
                 from .semantic_constraint_contract import VERSION as NOUN_VERSION
-                return TYPED_VERSION if typed else SCOPED_VERSION if scoped else NOUN_VERSION
+                return APPEARANCE_VERSION if appearance else UNIFIED_VERSION if unified else TYPED_VERSION if typed else SCOPED_VERSION if scoped else NOUN_VERSION
             from .interview_default_contract import PROFILE as DEFAULT_PROFILE,VERSION as DEFAULT_VERSION
             if self.config.get('interview_default_profile')==DEFAULT_PROFILE:
                 from .interview_default import contextual as interview_contextual
@@ -84,8 +92,14 @@ class Store(BaseStore):
         from .semantic_constraint_contract import VERSION as NOUN_VERSION
         from .semantic_reliability_contract import VERSION as SCOPED_VERSION
         from .semantic_structured_contract import VERSION as TYPED_VERSION
-        if version in (FRAME_VERSION,NOUN_VERSION,SCOPED_VERSION,TYPED_VERSION):
-            if version==FRAME_VERSION:
+        from .semantic_unified_contract import VERSION as UNIFIED_VERSION
+        from .semantic_appearance_contract import VERSION as APPEARANCE_VERSION
+        if version in (FRAME_VERSION,NOUN_VERSION,SCOPED_VERSION,TYPED_VERSION,UNIFIED_VERSION,APPEARANCE_VERSION):
+            if version==APPEARANCE_VERSION:
+                from .semantic_appearance import document as frame_document
+            elif version==UNIFIED_VERSION:
+                from .semantic_unified import document as frame_document
+            elif version==FRAME_VERSION:
                 from .semantic_frames import document as frame_document
             elif version==NOUN_VERSION:
                 from .semantic_constraints import document as frame_document
@@ -138,6 +152,14 @@ class Store(BaseStore):
         if version==TYPED_VERSION:
             from .semantic_structured import identity as typed_identity
             return typed_identity()
+        from .semantic_unified_contract import VERSION as UNIFIED_VERSION
+        if version==UNIFIED_VERSION:
+            from .semantic_unified import identity as unified_identity
+            return unified_identity()
+        from .semantic_appearance_contract import VERSION as APPEARANCE_VERSION
+        if version==APPEARANCE_VERSION:
+            from .semantic_appearance import identity as appearance_identity
+            return appearance_identity()
         from .interview_default_contract import VERSION as DEFAULT_VERSION
         if version==DEFAULT_VERSION:
             from .interview_default import identity as default_identity
@@ -190,7 +212,7 @@ class Store(BaseStore):
         if digest(proof)!=row['proof_sha256'] or not hmac.compare_digest(self.sign(proof),row['signature']): raise FixtureError('ChangedFixtureProof')
         from .personalization import base_version as personal_base
         personal=personal_base(proof.get('version')) is not None
-        from .semantic_structured_contract import owns as semantic_version
+        from .semantic_appearance_contract import owns as semantic_version
         semantic=semantic_version(proof.get('version'))
         if set(proof)!=({'version','catalog','grammar_sha256','raw','wearer_id','engine','seen','floor','decision','parent_id','ordinal','receipt','fingerprint','record_id'}|({'personalization'} if personal else set())|({'semantic_proposal'} if semantic else set())): raise FixtureError('UnknownFixtureProofField')
         if digest(proof['catalog']['fixture']) not in self.accepted_catalogs or proof['grammar_sha256']!=self.grammar_for(proof['version']): raise FixtureError('UnregisteredFixtureProof')
@@ -233,10 +255,14 @@ class Store(BaseStore):
         from .semantic_constraint_contract import VERSION as NOUN_VERSION
         from .semantic_reliability_contract import VERSION as SCOPED_VERSION,PROFILE as SCOPED_PROFILE
         from .semantic_structured_contract import VERSION as TYPED_VERSION,PROFILE as TYPED_PROFILE
-        if version==TYPED_VERSION and (self.config.get('semantic_frame_profile')!=TYPED_PROFILE or self.config.get('semantic_error')):return None
-        if version in (FRAME_VERSION,NOUN_VERSION,SCOPED_VERSION) and (self.config.get('semantic_frame_profile') not in (FRAME_PROFILE,SCOPED_PROFILE,TYPED_PROFILE) or self.config.get('semantic_error')):return None
-        if version==SCOPED_VERSION and self.config.get('semantic_frame_profile') not in (SCOPED_PROFILE,TYPED_PROFILE):return None
-        if version!=VERSION and not (version in (FRAME_VERSION,NOUN_VERSION,SCOPED_VERSION,TYPED_VERSION) and 'context' not in proof['decision']):
+        from .semantic_unified_contract import VERSION as UNIFIED_VERSION,PROFILE as UNIFIED_PROFILE
+        from .semantic_appearance_contract import VERSION as APPEARANCE_VERSION,PROFILE as APPEARANCE_PROFILE
+        if version==APPEARANCE_VERSION and (self.config.get('semantic_frame_profile')!=APPEARANCE_PROFILE or self.config.get('semantic_error')):return None
+        if version==UNIFIED_VERSION and (self.config.get('semantic_frame_profile') not in (UNIFIED_PROFILE,APPEARANCE_PROFILE) or self.config.get('semantic_error')):return None
+        if version==TYPED_VERSION and (self.config.get('semantic_frame_profile') not in (TYPED_PROFILE,UNIFIED_PROFILE,APPEARANCE_PROFILE) or self.config.get('semantic_error')):return None
+        if version in (FRAME_VERSION,NOUN_VERSION,SCOPED_VERSION) and (self.config.get('semantic_frame_profile') not in (FRAME_PROFILE,SCOPED_PROFILE,TYPED_PROFILE,UNIFIED_PROFILE,APPEARANCE_PROFILE) or self.config.get('semantic_error')):return None
+        if version==SCOPED_VERSION and self.config.get('semantic_frame_profile') not in (SCOPED_PROFILE,TYPED_PROFILE,UNIFIED_PROFILE,APPEARANCE_PROFILE):return None
+        if version!=VERSION and not (version in (FRAME_VERSION,NOUN_VERSION,SCOPED_VERSION,TYPED_VERSION,UNIFIED_VERSION,APPEARANCE_VERSION) and 'context' not in proof['decision']):
             from .context_contract import PROFILE as CONTEXT_PROFILE
             if self.config.get('context_profile')!=CONTEXT_PROFILE or proof['decision']['context']['selection_mode']!='best_evidenced_with_coverage_v1':return None
             from .context_language_contract import VERSION as LANGUAGE_VERSION,PROFILE as LANGUAGE_PROFILE
@@ -289,7 +315,7 @@ class Store(BaseStore):
             from .personalization import base_version as personal_base,capture as capture_personal
             personal=pp.get('personalization') if parent_id else capture_personal(self,c,owner,wearer) if personal_base(version) else None
         options={'_personalization':personal} if personal is not None else {}
-        from .semantic_structured_contract import owns as semantic_version,base as semantic_base
+        from .semantic_appearance_contract import owns as semantic_version,base as semantic_base
         from .semantic_reliability_contract import VERSION as SCOPED_VERSION
         if semantic_version(version):
             from .semantic_model import propose,ModelUnavailable
@@ -298,6 +324,12 @@ class Store(BaseStore):
             from .semantic_structured_contract import VERSION as TYPED_VERSION
             if semantic_base(version)==TYPED_VERSION:
                 from .semantic_structured import propose
+            from .semantic_unified_contract import VERSION as UNIFIED_VERSION
+            if semantic_base(version)==UNIFIED_VERSION:
+                from .semantic_unified import propose
+            from .semantic_appearance_contract import VERSION as APPEARANCE_VERSION
+            if semantic_base(version)==APPEARANCE_VERSION:
+                from .semantic_appearance import propose
             try:proposal=pp['semantic_proposal'] if parent_id else propose(raw)
             except ModelUnavailable as error:raise FixtureError('SemanticInterpreterUnavailable',503) from error
             options['_semantic_proposal']=proposal

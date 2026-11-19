@@ -1,12 +1,27 @@
 # Local hybrid semantic interpreter
 
-The current interpreter uses `hybrid-semantic-intent-1.1.0`. Its additive
+The repository's default interpreter uses `hybrid-semantic-intent-1.1.0`. Its additive
 `mixed-hybrid-semantic-selection-1.1.0` contract preserves explicit mandatory
 shirt nouns as same-member category constraints (`short_sleeve_top` or
 `long_sleeve_top`) alongside material/colour requirements. Jeans still require
 trousers AND qualified denim. No garment name or image supplies those facts.
 The frozen semantic 1.0.0 reader and grammars 1.6–1.9 keep their historical meanings.
 Use New Chat for the corrected interpretation; old receipts replay their records.
+
+Phase 2U-D verified the opt-in typed interpreter `hybrid-semantic-intent-1.3.0`
+and activated it locally with `local_semantic_nlp_structured_v1`. The repository
+example still defaults to 1.1. See [typed compilation status](SEMANTIC_TYPED_COMPILATION.md)
+for the 1.3 validation, scope and local activation details; archived readers
+retain their original identities.
+
+Phase 2V adds and locally activates `hybrid-semantic-intent-1.4.0` through
+`local_semantic_nlp_unified_v1` for context-only, clothing-only, explicit outfit
+style and combined requests. It preserves the 1.3 reader and uses the same
+assets and policies. See [unified intent and verification](UNIFIED_OUTFIT_INTENT.md).
+
+Phase 2V-A locally activates patch grammar `hybrid-semantic-intent-1.4.1` with
+`local_semantic_nlp_appearance_v1` for source-bound positive appearance goals.
+The 1.4 reader stays frozen; model assets, contexts and scoring remain unchanged.
 
 The pretrained `cross-encoder/nli-MiniLM2-L6-H768` classifier selects among the
 existing 18 context descriptions. The pretrained spaCy `en_core_web_sm` dependency
@@ -25,6 +40,82 @@ the candidate universe, scores and winner. History verifies the stored signed
 proposal, source spans and dependency bindings without classifying the context
 again. Existing Fashion Compatibility v2, exact 3/5–1/5–1/5 weights, feedback,
 diversity, eligibility, proof readers, receipts and continuation limits remain.
+
+## Already configured Windows: update to Grammar 1.4.1
+
+Run these commands from your existing checkout root on `main`. Review any local
+changes first; if Git reports a conflict or refuses the fast-forward, preserve
+that work and reconcile it rather than resetting it.
+
+```powershell
+git status --short
+git pull --ff-only origin main
+notepad .\backend\.env
+```
+
+In the editor, change only this existing key (one assignment, no duplicate):
+
+```dotenv
+SMART_WARDROBE_DEVELOPMENT_SEMANTIC_PROFILE=local_semantic_nlp_appearance_v1
+```
+
+Retain all database/media paths, signing secrets, account credentials, model
+settings and other profiles. Reuse the installed MiniLM + spaCy packages/assets;
+this update adds no dependency or model download. The manifest, pinned semantic
+requirements and missing-asset installer are already included in the repository.
+Full setup and the portable-dataset installer are for installation, not this
+upgrade; they are unnecessary for an already configured wardrobe.
+
+Stop only this checkout's backend through its owning terminal/process owner
+(Ctrl+C in its backend terminal). Keep the frontend running. Then start the
+backend from the checkout root in that terminal:
+
+```powershell
+Push-Location .\backend
+.\.venv\Scripts\python.exe -B -m uvicorn app.main:app --host 127.0.0.1 --port 8000
+```
+
+After stopping that terminal's backend later, `Pop-Location` returns to the
+checkout root. If port 8000 is occupied, identify its owner before starting;
+do not terminate unrelated Python processes. The existing `Start-Windows.ps1
+-Stop` stops both recorded services, so use the backend's owner for a backend-only
+restart. Existing wardrobe storage and authentication are retained throughout.
+
+Refresh localhost:3000 and sign in normally. In Outfit Assistant's authenticated
+`GET /api/v1/recommendations/capabilities` response, verify:
+
+```text
+mixed_wardrobe.grammar_version = hybrid-semantic-intent-1.4.1
+mixed_wardrobe.contextual.semantic_interpreter.profile = local_semantic_nlp_appearance_v1
+mixed_wardrobe.contextual.semantic_interpreter.ready = true
+```
+
+For a read-only browser-console check in the signed-in localhost:3000 tab:
+
+```javascript
+(async () => {
+  const token = sessionStorage.getItem("smart_wardrobe_access_token");
+  if (!token) return console.log("Sign in first.");
+  const response = await fetch("/api/v1/recommendations/capabilities", {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  const body = await response.json();
+  const mixed = body.mixed_wardrobe;
+  console.log({ status: response.status, grammar: mixed?.grammar_version,
+    profile: mixed?.contextual?.semantic_interpreter?.profile,
+    ready: mixed?.contextual?.semantic_interpreter?.ready });
+})();
+```
+
+Only share the printed status/version/readiness object, never credentials or
+authorization headers. An unauthenticated GET returns 401. If readiness is false,
+use the existing asset troubleshooting/setup instructions below; do not replace
+the wardrobe database or copy another PC's environment/secrets.
+
+Use **New Chat** and try `I want to look sporty.` or `I'd like a short-sleeved top.`
+Selection still requires qualified evidence. Date plus mandatory sporty style
+currently remains InsufficientEvidence for the shipped wardrobe under the
+unchanged date policy; this is distinct from an interpretation failure.
 
 ## Installation and activation
 

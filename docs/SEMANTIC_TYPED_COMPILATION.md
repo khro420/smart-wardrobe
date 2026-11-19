@@ -8,7 +8,7 @@ does not edit `.env`, restart services or reinterpret archived requests.
 
 Grammar 1.3 is shipped for review and remains disabled. Keep
 `SMART_WARDROBE_DEVELOPMENT_SEMANTIC_PROFILE=local_semantic_nlp_v1` for the
-stable 1.1 interpreter. The final focused closure recorded 168 passing tests;
+stable 1.1 interpreter. The prior Phase 2U-B closure recorded 168 passing tests;
 the fresh Phase 2U-B reserve recorded 23/24 exact structured agreements,
 1/14 false rejections and 0/10 incorrect acceptances. A shopping plan phrased
 as purchasing books with a white-top requirement still refused because source
@@ -16,6 +16,56 @@ coverage was incomplete. This task does not fix that limitation or activate
 1.3. Earlier exposed evaluation cases are regression evidence, not new held-out
 validation. Installation uses the same pinned assets as 1.1; see
 [the installation guide](HYBRID_SEMANTIC_NLP.md).
+
+Phase 2U-C corrects copular shopping departures: in “I'm off to the mall to
+purchase books”, the departure modifier and purpose infinitive can share a
+positive self-subject governor. Coverage requires that dependency relationship
+and a destination; it does not authorize assistant purchase commands or erase
+independent garment requirements. The candidate's registered fingerprint is now
+`9ad44475f9917bbf46d36775abcf8df014987ebfa2ab8ec5e87f6265ea1bc178`.
+No existing live 1.3 proofs were present; 1.0–1.2 readers are unchanged.
+
+The correction passed 185 focused checks. Its separately sealed, once-opened
+16-case reserve recorded 13/16 exact agreements, 2/10 false rejections and
+0/6 incorrect acceptances. One further exact mismatch was a prewritten label
+using `in` instead of the existing material `contains_any` operator; cotton
+and the shirt category were both preserved. The two genuine false rejections
+concern a plural shopping-purpose declaration and an “I'd like either…”
+request. Original labels/results remain retained; no correction was tuned to
+the opened reserve. Activation remains blocked, grammar 1.1 remains active,
+and no local profile change or restart followed.
+
+### Phase 2U-D local activation
+
+The next correction resolves subjects attached to an auxiliary spine and binds
+an infinitival purchase purpose to its existing shopping activity. No subject
+is borrowed from a product, complement or unrelated clause. Positive
+first-person `would like` requests license their verb only when a direct,
+already validated garment object is present. Same-member, same-axis OR remains
+exact; correlated category/attribute branches and cross-role alternatives refuse.
+
+The frozen candidate passed 27 new and 128 relevant existing checks. A fresh
+24-case reserve, manually labelled and sealed before source changes, then ran
+once: 24/24 full structured agreements, 0/14 false rejections, 0/10 incorrect
+acceptances, zero interpretation errors. No source tuning followed that run.
+The previous cotton-label correction is an explicit evaluation erratum; the
+original Phase 2U-C labels and raw results remain preserved.
+
+The registered 1.3 fingerprint is
+`ea22cb9d0967594d03074117d7e67f832f1eb9e5392e4fdc4731683fc760df4c`.
+No live 1.3 proof predated the correction. Historical 1.0–1.2 readers and all
+scoring/evidence policies are unchanged. Only the local semantic selector was
+changed to `local_semantic_nlp_structured_v1`, and only the owned backend on
+8000 was restarted. Frontend 3000 was retained. The repository `.env.example`
+still selects stable 1.1; no commit or push is part of this phase.
+
+Refresh the existing UI and use New Chat. In the authenticated capabilities
+response, `mixed_wardrobe.grammar_version` must be
+`hybrid-semantic-intent-1.3.0`, with
+`mixed_wardrobe.contextual.semantic_interpreter.profile` equal to
+`local_semantic_nlp_structured_v1` and `ready=true`. Unauthenticated requests
+continue to return 401. Accepted language may still legitimately produce
+InsufficientEvidence or no matching outfit when qualified garment facts are absent.
 
 The candidate reuses the installed, pinned CPU MiniLM and spaCy assets. It needs
 no new package, model download or external API. Dependency analysis grounds

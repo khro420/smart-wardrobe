@@ -59,6 +59,9 @@ const contextualMessages = new Set([
   "No complete eligible outfit is available for this wedding request. Check your wardrobe before starting a new chat.",
 ]);
 const contextReasons: Record<string, string> = {
+  semantic_sleeve_target_clarification: "Please name the garment, such as a short-sleeved top, or ask for something with long sleeves. A bare sleeve description does not establish a garment type.",
+  semantic_optional_style_unavailable: "Optional outfit-style wishes are not supported. Your wish was not converted into a mandatory condition. One supported top or bottom colour preference can be used instead.",
+  semantic_style_scope_unavailable: "That outfit-style combination cannot be represented safely. State one required style; no style restriction was ignored.",
   unsupported_compositional_clause: "Split the request into clear garment requirements and one optional colour/category wish. Every clause must be understood; none was ignored.",
   compositional_literal_scope_unavailable: "Quoted garment names and literal descriptions are outside this opt-in clause grammar. Use the original supported request path for literal matching.",
   unrepresentable_compositional_target: "Use a supported garment and its recorded attributes. This clause cannot be represented safely; no partial outfit request was submitted.",
